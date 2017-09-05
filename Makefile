@@ -30,7 +30,7 @@ JS_FILES=\
 JS_INPUT_FILES=$(addprefix editor/, $(JS_FILES))
 JS_BUILD_FILES=$(addprefix build/$(PACKAGE)/, $(JS_FILES))
 CLOSURE_JS_ARGS=$(addprefix --js , $(JS_INPUT_FILES))
-COMPILED_JS=editor/svgedit.compiled.js
+COMPILED_JS=editor/svgedit.min.js
 
 all: release firefox opera
 
@@ -56,10 +56,17 @@ build/$(PACKAGE): $(COMPILED_JS)
 # NOTE: WHITESPACE_ONLY and --formatting PRETTY_PRINT is helpful for debugging.
 $(COMPILED_JS):
 	java -jar $(CLOSURE) \
-		--compilation_level SIMPLE_OPTIMIZATIONS \
 		$(CLOSURE_JS_ARGS) \
-		--js_output_file $(COMPILED_JS) \
+		--js_output_file dist/svgedit.js \
+		--compilation_level WHITESPACE_ONLY \
+		--formatting PRETTY_PRINT \
 		--output_wrapper "const jquery = require('jquery'); const jQuery = jquery; const $$ = jquery; (function() { var %output%;module.exports = svgedit; }());"
+	java -jar $(CLOSURE) \
+		$(CLOSURE_JS_ARGS) \
+		--js_output_file dist/svgedit.min.js \
+		--compilation_level SIMPLE_OPTIMIZATIONS \
+		--output_wrapper "const jquery = require('jquery'); const jQuery = jquery; const $$ = jquery; (function() { var %output%;module.exports = svgedit; }());"
+	
 
 compile: $(COMPILED_JS)
 

@@ -1,402 +1,10074 @@
-const jquery = require('jquery'); const jQuery = jquery; const $ = jquery; (function() { var svgedit={NS:{HTML:"http://www.w3.org/1999/xhtml",MATH:"http://www.w3.org/1998/Math/MathML",SE:"http://svg-edit.googlecode.com",SVG:"http://www.w3.org/2000/svg",XLINK:"http://www.w3.org/1999/xlink",XML:"http://www.w3.org/XML/1998/namespace",XMLNS:"http://www.w3.org/2000/xmlns/"}};svgedit.getReverseNS=function(){var g={};$.each(this.NS,function(s,q){g[q]=s.toLowerCase()});return g};(function(){var g=jQuery.fn.attr;jQuery.fn.attr=function(s,q){var j,c=this.length;if(!c)return g.apply(this,arguments);for(j=0;j<c;++j){var k=this[j];if(k.namespaceURI==="http://www.w3.org/2000/svg"){if(q!==undefined)k.setAttribute(s,q);else if($.isArray(s)){c=s.length;for(var i={};c--;){var w=s[c];if((j=k.getAttribute(w))||j==="0")j=isNaN(j)?j:j-0;i[w]=j}return i}if(typeof s==="object")for(i in s)k.setAttribute(i,s[i]);else{if((j=k.getAttribute(s))||j==="0")j=isNaN(j)?j:j-0;return j}}else return g.apply(this,
-arguments)}return this}})();(function(){if(!window.SVGPathSeg){window.SVGPathSeg=function(g,s,q){this.pathSegType=g;this.pathSegTypeAsLetter=s;this._owningPathSegList=q};SVGPathSeg.PATHSEG_UNKNOWN=0;SVGPathSeg.PATHSEG_CLOSEPATH=1;SVGPathSeg.PATHSEG_MOVETO_ABS=2;SVGPathSeg.PATHSEG_MOVETO_REL=3;SVGPathSeg.PATHSEG_LINETO_ABS=4;SVGPathSeg.PATHSEG_LINETO_REL=5;SVGPathSeg.PATHSEG_CURVETO_CUBIC_ABS=6;SVGPathSeg.PATHSEG_CURVETO_CUBIC_REL=7;SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_ABS=8;SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_REL=9;SVGPathSeg.PATHSEG_ARC_ABS=
-10;SVGPathSeg.PATHSEG_ARC_REL=11;SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_ABS=12;SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_REL=13;SVGPathSeg.PATHSEG_LINETO_VERTICAL_ABS=14;SVGPathSeg.PATHSEG_LINETO_VERTICAL_REL=15;SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_ABS=16;SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_REL=17;SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS=18;SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL=19;SVGPathSeg.prototype._segmentChanged=function(){this._owningPathSegList&&this._owningPathSegList.segmentChanged(this)};
-window.SVGPathSegClosePath=function(g){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_CLOSEPATH,"z",g)};SVGPathSegClosePath.prototype=Object.create(SVGPathSeg.prototype);SVGPathSegClosePath.prototype.toString=function(){return"[object SVGPathSegClosePath]"};SVGPathSegClosePath.prototype._asPathString=function(){return this.pathSegTypeAsLetter};SVGPathSegClosePath.prototype.clone=function(){return new SVGPathSegClosePath(undefined)};window.SVGPathSegMovetoAbs=function(g,s,q){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_MOVETO_ABS,
-"M",g);this._x=s;this._y=q};SVGPathSegMovetoAbs.prototype=Object.create(SVGPathSeg.prototype);SVGPathSegMovetoAbs.prototype.toString=function(){return"[object SVGPathSegMovetoAbs]"};SVGPathSegMovetoAbs.prototype._asPathString=function(){return this.pathSegTypeAsLetter+" "+this._x+" "+this._y};SVGPathSegMovetoAbs.prototype.clone=function(){return new SVGPathSegMovetoAbs(undefined,this._x,this._y)};Object.defineProperty(SVGPathSegMovetoAbs.prototype,"x",{get:function(){return this._x},set:function(g){this._x=
-g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegMovetoAbs.prototype,"y",{get:function(){return this._y},set:function(g){this._y=g;this._segmentChanged()},enumerable:true});window.SVGPathSegMovetoRel=function(g,s,q){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_MOVETO_REL,"m",g);this._x=s;this._y=q};SVGPathSegMovetoRel.prototype=Object.create(SVGPathSeg.prototype);SVGPathSegMovetoRel.prototype.toString=function(){return"[object SVGPathSegMovetoRel]"};SVGPathSegMovetoRel.prototype._asPathString=
-function(){return this.pathSegTypeAsLetter+" "+this._x+" "+this._y};SVGPathSegMovetoRel.prototype.clone=function(){return new SVGPathSegMovetoRel(undefined,this._x,this._y)};Object.defineProperty(SVGPathSegMovetoRel.prototype,"x",{get:function(){return this._x},set:function(g){this._x=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegMovetoRel.prototype,"y",{get:function(){return this._y},set:function(g){this._y=g;this._segmentChanged()},enumerable:true});window.SVGPathSegLinetoAbs=
-function(g,s,q){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_LINETO_ABS,"L",g);this._x=s;this._y=q};SVGPathSegLinetoAbs.prototype=Object.create(SVGPathSeg.prototype);SVGPathSegLinetoAbs.prototype.toString=function(){return"[object SVGPathSegLinetoAbs]"};SVGPathSegLinetoAbs.prototype._asPathString=function(){return this.pathSegTypeAsLetter+" "+this._x+" "+this._y};SVGPathSegLinetoAbs.prototype.clone=function(){return new SVGPathSegLinetoAbs(undefined,this._x,this._y)};Object.defineProperty(SVGPathSegLinetoAbs.prototype,
-"x",{get:function(){return this._x},set:function(g){this._x=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegLinetoAbs.prototype,"y",{get:function(){return this._y},set:function(g){this._y=g;this._segmentChanged()},enumerable:true});window.SVGPathSegLinetoRel=function(g,s,q){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_LINETO_REL,"l",g);this._x=s;this._y=q};SVGPathSegLinetoRel.prototype=Object.create(SVGPathSeg.prototype);SVGPathSegLinetoRel.prototype.toString=function(){return"[object SVGPathSegLinetoRel]"};
-SVGPathSegLinetoRel.prototype._asPathString=function(){return this.pathSegTypeAsLetter+" "+this._x+" "+this._y};SVGPathSegLinetoRel.prototype.clone=function(){return new SVGPathSegLinetoRel(undefined,this._x,this._y)};Object.defineProperty(SVGPathSegLinetoRel.prototype,"x",{get:function(){return this._x},set:function(g){this._x=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegLinetoRel.prototype,"y",{get:function(){return this._y},set:function(g){this._y=g;this._segmentChanged()},
-enumerable:true});window.SVGPathSegCurvetoCubicAbs=function(g,s,q,j,c,k,i){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_CURVETO_CUBIC_ABS,"C",g);this._x=s;this._y=q;this._x1=j;this._y1=c;this._x2=k;this._y2=i};SVGPathSegCurvetoCubicAbs.prototype=Object.create(SVGPathSeg.prototype);SVGPathSegCurvetoCubicAbs.prototype.toString=function(){return"[object SVGPathSegCurvetoCubicAbs]"};SVGPathSegCurvetoCubicAbs.prototype._asPathString=function(){return this.pathSegTypeAsLetter+" "+this._x1+" "+this._y1+" "+this._x2+
-" "+this._y2+" "+this._x+" "+this._y};SVGPathSegCurvetoCubicAbs.prototype.clone=function(){return new SVGPathSegCurvetoCubicAbs(undefined,this._x,this._y,this._x1,this._y1,this._x2,this._y2)};Object.defineProperty(SVGPathSegCurvetoCubicAbs.prototype,"x",{get:function(){return this._x},set:function(g){this._x=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoCubicAbs.prototype,"y",{get:function(){return this._y},set:function(g){this._y=g;this._segmentChanged()},enumerable:true});
-Object.defineProperty(SVGPathSegCurvetoCubicAbs.prototype,"x1",{get:function(){return this._x1},set:function(g){this._x1=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoCubicAbs.prototype,"y1",{get:function(){return this._y1},set:function(g){this._y1=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoCubicAbs.prototype,"x2",{get:function(){return this._x2},set:function(g){this._x2=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoCubicAbs.prototype,
-"y2",{get:function(){return this._y2},set:function(g){this._y2=g;this._segmentChanged()},enumerable:true});window.SVGPathSegCurvetoCubicRel=function(g,s,q,j,c,k,i){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_CURVETO_CUBIC_REL,"c",g);this._x=s;this._y=q;this._x1=j;this._y1=c;this._x2=k;this._y2=i};SVGPathSegCurvetoCubicRel.prototype=Object.create(SVGPathSeg.prototype);SVGPathSegCurvetoCubicRel.prototype.toString=function(){return"[object SVGPathSegCurvetoCubicRel]"};SVGPathSegCurvetoCubicRel.prototype._asPathString=
-function(){return this.pathSegTypeAsLetter+" "+this._x1+" "+this._y1+" "+this._x2+" "+this._y2+" "+this._x+" "+this._y};SVGPathSegCurvetoCubicRel.prototype.clone=function(){return new SVGPathSegCurvetoCubicRel(undefined,this._x,this._y,this._x1,this._y1,this._x2,this._y2)};Object.defineProperty(SVGPathSegCurvetoCubicRel.prototype,"x",{get:function(){return this._x},set:function(g){this._x=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoCubicRel.prototype,"y",{get:function(){return this._y},
-set:function(g){this._y=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoCubicRel.prototype,"x1",{get:function(){return this._x1},set:function(g){this._x1=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoCubicRel.prototype,"y1",{get:function(){return this._y1},set:function(g){this._y1=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoCubicRel.prototype,"x2",{get:function(){return this._x2},set:function(g){this._x2=
-g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoCubicRel.prototype,"y2",{get:function(){return this._y2},set:function(g){this._y2=g;this._segmentChanged()},enumerable:true});window.SVGPathSegCurvetoQuadraticAbs=function(g,s,q,j,c){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_ABS,"Q",g);this._x=s;this._y=q;this._x1=j;this._y1=c};SVGPathSegCurvetoQuadraticAbs.prototype=Object.create(SVGPathSeg.prototype);SVGPathSegCurvetoQuadraticAbs.prototype.toString=
-function(){return"[object SVGPathSegCurvetoQuadraticAbs]"};SVGPathSegCurvetoQuadraticAbs.prototype._asPathString=function(){return this.pathSegTypeAsLetter+" "+this._x1+" "+this._y1+" "+this._x+" "+this._y};SVGPathSegCurvetoQuadraticAbs.prototype.clone=function(){return new SVGPathSegCurvetoQuadraticAbs(undefined,this._x,this._y,this._x1,this._y1)};Object.defineProperty(SVGPathSegCurvetoQuadraticAbs.prototype,"x",{get:function(){return this._x},set:function(g){this._x=g;this._segmentChanged()},enumerable:true});
-Object.defineProperty(SVGPathSegCurvetoQuadraticAbs.prototype,"y",{get:function(){return this._y},set:function(g){this._y=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoQuadraticAbs.prototype,"x1",{get:function(){return this._x1},set:function(g){this._x1=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoQuadraticAbs.prototype,"y1",{get:function(){return this._y1},set:function(g){this._y1=g;this._segmentChanged()},enumerable:true});
-window.SVGPathSegCurvetoQuadraticRel=function(g,s,q,j,c){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_REL,"q",g);this._x=s;this._y=q;this._x1=j;this._y1=c};SVGPathSegCurvetoQuadraticRel.prototype=Object.create(SVGPathSeg.prototype);SVGPathSegCurvetoQuadraticRel.prototype.toString=function(){return"[object SVGPathSegCurvetoQuadraticRel]"};SVGPathSegCurvetoQuadraticRel.prototype._asPathString=function(){return this.pathSegTypeAsLetter+" "+this._x1+" "+this._y1+" "+this._x+" "+this._y};
-SVGPathSegCurvetoQuadraticRel.prototype.clone=function(){return new SVGPathSegCurvetoQuadraticRel(undefined,this._x,this._y,this._x1,this._y1)};Object.defineProperty(SVGPathSegCurvetoQuadraticRel.prototype,"x",{get:function(){return this._x},set:function(g){this._x=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoQuadraticRel.prototype,"y",{get:function(){return this._y},set:function(g){this._y=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoQuadraticRel.prototype,
-"x1",{get:function(){return this._x1},set:function(g){this._x1=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoQuadraticRel.prototype,"y1",{get:function(){return this._y1},set:function(g){this._y1=g;this._segmentChanged()},enumerable:true});window.SVGPathSegArcAbs=function(g,s,q,j,c,k,i,w){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_ARC_ABS,"A",g);this._x=s;this._y=q;this._r1=j;this._r2=c;this._angle=k;this._largeArcFlag=i;this._sweepFlag=w};SVGPathSegArcAbs.prototype=
-Object.create(SVGPathSeg.prototype);SVGPathSegArcAbs.prototype.toString=function(){return"[object SVGPathSegArcAbs]"};SVGPathSegArcAbs.prototype._asPathString=function(){return this.pathSegTypeAsLetter+" "+this._r1+" "+this._r2+" "+this._angle+" "+(this._largeArcFlag?"1":"0")+" "+(this._sweepFlag?"1":"0")+" "+this._x+" "+this._y};SVGPathSegArcAbs.prototype.clone=function(){return new SVGPathSegArcAbs(undefined,this._x,this._y,this._r1,this._r2,this._angle,this._largeArcFlag,this._sweepFlag)};Object.defineProperty(SVGPathSegArcAbs.prototype,
-"x",{get:function(){return this._x},set:function(g){this._x=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegArcAbs.prototype,"y",{get:function(){return this._y},set:function(g){this._y=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegArcAbs.prototype,"r1",{get:function(){return this._r1},set:function(g){this._r1=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegArcAbs.prototype,"r2",{get:function(){return this._r2},set:function(g){this._r2=
-g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegArcAbs.prototype,"angle",{get:function(){return this._angle},set:function(g){this._angle=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegArcAbs.prototype,"largeArcFlag",{get:function(){return this._largeArcFlag},set:function(g){this._largeArcFlag=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegArcAbs.prototype,"sweepFlag",{get:function(){return this._sweepFlag},set:function(g){this._sweepFlag=
-g;this._segmentChanged()},enumerable:true});window.SVGPathSegArcRel=function(g,s,q,j,c,k,i,w){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_ARC_REL,"a",g);this._x=s;this._y=q;this._r1=j;this._r2=c;this._angle=k;this._largeArcFlag=i;this._sweepFlag=w};SVGPathSegArcRel.prototype=Object.create(SVGPathSeg.prototype);SVGPathSegArcRel.prototype.toString=function(){return"[object SVGPathSegArcRel]"};SVGPathSegArcRel.prototype._asPathString=function(){return this.pathSegTypeAsLetter+" "+this._r1+" "+this._r2+" "+
-this._angle+" "+(this._largeArcFlag?"1":"0")+" "+(this._sweepFlag?"1":"0")+" "+this._x+" "+this._y};SVGPathSegArcRel.prototype.clone=function(){return new SVGPathSegArcRel(undefined,this._x,this._y,this._r1,this._r2,this._angle,this._largeArcFlag,this._sweepFlag)};Object.defineProperty(SVGPathSegArcRel.prototype,"x",{get:function(){return this._x},set:function(g){this._x=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegArcRel.prototype,"y",{get:function(){return this._y},
-set:function(g){this._y=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegArcRel.prototype,"r1",{get:function(){return this._r1},set:function(g){this._r1=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegArcRel.prototype,"r2",{get:function(){return this._r2},set:function(g){this._r2=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegArcRel.prototype,"angle",{get:function(){return this._angle},set:function(g){this._angle=
-g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegArcRel.prototype,"largeArcFlag",{get:function(){return this._largeArcFlag},set:function(g){this._largeArcFlag=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegArcRel.prototype,"sweepFlag",{get:function(){return this._sweepFlag},set:function(g){this._sweepFlag=g;this._segmentChanged()},enumerable:true});window.SVGPathSegLinetoHorizontalAbs=function(g,s){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_ABS,
-"H",g);this._x=s};SVGPathSegLinetoHorizontalAbs.prototype=Object.create(SVGPathSeg.prototype);SVGPathSegLinetoHorizontalAbs.prototype.toString=function(){return"[object SVGPathSegLinetoHorizontalAbs]"};SVGPathSegLinetoHorizontalAbs.prototype._asPathString=function(){return this.pathSegTypeAsLetter+" "+this._x};SVGPathSegLinetoHorizontalAbs.prototype.clone=function(){return new SVGPathSegLinetoHorizontalAbs(undefined,this._x)};Object.defineProperty(SVGPathSegLinetoHorizontalAbs.prototype,"x",{get:function(){return this._x},
-set:function(g){this._x=g;this._segmentChanged()},enumerable:true});window.SVGPathSegLinetoHorizontalRel=function(g,s){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_REL,"h",g);this._x=s};SVGPathSegLinetoHorizontalRel.prototype=Object.create(SVGPathSeg.prototype);SVGPathSegLinetoHorizontalRel.prototype.toString=function(){return"[object SVGPathSegLinetoHorizontalRel]"};SVGPathSegLinetoHorizontalRel.prototype._asPathString=function(){return this.pathSegTypeAsLetter+" "+this._x};SVGPathSegLinetoHorizontalRel.prototype.clone=
-function(){return new SVGPathSegLinetoHorizontalRel(undefined,this._x)};Object.defineProperty(SVGPathSegLinetoHorizontalRel.prototype,"x",{get:function(){return this._x},set:function(g){this._x=g;this._segmentChanged()},enumerable:true});window.SVGPathSegLinetoVerticalAbs=function(g,s){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_LINETO_VERTICAL_ABS,"V",g);this._y=s};SVGPathSegLinetoVerticalAbs.prototype=Object.create(SVGPathSeg.prototype);SVGPathSegLinetoVerticalAbs.prototype.toString=function(){return"[object SVGPathSegLinetoVerticalAbs]"};
-SVGPathSegLinetoVerticalAbs.prototype._asPathString=function(){return this.pathSegTypeAsLetter+" "+this._y};SVGPathSegLinetoVerticalAbs.prototype.clone=function(){return new SVGPathSegLinetoVerticalAbs(undefined,this._y)};Object.defineProperty(SVGPathSegLinetoVerticalAbs.prototype,"y",{get:function(){return this._y},set:function(g){this._y=g;this._segmentChanged()},enumerable:true});window.SVGPathSegLinetoVerticalRel=function(g,s){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_LINETO_VERTICAL_REL,"v",g);
-this._y=s};SVGPathSegLinetoVerticalRel.prototype=Object.create(SVGPathSeg.prototype);SVGPathSegLinetoVerticalRel.prototype.toString=function(){return"[object SVGPathSegLinetoVerticalRel]"};SVGPathSegLinetoVerticalRel.prototype._asPathString=function(){return this.pathSegTypeAsLetter+" "+this._y};SVGPathSegLinetoVerticalRel.prototype.clone=function(){return new SVGPathSegLinetoVerticalRel(undefined,this._y)};Object.defineProperty(SVGPathSegLinetoVerticalRel.prototype,"y",{get:function(){return this._y},
-set:function(g){this._y=g;this._segmentChanged()},enumerable:true});window.SVGPathSegCurvetoCubicSmoothAbs=function(g,s,q,j,c){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_ABS,"S",g);this._x=s;this._y=q;this._x2=j;this._y2=c};SVGPathSegCurvetoCubicSmoothAbs.prototype=Object.create(SVGPathSeg.prototype);SVGPathSegCurvetoCubicSmoothAbs.prototype.toString=function(){return"[object SVGPathSegCurvetoCubicSmoothAbs]"};SVGPathSegCurvetoCubicSmoothAbs.prototype._asPathString=function(){return this.pathSegTypeAsLetter+
-" "+this._x2+" "+this._y2+" "+this._x+" "+this._y};SVGPathSegCurvetoCubicSmoothAbs.prototype.clone=function(){return new SVGPathSegCurvetoCubicSmoothAbs(undefined,this._x,this._y,this._x2,this._y2)};Object.defineProperty(SVGPathSegCurvetoCubicSmoothAbs.prototype,"x",{get:function(){return this._x},set:function(g){this._x=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoCubicSmoothAbs.prototype,"y",{get:function(){return this._y},set:function(g){this._y=g;this._segmentChanged()},
-enumerable:true});Object.defineProperty(SVGPathSegCurvetoCubicSmoothAbs.prototype,"x2",{get:function(){return this._x2},set:function(g){this._x2=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoCubicSmoothAbs.prototype,"y2",{get:function(){return this._y2},set:function(g){this._y2=g;this._segmentChanged()},enumerable:true});window.SVGPathSegCurvetoCubicSmoothRel=function(g,s,q,j,c){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_REL,"s",g);this._x=s;
-this._y=q;this._x2=j;this._y2=c};SVGPathSegCurvetoCubicSmoothRel.prototype=Object.create(SVGPathSeg.prototype);SVGPathSegCurvetoCubicSmoothRel.prototype.toString=function(){return"[object SVGPathSegCurvetoCubicSmoothRel]"};SVGPathSegCurvetoCubicSmoothRel.prototype._asPathString=function(){return this.pathSegTypeAsLetter+" "+this._x2+" "+this._y2+" "+this._x+" "+this._y};SVGPathSegCurvetoCubicSmoothRel.prototype.clone=function(){return new SVGPathSegCurvetoCubicSmoothRel(undefined,this._x,this._y,
-this._x2,this._y2)};Object.defineProperty(SVGPathSegCurvetoCubicSmoothRel.prototype,"x",{get:function(){return this._x},set:function(g){this._x=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoCubicSmoothRel.prototype,"y",{get:function(){return this._y},set:function(g){this._y=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoCubicSmoothRel.prototype,"x2",{get:function(){return this._x2},set:function(g){this._x2=g;this._segmentChanged()},
-enumerable:true});Object.defineProperty(SVGPathSegCurvetoCubicSmoothRel.prototype,"y2",{get:function(){return this._y2},set:function(g){this._y2=g;this._segmentChanged()},enumerable:true});window.SVGPathSegCurvetoQuadraticSmoothAbs=function(g,s,q){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS,"T",g);this._x=s;this._y=q};SVGPathSegCurvetoQuadraticSmoothAbs.prototype=Object.create(SVGPathSeg.prototype);SVGPathSegCurvetoQuadraticSmoothAbs.prototype.toString=function(){return"[object SVGPathSegCurvetoQuadraticSmoothAbs]"};
-SVGPathSegCurvetoQuadraticSmoothAbs.prototype._asPathString=function(){return this.pathSegTypeAsLetter+" "+this._x+" "+this._y};SVGPathSegCurvetoQuadraticSmoothAbs.prototype.clone=function(){return new SVGPathSegCurvetoQuadraticSmoothAbs(undefined,this._x,this._y)};Object.defineProperty(SVGPathSegCurvetoQuadraticSmoothAbs.prototype,"x",{get:function(){return this._x},set:function(g){this._x=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoQuadraticSmoothAbs.prototype,
-"y",{get:function(){return this._y},set:function(g){this._y=g;this._segmentChanged()},enumerable:true});window.SVGPathSegCurvetoQuadraticSmoothRel=function(g,s,q){SVGPathSeg.call(this,SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL,"t",g);this._x=s;this._y=q};SVGPathSegCurvetoQuadraticSmoothRel.prototype=Object.create(SVGPathSeg.prototype);SVGPathSegCurvetoQuadraticSmoothRel.prototype.toString=function(){return"[object SVGPathSegCurvetoQuadraticSmoothRel]"};SVGPathSegCurvetoQuadraticSmoothRel.prototype._asPathString=
-function(){return this.pathSegTypeAsLetter+" "+this._x+" "+this._y};SVGPathSegCurvetoQuadraticSmoothRel.prototype.clone=function(){return new SVGPathSegCurvetoQuadraticSmoothRel(undefined,this._x,this._y)};Object.defineProperty(SVGPathSegCurvetoQuadraticSmoothRel.prototype,"x",{get:function(){return this._x},set:function(g){this._x=g;this._segmentChanged()},enumerable:true});Object.defineProperty(SVGPathSegCurvetoQuadraticSmoothRel.prototype,"y",{get:function(){return this._y},set:function(g){this._y=
-g;this._segmentChanged()},enumerable:true});SVGPathElement.prototype.createSVGPathSegClosePath=function(){return new SVGPathSegClosePath(undefined)};SVGPathElement.prototype.createSVGPathSegMovetoAbs=function(g,s){return new SVGPathSegMovetoAbs(undefined,g,s)};SVGPathElement.prototype.createSVGPathSegMovetoRel=function(g,s){return new SVGPathSegMovetoRel(undefined,g,s)};SVGPathElement.prototype.createSVGPathSegLinetoAbs=function(g,s){return new SVGPathSegLinetoAbs(undefined,g,s)};SVGPathElement.prototype.createSVGPathSegLinetoRel=
-function(g,s){return new SVGPathSegLinetoRel(undefined,g,s)};SVGPathElement.prototype.createSVGPathSegCurvetoCubicAbs=function(g,s,q,j,c,k){return new SVGPathSegCurvetoCubicAbs(undefined,g,s,q,j,c,k)};SVGPathElement.prototype.createSVGPathSegCurvetoCubicRel=function(g,s,q,j,c,k){return new SVGPathSegCurvetoCubicRel(undefined,g,s,q,j,c,k)};SVGPathElement.prototype.createSVGPathSegCurvetoQuadraticAbs=function(g,s,q,j){return new SVGPathSegCurvetoQuadraticAbs(undefined,g,s,q,j)};SVGPathElement.prototype.createSVGPathSegCurvetoQuadraticRel=
-function(g,s,q,j){return new SVGPathSegCurvetoQuadraticRel(undefined,g,s,q,j)};SVGPathElement.prototype.createSVGPathSegArcAbs=function(g,s,q,j,c,k,i){return new SVGPathSegArcAbs(undefined,g,s,q,j,c,k,i)};SVGPathElement.prototype.createSVGPathSegArcRel=function(g,s,q,j,c,k,i){return new SVGPathSegArcRel(undefined,g,s,q,j,c,k,i)};SVGPathElement.prototype.createSVGPathSegLinetoHorizontalAbs=function(g){return new SVGPathSegLinetoHorizontalAbs(undefined,g)};SVGPathElement.prototype.createSVGPathSegLinetoHorizontalRel=
-function(g){return new SVGPathSegLinetoHorizontalRel(undefined,g)};SVGPathElement.prototype.createSVGPathSegLinetoVerticalAbs=function(g){return new SVGPathSegLinetoVerticalAbs(undefined,g)};SVGPathElement.prototype.createSVGPathSegLinetoVerticalRel=function(g){return new SVGPathSegLinetoVerticalRel(undefined,g)};SVGPathElement.prototype.createSVGPathSegCurvetoCubicSmoothAbs=function(g,s,q,j){return new SVGPathSegCurvetoCubicSmoothAbs(undefined,g,s,q,j)};SVGPathElement.prototype.createSVGPathSegCurvetoCubicSmoothRel=
-function(g,s,q,j){return new SVGPathSegCurvetoCubicSmoothRel(undefined,g,s,q,j)};SVGPathElement.prototype.createSVGPathSegCurvetoQuadraticSmoothAbs=function(g,s){return new SVGPathSegCurvetoQuadraticSmoothAbs(undefined,g,s)};SVGPathElement.prototype.createSVGPathSegCurvetoQuadraticSmoothRel=function(g,s){return new SVGPathSegCurvetoQuadraticSmoothRel(undefined,g,s)}}if(!window.SVGPathSegList){window.SVGPathSegList=function(g){this._pathElement=g;this._list=this._parsePath(this._pathElement.getAttribute("d"));
-this._mutationObserverConfig={attributes:true,attributeFilter:["d"]};this._pathElementMutationObserver=new MutationObserver(this._updateListFromPathMutations.bind(this));this._pathElementMutationObserver.observe(this._pathElement,this._mutationObserverConfig)};Object.defineProperty(SVGPathSegList.prototype,"numberOfItems",{get:function(){this._checkPathSynchronizedToList();return this._list.length}});SVGPathSegList.prototype._checkPathSynchronizedToList=function(){this._updateListFromPathMutations(this._pathElementMutationObserver.takeRecords())};
-SVGPathSegList.prototype._updateListFromPathMutations=function(g){if(this._pathElement){var s=false;g.forEach(function(q){if(q.attributeName=="d")s=true});if(s)this._list=this._parsePath(this._pathElement.getAttribute("d"))}};SVGPathSegList.prototype._writeListToPath=function(){this._pathElementMutationObserver.disconnect();this._pathElement.setAttribute("d",SVGPathSegList._pathSegArrayAsString(this._list));this._pathElementMutationObserver.observe(this._pathElement,this._mutationObserverConfig)};
-SVGPathSegList.prototype.segmentChanged=function(){this._writeListToPath()};SVGPathSegList.prototype.clear=function(){this._checkPathSynchronizedToList();this._list.forEach(function(g){g._owningPathSegList=null});this._list=[];this._writeListToPath()};SVGPathSegList.prototype.initialize=function(g){this._checkPathSynchronizedToList();this._list=[g];g._owningPathSegList=this;this._writeListToPath();return g};SVGPathSegList.prototype._checkValidIndex=function(g){if(isNaN(g)||g<0||g>=this.numberOfItems)throw"INDEX_SIZE_ERR";
-};SVGPathSegList.prototype.getItem=function(g){this._checkPathSynchronizedToList();this._checkValidIndex(g);return this._list[g]};SVGPathSegList.prototype.insertItemBefore=function(g,s){this._checkPathSynchronizedToList();if(s>this.numberOfItems)s=this.numberOfItems;if(g._owningPathSegList)g=g.clone();this._list.splice(s,0,g);g._owningPathSegList=this;this._writeListToPath();return g};SVGPathSegList.prototype.replaceItem=function(g,s){this._checkPathSynchronizedToList();if(g._owningPathSegList)g=
-g.clone();this._checkValidIndex(s);this._list[s]=g;g._owningPathSegList=this;this._writeListToPath();return g};SVGPathSegList.prototype.removeItem=function(g){this._checkPathSynchronizedToList();this._checkValidIndex(g);var s=this._list[g];this._list.splice(g,1);this._writeListToPath();return s};SVGPathSegList.prototype.appendItem=function(g){this._checkPathSynchronizedToList();if(g._owningPathSegList)g=g.clone();this._list.push(g);g._owningPathSegList=this;this._writeListToPath();return g};SVGPathSegList._pathSegArrayAsString=
-function(g){var s="",q=true;g.forEach(function(j){if(q){q=false;s+=j._asPathString()}else s+=" "+j._asPathString()});return s};SVGPathSegList.prototype._parsePath=function(g){if(!g||g.length==0)return[];var s=this,q=function(){this.pathSegList=[]};q.prototype.appendSegment=function(c){this.pathSegList.push(c)};var j=function(c){this._string=c;this._currentIndex=0;this._endIndex=this._string.length;this._previousCommand=SVGPathSeg.PATHSEG_UNKNOWN;this._skipOptionalSpaces()};j.prototype._isCurrentSpace=
-function(){var c=this._string[this._currentIndex];return c<=" "&&(c==" "||c=="\n"||c=="\t"||c=="\r"||c=="\u000c")};j.prototype._skipOptionalSpaces=function(){for(;this._currentIndex<this._endIndex&&this._isCurrentSpace();)this._currentIndex++;return this._currentIndex<this._endIndex};j.prototype._skipOptionalSpacesOrDelimiter=function(){if(this._currentIndex<this._endIndex&&!this._isCurrentSpace()&&this._string.charAt(this._currentIndex)!=",")return false;if(this._skipOptionalSpaces())if(this._currentIndex<
-this._endIndex&&this._string.charAt(this._currentIndex)==","){this._currentIndex++;this._skipOptionalSpaces()}return this._currentIndex<this._endIndex};j.prototype.hasMoreData=function(){return this._currentIndex<this._endIndex};j.prototype.peekSegmentType=function(){return this._pathSegTypeFromChar(this._string[this._currentIndex])};j.prototype._pathSegTypeFromChar=function(c){switch(c){case "Z":case "z":return SVGPathSeg.PATHSEG_CLOSEPATH;case "M":return SVGPathSeg.PATHSEG_MOVETO_ABS;case "m":return SVGPathSeg.PATHSEG_MOVETO_REL;
-case "L":return SVGPathSeg.PATHSEG_LINETO_ABS;case "l":return SVGPathSeg.PATHSEG_LINETO_REL;case "C":return SVGPathSeg.PATHSEG_CURVETO_CUBIC_ABS;case "c":return SVGPathSeg.PATHSEG_CURVETO_CUBIC_REL;case "Q":return SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_ABS;case "q":return SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_REL;case "A":return SVGPathSeg.PATHSEG_ARC_ABS;case "a":return SVGPathSeg.PATHSEG_ARC_REL;case "H":return SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_ABS;case "h":return SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_REL;
-case "V":return SVGPathSeg.PATHSEG_LINETO_VERTICAL_ABS;case "v":return SVGPathSeg.PATHSEG_LINETO_VERTICAL_REL;case "S":return SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_ABS;case "s":return SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_REL;case "T":return SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS;case "t":return SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL;default:return SVGPathSeg.PATHSEG_UNKNOWN}};j.prototype._nextCommandHelper=function(c,k){if((c=="+"||c=="-"||c=="."||c>="0"&&c<="9")&&k!=SVGPathSeg.PATHSEG_CLOSEPATH){if(k==
-SVGPathSeg.PATHSEG_MOVETO_ABS)return SVGPathSeg.PATHSEG_LINETO_ABS;if(k==SVGPathSeg.PATHSEG_MOVETO_REL)return SVGPathSeg.PATHSEG_LINETO_REL;return k}return SVGPathSeg.PATHSEG_UNKNOWN};j.prototype.initialCommandIsMoveTo=function(){if(!this.hasMoreData())return true;var c=this.peekSegmentType();return c==SVGPathSeg.PATHSEG_MOVETO_ABS||c==SVGPathSeg.PATHSEG_MOVETO_REL};j.prototype._parseNumber=function(){var c=0,k=0,i=1,w=0,u=1,K=1,B=this._currentIndex;this._skipOptionalSpaces();if(this._currentIndex<
-this._endIndex&&this._string.charAt(this._currentIndex)=="+")this._currentIndex++;else if(this._currentIndex<this._endIndex&&this._string.charAt(this._currentIndex)=="-"){this._currentIndex++;u=-1}if(!(this._currentIndex==this._endIndex||(this._string.charAt(this._currentIndex)<"0"||this._string.charAt(this._currentIndex)>"9")&&this._string.charAt(this._currentIndex)!=".")){for(var d=this._currentIndex;this._currentIndex<this._endIndex&&this._string.charAt(this._currentIndex)>="0"&&this._string.charAt(this._currentIndex)<=
-"9";)this._currentIndex++;if(this._currentIndex!=d)for(var n=this._currentIndex-1,f=1;n>=d;){k+=f*(this._string.charAt(n--)-"0");f*=10}if(this._currentIndex<this._endIndex&&this._string.charAt(this._currentIndex)=="."){this._currentIndex++;if(this._currentIndex>=this._endIndex||this._string.charAt(this._currentIndex)<"0"||this._string.charAt(this._currentIndex)>"9")return;for(;this._currentIndex<this._endIndex&&this._string.charAt(this._currentIndex)>="0"&&this._string.charAt(this._currentIndex)<=
-"9";)w+=(this._string.charAt(this._currentIndex++)-"0")*(i*=0.1)}if(this._currentIndex!=B&&this._currentIndex+1<this._endIndex&&(this._string.charAt(this._currentIndex)=="e"||this._string.charAt(this._currentIndex)=="E")&&this._string.charAt(this._currentIndex+1)!="x"&&this._string.charAt(this._currentIndex+1)!="m"){this._currentIndex++;if(this._string.charAt(this._currentIndex)=="+")this._currentIndex++;else if(this._string.charAt(this._currentIndex)=="-"){this._currentIndex++;K=-1}if(this._currentIndex>=
-this._endIndex||this._string.charAt(this._currentIndex)<"0"||this._string.charAt(this._currentIndex)>"9")return;for(;this._currentIndex<this._endIndex&&this._string.charAt(this._currentIndex)>="0"&&this._string.charAt(this._currentIndex)<="9";){c*=10;c+=this._string.charAt(this._currentIndex)-"0";this._currentIndex++}}k=k+w;k*=u;if(c)k*=Math.pow(10,K*c);if(B!=this._currentIndex){this._skipOptionalSpacesOrDelimiter();return k}}};j.prototype._parseArcFlag=function(){if(!(this._currentIndex>=this._endIndex)){var c=
-false;c=this._string.charAt(this._currentIndex++);if(c=="0")c=false;else if(c=="1")c=true;else return;this._skipOptionalSpacesOrDelimiter();return c}};j.prototype.parseSegment=function(){var c=this._string[this._currentIndex],k=this._pathSegTypeFromChar(c);if(k==SVGPathSeg.PATHSEG_UNKNOWN){if(this._previousCommand==SVGPathSeg.PATHSEG_UNKNOWN)return null;k=this._nextCommandHelper(c,this._previousCommand);if(k==SVGPathSeg.PATHSEG_UNKNOWN)return null}else this._currentIndex++;this._previousCommand=k;
-switch(k){case SVGPathSeg.PATHSEG_MOVETO_REL:return new SVGPathSegMovetoRel(s,this._parseNumber(),this._parseNumber());case SVGPathSeg.PATHSEG_MOVETO_ABS:return new SVGPathSegMovetoAbs(s,this._parseNumber(),this._parseNumber());case SVGPathSeg.PATHSEG_LINETO_REL:return new SVGPathSegLinetoRel(s,this._parseNumber(),this._parseNumber());case SVGPathSeg.PATHSEG_LINETO_ABS:return new SVGPathSegLinetoAbs(s,this._parseNumber(),this._parseNumber());case SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_REL:return new SVGPathSegLinetoHorizontalRel(s,
-this._parseNumber());case SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_ABS:return new SVGPathSegLinetoHorizontalAbs(s,this._parseNumber());case SVGPathSeg.PATHSEG_LINETO_VERTICAL_REL:return new SVGPathSegLinetoVerticalRel(s,this._parseNumber());case SVGPathSeg.PATHSEG_LINETO_VERTICAL_ABS:return new SVGPathSegLinetoVerticalAbs(s,this._parseNumber());case SVGPathSeg.PATHSEG_CLOSEPATH:this._skipOptionalSpaces();return new SVGPathSegClosePath(s);case SVGPathSeg.PATHSEG_CURVETO_CUBIC_REL:c={x1:this._parseNumber(),
-y1:this._parseNumber(),x2:this._parseNumber(),y2:this._parseNumber(),x:this._parseNumber(),y:this._parseNumber()};return new SVGPathSegCurvetoCubicRel(s,c.x,c.y,c.x1,c.y1,c.x2,c.y2);case SVGPathSeg.PATHSEG_CURVETO_CUBIC_ABS:c={x1:this._parseNumber(),y1:this._parseNumber(),x2:this._parseNumber(),y2:this._parseNumber(),x:this._parseNumber(),y:this._parseNumber()};return new SVGPathSegCurvetoCubicAbs(s,c.x,c.y,c.x1,c.y1,c.x2,c.y2);case SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_REL:c={x2:this._parseNumber(),
-y2:this._parseNumber(),x:this._parseNumber(),y:this._parseNumber()};return new SVGPathSegCurvetoCubicSmoothRel(s,c.x,c.y,c.x2,c.y2);case SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_ABS:c={x2:this._parseNumber(),y2:this._parseNumber(),x:this._parseNumber(),y:this._parseNumber()};return new SVGPathSegCurvetoCubicSmoothAbs(s,c.x,c.y,c.x2,c.y2);case SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_REL:c={x1:this._parseNumber(),y1:this._parseNumber(),x:this._parseNumber(),y:this._parseNumber()};return new SVGPathSegCurvetoQuadraticRel(s,
-c.x,c.y,c.x1,c.y1);case SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_ABS:c={x1:this._parseNumber(),y1:this._parseNumber(),x:this._parseNumber(),y:this._parseNumber()};return new SVGPathSegCurvetoQuadraticAbs(s,c.x,c.y,c.x1,c.y1);case SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL:return new SVGPathSegCurvetoQuadraticSmoothRel(s,this._parseNumber(),this._parseNumber());case SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS:return new SVGPathSegCurvetoQuadraticSmoothAbs(s,this._parseNumber(),this._parseNumber());
-case SVGPathSeg.PATHSEG_ARC_REL:c={x1:this._parseNumber(),y1:this._parseNumber(),arcAngle:this._parseNumber(),arcLarge:this._parseArcFlag(),arcSweep:this._parseArcFlag(),x:this._parseNumber(),y:this._parseNumber()};return new SVGPathSegArcRel(s,c.x,c.y,c.x1,c.y1,c.arcAngle,c.arcLarge,c.arcSweep);case SVGPathSeg.PATHSEG_ARC_ABS:c={x1:this._parseNumber(),y1:this._parseNumber(),arcAngle:this._parseNumber(),arcLarge:this._parseArcFlag(),arcSweep:this._parseArcFlag(),x:this._parseNumber(),y:this._parseNumber()};
-return new SVGPathSegArcAbs(s,c.x,c.y,c.x1,c.y1,c.arcAngle,c.arcLarge,c.arcSweep);default:throw"Unknown path seg type.";}};q=new q;g=new j(g);if(!g.initialCommandIsMoveTo())return[];for(;g.hasMoreData();){j=g.parseSegment();if(!j)return[];q.appendSegment(j)}return q.pathSegList};Object.defineProperty(SVGPathElement.prototype,"pathSegList",{get:function(){if(!this._pathSegList)this._pathSegList=new SVGPathSegList(this);return this._pathSegList},enumerable:true});Object.defineProperty(SVGPathElement.prototype,
-"normalizedPathSegList",{get:function(){return this.pathSegList},enumerable:true});Object.defineProperty(SVGPathElement.prototype,"animatedPathSegList",{get:function(){return this.pathSegList},enumerable:true});Object.defineProperty(SVGPathElement.prototype,"animatedNormalizedPathSegList",{get:function(){return this.pathSegList},enumerable:true})}})();(function(){if(!svgedit.browser)svgedit.browser={};var g=svgedit.NS,s=!!document.createElementNS&&!!document.createElementNS(g.SVG,"svg").createSVGRect;svgedit.browser.supportsSvg=function(){return s};if(svgedit.browser.supportsSvg()){var q=navigator.userAgent,j=document.createElementNS(g.SVG,"svg"),c=!!window.opera,k=q.indexOf("AppleWebKit")>=0,i=q.indexOf("Gecko/")>=0,w=q.indexOf("MSIE")>=0,u=q.indexOf("Chrome/")>=0,K=q.indexOf("Windows")>=0,B=q.indexOf("Macintosh")>=0,d="ontouchstart"in window,
-n=!!j.querySelector,f=!!document.evaluate,e=function(){var N=document.createElementNS(g.SVG,"path");N.setAttribute("d","M0,0 10,10");var T=N.pathSegList;N=N.createSVGPathSegLinetoAbs(5,5);try{T.replaceItem(N,1);return true}catch(ga){}return false}(),m=function(){var N=document.createElementNS(g.SVG,"path");N.setAttribute("d","M0,0 10,10");var T=N.pathSegList;N=N.createSVGPathSegLinetoAbs(5,5);try{T.insertItemBefore(N,1);return true}catch(ga){}return false}(),r=function(){var N=document.createElementNS(g.SVG,
-"svg"),T=document.createElementNS(g.SVG,"svg");document.documentElement.appendChild(N);T.setAttribute("x",5);N.appendChild(T);var ga=document.createElementNS(g.SVG,"text");ga.textContent="a";T.appendChild(ga);T=ga.getStartPositionOfChar(0).x;document.documentElement.removeChild(N);return T===0}(),v=function(){var N=document.createElementNS(g.SVG,"svg");document.documentElement.appendChild(N);var T=document.createElementNS(g.SVG,"path");T.setAttribute("d","M0,0 C0,0 10,10 10,0");N.appendChild(T);T=
-T.getBBox();document.documentElement.removeChild(N);return T.height>4&&T.height<5}(),t=function(){var N=document.createElementNS(g.SVG,"svg");document.documentElement.appendChild(N);var T=document.createElementNS(g.SVG,"path");T.setAttribute("d","M0,0 10,0");var ga=document.createElementNS(g.SVG,"path");ga.setAttribute("d","M5,0 15,0");var ba=document.createElementNS(g.SVG,"g");ba.appendChild(T);ba.appendChild(ga);N.appendChild(ba);T=ba.getBBox();document.documentElement.removeChild(N);return T.width==
-15}(),O=function(){var N=document.createElementNS(g.SVG,"rect");N.setAttribute("x",0.1);(N=N.cloneNode(false).getAttribute("x").indexOf(",")==-1)||$.alert('NOTE: This version of Opera is known to contain bugs in SVG-edit.\nPlease upgrade to the <a href="http://opera.com">latest version</a> in which the problems have been fixed.');return N}(),Q=function(){var N=document.createElementNS(g.SVG,"rect");N.setAttribute("style","vector-effect:non-scaling-stroke");return N.style.vectorEffect==="non-scaling-stroke"}(),
-L=function(){var N=document.createElementNS(g.SVG,"rect").transform.baseVal,T=j.createSVGTransform();N.appendItem(T);return N.getItem(0)==T}();svgedit.browser.isOpera=function(){return c};svgedit.browser.isWebkit=function(){return k};svgedit.browser.isGecko=function(){return i};svgedit.browser.isIE=function(){return w};svgedit.browser.isChrome=function(){return u};svgedit.browser.isWindows=function(){return K};svgedit.browser.isMac=function(){return B};svgedit.browser.isTouch=function(){return d};
-svgedit.browser.supportsSelectors=function(){return n};svgedit.browser.supportsXpath=function(){return f};svgedit.browser.supportsPathReplaceItem=function(){return e};svgedit.browser.supportsPathInsertItemBefore=function(){return m};svgedit.browser.supportsPathBBox=function(){return v};svgedit.browser.supportsHVLineContainerBBox=function(){return t};svgedit.browser.supportsGoodTextCharPos=function(){return r};svgedit.browser.supportsEditableText=function(){return c};svgedit.browser.supportsGoodDecimals=
-function(){return O};svgedit.browser.supportsNonScalingStroke=function(){return Q};svgedit.browser.supportsNativeTransformLists=function(){return L}}else window.location="browser-not-supported.html"})();(function(){if(!svgedit.transformlist)svgedit.transformlist={};var g=document.createElementNS(svgedit.NS.SVG,"svg"),s={};svgedit.transformlist.SVGTransformList=function(q){this._elem=q||null;this._xforms=[];this._update=function(){var j="";g.createSVGMatrix();var c;for(c=0;c<this.numberOfItems;++c){var k=this._list.getItem(c);j=j;k=k;var i=k.matrix,w="";switch(k.type){case 1:w="matrix("+[i.a,i.b,i.c,i.d,i.e,i.f].join(",")+")";break;case 2:w="translate("+i.e+","+i.f+")";break;case 3:w=i.a==i.d?"scale("+
-i.a+")":"scale("+i.a+","+i.d+")";break;case 4:var u=0;w=0;if(k.angle!=0){u=1-i.a;w=(u*i.f+i.b*i.e)/(u*u+i.b*i.b);u=(i.e-i.b*w)/u}w="rotate("+k.angle+" "+u+","+w+")"}j=j+(w+" ")}this._elem.setAttribute("transform",j)};this._list=this;this._init=function(){var j=this._elem.getAttribute("transform");if(j)for(var c=/\s*((scale|matrix|rotate|translate)\s*\(.*?\))\s*,?\s*/,k=true;k;){k=j.match(c);j=j.replace(c,"");if(k&&k[1]){var i=k[1].split(/\s*\(/),w=i[0];i=i[1].match(/\s*(.*?)\s*\)/);i[1]=i[1].replace(/(\d)-/g,
-"$1 -");var u=i[1].split(/[, ]+/),K="abcdef".split(""),B=g.createSVGMatrix();$.each(u,function(f,e){u[f]=parseFloat(e);if(w=="matrix")B[K[f]]=u[f]});i=g.createSVGTransform();var d="set"+w.charAt(0).toUpperCase()+w.slice(1),n=w=="matrix"?[B]:u;if(w=="scale"&&n.length==1)n.push(n[0]);else if(w=="translate"&&n.length==1)n.push(0);else w=="rotate"&&n.length==1&&n.push(0,0);i[d].apply(i,n);this._list.appendItem(i)}}};this._removeFromOtherLists=function(j){if(j){var c=false,k;for(k in s){var i=s[k],w,u;
-w=0;for(u=i._xforms.length;w<u;++w)if(i._xforms[w]==j){c=true;i.removeItem(w);break}if(c)break}}};this.numberOfItems=0;this.clear=function(){this.numberOfItems=0;this._xforms=[]};this.initialize=function(j){this.numberOfItems=1;this._removeFromOtherLists(j);this._xforms=[j]};this.getItem=function(j){if(j<this.numberOfItems&&j>=0)return this._xforms[j];throw{code:1};};this.insertItemBefore=function(j,c){var k=null;if(c>=0)if(c<this.numberOfItems){this._removeFromOtherLists(j);k=Array(this.numberOfItems+
-1);var i;for(i=0;i<c;++i)k[i]=this._xforms[i];k[i]=j;var w;for(w=i+1;i<this.numberOfItems;++w,++i)k[w]=this._xforms[i];this.numberOfItems++;this._xforms=k;k=j;this._list._update()}else k=this._list.appendItem(j);return k};this.replaceItem=function(j,c){var k=null;if(c<this.numberOfItems&&c>=0){this._removeFromOtherLists(j);k=this._xforms[c]=j;this._list._update()}return k};this.removeItem=function(j){if(j<this.numberOfItems&&j>=0){var c=this._xforms[j],k=Array(this.numberOfItems-1),i;for(i=0;i<j;++i)k[i]=
-this._xforms[i];for(j=i;j<this.numberOfItems-1;++j,++i)k[j]=this._xforms[i+1];this.numberOfItems--;this._xforms=k;this._list._update();return c}throw{code:1};};this.appendItem=function(j){this._removeFromOtherLists(j);this._xforms.push(j);this.numberOfItems++;this._list._update();return j}};svgedit.transformlist.resetListMap=function(){s={}};svgedit.transformlist.removeElementFromListMap=function(q){q.id&&s[q.id]&&delete s[q.id]};svgedit.transformlist.getTransformList=function(q){if(!svgedit.browser.supportsNativeTransformLists()){var j=
-q.id||"temp",c=s[j];if(!c||j==="temp"){s[j]=new svgedit.transformlist.SVGTransformList(q);s[j]._init();c=s[j]}return c}if(q.transform)return q.transform.baseVal;if(q.gradientTransform)return q.gradientTransform.baseVal;if(q.patternTransform)return q.patternTransform.baseVal;return null}})();(function(){if(!svgedit.math)svgedit.math={};var g=document.createElementNS(svgedit.NS.SVG,"svg");svgedit.math.transformPoint=function(s,q,j){return{x:j.a*s+j.c*q+j.e,y:j.b*s+j.d*q+j.f}};svgedit.math.isIdentity=function(s){return s.a===1&&s.b===0&&s.c===0&&s.d===1&&s.e===0&&s.f===0};svgedit.math.matrixMultiply=function(){for(var s=arguments,q=s.length,j=s[q-1];q-- >1;)j=s[q-1].multiply(j);if(Math.abs(j.a)<1.0E-14)j.a=0;if(Math.abs(j.b)<1.0E-14)j.b=0;if(Math.abs(j.c)<1.0E-14)j.c=0;if(Math.abs(j.d)<
-1.0E-14)j.d=0;if(Math.abs(j.e)<1.0E-14)j.e=0;if(Math.abs(j.f)<1.0E-14)j.f=0;return j};svgedit.math.hasMatrixTransform=function(s){if(!s)return false;for(var q=s.numberOfItems;q--;){var j=s.getItem(q);if(j.type==1&&!svgedit.math.isIdentity(j.matrix))return true}return false};svgedit.math.transformBox=function(s,q,j,c,k){var i=svgedit.math.transformPoint,w=i(s,q,k),u=i(s+j,q,k),K=i(s,q+c,k);s=i(s+j,q+c,k);q=Math.min(w.x,u.x,K.x,s.x);j=Math.min(w.y,u.y,K.y,s.y);return{tl:w,tr:u,bl:K,br:s,aabox:{x:q,
-y:j,width:Math.max(w.x,u.x,K.x,s.x)-q,height:Math.max(w.y,u.y,K.y,s.y)-j}}};svgedit.math.transformListToTransform=function(s,q,j){if(s==null)return g.createSVGTransformFromMatrix(g.createSVGMatrix());q=q||0;j=j||s.numberOfItems-1;q=parseInt(q,10);j=parseInt(j,10);if(q>j){var c=j;j=q;q=c}c=g.createSVGMatrix();for(q=q;q<=j;++q){var k=q>=0&&q<s.numberOfItems?s.getItem(q).matrix:g.createSVGMatrix();c=svgedit.math.matrixMultiply(c,k)}return g.createSVGTransformFromMatrix(c)};svgedit.math.getMatrix=function(s){s=
-svgedit.transformlist.getTransformList(s);return svgedit.math.transformListToTransform(s).matrix};svgedit.math.snapToAngle=function(s,q,j,c){var k=Math.PI/4;j=j-s;var i=c-q;c=Math.sqrt(j*j+i*i);k=Math.round(Math.atan2(i,j)/k)*k;return{x:s+c*Math.cos(k),y:q+c*Math.sin(k),a:k}};svgedit.math.rectsIntersect=function(s,q){return q.x<s.x+s.width&&q.x+q.width>s.x&&q.y<s.y+s.height&&q.y+q.height>s.y}})();(function(){if(!svgedit.units)svgedit.units={};var g=svgedit.NS,s=["x","x1","cx","rx","width"],q=["y","y1","cy","ry","height"],j=["r","radius"].concat(s,q),c,k={};svgedit.units.init=function(w){c=w;w=document.createElementNS(g.SVG,"svg");document.body.appendChild(w);var u=document.createElementNS(g.SVG,"rect");u.setAttribute("width","1em");u.setAttribute("height","1ex");u.setAttribute("x","1in");w.appendChild(u);u=u.getBBox();document.body.removeChild(w);w=u.x;k={em:u.width,ex:u.height,"in":w,cm:w/
-2.54,mm:w/25.4,pt:w/72,pc:w/6,px:1,"%":0}};svgedit.units.getTypeMap=function(){return k};svgedit.units.shortFloat=function(w){var u=c.getRoundDigits();if(!isNaN(w))return+(+w).toFixed(u);if($.isArray(w))return svgedit.units.shortFloat(w[0])+","+svgedit.units.shortFloat(w[1]);return parseFloat(w).toFixed(u)-0};svgedit.units.convertUnit=function(w,u){u=u||c.getBaseUnit();return svgedit.units.shortFloat(w/k[u])};svgedit.units.setUnitAttr=function(w,u,K){w.setAttribute(u,K)};var i={line:["x1","x2","y1",
-"y2"],circle:["cx","cy","r"],ellipse:["cx","cy","rx","ry"],foreignObject:["x","y","width","height"],rect:["x","y","width","height"],image:["x","y","width","height"],use:["x","y","width","height"],text:["x","y"]};svgedit.units.convertAttrs=function(w){var u=w.tagName,K=c.getBaseUnit();if(u=i[u]){var B=u.length,d;for(d=0;d<B;d++){var n=u[d],f=w.getAttribute(n);if(f)isNaN(f)||w.setAttribute(n,f/k[K]+K)}}};svgedit.units.convertToNum=function(w,u){if(!isNaN(u))return u-0;var K;if(u.substr(-1)==="%"){K=
-u.substr(0,u.length-1)/100;var B=c.getWidth(),d=c.getHeight();if(s.indexOf(w)>=0)return K*B;if(q.indexOf(w)>=0)return K*d;return K*Math.sqrt(B*B+d*d)/Math.sqrt(2)}B=u.substr(-2);K=u.substr(0,u.length-2);return K*k[B]};svgedit.units.isValidUnit=function(w,u,K){var B=false;if(j.indexOf(w)>=0)if(isNaN(u)){u=u.toLowerCase();$.each(k,function(f){if(!B)if(RegExp("^-?[\\d\\.]+"+f+"$").test(u))B=true})}else B=true;else if(w=="id"){w=false;try{var d=c.getElement(u);w=d==null||d===K}catch(n){}return w}return B=
-true}})();(function(g){function s(d){if(svgedit.browser.supportsHVLineContainerBBox())try{return d.getBBox()}catch(n){}var f=$.data(d,"ref"),e=null,m;if(f){m=$(f).children().clone().attr("visibility","hidden");$(K).append(m);e=m.filter("line, path")}else e=$(d).find("line, path");var r=false;if(e.length){e.each(function(){var v=this.getBBox();if(!v.width||!v.height)r=true});if(r){d=f?m:$(d).children();d=getStrokedBBox(d)}else d=d.getBBox()}else d=d.getBBox();f&&m.remove();return d}function q(d){var n=d.getAttribute("stroke-width");
-return!isNaN(n)&&d.getAttribute("stroke")!="none"?n/2:0}function j(d,n,f,e){$.each(n,function(m,r){n[m]=svgedit.units.shortFloat(r)});d=d+n.join(" ");if(f)d+=" "+f.join(" ");if(e)d+=" "+svgedit.units.shortFloat(e);return d}if(!svgedit.utilities)svgedit.utilities={};var c=svgedit.NS,k="a,circle,ellipse,foreignObject,g,image,line,path,polygon,polyline,rect,svg,text,tspan,use".split(","),i=null,w=null,u=null,K=null;svgedit.utilities.init=function(d){i=d;w=d.getDOMDocument();u=d.getDOMContainer();K=d.getSVGRoot()};
-svgedit.utilities.toXml=function(d){return d.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/,"&#x27;")};svgedit.utilities.fromXml=function(d){return $("<p/>").html(d).text()};svgedit.utilities.encode64=function(d){d=svgedit.utilities.encodeUTF8(d);if(window.btoa)return window.btoa(d);var n=[];n.length=Math.floor((d.length+2)/3)*4;var f,e,m,r,v,t,O=0,Q=0;do{f=d.charCodeAt(O++);e=d.charCodeAt(O++);m=d.charCodeAt(O++);r=f>>2;f=(f&3)<<4|e>>4;v=(e&15)<<
-2|m>>6;t=m&63;if(isNaN(e))v=t=64;else if(isNaN(m))t=64;n[Q++]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".charAt(r);n[Q++]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".charAt(f);n[Q++]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".charAt(v);n[Q++]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".charAt(t)}while(O<d.length);return n.join("")};svgedit.utilities.decode64=function(d){if(window.atob)return svgedit.utilities.decodeUTF8(window.atob(d));
-var n="",f,e,m="",r,v="",t=0;d=d.replace(/[^A-Za-z0-9\+\/\=]/g,"");do{f="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".indexOf(d.charAt(t++));e="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".indexOf(d.charAt(t++));r="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".indexOf(d.charAt(t++));v="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".indexOf(d.charAt(t++));f=f<<2|e>>4;e=(e&15)<<4|r>>2;m=(r&3)<<6|v;n+=String.fromCharCode(f);
-if(r!=64)n+=String.fromCharCode(e);if(v!=64)n+=String.fromCharCode(m)}while(t<d.length);return svgedit.utilities.decodeUTF8(n)};svgedit.utilities.decodeUTF8=function(d){return decodeURIComponent(escape(d))};svgedit.utilities.encodeUTF8=function(d){return unescape(encodeURIComponent(d))};svgedit.utilities.convertToXMLReferences=function(d){var n,f="";for(n=0;n<d.length;n++){var e=d.charCodeAt(n);if(e<128)f+=d[n];else if(e>127)f+="&#"+e+";"}return f};svgedit.utilities.text2xml=function(d){if(d.indexOf("<svg:svg")>=
-0)d=d.replace(/<(\/?)svg:/g,"<$1").replace("xmlns:svg","xmlns");var n,f;try{f=window.DOMParser?new DOMParser:new ActiveXObject("Microsoft.XMLDOM");f.async=false}catch(e){throw Error("XML Parser could not be instantiated");}try{n=f.loadXML?f.loadXML(d)?f:false:f.parseFromString(d,"text/xml")}catch(m){throw Error("Error parsing XML string");}return n};svgedit.utilities.bboxToObj=function(d){return{x:d.x,y:d.y,width:d.width,height:d.height}};svgedit.utilities.walkTree=function(d,n){if(d&&d.nodeType==
-1){n(d);for(var f=d.childNodes.length;f--;)svgedit.utilities.walkTree(d.childNodes.item(f),n)}};svgedit.utilities.walkTreePost=function(d,n){if(d&&d.nodeType==1){for(var f=d.childNodes.length;f--;)svgedit.utilities.walkTree(d.childNodes.item(f),n);n(d)}};svgedit.utilities.getUrlFromAttr=function(d){if(d){if(d.indexOf('url("')===0)return d.substring(5,d.indexOf('"',6));if(d.indexOf("url('")===0)return d.substring(5,d.indexOf("'",6));if(d.indexOf("url(")===0)return d.substring(4,d.indexOf(")"))}return null};
-svgedit.utilities.getHref=function(d){return d.getAttributeNS(c.XLINK,"href")};svgedit.utilities.setHref=function(d,n){d.setAttributeNS(c.XLINK,"xlink:href",n)};svgedit.utilities.findDefs=function(){var d=i.getSVGContent(),n=d.getElementsByTagNameNS(c.SVG,"defs");if(n.length>0)n=n[0];else{n=d.ownerDocument.createElementNS(c.SVG,"defs");d.firstChild?d.insertBefore(n,d.firstChild.nextSibling):d.appendChild(n)}return n};svgedit.utilities.getPathBBox=function(d){var n=d.pathSegList,f=n.numberOfItems;
-d=[[],[]];var e=n.getItem(0),m=[e.x,e.y];for(e=0;e<f;e++){var r=n.getItem(e);if(r.x!==g){d[0].push(m[0]);d[1].push(m[1]);if(r.x1){var v=[r.x1,r.y1],t=[r.x2,r.y2],O=[r.x,r.y],Q;for(Q=0;Q<2;Q++){r=function(ba){return Math.pow(1-ba,3)*m[Q]+3*Math.pow(1-ba,2)*ba*v[Q]+3*(1-ba)*Math.pow(ba,2)*t[Q]+Math.pow(ba,3)*O[Q]};var L=6*m[Q]-12*v[Q]+6*t[Q],N=-3*m[Q]+9*v[Q]-9*t[Q]+3*O[Q],T=3*v[Q]-3*m[Q];if(N==0){if(L!=0){L=-T/L;0<L&&L<1&&d[Q].push(r(L))}}else{T=Math.pow(L,2)-4*T*N;if(!(T<0)){var ga=(-L+Math.sqrt(T))/
-(2*N);0<ga&&ga<1&&d[Q].push(r(ga));L=(-L-Math.sqrt(T))/(2*N);0<L&&L<1&&d[Q].push(r(L))}}}m=O}else{d[0].push(r.x);d[1].push(r.y)}}}n=Math.min.apply(null,d[0]);f=Math.max.apply(null,d[0])-n;e=Math.min.apply(null,d[1]);d=Math.max.apply(null,d[1])-e;return{x:n,y:e,width:f,height:d}};svgedit.utilities.getBBox=function(d){var n=d||i.geSelectedElements()[0];if(d.nodeType!=1)return null;d=null;var f=n.nodeName;switch(f){case "text":if(n.textContent===""){n.textContent="a";d=n.getBBox();n.textContent=""}else if(n.getBBox)d=
-n.getBBox();break;case "path":if(svgedit.browser.supportsPathBBox()){if(n.getBBox)d=n.getBBox()}else d=svgedit.utilities.getPathBBox(n);break;case "g":case "a":d=s(n);break;default:if(f==="use")d=s(n,true);if(f==="use"||f==="foreignObject"&&svgedit.browser.isWebkit()){d||(d=n.getBBox());if(!svgedit.browser.isWebkit()){f={};f.width=d.width;f.height=d.height;f.x=d.x+parseFloat(n.getAttribute("x")||0);f.y=d.y+parseFloat(n.getAttribute("y")||0);d=f}}else if(~k.indexOf(f))if(n)d=n.getBBox();else{n=$(n).closest("foreignObject");
-if(n.length)if(n[0].getBBox)d=n[0].getBBox()}}if(d)d=svgedit.utilities.bboxToObj(d);return d};svgedit.utilities.getPathDFromSegments=function(d){var n="";$.each(d,function(f,e){var m,r=e[1];n+=e[0];for(m=0;m<r.length;m+=2)n+=r[m]+","+r[m+1]+" "});return n};svgedit.utilities.getPathDFromElement=function(d){var n=1.81,f,e;switch(d.tagName){case "ellipse":case "circle":e=$(d).attr(["rx","ry","cx","cy"]);var m=e.cx,r=e.cy;f=e.rx;e=e.ry;if(d.tagName=="circle")f=e=$(d).attr("r");f=svgedit.utilities.getPathDFromSegments([["M",
-[m-f,r]],["C",[m-f,r-e/n,m-f/n,r-e,m,r-e]],["C",[m+f/n,r-e,m+f,r-e/n,m+f,r]],["C",[m+f,r+e/n,m+f/n,r+e,m,r+e]],["C",[m-f/n,r+e,m-f,r+e/n,m-f,r]],["Z",[]]]);break;case "path":f=d.getAttribute("d");break;case "line":e=$(d).attr(["x1","y1","x2","y2"]);f="M"+e.x1+","+e.y1+"L"+e.x2+","+e.y2;break;case "polyline":f="M"+d.getAttribute("points");break;case "polygon":f="M"+d.getAttribute("points")+" Z";break;case "rect":e=$(d).attr(["rx","ry"]);f=e.rx;e=e.ry;var v=d.getBBox();d=v.x;m=v.y;r=v.width;v=v.height;
-n=4-n;f=!f&&!e?svgedit.utilities.getPathDFromSegments([["M",[d,m]],["L",[d+r,m]],["L",[d+r,m+v]],["L",[d,m+v]],["L",[d,m]],["Z",[]]]):svgedit.utilities.getPathDFromSegments([["M",[d,m+e]],["C",[d,m+e/n,d+f/n,m,d+f,m]],["L",[d+r-f,m]],["C",[d+r-f/n,m,d+r,m+e/n,d+r,m+e]],["L",[d+r,m+v-e]],["C",[d+r,m+v-e/n,d+r-f/n,m+v,d+r-f,m+v]],["L",[d+f,m+v]],["C",[d+f/n,m+v,d,m+v-e/n,d,m+v-e]],["L",[d,m+e]],["Z",[]]])}return f};svgedit.utilities.getExtraAttributesForConvertToPath=function(d){var n={};$.each(["marker-start",
-"marker-end","marker-mid","filter","clip-path"],function(){var f=d.getAttribute(this);if(f)n[this]=f});return n};svgedit.utilities.getBBoxOfElementAsPath=function(d,n,f){n=n({element:"path",attr:svgedit.utilities.getExtraAttributesForConvertToPath(d)});var e=d.getAttribute("transform");e&&n.setAttribute("transform",e);e=d.parentNode;d.nextSibling?e.insertBefore(n,d):e.appendChild(n);(d=svgedit.utilities.getPathDFromElement(d))?n.setAttribute("d",d):n.parentNode.removeChild(n);f.resetOrientation(n);
-f=false;try{f=n.getBBox()}catch(m){}n.parentNode.removeChild(n);return f};svgedit.utilities.convertToPath=function(d,n,f,e,m,r,v,t){var O=new v.BatchCommand("Convert element to Path");n=$.extend({},n,svgedit.utilities.getExtraAttributesForConvertToPath(d));n=f({element:"path",attr:n});var Q=d.getAttribute("transform");Q&&n.setAttribute("transform",Q);f=d.id;var L=d.parentNode;d.nextSibling?L.insertBefore(n,d):L.appendChild(n);var N=svgedit.utilities.getPathDFromElement(d);if(N){n.setAttribute("d",
-N);if(Q){Q=svgedit.transformlist.getTransformList(n);svgedit.math.hasMatrixTransform(Q)&&e.resetOrientation(n)}O.addSubCommand(new v.RemoveElementCommand(d,d.nextSibling,L));O.addSubCommand(new v.InsertElementCommand(n));m();d.parentNode.removeChild(d);n.setAttribute("id",f);n.removeAttribute("visibility");r([n],true);t(O);return n}else{n.parentNode.removeChild(n);return null}};svgedit.utilities.getBBoxWithTransform=function(d,n,f){var e=svgedit.utilities.getBBox(d);if(!e)return null;var m=svgedit.transformlist.getTransformList(d),
-r=svgedit.utilities.getRotationAngleFromTransformList(m),v=svgedit.math.hasMatrixTransform(m);if(r||v){var t=false,O=r%90;r=O<-89.99||O>89.99;O=O>-0.001&&O<0.001;if(v||!(O||r))if(["ellipse","path","line","polyline","polygon"].indexOf(d.tagName)>=0)e=t=svgedit.utilities.getBBoxOfElementAsPath(d,n,f);else if(d.tagName=="rect"){v=d.getAttribute("rx");r=d.getAttribute("ry");if(v||r)e=t=svgedit.utilities.getBBoxOfElementAsPath(d,n,f)}if(!t){d=svgedit.math.transformListToTransform(m).matrix;e=svgedit.math.transformBox(e.x,
-e.y,e.width,e.height,d).aabox}}return e};svgedit.utilities.getStrokedBBox=function(d,n,f){if(!d||!d.length)return false;var e;$.each(d,function(){if(!e)if(this.parentNode)e=svgedit.utilities.getBBoxWithTransform(this,n,f)});if(e===undefined)return null;var m=e.x+e.width,r=e.y+e.height,v=e.x,t=e.y;if(d.length===1){d=q(d[0]);v-=d;t-=d;m+=d;r+=d}else $.each(d,function(O,Q){var L=svgedit.utilities.getBBoxWithTransform(Q,n,f);if(L){var N=q(Q);v=Math.min(v,L.x-N);t=Math.min(t,L.y-N);if(Q.nodeType==1){m=
-Math.max(m,L.x+L.width+N);r=Math.max(r,L.y+L.height+N)}}});e.x=v;e.y=t;e.width=m-v;e.height=r-t;return e};svgedit.utilities.getRotationAngleFromTransformList=function(d,n){if(!d)return 0;var f=d.numberOfItems,e;for(e=0;e<f;++e){var m=d.getItem(e);if(m.type==4)return n?m.angle*Math.PI/180:m.angle}return 0};svgedit.utilities.getRotationAngle=function(d,n){var f=d||i.getSelectedElements()[0];f=svgedit.transformlist.getTransformList(f);return svgedit.utilities.getRotationAngleFromTransformList(f,n)};
-svgedit.utilities.getRefElem=function(d){return svgedit.utilities.getElem(svgedit.utilities.getUrlFromAttr(d).substr(1))};svgedit.utilities.getElem=svgedit.browser.supportsSelectors()?function(d){return K.querySelector("#"+d)}:svgedit.browser.supportsXpath()?function(d){return w.evaluate('svg:svg[@id="svgroot"]//svg:*[@id="'+d+'"]',u,function(){return svgedit.NS.SVG},9,null).singleNodeValue}:function(d){return $(K).find("[id="+d+"]")[0]};svgedit.utilities.assignAttributes=function(d,n,f,e){for(var m in n)if(f=
-m.substr(0,4)==="xml:"?c.XML:m.substr(0,6)==="xlink:"?c.XLINK:null)d.setAttributeNS(f,m,n[m]);else e?svgedit.units.setUnitAttr(d,m,n[m]):d.setAttribute(m,n[m])};svgedit.utilities.cleanupElement=function(d){var n={"fill-opacity":1,"stop-opacity":1,opacity:1,stroke:"none","stroke-dasharray":"none","stroke-linejoin":"miter","stroke-linecap":"butt","stroke-opacity":1,"stroke-width":1,rx:0,ry:0};if(d.nodeName==="ellipse"){delete n.rx;delete n.ry}for(var f in n){var e=n[f];d.getAttribute(f)==e&&d.removeAttribute(f)}};
-svgedit.utilities.snapToGrid=function(d){var n=i.getSnappingStep(),f=i.getBaseUnit();if(f!=="px")n*=svgedit.units.getTypeMap()[f];return d=Math.round(d/n)*n};svgedit.utilities.preg_quote=function(d,n){return String(d).replace(RegExp("[.\\\\+*?\\[\\^\\]$(){}=!<>|:\\"+(n||"")+"-]","g"),"\\$&")};svgedit.utilities.executeAfterLoads=function(d,n,f){return function(){function e(){f.apply(null,m)}var m=arguments;window[d]?e():n.reduceRight(function(r,v){return function(){$.getScript(v,r)}},e)()}};svgedit.utilities.buildCanvgCallback=
-function(d){return svgedit.utilities.executeAfterLoads("canvg",["canvg/rgbcolor.js","canvg/canvg.js"],d)};svgedit.utilities.buildJSPDFCallback=function(d){return svgedit.utilities.executeAfterLoads("RGBColor",["canvg/rgbcolor.js"],function(){var n=[];if(!RGBColor||RGBColor.ok===g)n.push("canvg/rgbcolor.js");svgedit.utilities.executeAfterLoads("jsPDF",n.concat("jspdf/underscore-min.js","jspdf/jspdf.min.js","jspdf/jspdf.plugin.svgToPdf.js"),d)()})};svgedit.utilities.preventClickDefault=function(d){$(d).click(function(n){n.preventDefault()})};
-svgedit.utilities.copyElem=function(d,n){var f=document.createElementNS(d.namespaceURI,d.nodeName);$.each(d.attributes,function(m,r){r.localName!="-moz-math-font-style"&&f.setAttributeNS(r.namespaceURI,r.nodeName,r.value)});f.removeAttribute("id");f.id=n();if(svgedit.browser.isWebkit()&&d.nodeName=="path"){var e=svgedit.utilities.convertPath(d);f.setAttribute("d",e)}$.each(d.childNodes,function(m,r){switch(r.nodeType){case 1:f.appendChild(svgedit.utilities.copyElem(r,n));break;case 3:f.textContent=
-r.nodeValue}});if($(d).data("gsvg"))$(f).data("gsvg",f.firstChild);else if($(d).data("symbol")){e=$(d).data("symbol");$(f).data("ref",e).data("symbol",e)}else f.tagName=="image"&&preventClickDefault(f);return f};var B=[0,"z","M","m","L","l","C","c","Q","q","A","a","H","h","V","v","S","s","T","t"];svgedit.utilities.convertPath=function(d,n){var f,e=d.pathSegList,m=e.numberOfItems,r=0,v=0,t="",O=null;for(f=0;f<m;++f){var Q=e.getItem(f),L=Q.x||0,N=Q.y||0,T=Q.x1||0,ga=Q.y1||0,ba=Q.x2||0,pa=Q.y2||0,ta=
-Q.pathSegType,qa=B[ta]["to"+(n?"Lower":"Upper")+"Case"]();switch(ta){case 1:t+="z";break;case 12:L-=r;case 13:if(n){r+=L;qa="l"}else{L+=r;r=L;qa="L"}t+=j(qa,[[L,v]]);break;case 14:N-=v;case 15:if(n){v+=N;qa="l"}else{N+=v;v=N;qa="L"}t+=j(qa,[[r,N]]);break;case 2:case 4:case 18:L-=r;N-=v;case 5:case 3:if(O&&e.getItem(f-1).pathSegType===1&&!n){r=O[0];v=O[1]}case 19:if(n){r+=L;v+=N}else{L+=r;N+=v;r=L;v=N}if(ta===3)O=[r,v];t+=j(qa,[[L,N]]);break;case 6:L-=r;T-=r;ba-=r;N-=v;ga-=v;pa-=v;case 7:if(n){r+=
-L;v+=N}else{L+=r;T+=r;ba+=r;N+=v;ga+=v;pa+=v;r=L;v=N}t+=j(qa,[[T,ga],[ba,pa],[L,N]]);break;case 8:L-=r;T-=r;N-=v;ga-=v;case 9:if(n){r+=L;v+=N}else{L+=r;T+=r;N+=v;ga+=v;r=L;v=N}t+=j(qa,[[T,ga],[L,N]]);break;case 10:L-=r;N-=v;case 11:if(n){r+=L;v+=N}else{L+=r;N+=v;r=L;v=N}t+=j(qa,[[Q.r1,Q.r2]],[Q.angle,Q.largeArcFlag?1:0,Q.sweepFlag?1:0],[L,N]);break;case 16:L-=r;ba-=r;N-=v;pa-=v;case 17:if(n){r+=L;v+=N}else{L+=r;ba+=r;N+=v;pa+=v;r=L;v=N}t+=j(qa,[[ba,pa],[L,N]])}}return t}})();(function(){if(!svgedit.sanitize)svgedit.sanitize={};var g=svgedit.NS,s=svgedit.getReverseNS(),q={a:["class","clip-path","clip-rule","fill","fill-opacity","fill-rule","filter","id","mask","opacity","stroke","stroke-dasharray","stroke-dashoffset","stroke-linecap","stroke-linejoin","stroke-miterlimit","stroke-opacity","stroke-width","style","systemLanguage","transform","xlink:href","xlink:title"],circle:["class","clip-path","clip-rule","cx","cy","fill","fill-opacity","fill-rule","filter","id","mask",
-"opacity","r","requiredFeatures","stroke","stroke-dasharray","stroke-dashoffset","stroke-linecap","stroke-linejoin","stroke-miterlimit","stroke-opacity","stroke-width","style","systemLanguage","transform"],clipPath:["class","clipPathUnits","id"],defs:[],style:["type"],desc:[],ellipse:["class","clip-path","clip-rule","cx","cy","fill","fill-opacity","fill-rule","filter","id","mask","opacity","requiredFeatures","rx","ry","stroke","stroke-dasharray","stroke-dashoffset","stroke-linecap","stroke-linejoin",
-"stroke-miterlimit","stroke-opacity","stroke-width","style","systemLanguage","transform"],feGaussianBlur:["class","color-interpolation-filters","id","requiredFeatures","stdDeviation"],filter:["class","color-interpolation-filters","filterRes","filterUnits","height","id","primitiveUnits","requiredFeatures","width","x","xlink:href","y"],foreignObject:["class","font-size","height","id","opacity","requiredFeatures","style","transform","width","x","y"],g:["class","clip-path","clip-rule","id","display",
-"fill","fill-opacity","fill-rule","filter","mask","opacity","requiredFeatures","stroke","stroke-dasharray","stroke-dashoffset","stroke-linecap","stroke-linejoin","stroke-miterlimit","stroke-opacity","stroke-width","style","systemLanguage","transform","font-family","font-size","font-style","font-weight","text-anchor"],image:["class","clip-path","clip-rule","filter","height","id","mask","opacity","requiredFeatures","style","systemLanguage","transform","width","x","xlink:href","xlink:title","y"],line:["class",
-"clip-path","clip-rule","fill","fill-opacity","fill-rule","filter","id","marker-end","marker-mid","marker-start","mask","opacity","requiredFeatures","stroke","stroke-dasharray","stroke-dashoffset","stroke-linecap","stroke-linejoin","stroke-miterlimit","stroke-opacity","stroke-width","style","systemLanguage","transform","x1","x2","y1","y2"],linearGradient:["class","id","gradientTransform","gradientUnits","requiredFeatures","spreadMethod","systemLanguage","x1","x2","xlink:href","y1","y2"],marker:["id",
-"class","markerHeight","markerUnits","markerWidth","orient","preserveAspectRatio","refX","refY","systemLanguage","viewBox"],mask:["class","height","id","maskContentUnits","maskUnits","width","x","y"],metadata:["class","id"],path:["class","clip-path","clip-rule","d","fill","fill-opacity","fill-rule","filter","id","marker-end","marker-mid","marker-start","mask","opacity","requiredFeatures","stroke","stroke-dasharray","stroke-dashoffset","stroke-linecap","stroke-linejoin","stroke-miterlimit","stroke-opacity",
-"stroke-width","style","systemLanguage","transform"],pattern:["class","height","id","patternContentUnits","patternTransform","patternUnits","requiredFeatures","style","systemLanguage","viewBox","width","x","xlink:href","y"],polygon:["class","clip-path","clip-rule","id","fill","fill-opacity","fill-rule","filter","id","class","marker-end","marker-mid","marker-start","mask","opacity","points","requiredFeatures","stroke","stroke-dasharray","stroke-dashoffset","stroke-linecap","stroke-linejoin","stroke-miterlimit",
-"stroke-opacity","stroke-width","style","systemLanguage","transform"],polyline:["class","clip-path","clip-rule","id","fill","fill-opacity","fill-rule","filter","marker-end","marker-mid","marker-start","mask","opacity","points","requiredFeatures","stroke","stroke-dasharray","stroke-dashoffset","stroke-linecap","stroke-linejoin","stroke-miterlimit","stroke-opacity","stroke-width","style","systemLanguage","transform"],radialGradient:["class","cx","cy","fx","fy","gradientTransform","gradientUnits","id",
-"r","requiredFeatures","spreadMethod","systemLanguage","xlink:href"],rect:["class","clip-path","clip-rule","fill","fill-opacity","fill-rule","filter","height","id","mask","opacity","requiredFeatures","rx","ry","stroke","stroke-dasharray","stroke-dashoffset","stroke-linecap","stroke-linejoin","stroke-miterlimit","stroke-opacity","stroke-width","style","systemLanguage","transform","width","x","y"],stop:["class","id","offset","requiredFeatures","stop-color","stop-opacity","style","systemLanguage"],svg:["class",
-"clip-path","clip-rule","filter","id","height","mask","preserveAspectRatio","requiredFeatures","style","systemLanguage","viewBox","width","x","xmlns","xmlns:se","xmlns:xlink","y"],"switch":["class","id","requiredFeatures","systemLanguage"],symbol:["class","fill","fill-opacity","fill-rule","filter","font-family","font-size","font-style","font-weight","id","opacity","preserveAspectRatio","requiredFeatures","stroke","stroke-dasharray","stroke-dashoffset","stroke-linecap","stroke-linejoin","stroke-miterlimit",
-"stroke-opacity","stroke-width","style","systemLanguage","transform","viewBox"],text:["class","clip-path","clip-rule","fill","fill-opacity","fill-rule","filter","font-family","font-size","font-style","font-weight","id","mask","opacity","requiredFeatures","stroke","stroke-dasharray","stroke-dashoffset","stroke-linecap","stroke-linejoin","stroke-miterlimit","stroke-opacity","stroke-width","style","systemLanguage","text-anchor","transform","x","xml:space","y"],textPath:["class","id","method","requiredFeatures",
-"spacing","startOffset","style","systemLanguage","transform","xlink:href"],title:[],tspan:["class","clip-path","clip-rule","dx","dy","fill","fill-opacity","fill-rule","filter","font-family","font-size","font-style","font-weight","id","mask","opacity","requiredFeatures","rotate","stroke","stroke-dasharray","stroke-dashoffset","stroke-linecap","stroke-linejoin","stroke-miterlimit","stroke-opacity","stroke-width","style","systemLanguage","text-anchor","textLength","transform","x","xml:space","y"],use:["class",
-"clip-path","clip-rule","fill","fill-opacity","fill-rule","filter","height","id","mask","stroke","stroke-dasharray","stroke-dashoffset","stroke-linecap","stroke-linejoin","stroke-miterlimit","stroke-opacity","stroke-width","style","transform","width","x","xlink:href","y"],annotation:["encoding"],"annotation-xml":["encoding"],maction:["actiontype","other","selection"],math:["class","id","display","xmlns"],menclose:["notation"],merror:[],mfrac:["linethickness"],mi:["mathvariant"],mmultiscripts:[],mn:[],
-mo:["fence","lspace","maxsize","minsize","rspace","stretchy"],mover:[],mpadded:["lspace","width","height","depth","voffset"],mphantom:[],mprescripts:[],mroot:[],mrow:["xlink:href","xlink:type","xmlns:xlink"],mspace:["depth","height","width"],msqrt:[],mstyle:["displaystyle","mathbackground","mathcolor","mathvariant","scriptlevel"],msub:[],msubsup:[],msup:[],mtable:["align","columnalign","columnlines","columnspacing","displaystyle","equalcolumns","equalrows","frame","rowalign","rowlines","rowspacing",
-"width"],mtd:["columnalign","columnspan","rowalign","rowspan"],mtext:[],mtr:["columnalign","rowalign"],munder:[],munderover:[],none:[],semantics:[]},j={};$.each(q,function(c,k){var i={};$.each(k,function(w,u){if(u.indexOf(":")>=0){var K=u.split(":");i[K[1]]=g[K[0].toUpperCase()]}else i[u]=u=="xmlns"?g.XMLNS:null});j[c]=i});svgedit.sanitize.sanitizeSvg=function(c){if(c.nodeType==3){c.nodeValue=c.nodeValue.replace(/^\s+|\s+$/g,"");c.nodeValue.length===0&&c.parentNode.removeChild(c)}if(c.nodeType==1){var k=
-c.parentNode;if(c.ownerDocument&&k){var i=q[c.nodeName],w=j[c.nodeName],u;if(typeof i!=="undefined"){var K=[];for(u=c.attributes.length;u--;){var B=c.attributes.item(u),d=B.nodeName,n=B.localName,f=B.namespaceURI;if(!(w.hasOwnProperty(n)&&f==w[n]&&f!=g.XMLNS)&&!(f==g.XMLNS&&s[B.value])){d.indexOf("se:")===0&&K.push([d,B.value]);c.removeAttributeNS(f,n)}if(svgedit.browser.isGecko())switch(d){case "transform":case "gradientTransform":case "patternTransform":n=B.value.replace(/(\d)-/g,"$1 -");c.setAttribute(d,
-n)}if(d=="style"){B=B.value.split(";");for(d=B.length;d--;){f=B[d].split(":");n=$.trim(f[0]);f=$.trim(f[1]);i.indexOf(n)>=0&&c.setAttribute(n,f)}c.removeAttribute("style")}}$.each(K,function(e,m){c.setAttributeNS(g.SE,m[0],m[1])});if((u=svgedit.utilities.getHref(c))&&["filter","linearGradient","pattern","radialGradient","textPath","use"].indexOf(c.nodeName)>=0)if(u[0]!="#"){svgedit.utilities.setHref(c,"");c.removeAttributeNS(g.XLINK,"href")}if(c.nodeName=="use"&&!svgedit.utilities.getHref(c))k.removeChild(c);
-else{$.each(["clip-path","fill","filter","marker-end","marker-mid","marker-start","mask","stroke"],function(e,m){var r=c.getAttribute(m);if(r)if((r=svgedit.utilities.getUrlFromAttr(r))&&r[0]!=="#"){c.setAttribute(m,"");c.removeAttribute(m)}});for(u=c.childNodes.length;u--;)svgedit.sanitize.sanitizeSvg(c.childNodes.item(u))}}else{for(i=[];c.hasChildNodes();)i.push(k.insertBefore(c.firstChild,c));k.removeChild(c);for(u=i.length;u--;)svgedit.sanitize.sanitizeSvg(i[u])}}}}})();(function(){if(!svgedit.history)svgedit.history={};svgedit.history.HistoryEventTypes={BEFORE_APPLY:"before_apply",AFTER_APPLY:"after_apply",BEFORE_UNAPPLY:"before_unapply",AFTER_UNAPPLY:"after_unapply"};svgedit.history.MoveElementCommand=function(g,s,q,j){this.elem=g;this.text=j?"Move "+g.tagName+" to "+j:"Move "+g.tagName;this.oldNextSibling=s;this.oldParent=q;this.newNextSibling=g.nextSibling;this.newParent=g.parentNode};svgedit.history.MoveElementCommand.type=function(){return"svgedit.history.MoveElementCommand"};
-svgedit.history.MoveElementCommand.prototype.type=svgedit.history.MoveElementCommand.type;svgedit.history.MoveElementCommand.prototype.getText=function(){return this.text};svgedit.history.MoveElementCommand.prototype.apply=function(g){g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_APPLY,this);this.elem=this.newParent.insertBefore(this.elem,this.newNextSibling);g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_APPLY,this)};svgedit.history.MoveElementCommand.prototype.unapply=
-function(g){g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_UNAPPLY,this);this.elem=this.oldParent.insertBefore(this.elem,this.oldNextSibling);g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_UNAPPLY,this)};svgedit.history.MoveElementCommand.prototype.elements=function(){return[this.elem]};svgedit.history.InsertElementCommand=function(g,s){this.elem=g;this.text=s||"Create "+g.tagName;this.parent=g.parentNode;this.nextSibling=this.elem.nextSibling};svgedit.history.InsertElementCommand.type=
-function(){return"svgedit.history.InsertElementCommand"};svgedit.history.InsertElementCommand.prototype.type=svgedit.history.InsertElementCommand.type;svgedit.history.InsertElementCommand.prototype.getText=function(){return this.text};svgedit.history.InsertElementCommand.prototype.apply=function(g){g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_APPLY,this);this.elem=this.parent.insertBefore(this.elem,this.nextSibling);g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_APPLY,
-this)};svgedit.history.InsertElementCommand.prototype.unapply=function(g){g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_UNAPPLY,this);this.parent=this.elem.parentNode;this.elem=this.elem.parentNode.removeChild(this.elem);g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_UNAPPLY,this)};svgedit.history.InsertElementCommand.prototype.elements=function(){return[this.elem]};svgedit.history.RemoveElementCommand=function(g,s,q,j){this.elem=g;this.text=j||"Delete "+g.tagName;
-this.nextSibling=s;this.parent=q;svgedit.transformlist.removeElementFromListMap(g)};svgedit.history.RemoveElementCommand.type=function(){return"svgedit.history.RemoveElementCommand"};svgedit.history.RemoveElementCommand.prototype.type=svgedit.history.RemoveElementCommand.type;svgedit.history.RemoveElementCommand.prototype.getText=function(){return this.text};svgedit.history.RemoveElementCommand.prototype.apply=function(g){g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_APPLY,this);
-svgedit.transformlist.removeElementFromListMap(this.elem);this.parent=this.elem.parentNode;this.elem=this.parent.removeChild(this.elem);g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_APPLY,this)};svgedit.history.RemoveElementCommand.prototype.unapply=function(g){g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_UNAPPLY,this);svgedit.transformlist.removeElementFromListMap(this.elem);this.nextSibling==null&&window.console&&console.log("Error: reference element was lost");
-this.parent.insertBefore(this.elem,this.nextSibling);g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_UNAPPLY,this)};svgedit.history.RemoveElementCommand.prototype.elements=function(){return[this.elem]};svgedit.history.ChangeElementCommand=function(g,s,q){this.elem=g;this.text=q?"Change "+g.tagName+" "+q:"Change "+g.tagName;this.newValues={};this.oldValues=s;for(var j in s)this.newValues[j]=j=="#text"?g.textContent:j=="#href"?svgedit.utilities.getHref(g):g.getAttribute(j)};svgedit.history.ChangeElementCommand.type=
-function(){return"svgedit.history.ChangeElementCommand"};svgedit.history.ChangeElementCommand.prototype.type=svgedit.history.ChangeElementCommand.type;svgedit.history.ChangeElementCommand.prototype.getText=function(){return this.text};svgedit.history.ChangeElementCommand.prototype.apply=function(g){g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_APPLY,this);var s=false,q;for(q in this.newValues){if(this.newValues[q])if(q=="#text")this.elem.textContent=this.newValues[q];else q=="#href"?
-svgedit.utilities.setHref(this.elem,this.newValues[q]):this.elem.setAttribute(q,this.newValues[q]);else if(q=="#text")this.elem.textContent="";else{this.elem.setAttribute(q,"");this.elem.removeAttribute(q)}if(q=="transform")s=true}if(!s)if(s=svgedit.utilities.getRotationAngle(this.elem)){q=elem.getBBox();s=["rotate(",s," ",q.x+q.width/2,",",q.y+q.height/2,")"].join("");s!=elem.getAttribute("transform")&&elem.setAttribute("transform",s)}g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_APPLY,
-this);return true};svgedit.history.ChangeElementCommand.prototype.unapply=function(g){g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_UNAPPLY,this);var s=false,q;for(q in this.oldValues){if(this.oldValues[q])if(q=="#text")this.elem.textContent=this.oldValues[q];else q=="#href"?svgedit.utilities.setHref(this.elem,this.oldValues[q]):this.elem.setAttribute(q,this.oldValues[q]);else if(q=="#text")this.elem.textContent="";else this.elem.removeAttribute(q);if(q=="transform")s=true}if(!s)if(s=
-svgedit.utilities.getRotationAngle(this.elem)){q=elem.getBBox();s=["rotate(",s," ",q.x+q.width/2,",",q.y+q.height/2,")"].join("");s!=elem.getAttribute("transform")&&elem.setAttribute("transform",s)}svgedit.transformlist.removeElementFromListMap(this.elem);g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_UNAPPLY,this);return true};svgedit.history.ChangeElementCommand.prototype.elements=function(){return[this.elem]};svgedit.history.BatchCommand=function(g){this.text=g||"Batch Command";
-this.stack=[]};svgedit.history.BatchCommand.type=function(){return"svgedit.history.BatchCommand"};svgedit.history.BatchCommand.prototype.type=svgedit.history.BatchCommand.type;svgedit.history.BatchCommand.prototype.getText=function(){return this.text};svgedit.history.BatchCommand.prototype.apply=function(g){g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_APPLY,this);var s,q=this.stack.length;for(s=0;s<q;++s)this.stack[s].apply(g);g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_APPLY,
-this)};svgedit.history.BatchCommand.prototype.unapply=function(g){g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_UNAPPLY,this);var s;for(s=this.stack.length-1;s>=0;s--)this.stack[s].unapply(g);g&&g.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_UNAPPLY,this)};svgedit.history.BatchCommand.prototype.elements=function(){for(var g=[],s=this.stack.length;s--;)for(var q=this.stack[s].elements(),j=q.length;j--;)g.indexOf(q[j])==-1&&g.push(q[j]);return g};svgedit.history.BatchCommand.prototype.addSubCommand=
-function(g){this.stack.push(g)};svgedit.history.BatchCommand.prototype.isEmpty=function(){return this.stack.length===0};svgedit.history.UndoManager=function(g){this.handler_=g||null;this.undoStackPointer=0;this.undoStack=[];this.undoChangeStackPointer=-1;this.undoableChangeStack=[]};svgedit.history.UndoManager.prototype.resetUndoStack=function(){this.undoStack=[];this.undoStackPointer=0};svgedit.history.UndoManager.prototype.getUndoStackSize=function(){return this.undoStackPointer};svgedit.history.UndoManager.prototype.getRedoStackSize=
-function(){return this.undoStack.length-this.undoStackPointer};svgedit.history.UndoManager.prototype.getNextUndoCommandText=function(){return this.undoStackPointer>0?this.undoStack[this.undoStackPointer-1].getText():""};svgedit.history.UndoManager.prototype.getNextRedoCommandText=function(){return this.undoStackPointer<this.undoStack.length?this.undoStack[this.undoStackPointer].getText():""};svgedit.history.UndoManager.prototype.undo=function(){this.undoStackPointer>0&&this.undoStack[--this.undoStackPointer].unapply(this.handler_)};
-svgedit.history.UndoManager.prototype.redo=function(){this.undoStackPointer<this.undoStack.length&&this.undoStack.length>0&&this.undoStack[this.undoStackPointer++].apply(this.handler_)};svgedit.history.UndoManager.prototype.addCommandToHistory=function(g){if(this.undoStackPointer<this.undoStack.length&&this.undoStack.length>0)this.undoStack=this.undoStack.splice(0,this.undoStackPointer);this.undoStack.push(g);this.undoStackPointer=this.undoStack.length};svgedit.history.UndoManager.prototype.beginUndoableChange=
-function(g,s){for(var q=++this.undoChangeStackPointer,j=s.length,c=Array(j),k=Array(j);j--;){var i=s[j];if(i!=null){k[j]=i;c[j]=i.getAttribute(g)}}this.undoableChangeStack[q]={attrName:g,oldValues:c,elements:k}};svgedit.history.UndoManager.prototype.finishUndoableChange=function(){for(var g=this.undoChangeStackPointer--,s=this.undoableChangeStack[g],q=s.elements.length,j=s.attrName,c=new svgedit.history.BatchCommand("Change "+j);q--;){var k=s.elements[q];if(k!=null){var i={};i[j]=s.oldValues[q];i[j]!=
-k.getAttribute(j)&&c.addSubCommand(new svgedit.history.ChangeElementCommand(k,i,j))}}this.undoableChangeStack[g]=null;return c}})();(function(){if(!svgedit.history)svgedit.history={};var g=svgedit.history,s=g.HistoryRecordingService=function(q){this.undoManager_=q;this.currentBatchCommand_=null;this.batchCommandStack_=[]};s.NO_HISTORY=new s;s.prototype.startBatchCommand=function(q){if(!this.undoManager_)return this;this.currentBatchCommand_=new g.BatchCommand(q);this.batchCommandStack_.push(this.currentBatchCommand_);return this};s.prototype.endBatchCommand=function(){if(!this.undoManager_)return this;if(this.currentBatchCommand_){var q=
-this.currentBatchCommand_;this.batchCommandStack_.pop();var j=this.batchCommandStack_.length;this.currentBatchCommand_=j?this.batchCommandStack_[j-1]:null;this.addCommand_(q)}return this};s.prototype.moveElement=function(q,j,c,k){if(!this.undoManager_)return this;this.addCommand_(new g.MoveElementCommand(q,j,c,k));return this};s.prototype.insertElement=function(q,j){if(!this.undoManager_)return this;this.addCommand_(new g.InsertElementCommand(q,j));return this};s.prototype.removeElement=function(q,
-j,c,k){if(!this.undoManager_)return this;this.addCommand_(new g.RemoveElementCommand(q,j,c,k));return this};s.prototype.changeElement=function(q,j,c){if(!this.undoManager_)return this;this.addCommand_(new g.ChangeElementCommand(q,j,c));return this};s.prototype.addCommand_=function(q){if(!this.undoManager_)return this;this.currentBatchCommand_?this.currentBatchCommand_.addSubCommand(q):this.undoManager_.addCommandToHistory(q)}})();var svgedit=svgedit||{};
-(function(){if(!svgedit.coords)svgedit.coords={};var g=[0,"z","M","m","L","l","C","c","Q","q","A","a","H","h","V","v","S","s","T","t"],s=null;svgedit.coords.init=function(q){s=q};svgedit.coords.remapElement=function(q,j,c){var k,i,w=function(e,m){return svgedit.math.transformPoint(e,m,c)},u=s.getGridSnapping()&&q.parentNode.parentNode.localName==="svg",K=function(){var e;if(u)for(e in j)j[e]=svgedit.utilities.snapToGrid(j[e]);svgedit.utilities.assignAttributes(q,j,1E3,true)},B=svgedit.utilities.getBBox(q);
-for(k=0;k<2;k++){i=k===0?"fill":"stroke";var d=q.getAttribute(i);if(d&&d.indexOf("url(")===0)if(c.a<0||c.d<0){d=svgedit.utilities.getRefElem(d).cloneNode(true);if(c.a<0){var n=d.getAttribute("x1"),f=d.getAttribute("x2");d.setAttribute("x1",-(n-1));d.setAttribute("x2",-(f-1))}if(c.d<0){n=d.getAttribute("y1");f=d.getAttribute("y2");d.setAttribute("y1",-(n-1));d.setAttribute("y2",-(f-1))}d.id=s.getDrawing().getNextId();svgedit.utilities.findDefs().appendChild(d);q.setAttribute(i,"url(#"+d.id+")")}}k=
-q.tagName;if(k==="g"||k==="text"||k=="tspan"||k==="use")if(c.a==1&&c.b==0&&c.c==0&&c.d==1&&(c.e!=0||c.f!=0)){i=svgedit.math.transformListToTransform(q).matrix;i=svgedit.math.matrixMultiply(i.inverse(),c,i);j.x=parseFloat(j.x)+i.e;j.y=parseFloat(j.y)+i.f}else{i=svgedit.transformlist.getTransformList(q);d=svgroot.createSVGTransform();d.setMatrix(svgedit.math.matrixMultiply(svgedit.math.transformListToTransform(i).matrix,c));i.clear();i.appendItem(d)}switch(k){case "foreignObject":case "rect":case "image":if(k===
-"image"&&(c.a<0||c.d<0)){i=svgedit.transformlist.getTransformList(q);d=svgroot.createSVGTransform();d.setMatrix(svgedit.math.matrixMultiply(svgedit.math.transformListToTransform(i).matrix,c));i.clear();i.appendItem(d)}else{d=w(j.x,j.y);j.width=c.a*j.width;j.height=c.d*j.height;j.x=d.x+Math.min(0,j.width);j.y=d.y+Math.min(0,j.height);j.width=Math.abs(j.width);j.height=Math.abs(j.height)}K();break;case "ellipse":w=w(j.cx,j.cy);j.cx=w.x;j.cy=w.y;j.rx=c.a*j.rx;j.ry=c.d*j.ry;j.rx=Math.abs(j.rx);j.ry=Math.abs(j.ry);
-K();break;case "circle":w=w(j.cx,j.cy);j.cx=w.x;j.cy=w.y;w=svgedit.math.transformBox(B.x,B.y,B.width,B.height,c);j.r=Math.min((w.tr.x-w.tl.x)/2,(w.bl.y-w.tl.y)/2);if(j.r)j.r=Math.abs(j.r);K();break;case "line":d=w(j.x1,j.y1);n=w(j.x2,j.y2);j.x1=d.x;j.y1=d.y;j.x2=n.x;j.y2=n.y;case "text":case "tspan":case "use":K();break;case "g":(w=$(q).data("gsvg"))&&svgedit.utilities.assignAttributes(w,j,1E3,true);break;case "polyline":case "polygon":K=j.points.length;for(k=0;k<K;++k){i=j.points[k];i=w(i.x,i.y);
-j.points[k].x=i.x;j.points[k].y=i.y}K=j.points.length;w="";for(k=0;k<K;++k){i=j.points[k];w+=i.x+","+i.y+" "}q.setAttribute("points",w);break;case "path":i=q.pathSegList;K=i.numberOfItems;j.d=[];for(k=0;k<K;++k){B=i.getItem(k);j.d[k]={type:B.pathSegType,x:B.x,y:B.y,x1:B.x1,y1:B.y1,x2:B.x2,y2:B.y2,r1:B.r1,r2:B.r2,angle:B.angle,largeArcFlag:B.largeArcFlag,sweepFlag:B.sweepFlag}}K=j.d.length;k=j.d[0];f=w(k.x,k.y);j.d[0].x=f.x;j.d[0].y=f.y;for(k=1;k<K;++k){B=j.d[k];i=B.type;if(i%2==0){i=w(B.x!=undefined?
-B.x:f.x,B.y!=undefined?B.y:f.y);d=w(B.x1,B.y1);n=w(B.x2,B.y2);B.x=i.x;B.y=i.y;B.x1=d.x;B.y1=d.y;B.x2=n.x;B.y2=n.y}else{B.x=c.a*B.x;B.y=c.d*B.y;B.x1=c.a*B.x1;B.y1=c.d*B.y1;B.x2=c.a*B.x2;B.y2=c.d*B.y2}B.r1=c.a*B.r1;B.r2=c.d*B.r2}w="";K=j.d.length;for(k=0;k<K;++k){B=j.d[k];i=B.type;w+=g[i];switch(i){case 13:case 12:w+=B.x+" ";break;case 15:case 14:w+=B.y+" ";break;case 3:case 5:case 19:case 2:case 4:case 18:w+=B.x+","+B.y+" ";break;case 7:case 6:w+=B.x1+","+B.y1+" "+B.x2+","+B.y2+" "+B.x+","+B.y+" ";
-break;case 9:case 8:w+=B.x1+","+B.y1+" "+B.x+","+B.y+" ";break;case 11:case 10:w+=B.r1+","+B.r2+" "+B.angle+" "+ +B.largeArcFlag+" "+ +B.sweepFlag+" "+B.x+","+B.y+" ";break;case 17:case 16:w+=B.x2+","+B.y2+" "+B.x+","+B.y+" "}}q.setAttribute("d",w)}}})();svgedit=svgedit||{};
-(function(){if(!svgedit.recalculate)svgedit.recalculate={};var g=svgedit.NS,s;svgedit.recalculate.init=function(q){s=q};svgedit.recalculate.updateClipPath=function(q,j,c){q=getRefElem(q).firstChild;var k=svgedit.transformlist.getTransformList(q),i=s.getSVGRoot().createSVGTransform();i.setTranslate(j,c);k.appendItem(i);svgedit.recalculate.recalculateDimensions(q)};svgedit.recalculate.recalculateDimensions=function(q){if(q==null)return null;if(q.nodeName=="svg"&&navigator.userAgent.indexOf("Firefox/20")>=0)return null;
-var j=s.getSVGRoot(),c=svgedit.transformlist.getTransformList(q),k;if(c&&c.numberOfItems>0){for(k=c.numberOfItems;k--;){var i=c.getItem(k);if(i.type===0)c.removeItem(k);else if(i.type===1)svgedit.math.isIdentity(i.matrix)&&c.removeItem(k);else i.type===4&&i.angle===0&&c.removeItem(k)}if(c.numberOfItems===1&&svgedit.utilities.getRotationAngle(q))return null}if(!c||c.numberOfItems==0){q.setAttribute("transform","");q.removeAttribute("transform");return null}if(c){k=c.numberOfItems;for(var w=[];k--;){i=
-c.getItem(k);if(i.type===1)w.push([i.matrix,k]);else if(w.length)w=[]}if(w.length===2){k=j.createSVGTransformFromMatrix(svgedit.math.matrixMultiply(w[1][0],w[0][0]));c.removeItem(w[0][1]);c.removeItem(w[1][1]);c.insertItemBefore(k,w[1][1])}k=c.numberOfItems;if(k>=2&&c.getItem(k-2).type===1&&c.getItem(k-1).type===2){w=j.createSVGTransform();i=svgedit.math.matrixMultiply(c.getItem(k-2).matrix,c.getItem(k-1).matrix);w.setMatrix(i);c.removeItem(k-2);c.removeItem(k-2);c.appendItem(w)}}switch(q.tagName){case "line":case "polyline":case "polygon":case "path":break;
-default:if(c.numberOfItems===1&&c.getItem(0).type===1||c.numberOfItems===2&&c.getItem(0).type===1&&c.getItem(0).type===4)return null}var u=$(q).data("gsvg");k=new svgedit.history.BatchCommand("Transform");var K={},B=null;i=[];switch(q.tagName){case "line":i=["x1","y1","x2","y2"];break;case "circle":i=["cx","cy","r"];break;case "ellipse":i=["cx","cy","rx","ry"];break;case "foreignObject":case "rect":case "image":i=["width","height","x","y"];break;case "use":case "text":case "tspan":i=["x","y"];break;
-case "polygon":case "polyline":B={};B.points=q.getAttribute("points");w=q.points;var d=w.numberOfItems;K.points=Array(d);var n;for(n=0;n<d;++n){var f=w.getItem(n);K.points[n]={x:f.x,y:f.y}}break;case "path":B={};B.d=q.getAttribute("d");K.d=q.getAttribute("d")}if(i.length){K=$(q).attr(i);$.each(K,function(Ca,La){K[Ca]=svgedit.units.convertToNum(Ca,La)})}else if(u)K={x:$(u).attr("x")||0,y:$(u).attr("y")||0};if(B==null){B=$.extend(true,{},K);$.each(B,function(Ca,La){B[Ca]=svgedit.units.convertToNum(Ca,
-La)})}B.transform=s.getStartTransform()||"";if(q.tagName=="g"&&!u||q.tagName=="a"){w=svgedit.utilities.getBBox(q);var e={x:w.x+w.width/2,y:w.y+w.height/2},m=svgedit.math.transformPoint(w.x+w.width/2,w.y+w.height/2,svgedit.math.transformListToTransform(c).matrix);i=j.createSVGMatrix();if(w=svgedit.utilities.getRotationAngle(q)){n=w*Math.PI/180;d=Math.abs(n)>1.0E-10?Math.sin(n)/(1-Math.cos(n)):2/n;for(n=0;n<c.numberOfItems;++n){i=c.getItem(n);if(i.type==4){i=i.matrix;e.y=(d*i.e+i.f)/2;e.x=(i.e-d*i.f)/
-2;c.removeItem(n);break}}}n=i=u=0;var r=c.numberOfItems;if(r)var v=c.getItem(0).matrix;if(r>=3&&c.getItem(r-2).type==3&&c.getItem(r-3).type==2&&c.getItem(r-1).type==2){n=3;var t=c.getItem(r-3).matrix,O=c.getItem(r-2).matrix,Q=c.getItem(r-1).matrix;d=q.childNodes;for(f=d.length;f--;){var L=d.item(f);i=u=0;if(L.nodeType==1){var N=svgedit.transformlist.getTransformList(L);if(N){i=svgedit.math.transformListToTransform(N).matrix;u=svgedit.utilities.getRotationAngle(L);var T=s.getStartTransform(),ga=[];
-s.setStartTransform(L.getAttribute("transform"));if(u||svgedit.math.hasMatrixTransform(N)){var ba=j.createSVGTransform();ba.setMatrix(svgedit.math.matrixMultiply(t,O,Q,i));N.clear();N.appendItem(ba);ga.push(ba)}else{u=svgedit.math.matrixMultiply(i.inverse(),Q,i);ba=j.createSVGMatrix();ba.e=-u.e;ba.f=-u.f;i=svgedit.math.matrixMultiply(ba.inverse(),i.inverse(),t,O,Q,i,u.inverse());var pa=j.createSVGTransform(),ta=j.createSVGTransform(),qa=j.createSVGTransform();pa.setTranslate(u.e,u.f);ta.setScale(i.a,
-i.d);qa.setTranslate(ba.e,ba.f);N.appendItem(qa);N.appendItem(ta);N.appendItem(pa);ga.push(qa);ga.push(ta);ga.push(pa)}k.addSubCommand(svgedit.recalculate.recalculateDimensions(L));s.setStartTransform(T)}}}c.removeItem(r-1);c.removeItem(r-2);c.removeItem(r-3)}else if(r>=3&&c.getItem(r-1).type==1){n=3;i=svgedit.math.transformListToTransform(c).matrix;ba=j.createSVGTransform();ba.setMatrix(i);c.clear();c.appendItem(ba)}else if((r==1||r>1&&c.getItem(1).type!=3)&&c.getItem(0).type==2){n=2;u=svgedit.math.transformListToTransform(c).matrix;
-c.removeItem(0);i=svgedit.math.transformListToTransform(c).matrix.inverse();i=svgedit.math.matrixMultiply(i,u);u=i.e;i=i.f;if(u!=0||i!=0){d=q.childNodes;f=d.length;for(r=[];f--;){L=d.item(f);if(L.nodeType==1){if(L.getAttribute("clip-path")){T=L.getAttribute("clip-path");if(r.indexOf(T)===-1){svgedit.recalculate.updateClipPath(T,u,i);r.push(T)}}T=s.getStartTransform();s.setStartTransform(L.getAttribute("transform"));if(N=svgedit.transformlist.getTransformList(L)){t=j.createSVGTransform();t.setTranslate(u,
-i);N.numberOfItems?N.insertItemBefore(t,0):N.appendItem(t);k.addSubCommand(svgedit.recalculate.recalculateDimensions(L));N=q.getElementsByTagNameNS(g.SVG,"use");L="#"+L.id;for(t=N.length;t--;){O=N.item(t);if(L==svgedit.utilities.getHref(O)){Q=j.createSVGTransform();Q.setTranslate(-u,-i);svgedit.transformlist.getTransformList(O).insertItemBefore(Q,0);k.addSubCommand(svgedit.recalculate.recalculateDimensions(O))}}s.setStartTransform(T)}}}r=[];s.setStartTransform(T)}}else if(r==1&&c.getItem(0).type==
-1&&!w){n=1;i=c.getItem(0).matrix;d=q.childNodes;for(f=d.length;f--;){L=d.item(f);if(L.nodeType==1){T=s.getStartTransform();s.setStartTransform(L.getAttribute("transform"));if(N=svgedit.transformlist.getTransformList(L)){u=svgedit.math.matrixMultiply(i,svgedit.math.transformListToTransform(N).matrix);r=j.createSVGTransform();r.setMatrix(u);N.clear();N.appendItem(r,0);k.addSubCommand(svgedit.recalculate.recalculateDimensions(L));s.setStartTransform(T);T=L.getAttribute("stroke-width");L.getAttribute("stroke")!==
-"none"&&!isNaN(T)&&L.setAttribute("stroke-width",T*((Math.abs(u.a)+Math.abs(u.d))/2))}}}c.clear()}else{if(w){j=j.createSVGTransform();j.setRotate(w,m.x,m.y);c.numberOfItems?c.insertItemBefore(j,0):c.appendItem(j)}c.numberOfItems==0&&q.removeAttribute("transform");return null}if(n==2){if(w){m={x:e.x+v.e,y:e.y+v.f};j=j.createSVGTransform();j.setRotate(w,m.x,m.y);c.numberOfItems?c.insertItemBefore(j,0):c.appendItem(j)}}else if(n==3){i=svgedit.math.transformListToTransform(c).matrix;v=j.createSVGTransform();
-v.setRotate(w,e.x,e.y);v=v.matrix;e=j.createSVGTransform();e.setRotate(w,m.x,m.y);m=e.matrix.inverse();T=i.inverse();m=svgedit.math.matrixMultiply(T,m,v,i);u=m.e;i=m.f;if(u!=0||i!=0){d=q.childNodes;for(f=d.length;f--;){L=d.item(f);if(L.nodeType==1){T=s.getStartTransform();s.setStartTransform(L.getAttribute("transform"));N=svgedit.transformlist.getTransformList(L);t=j.createSVGTransform();t.setTranslate(u,i);N.numberOfItems?N.insertItemBefore(t,0):N.appendItem(t);k.addSubCommand(svgedit.recalculate.recalculateDimensions(L));
-s.setStartTransform(T)}}}if(w)c.numberOfItems?c.insertItemBefore(e,0):c.appendItem(e)}}else{w=svgedit.utilities.getBBox(q);if(!w&&q.tagName!="path")return null;i=j.createSVGMatrix();if(u=svgedit.utilities.getRotationAngle(q)){e={x:w.x+w.width/2,y:w.y+w.height/2};m=svgedit.math.transformPoint(w.x+w.width/2,w.y+w.height/2,svgedit.math.transformListToTransform(c).matrix);n=u*Math.PI/180;d=Math.abs(n)>1.0E-10?Math.sin(n)/(1-Math.cos(n)):2/n;for(n=0;n<c.numberOfItems;++n){i=c.getItem(n);if(i.type==4){i=
-i.matrix;e.y=(d*i.e+i.f)/2;e.x=(i.e-d*i.f)/2;c.removeItem(n);break}}}n=0;r=c.numberOfItems;if(!svgedit.browser.isWebkit())if((v=q.getAttribute("fill"))&&v.indexOf("url(")===0){v=getRefElem(v);T="pattern";if(v.tagName!==T)T="gradient";if(v.getAttribute(T+"Units")==="userSpaceOnUse"){i=svgedit.math.transformListToTransform(c).matrix;w=svgedit.transformlist.getTransformList(v);w=svgedit.math.transformListToTransform(w).matrix;i=svgedit.math.matrixMultiply(i,w);w="matrix("+[i.a,i.b,i.c,i.d,i.e,i.f].join(",")+
-")";v.setAttribute(T+"Transform",w)}}if(r>=3&&c.getItem(r-2).type==3&&c.getItem(r-3).type==2&&c.getItem(r-1).type==2){n=3;i=svgedit.math.transformListToTransform(c,r-3,r-1).matrix;c.removeItem(r-1);c.removeItem(r-2);c.removeItem(r-3)}else if(r==4&&c.getItem(r-1).type==1){n=3;i=svgedit.math.transformListToTransform(c).matrix;ba=j.createSVGTransform();ba.setMatrix(i);c.clear();c.appendItem(ba);i=j.createSVGMatrix()}else if((r==1||r>1&&c.getItem(1).type!=3)&&c.getItem(0).type==2){n=2;v=c.getItem(0).matrix;
-T=svgedit.math.transformListToTransform(c,1).matrix;w=T.inverse();i=svgedit.math.matrixMultiply(w,v,T);c.removeItem(0)}else if(r==1&&c.getItem(0).type==1&&!u){i=svgedit.math.transformListToTransform(c).matrix;switch(q.tagName){case "line":K=$(q).attr(["x1","y1","x2","y2"]);case "polyline":case "polygon":K.points=q.getAttribute("points");if(K.points){w=q.points;d=w.numberOfItems;K.points=Array(d);for(n=0;n<d;++n){f=w.getItem(n);K.points[n]={x:f.x,y:f.y}}}case "path":K.d=q.getAttribute("d");n=1;c.clear()}}else{n=
-4;if(u){j=j.createSVGTransform();j.setRotate(u,m.x,m.y);c.numberOfItems?c.insertItemBefore(j,0):c.appendItem(j)}c.numberOfItems==0&&q.removeAttribute("transform");return null}if(n==1||n==2||n==3)svgedit.coords.remapElement(q,K,i);if(n==2){if(u){svgedit.math.hasMatrixTransform(c)||(m={x:e.x+i.e,y:e.y+i.f});j=j.createSVGTransform();j.setRotate(u,m.x,m.y);c.numberOfItems?c.insertItemBefore(j,0):c.appendItem(j)}if(q.tagName=="text"){d=q.childNodes;for(f=d.length;f--;){L=d.item(f);if(L.tagName=="tspan"){j=
-{x:$(L).attr("x")||0,y:$(L).attr("y")||0};svgedit.coords.remapElement(L,j,i)}}}}else if(n==3&&u){i=svgedit.math.transformListToTransform(c).matrix;v=j.createSVGTransform();v.setRotate(u,e.x,e.y);v=v.matrix;e=j.createSVGTransform();e.setRotate(u,m.x,m.y);m=e.matrix.inverse();T=i.inverse();m=svgedit.math.matrixMultiply(T,m,v,i);svgedit.coords.remapElement(q,K,m);if(u)c.numberOfItems?c.insertItemBefore(e,0):c.appendItem(e)}}c.numberOfItems==0&&q.removeAttribute("transform");k.addSubCommand(new svgedit.history.ChangeElementCommand(q,
-B));return k}})();(function(){if(!svgedit.select)svgedit.select={};var g,s,q,j=svgedit.browser.isTouch()?10:4;svgedit.select.Selector=function(c,k,i){this.id=c;this.selectedElement=k;this.locked=true;this.selectorGroup=g.createSVGElement({element:"g",attr:{id:"selectorGroup"+this.id}});this.selectorRect=this.selectorGroup.appendChild(g.createSVGElement({element:"path",attr:{id:"selectedBox"+this.id,fill:"none",stroke:"#22C","stroke-width":"1","stroke-dasharray":"5,5",style:"pointer-events:none"}}));this.gripCoords=
-{nw:null,n:null,ne:null,e:null,se:null,s:null,sw:null,w:null};this.reset(this.selectedElement,i)};svgedit.select.Selector.prototype.reset=function(c,k){this.locked=true;this.selectedElement=c;this.resize(k);this.selectorGroup.setAttribute("display","inline")};svgedit.select.Selector.prototype.updateGripCursors=function(c){var k,i=[];c=Math.round(c/45);if(c<0)c+=8;for(k in q.selectorGrips)i.push(k);for(;c>0;){i.push(i.shift());c--}c=0;for(k in q.selectorGrips){q.selectorGrips[k].setAttribute("style",
-"cursor:"+i[c]+"-resize");c++}};svgedit.select.Selector.prototype.showGrips=function(c){q.selectorGripsGroup.setAttribute("display",c?"inline":"none");var k=this.selectedElement;this.hasGrips=c;if(k&&c){this.selectorGroup.appendChild(q.selectorGripsGroup);this.updateGripCursors(svgedit.utilities.getRotationAngle(k))}};svgedit.select.Selector.prototype.resize=function(c){var k=this.selectorRect,i=q,w=i.selectorGrips,u=this.selectedElement,K=u.getAttribute("stroke-width"),B=g.currentZoom(),d=1/B;if(u.getAttribute("stroke")!==
-"none"&&!isNaN(K))d+=K/2;var n=u.tagName;if(n==="text")d+=2/B;K=svgedit.transformlist.getTransformList(u);K=svgedit.math.transformListToTransform(K).matrix;K.e*=B;K.f*=B;c||(c=svgedit.utilities.getBBox(u));if(n==="g"&&!$.data(u,"gsvg"))if(n=g.getStrokedBBox(u.childNodes))c=n;n=c.x;var f=c.y,e=c.width;c=c.height;d*=B;B=svgedit.math.transformBox(n*B,f*B,e*B,c*B,K);c=B.aabox;n=c.x-d;f=c.y-d;var m=c.width+d*2;e=c.height+d*2;c=n+m/2;K=f+e/2;if(u=svgedit.utilities.getRotationAngle(u)){n=g.svgRoot().createSVGTransform();
-n.setRotate(-u,c,K);n=n.matrix;B.tl=svgedit.math.transformPoint(B.tl.x,B.tl.y,n);B.tr=svgedit.math.transformPoint(B.tr.x,B.tr.y,n);B.bl=svgedit.math.transformPoint(B.bl.x,B.bl.y,n);B.br=svgedit.math.transformPoint(B.br.x,B.br.y,n);n=B.tl;m=n.x;e=n.y;var r=n.x,v=n.y;n=Math.min;f=Math.max;m=n(m,n(B.tr.x,n(B.bl.x,B.br.x)))-d;e=n(e,n(B.tr.y,n(B.bl.y,B.br.y)))-d;r=f(r,f(B.tr.x,f(B.bl.x,B.br.x)))+d;v=f(v,f(B.tr.y,f(B.bl.y,B.br.y)))+d;n=m;f=e;m=r-m;e=v-e}k.setAttribute("d","M"+n+","+f+" L"+(n+m)+","+f+" "+
-(n+m)+","+(f+e)+" "+n+","+(f+e)+"z");this.selectorGroup.setAttribute("transform",u?"rotate("+[u,c,K].join(",")+")":"");this.gripCoords={nw:[n,f],ne:[n+m,f],sw:[n,f+e],se:[n+m,f+e],n:[n+m/2,f],w:[n,f+e/2],e:[n+m,f+e/2],s:[n+m/2,f+e]};for(var t in this.gripCoords){k=this.gripCoords[t];w[t].setAttribute("cx",k[0]);w[t].setAttribute("cy",k[1])}i.rotateGripConnector.setAttribute("x1",n+m/2);i.rotateGripConnector.setAttribute("y1",f);i.rotateGripConnector.setAttribute("x2",n+m/2);i.rotateGripConnector.setAttribute("y2",
-f-j*5);i.rotateGrip.setAttribute("cx",n+m/2);i.rotateGrip.setAttribute("cy",f-j*5)};svgedit.select.SelectorManager=function(){this.rubberBandBox=this.selectorParentGroup=null;this.selectors=[];this.selectorMap={};this.selectorGrips={nw:null,n:null,ne:null,e:null,se:null,s:null,sw:null,w:null};this.rotateGrip=this.rotateGripConnector=this.selectorGripsGroup=null;this.initGroup()};svgedit.select.SelectorManager.prototype.initGroup=function(){this.selectorParentGroup&&this.selectorParentGroup.parentNode&&
-this.selectorParentGroup.parentNode.removeChild(this.selectorParentGroup);this.selectorParentGroup=g.createSVGElement({element:"g",attr:{id:"selectorParentGroup"}});this.selectorGripsGroup=g.createSVGElement({element:"g",attr:{display:"none"}});this.selectorParentGroup.appendChild(this.selectorGripsGroup);g.svgRoot().appendChild(this.selectorParentGroup);this.selectorMap={};this.selectors=[];this.rubberBandBox=null;for(var c in this.selectorGrips){var k=g.createSVGElement({element:"circle",attr:{id:"selectorGrip_resize_"+
-c,fill:"#22C",r:j,style:"cursor:"+c+"-resize","stroke-width":2,"pointer-events":"all"}});$.data(k,"dir",c);$.data(k,"type","resize");this.selectorGrips[c]=this.selectorGripsGroup.appendChild(k)}this.rotateGripConnector=this.selectorGripsGroup.appendChild(g.createSVGElement({element:"line",attr:{id:"selectorGrip_rotateconnector",stroke:"#22C","stroke-width":"1"}}));this.rotateGrip=this.selectorGripsGroup.appendChild(g.createSVGElement({element:"circle",attr:{id:"selectorGrip_rotate",fill:"lime",r:j,
-stroke:"#22C","stroke-width":2,style:"cursor:url("+s.imgPath+"rotate.png) 12 12, auto;"}}));$.data(this.rotateGrip,"type","rotate");if(!$("#canvasBackground").length){c=s.dimensions;c=g.createSVGElement({element:"svg",attr:{id:"canvasBackground",width:c[0],height:c[1],x:0,y:0,overflow:svgedit.browser.isWebkit()?"none":"visible",style:"pointer-events:none"}});k=g.createSVGElement({element:"rect",attr:{width:"100%",height:"100%",x:0,y:0,"stroke-width":1,stroke:"#000",fill:"#FFF",style:"pointer-events:none"}});
-c.appendChild(k);g.svgRoot().insertBefore(c,g.svgContent())}};svgedit.select.SelectorManager.prototype.requestSelector=function(c,k){if(c==null)return null;var i,w=this.selectors.length;if(typeof this.selectorMap[c.id]=="object"){this.selectorMap[c.id].locked=true;return this.selectorMap[c.id]}for(i=0;i<w;++i)if(this.selectors[i]&&!this.selectors[i].locked){this.selectors[i].locked=true;this.selectors[i].reset(c,k);this.selectorMap[c.id]=this.selectors[i];return this.selectors[i]}this.selectors[w]=
-new svgedit.select.Selector(w,c,k);this.selectorParentGroup.appendChild(this.selectors[w].selectorGroup);this.selectorMap[c.id]=this.selectors[w];return this.selectors[w]};svgedit.select.SelectorManager.prototype.releaseSelector=function(c){if(c!=null){var k,i=this.selectors.length,w=this.selectorMap[c.id];w.locked||console.log("WARNING! selector was released but was already unlocked");for(k=0;k<i;++k)if(this.selectors[k]&&this.selectors[k]==w){delete this.selectorMap[c.id];w.locked=false;w.selectedElement=
-null;w.showGrips(false);try{w.selectorGroup.setAttribute("display","none")}catch(u){}break}}};svgedit.select.SelectorManager.prototype.getRubberBandBox=function(){if(!this.rubberBandBox)this.rubberBandBox=this.selectorParentGroup.appendChild(g.createSVGElement({element:"rect",attr:{id:"selectorRubberBand",fill:"#22C","fill-opacity":0.15,stroke:"#22C","stroke-width":0.5,display:"none",style:"pointer-events:none"}}));return this.rubberBandBox};svgedit.select.init=function(c,k){s=c;g=k;q=new svgedit.select.SelectorManager};
-svgedit.select.getSelectorManager=function(){return q}})();(function(){function g(k){for(var i=1;k.indexOf("Layer "+i)>=0;)i++;return"Layer "+i}if(!svgedit.draw)svgedit.draw={};var s=svgedit.NS,q="a,circle,ellipse,foreignObject,g,image,line,path,polygon,polyline,rect,svg,text,tspan,use".split(","),j={LET_DOCUMENT_DECIDE:0,ALWAYS_RANDOMIZE:1,NEVER_RANDOMIZE:2},c=j.LET_DOCUMENT_DECIDE;svgedit.draw.randomizeIds=function(k,i){c=k===false?j.NEVER_RANDOMIZE:j.ALWAYS_RANDOMIZE;if(c==j.ALWAYS_RANDOMIZE&&!i.getNonce())i.setNonce(Math.floor(Math.random()*100001));
-else c==j.NEVER_RANDOMIZE&&i.getNonce()&&i.clearNonce()};svgedit.draw.Drawing=function(k,i){if(!k||!k.tagName||!k.namespaceURI||k.tagName!="svg"||k.namespaceURI!=s.SVG)throw"Error: svgedit.draw.Drawing instance initialized without a <svg> element";this.svgElem_=k;this.obj_num=0;this.idPrefix=i||"svg_";this.releasedNums=[];this.all_layers=[];this.layer_map={};this.current_layer=null;this.nonce_="";var w=this.svgElem_.getAttributeNS(s.SE,"nonce");if(w&&c!=j.NEVER_RANDOMIZE)this.nonce_=w;else c==j.ALWAYS_RANDOMIZE&&
-this.setNonce(Math.floor(Math.random()*100001))};svgedit.draw.Drawing.prototype.getElem_=function(k){if(this.svgElem_.querySelector)return this.svgElem_.querySelector("#"+k);return $(this.svgElem_).find("[id="+k+"]")[0]};svgedit.draw.Drawing.prototype.getSvgElem=function(){return this.svgElem_};svgedit.draw.Drawing.prototype.getNonce=function(){return this.nonce_};svgedit.draw.Drawing.prototype.setNonce=function(k){this.svgElem_.setAttributeNS(s.XMLNS,"xmlns:se",s.SE);this.svgElem_.setAttributeNS(s.SE,
-"se:nonce",k);this.nonce_=k};svgedit.draw.Drawing.prototype.clearNonce=function(){this.nonce_=""};svgedit.draw.Drawing.prototype.getId=function(){return this.nonce_?this.idPrefix+this.nonce_+"_"+this.obj_num:this.idPrefix+this.obj_num};svgedit.draw.Drawing.prototype.getNextId=function(){var k=this.obj_num,i=false;if(this.releasedNums.length>0){this.obj_num=this.releasedNums.pop();i=true}else this.obj_num++;for(var w=this.getId();this.getElem_(w);){if(i){this.obj_num=k;i=false}this.obj_num++;w=this.getId()}if(i)this.obj_num=
-k;return w};svgedit.draw.Drawing.prototype.releaseId=function(k){var i=this.idPrefix+(this.nonce_?this.nonce_+"_":"");if(typeof k!=="string"||k.indexOf(i)!==0)return false;k=parseInt(k.substr(i.length),10);if(typeof k!=="number"||k<=0||this.releasedNums.indexOf(k)!=-1)return false;this.releasedNums.push(k);return true};svgedit.draw.Drawing.prototype.getNumLayers=function(){return this.all_layers.length};svgedit.draw.Drawing.prototype.hasLayer=function(k){return this.layer_map[k]!==undefined};svgedit.draw.Drawing.prototype.getLayerName=
-function(k){return k>=0&&k<this.getNumLayers()?this.all_layers[k].getName():""};svgedit.draw.Drawing.prototype.getCurrentLayer=function(){return this.current_layer?this.current_layer.getGroup():null};svgedit.draw.Drawing.prototype.getLayerByName=function(k){return(k=this.layer_map[k])?k.getGroup():null};svgedit.draw.Drawing.prototype.getCurrentLayerName=function(){return this.current_layer?this.current_layer.getName():""};svgedit.draw.Drawing.prototype.setCurrentLayerName=function(k,i){var w=null;
-if(this.current_layer){var u=this.current_layer.getName();if(w=this.current_layer.setName(k,i)){delete this.layer_map[u];this.layer_map[w]=this.current_layer}}return w};svgedit.draw.Drawing.prototype.setCurrentLayerPosition=function(k){var i=this.getNumLayers();if(!this.current_layer||k<0||k>=i)return null;var w;for(w=0;w<i;++w)if(this.all_layers[w]==this.current_layer)break;if(w==i)return null;if(w!=k){var u=null,K=this.current_layer.getGroup(),B=K.nextSibling;if(k>w){if(k<i-1)u=this.all_layers[k+
-1].getGroup()}else u=this.all_layers[k].getGroup();this.svgElem_.insertBefore(K,u);this.identifyLayers();this.setCurrentLayer(this.getLayerName(k));return{currentGroup:K,oldNextSibling:B}}return null};svgedit.draw.Drawing.prototype.mergeLayer=function(k){var i=this.current_layer.getGroup(),w=$(i).prev()[0];if(w){k.startBatchCommand("Merge Layer");for(k.removeElement(i,i.nextSibling,this.svgElem_);i.firstChild;){var u=i.firstChild;if(u.localName=="title"){k.removeElement(u,u.nextSibling,i);i.removeChild(u)}else{var K=
-u.nextSibling;w.appendChild(u);k.moveElement(u,K,i)}}this.current_layer.removeGroup();i=this.all_layers.indexOf(this.current_layer);if(i>0){w=this.current_layer.getName();this.current_layer=this.all_layers[i-1];this.all_layers.splice(i,1);delete this.layer_map[w]}k.endBatchCommand()}};svgedit.draw.Drawing.prototype.mergeAllLayers=function(k){this.current_layer=this.all_layers[this.all_layers.length-1];for(k.startBatchCommand("Merge all Layers");this.all_layers.length>1;)this.mergeLayer(k);k.endBatchCommand()};
-svgedit.draw.Drawing.prototype.setCurrentLayer=function(k){if(k=this.layer_map[k]){this.current_layer&&this.current_layer.deactivate();this.current_layer=k;this.current_layer.activate();return true}return false};svgedit.draw.Drawing.prototype.deleteCurrentLayer=function(){if(this.current_layer&&this.getNumLayers()>1){var k=this.current_layer.removeGroup();this.identifyLayers();return k}return null};svgedit.draw.Drawing.prototype.identifyLayers=function(){this.all_layers=[];this.layer_map={};for(var k=
-this.svgElem_.childNodes.length,i=[],w=[],u=null,K=false,B=0;B<k;++B){var d=this.svgElem_.childNodes.item(B);if(d&&d.nodeType==1)if(d.tagName=="g"){K=true;var n;n=d;var f=$("title",n).text();if(!f&&svgedit.browser.isOpera()&&n.querySelectorAll)f=$(n.querySelectorAll("title")).text();if(n=f){w.push(n);u=new svgedit.draw.Layer(n,d);this.all_layers.push(u);this.layer_map[n]=u}else i.push(d)}else~q.indexOf(d.nodeName)&&i.push(d)}if(i.length>0||!K){u=new svgedit.draw.Layer(g(w),null,this.svgElem_);u.appendChildren(i);
-this.all_layers.push(u);this.layer_map[n]=u}else u.activate();this.current_layer=u};svgedit.draw.Drawing.prototype.createLayer=function(k,i){this.current_layer&&this.current_layer.deactivate();if(k===undefined||k===null||k===""||this.layer_map[k])k=g(Object.keys(this.layer_map));var w=new svgedit.draw.Layer(k,null,this.svgElem_);if(i){i.startBatchCommand("Create Layer");i.insertElement(w.getGroup());i.endBatchCommand()}this.all_layers.push(w);this.current_layer=this.layer_map[k]=w;return w.getGroup()};
-svgedit.draw.Drawing.prototype.cloneLayer=function(k,i){if(!this.current_layer)return null;this.current_layer.deactivate();if(k===undefined||k===null||k===""||this.layer_map[k])k=g(Object.keys(this.layer_map));var w=this.current_layer.getGroup(),u=new svgedit.draw.Layer(k,w,this.svgElem_),K=u.getGroup();w=w.childNodes;var B;for(B=0;B<w.length;B++){var d=w[B];d.localName!="title"&&K.appendChild(this.copyElem(d))}if(i){i.startBatchCommand("Duplicate Layer");i.insertElement(K);i.endBatchCommand()}B=
-this.all_layers.indexOf(this.current_layer);B>=0?this.all_layers.splice(B+1,0,u):this.all_layers.push(u);this.current_layer=this.layer_map[k]=u;return K};svgedit.draw.Drawing.prototype.getLayerVisibility=function(k){return(k=this.layer_map[k])?k.isVisible():false};svgedit.draw.Drawing.prototype.setLayerVisibility=function(k,i){if(typeof i!=="boolean")return null;var w=this.layer_map[k];if(!w)return null;w.setVisible(i);return w.getGroup()};svgedit.draw.Drawing.prototype.getLayerOpacity=function(k){k=
-this.layer_map[k];if(!k)return null;return k.getOpacity()};svgedit.draw.Drawing.prototype.setLayerOpacity=function(k,i){if(!(typeof i!=="number"||i<0||i>1)){var w=this.layer_map[k];w&&w.setOpacity(i)}};svgedit.draw.Drawing.prototype.copyElem=function(k){var i=this;return svgedit.utilities.copyElem(k,function(){return i.getNextId()})}})();(function(){function g(j){var c=j.getAttribute("class");if(c===null||c===undefined||c.length===0)j.setAttribute("class",q.CLASS_NAME);else q.CLASS_REGEX.test(c)||j.setAttribute("class",c+" "+q.CLASS_NAME)}if(!svgedit.draw)svgedit.draw={};var s=svgedit.NS,q=svgedit.draw.Layer=function(j,c,k){this.name_=j;this.group_=k?null:c;if(k){var i=k.ownerDocument;this.group_=i.createElementNS(s.SVG,"g");i=i.createElementNS(s.SVG,"title");i.textContent=j;this.group_.appendChild(i);c?$(c).after(this.group_):k.appendChild(this.group_)}g(this.group_);
-svgedit.utilities.walkTree(this.group_,function(w){w.setAttribute("style","pointer-events:inherit")});this.group_.setAttribute("style",k?"pointer-events:all":"pointer-events:none")};q.CLASS_NAME="layer";q.CLASS_REGEX=RegExp("(\\s|^)"+q.CLASS_NAME+"(\\s|$)");q.prototype.getName=function(){return this.name_};q.prototype.getGroup=function(){return this.group_};q.prototype.activate=function(){this.group_.setAttribute("style","pointer-events:all")};q.prototype.deactivate=function(){this.group_.setAttribute("style",
-"pointer-events:none")};q.prototype.setVisible=function(j){j=j===undefined||j?"inline":"none";this.group_.getAttribute("display")!==j&&this.group_.setAttribute("display",j)};q.prototype.isVisible=function(){return this.group_.getAttribute("display")!=="none"};q.prototype.getOpacity=function(){var j=this.group_.getAttribute("opacity");if(j===null||j===undefined)return 1;return parseFloat(j)};q.prototype.setOpacity=function(j){typeof j==="number"&&j>=0&&j<=1&&this.group_.setAttribute("opacity",j)};
-q.prototype.appendChildren=function(j){for(var c=0;c<j.length;++c)this.group_.appendChild(j[c])};q.prototype.getTitleElement=function(){for(var j=this.group_.childNodes.length,c=0;c<j;++c){var k=this.group_.childNodes.item(c);if(k&&k.tagName==="title")return k}return null};q.prototype.setName=function(j,c){var k=this.name_;j=svgedit.utilities.toXml(j);var i=this.getTitleElement();if(i){for(;i.firstChild;)i.removeChild(i.firstChild);this.name_=i.textContent=j;c&&c.changeElement(i,{"#text":k});return this.name_}return null};
-q.prototype.removeGroup=function(){var j=this.group_.parentNode.removeChild(this.group_);this.group_=undefined;return j}})();(function(){if(!svgedit.path)svgedit.path={};var g=svgedit.NS,s={pathNodeTooltip:"Drag node to move it. Double-click node to change segment type",pathCtrlPtTooltip:"Drag control point to adjust curve properties"},q={2:["x","y"],4:["x","y"],6:["x","y","x1","y1","x2","y2"],8:["x","y","x1","y1"],10:["x","y","r1","r2","angle","largeArcFlag","sweepFlag"],12:["x"],14:["y"],16:["x","y","x2","y2"],18:["x","y"]},j=[],c=true,k={};svgedit.path.setLinkControlPoints=function(f){c=f};var i=svgedit.path.path=null;
-svgedit.path.init=function(f){i=f;j=[0,"ClosePath"];$.each(["Moveto","Lineto","CurvetoCubic","CurvetoQuadratic","Arc","LinetoHorizontal","LinetoVertical","CurvetoCubicSmooth","CurvetoQuadraticSmooth"],function(e,m){j.push(m+"Abs");j.push(m+"Rel")})};svgedit.path.insertItemBefore=function(f,e,m){f=f.pathSegList;if(svgedit.browser.supportsPathInsertItemBefore())f.insertItemBefore(e,m);else{var r=f.numberOfItems,v=[],t;for(t=0;t<r;t++){var O=f.getItem(t);v.push(O)}f.clear();for(t=0;t<r;t++){t==m&&f.appendItem(e);
-f.appendItem(v[t])}}};svgedit.path.ptObjToArr=function(f,e){var m=q[f],r=m.length,v,t=[];for(v=0;v<r;v++)t[v]=e[m[v]];return t};svgedit.path.getGripPt=function(f,e){var m={x:e?e.x:f.item.x,y:e?e.y:f.item.y},r=f.path;if(r.matrix)m=svgedit.math.transformPoint(m.x,m.y,r.matrix);m.x*=i.getCurrentZoom();m.y*=i.getCurrentZoom();return m};svgedit.path.getPointFromGrip=function(f,e){var m={x:f.x,y:f.y};if(e.matrix){f=svgedit.math.transformPoint(m.x,m.y,e.imatrix);m.x=f.x;m.y=f.y}m.x/=i.getCurrentZoom();m.y/=
-i.getCurrentZoom();return m};svgedit.path.addPointGrip=function(f,e,m){var r=svgedit.path.getGripContainer(),v=svgedit.utilities.getElem("pathpointgrip_"+f);if(!v){v=document.createElementNS(g.SVG,"circle");svgedit.utilities.assignAttributes(v,{id:"pathpointgrip_"+f,display:"none",r:4,fill:"#0FF",stroke:"#00F","stroke-width":2,cursor:"move",style:"pointer-events:all","xlink:title":s.pathNodeTooltip});v=r.appendChild(v);$("#pathpointgrip_"+f).dblclick(function(){svgedit.path.path&&svgedit.path.path.setSegType()})}e&&
-m&&svgedit.utilities.assignAttributes(v,{cx:e,cy:m,display:"inline"});return v};svgedit.path.getGripContainer=function(){var f=svgedit.utilities.getElem("pathpointgrip_container");if(!f){f=svgedit.utilities.getElem("selectorParentGroup").appendChild(document.createElementNS(g.SVG,"g"));f.id="pathpointgrip_container"}return f};svgedit.path.addCtrlGrip=function(f){var e=svgedit.utilities.getElem("ctrlpointgrip_"+f);if(e)return e;e=document.createElementNS(g.SVG,"circle");svgedit.utilities.assignAttributes(e,
-{id:"ctrlpointgrip_"+f,display:"none",r:4,fill:"#0FF",stroke:"#55F","stroke-width":1,cursor:"move",style:"pointer-events:all","xlink:title":s.pathCtrlPtTooltip});svgedit.path.getGripContainer().appendChild(e);return e};svgedit.path.getCtrlLine=function(f){var e=svgedit.utilities.getElem("ctrlLine_"+f);if(e)return e;e=document.createElementNS(g.SVG,"line");svgedit.utilities.assignAttributes(e,{id:"ctrlLine_"+f,stroke:"#555","stroke-width":1,style:"pointer-events:none"});svgedit.path.getGripContainer().appendChild(e);
-return e};svgedit.path.getPointGrip=function(f,e){var m=svgedit.path.addPointGrip(f.index);if(e){var r=svgedit.path.getGripPt(f);svgedit.utilities.assignAttributes(m,{cx:r.x,cy:r.y,display:"inline"})}return m};svgedit.path.getControlPoints=function(f){var e=f.item,m=f.index;if(!("x1"in e)||!("x2"in e))return null;var r={};svgedit.path.getGripContainer();var v=[svgedit.path.path.segs[m-1].item,e],t;for(t=1;t<3;t++){var O=m+"c"+t,Q=r["c"+t+"_line"]=svgedit.path.getCtrlLine(O),L=svgedit.path.getGripPt(f,
-{x:e["x"+t],y:e["y"+t]}),N=svgedit.path.getGripPt(f,{x:v[t-1].x,y:v[t-1].y});svgedit.utilities.assignAttributes(Q,{x1:L.x,y1:L.y,x2:N.x,y2:N.y,display:"inline"});r["c"+t+"_line"]=Q;O=r["c"+t]=svgedit.path.addCtrlGrip(O);svgedit.utilities.assignAttributes(O,{cx:L.x,cy:L.y,display:"inline"});r["c"+t]=O}return r};svgedit.path.replacePathSeg=function(f,e,m,r){r=r||svgedit.path.path.elem;f=r["createSVGPathSeg"+j[f]].apply(r,m);if(svgedit.browser.supportsPathReplaceItem())r.pathSegList.replaceItem(f,e);
-else{m=r.pathSegList;r=m.numberOfItems;var v=[],t;for(t=0;t<r;t++){var O=m.getItem(t);v.push(O)}m.clear();for(t=0;t<r;t++)t==e?m.appendItem(f):m.appendItem(v[t])}};svgedit.path.getSegSelector=function(f,e){var m=f.index,r=svgedit.utilities.getElem("segline_"+m);if(!r){var v=svgedit.path.getGripContainer();r=document.createElementNS(g.SVG,"path");svgedit.utilities.assignAttributes(r,{id:"segline_"+m,display:"none",fill:"none",stroke:"#0FF","stroke-width":2,style:"pointer-events:none",d:"M0,0 0,0"});
-v.appendChild(r)}if(e){m=f.prev;if(!m){r.setAttribute("display","none");return r}m=svgedit.path.getGripPt(m);svgedit.path.replacePathSeg(2,0,[m.x,m.y],r);v=svgedit.path.ptObjToArr(f.type,f.item,true);var t;for(t=0;t<v.length;t+=2){m=svgedit.path.getGripPt(f,{x:v[t],y:v[t+1]});v[t]=m.x;v[t+1]=m.y}svgedit.path.replacePathSeg(f.type,1,v,r)}return r};svgedit.path.smoothControlPoints=function(f,e,m){var r=f.x-m.x,v=f.y-m.y,t=e.x-m.x,O=e.y-m.y;if((r!=0||v!=0)&&(t!=0||O!=0)){f=Math.atan2(v,r);e=Math.atan2(O,
-t);r=Math.sqrt(r*r+v*v);t=Math.sqrt(t*t+O*O);v=i.getSVGRoot().createSVGPoint();O=i.getSVGRoot().createSVGPoint();if(f<0)f+=2*Math.PI;if(e<0)e+=2*Math.PI;var Q=Math.abs(f-e),L=Math.abs(Math.PI-Q)/2;if(f-e>0){f=Q<Math.PI?f+L:f-L;e=Q<Math.PI?e-L:e+L}else{f=Q<Math.PI?f-L:f+L;e=Q<Math.PI?e+L:e-L}v.x=r*Math.cos(f)+m.x;v.y=r*Math.sin(f)+m.y;O.x=t*Math.cos(e)+m.x;O.y=t*Math.sin(e)+m.y;return[v,O]}};svgedit.path.Segment=function(f,e){this.selected=false;this.index=f;this.item=e;this.type=e.pathSegType;this.ctrlpts=
-[];this.segsel=this.ptgrip=null};svgedit.path.Segment.prototype.showCtrlPts=function(f){for(var e in this.ctrlpts)if(this.ctrlpts.hasOwnProperty(e))this.ctrlpts[e].setAttribute("display",f?"inline":"none")};svgedit.path.Segment.prototype.selectCtrls=function(f){$("#ctrlpointgrip_"+this.index+"c1, #ctrlpointgrip_"+this.index+"c2").attr("fill",f?"#0FF":"#EEE")};svgedit.path.Segment.prototype.show=function(f){if(this.ptgrip){this.ptgrip.setAttribute("display",f?"inline":"none");this.segsel.setAttribute("display",
-f?"inline":"none");this.showCtrlPts(f)}};svgedit.path.Segment.prototype.select=function(f){if(this.ptgrip){this.ptgrip.setAttribute("stroke",f?"#0FF":"#00F");this.segsel.setAttribute("display",f?"inline":"none");this.ctrlpts&&this.selectCtrls(f);this.selected=f}};svgedit.path.Segment.prototype.addGrip=function(){this.ptgrip=svgedit.path.getPointGrip(this,true);this.ctrlpts=svgedit.path.getControlPoints(this,true);this.segsel=svgedit.path.getSegSelector(this,true)};svgedit.path.Segment.prototype.update=
-function(f){if(this.ptgrip){var e=svgedit.path.getGripPt(this);svgedit.utilities.assignAttributes(this.ptgrip,{cx:e.x,cy:e.y});svgedit.path.getSegSelector(this,true);if(this.ctrlpts){if(f){this.item=svgedit.path.path.elem.pathSegList.getItem(this.index);this.type=this.item.pathSegType}svgedit.path.getControlPoints(this)}}};svgedit.path.Segment.prototype.move=function(f,e){var m;m=this.item;m=this.ctrlpts?[m.x+=f,m.y+=e,m.x1,m.y1,m.x2+=f,m.y2+=e]:[m.x+=f,m.y+=e];svgedit.path.replacePathSeg(this.type,
-this.index,m);if(this.next&&this.next.ctrlpts){m=this.next.item;m=[m.x,m.y,m.x1+=f,m.y1+=e,m.x2,m.y2];svgedit.path.replacePathSeg(this.next.type,this.next.index,m)}if(this.mate){m=this.mate.item;m=[m.x+=f,m.y+=e];svgedit.path.replacePathSeg(this.mate.type,this.mate.index,m)}this.update(true);this.next&&this.next.update(true)};svgedit.path.Segment.prototype.setLinked=function(f){var e,m,r;if(f==2){m=1;e=this.next;if(!e)return;r=this.item}else{m=2;e=this.prev;if(!e)return;r=e.item}var v=e.item;v["x"+
-m]=r.x+(r.x-this.item["x"+f]);v["y"+m]=r.y+(r.y-this.item["y"+f]);svgedit.path.replacePathSeg(e.type,e.index,[v.x,v.y,v.x1,v.y1,v.x2,v.y2]);e.update(true)};svgedit.path.Segment.prototype.moveCtrl=function(f,e,m){var r=this.item;r["x"+f]+=e;r["y"+f]+=m;svgedit.path.replacePathSeg(this.type,this.index,[r.x,r.y,r.x1,r.y1,r.x2,r.y2]);this.update(true)};svgedit.path.Segment.prototype.setType=function(f,e){svgedit.path.replacePathSeg(f,this.index,e);this.type=f;this.item=svgedit.path.path.elem.pathSegList.getItem(this.index);
-this.showCtrlPts(f===6);this.ctrlpts=svgedit.path.getControlPoints(this);this.update(true)};svgedit.path.Path=function(f){if(!f||f.tagName!=="path")throw"svgedit.path.Path constructed without a <path> element";this.elem=f;this.segs=[];this.selected_pts=[];svgedit.path.path=this;this.init()};svgedit.path.Path.prototype.init=function(){$(svgedit.path.getGripContainer()).find("*").each(function(){$(this).attr("display","none")});var f=this.elem.pathSegList,e=f.numberOfItems;this.segs=[];this.selected_pts=
-[];this.first_seg=null;var m;for(m=0;m<e;m++){var r=f.getItem(m);r=new svgedit.path.Segment(m,r);r.path=this;this.segs.push(r)}f=this.segs;r=null;for(m=0;m<e;m++){var v=f[m],t=m+1>=e?null:f[m+1],O=m-1<0?null:f[m-1];if(v.type===2){if(O&&O.type!==1){t=f[r];t.next=f[r+1];t.next.prev=t;t.addGrip()}r=m}else if(t&&t.type===1){v.next=f[r+1];v.next.prev=v;v.mate=f[r];v.addGrip();if(this.first_seg==null)this.first_seg=v}else if(t){if(v.type!==1){v.addGrip();if(t&&t.type!==2){v.next=t;v.next.prev=v}}}else if(v.type!==
-1){t=f[r];t.next=f[r+1];t.next.prev=t;t.addGrip();v.addGrip();if(!this.first_seg)this.first_seg=f[r]}}return this};svgedit.path.Path.prototype.eachSeg=function(f){var e,m=this.segs.length;for(e=0;e<m;e++)if(f.call(this.segs[e],e)===false)break};svgedit.path.Path.prototype.addSeg=function(f){var e=this.segs[f];if(e.prev){var m=e.prev,r,v,t;switch(e.item.pathSegType){case 4:v=(e.item.x+m.item.x)/2;t=(e.item.y+m.item.y)/2;r=this.elem.createSVGPathSegLinetoAbs(v,t);break;case 6:r=(m.item.x+e.item.x1)/
-2;var O=(e.item.x1+e.item.x2)/2,Q=(e.item.x2+e.item.x)/2,L=(r+O)/2;O=(O+Q)/2;v=(L+O)/2;var N=(m.item.y+e.item.y1)/2,T=(e.item.y1+e.item.y2)/2;m=(e.item.y2+e.item.y)/2;var ga=(N+T)/2;T=(T+m)/2;t=(ga+T)/2;r=this.elem.createSVGPathSegCurvetoCubicAbs(v,t,r,N,L,ga);svgedit.path.replacePathSeg(e.type,f,[e.item.x,e.item.y,O,T,Q,m])}svgedit.path.insertItemBefore(this.elem,r,f)}};svgedit.path.Path.prototype.deleteSeg=function(f){var e=this.segs[f],m=this.elem.pathSegList;e.show(false);var r=e.next,v;if(e.mate){v=
-[r.item.x,r.item.y];svgedit.path.replacePathSeg(2,r.index,v);svgedit.path.replacePathSeg(4,e.index,v);m.removeItem(e.mate.index)}else{if(!e.prev){v=[r.item.x,r.item.y];svgedit.path.replacePathSeg(2,e.next.index,v)}m.removeItem(f)}};svgedit.path.Path.prototype.subpathIsClosed=function(f){var e=false;svgedit.path.path.eachSeg(function(m){if(m<=f)return true;if(this.type===2)return false;if(this.type===1){e=true;return false}});return e};svgedit.path.Path.prototype.removePtFromSelection=function(f){var e=
-this.selected_pts.indexOf(f);if(e!=-1){this.segs[f].select(false);this.selected_pts.splice(e,1)}};svgedit.path.Path.prototype.clearSelection=function(){this.eachSeg(function(){this.select(false)});this.selected_pts=[]};svgedit.path.Path.prototype.storeD=function(){this.last_d=this.elem.getAttribute("d")};svgedit.path.Path.prototype.show=function(f){this.eachSeg(function(){this.show(f)});f&&this.selectPt(this.first_seg.index);return this};svgedit.path.Path.prototype.movePts=function(f,e){for(var m=
-this.selected_pts.length;m--;)this.segs[this.selected_pts[m]].move(f,e)};svgedit.path.Path.prototype.moveCtrl=function(f,e){var m=this.segs[this.selected_pts[0]];m.moveCtrl(this.dragctrl,f,e);c&&m.setLinked(this.dragctrl)};svgedit.path.Path.prototype.setSegType=function(f){this.storeD();for(var e=this.selected_pts.length,m;e--;){var r=this.segs[this.selected_pts[e]],v=r.prev;if(v){if(!f){m="Toggle Path Segment Type";f=r.type==6?4:6}f=Number(f);var t=r.item.x,O=r.item.y,Q=v.item.x;v=v.item.y;var L;
-switch(f){case 6:if(r.olditem){Q=r.olditem;L=[t,O,Q.x1,Q.y1,Q.x2,Q.y2]}else{L=t-Q;var N=O-v;L=[t,O,Q+L/3,v+N/3,t-L/3,O-N/3]}break;case 4:L=[t,O];r.olditem=r.item}r.setType(f,L)}}svgedit.path.path.endChanges(m)};svgedit.path.Path.prototype.selectPt=function(f,e){this.clearSelection();f==null&&this.eachSeg(function(m){if(this.prev)f=m});this.addPtsToSelection(f);if(e){this.dragctrl=e;c&&this.segs[f].setLinked(e)}};svgedit.path.Path.prototype.update=function(){var f=this.elem;if(svgedit.utilities.getRotationAngle(f)){this.matrix=
-svgedit.math.getMatrix(f);this.imatrix=this.matrix.inverse()}else this.imatrix=this.matrix=null;this.eachSeg(function(e){this.item=f.pathSegList.getItem(e);this.update()});return this};svgedit.path.getPath_=function(f){var e=k[f.id];e||(e=k[f.id]=new svgedit.path.Path(f));return e};svgedit.path.removePath_=function(f){f in k&&delete k[f]};var w,u,K,B,d,n=function(f,e){var m=f-K,r=e-B,v=Math.sqrt(m*m+r*r);r=Math.atan2(r,m)+d;m=v*Math.cos(r)+K;r=v*Math.sin(r)+B;m-=w;r-=u;v=Math.sqrt(m*m+r*r);r=Math.atan2(r,
-m)-d;return{x:v*Math.cos(r)+w,y:v*Math.sin(r)+u}};svgedit.path.recalcRotatedPath=function(){var f=svgedit.path.path.elem;if(d=svgedit.utilities.getRotationAngle(f,true)){var e=svgedit.utilities.getBBox(f),m=svgedit.path.path.oldbbox;K=m.x+m.width/2;B=m.y+m.height/2;w=e.x+e.width/2;u=e.y+e.height/2;m=w-K;var r=u-B;e=Math.sqrt(m*m+r*r);m=Math.atan2(r,m)+d;w=e*Math.cos(m)+K;u=e*Math.sin(m)+B;e=f.pathSegList;for(m=e.numberOfItems;m;){m-=1;var v=e.getItem(m);r=v.pathSegType;if(r!=1){var t=n(v.x,v.y);t=
-[t.x,t.y];if(v.x1!=null&&v.x2!=null){var O=n(v.x1,v.y1);v=n(v.x2,v.y2);t.splice(t.length,0,O.x,O.y,v.x,v.y)}svgedit.path.replacePathSeg(r,m,t)}}svgedit.utilities.getBBox(f);e=svgroot.createSVGTransform();f=svgedit.transformlist.getTransformList(f);e.setRotate(d*180/Math.PI,w,u);f.replaceItem(e,0)}};svgedit.path.clearData=function(){k={}}})();(function(){if(!window.console){window.console={};window.console.log=function(){};window.console.dir=function(){}}if(window.opera){window.console.log=function(g){opera.postError(g)};window.console.dir=function(){}}})();
-$.SvgCanvas=function(g,s){function q(a){return a?a:new svgedit.history.HistoryRecordingService(u.undoMgr)}function j(){ha();var a=[],h={feGaussianBlur:Ma.exportNoBlur,foreignObject:Ma.exportNoforeignObject,"[stroke-dasharray]":Ma.exportNoDashArray},b=$(d);if(!("font"in $("<canvas>")[0].getContext("2d")))h.text=Ma.exportNoText;$.each(h,function(p,o){b.find(p).length&&a.push(o)});return a}function c(a,h){var b,p=svgedit.utilities.getBBox(a);for(b=0;b<2;b++){var o=b===0?"fill":"stroke",C=a.getAttribute(o);
-if(C&&C.indexOf("url(")===0){C=svgedit.utilities.getRefElem(C);if(C.tagName==="linearGradient"){var l=C.getAttribute("x1")||0,z=C.getAttribute("y1")||0,A=C.getAttribute("x2")||1,E=C.getAttribute("y2")||0;l=p.width*l+p.x;z=p.height*z+p.y;A=p.width*A+p.x;E=p.height*E+p.y;l=svgedit.math.transformPoint(l,z,h);E=svgedit.math.transformPoint(A,E,h);A={};A.x1=(l.x-p.x)/p.width;A.y1=(l.y-p.y)/p.height;A.x2=(E.x-p.x)/p.width;A.y2=(E.y-p.y)/p.height;C=C.cloneNode(true);$(C).attr(A);C.id=na();svgedit.utilities.findDefs().appendChild(C);
-a.setAttribute(o,"url(#"+C.id+")")}}}}var k=svgedit.NS,i={show_outside_canvas:true,selectNew:true,dimensions:[640,480]};s&&$.extend(i,s);var w=i.dimensions,u=this,K=g.ownerDocument,B=K.importNode(svgedit.utilities.text2xml('<svg id="svgroot" xmlns="'+k.SVG+'" xlinkns="'+k.XLINK+'" width="'+w[0]+'" height="'+w[1]+'" x="'+w[0]+'" y="'+w[1]+'" overflow="visible"><defs><filter id="canvashadow" filterUnits="objectBoundingBox"><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/><feOffset in="blur" dx="5" dy="5" result="offsetBlur"/><feMerge><feMergeNode in="offsetBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs></svg>').documentElement,
-true);g.appendChild(B);var d=K.createElementNS(k.SVG,"svg");(u.clearSvgContentElement=function(){for(;d.firstChild;)d.removeChild(d.firstChild);$(d).attr({id:"svgcontent",width:w[0],height:w[1],x:w[0],y:w[1],overflow:i.show_outside_canvas?"visible":"hidden",xmlns:k.SVG,"xmlns:se":k.SE,"xmlns:xlink":k.XLINK}).appendTo(B);var a=K.createComment(" Created with SVG-edit - https://github.com/SVG-Edit/svgedit");d.appendChild(a)})();var n="svg_";u.setIdPrefix=function(a){n=a};u.current_drawing_=new svgedit.draw.Drawing(d,
-n);var f=u.getCurrentDrawing=function(){return u.current_drawing_},e=1,m=null,r={shape:{fill:(i.initFill.color=="none"?"":"#")+i.initFill.color,fill_paint:null,fill_opacity:i.initFill.opacity,stroke:"#"+i.initStroke.color,stroke_paint:null,stroke_opacity:i.initStroke.opacity,stroke_width:i.initStroke.width,stroke_dasharray:"none",stroke_linejoin:"miter",stroke_linecap:"butt",opacity:i.initOpacity}};r.text=$.extend(true,{},r.shape);$.extend(r.text,{fill:"#000000",stroke_width:i.text.stroke_width,font_size:i.text.font_size,
-font_family:i.text.font_family});var v=r.shape,t=[],O=this.addSvgElementFromJson=function(a){if(typeof a=="string")return K.createTextNode(a);var h=svgedit.utilities.getElem(a.attr.id),b=f().getCurrentLayer();if(h&&a.element!=h.tagName){b.removeChild(h);h=null}if(!h){h=K.createElementNS(k.SVG,a.element);if(b)(m||b).appendChild(h)}a.curStyles&&svgedit.utilities.assignAttributes(h,{fill:v.fill,stroke:v.stroke,"stroke-width":v.stroke_width,"stroke-dasharray":v.stroke_dasharray,"stroke-linejoin":v.stroke_linejoin,
-"stroke-linecap":v.stroke_linecap,"stroke-opacity":v.stroke_opacity,"fill-opacity":v.fill_opacity,opacity:v.opacity/2,style:"pointer-events:inherit"},100);svgedit.utilities.assignAttributes(h,a.attr,100);svgedit.utilities.cleanupElement(h);a.children&&a.children.forEach(function(p){h.appendChild(O(p))});return h};u.getTransformList=svgedit.transformlist.getTransformList;var Q=svgedit.math.transformPoint,L=u.matrixMultiply=svgedit.math.matrixMultiply,N=u.hasMatrixTransform=svgedit.math.hasMatrixTransform,
-T=u.transformListToTransform=svgedit.math.transformListToTransform;svgedit.units.init({getBaseUnit:function(){return i.baseUnit},getElement:svgedit.utilities.getElem,getHeight:function(){return d.getAttribute("height")/e},getWidth:function(){return d.getAttribute("width")/e},getRoundDigits:function(){return Fa.round_digits}});u.convertToNum=svgedit.units.convertToNum;svgedit.utilities.init({getDOMDocument:function(){return K},getDOMContainer:function(){return g},getSVGRoot:function(){return B},getSelectedElements:function(){return t},
-getSVGContent:function(){return d},getBaseUnit:function(){return i.baseUnit},getSnappingStep:function(){return i.snappingStep}});var ga=u.findDefs=svgedit.utilities.findDefs,ba=u.getUrlFromAttr=svgedit.utilities.getUrlFromAttr,pa=u.getHref=svgedit.utilities.getHref,ta=u.setHref=svgedit.utilities.setHref,qa=svgedit.utilities.getPathBBox;u.getBBox=svgedit.utilities.getBBox;u.getRotationAngle=svgedit.utilities.getRotationAngle;var Ca=u.getElem=svgedit.utilities.getElem;u.getRefElem=svgedit.utilities.getRefElem;
-var La=u.assignAttributes=svgedit.utilities.assignAttributes,nb=this.cleanupElement=svgedit.utilities.cleanupElement;svgedit.coords.init({getDrawing:function(){return f()},getGridSnapping:function(){return i.gridSnapping}});var xb=this.remapElement=svgedit.coords.remapElement;svgedit.recalculate.init({getSVGRoot:function(){return B},getStartTransform:function(){return Ra},setStartTransform:function(a){Ra=a}});var yb=this.recalculateDimensions=svgedit.recalculate.recalculateDimensions,ya=svgedit.getReverseNS(),
-zb=u.sanitizeSvg=svgedit.sanitize.sanitizeSvg,ob=svgedit.history.MoveElementCommand,$a=svgedit.history.InsertElementCommand,Sa=svgedit.history.RemoveElementCommand,pb=svgedit.history.ChangeElementCommand,Ab=svgedit.history.BatchCommand,Y;u.undoMgr=new svgedit.history.UndoManager({handleHistoryEvent:function(a,h){var b=svgedit.history.HistoryEventTypes;if(a==b.BEFORE_UNAPPLY||a==b.BEFORE_APPLY)u.clearSelection();else if(a==b.AFTER_APPLY||a==b.AFTER_UNAPPLY){var p=h.elements();u.pathActions.clear();
-Y("changed",p);p=h.type();b=a==b.AFTER_APPLY;if(p==ob.type())(b?h.newParent:h.oldParent)==d&&u.identifyLayers();else if(p==$a.type()||p==Sa.type()){h.parent==d&&u.identifyLayers();if(p==$a.type())b&&Ta(h.elem);else b||Ta(h.elem);h.elem.tagName==="use"&&ab(h.elem)}else if(p==pb.type()){h.elem.tagName=="title"&&h.elem.parentNode.parentNode==d&&u.identifyLayers();b=b?h.newValues:h.oldValues;b.stdDeviation&&u.setBlurOffsets(h.elem.parentNode,b.stdDeviation)}}}});var da=function(a){u.undoMgr.addCommandToHistory(a)};
-svgedit.select.init(i,{createSVGElement:function(a){return u.addSvgElementFromJson(a)},svgRoot:function(){return B},svgContent:function(){return d},currentZoom:function(){return e},getStrokedBBox:function(a){return u.getStrokedBBox([a])}});var ea=this.selectorManager=svgedit.select.getSelectorManager();svgedit.path.init({getCurrentZoom:function(){return e},getSVGRoot:function(){return B}});var Ma={exportNoBlur:"Blurred elements will appear as un-blurred",exportNoforeignObject:"foreignObject elements will not appear",
-exportNoDashArray:"Strokes will appear filled",exportNoText:"Text may not appear as expected"},qb=["clip-path","fill","filter","marker-end","marker-mid","marker-start","mask","stroke"],Ua=$.data,bb=document.createElementNS(k.SVG,"animate");$(bb).attr({attributeName:"opacity",begin:"indefinite",dur:1,fill:"freeze"}).appendTo(B);var Ta=function(a){var h,b=$(a).attr(qb);for(h in b){var p=b[h];if(p&&p.indexOf("url(")===0){p=svgedit.utilities.getUrlFromAttr(p).substr(1);if(!Ca(p)){svgedit.utilities.findDefs().appendChild(cb[p]);
-delete cb[p]}}}b=a.getElementsByTagName("*");if(b.length){a=0;for(h=b.length;a<h;a++)Ta(b[a])}},Va={},db=i.imgPath+"logo.png",Wa=[],Fa={round_digits:5},ma=false,Ra=null,fa="select",za="none",Na={},ua=r.text,ra=v,eb=null,ia=null,Ga=[],fb={},gb=null,cb={};u.clipBoard=[];var Ja=this.runExtensions=function(a,h,b){var p=b?[]:false;$.each(fb,function(o,C){if(C&&a in C)if(b)p.push(C[a](h));else p=C[a](h)});return p};this.addExtension=function(a,h){var b;if(a in fb)console.log('Cannot add extension "'+a+
-'", an extension by that name already exists.');else{b=$.isFunction(h)?h($.extend(u.getPrivateMethods(),{svgroot:B,svgcontent:d,nonce:f().getNonce(),selectorManager:ea})):h;fb[a]=b;Y("extension_added",b)}};var Oa=this.round=function(a){return parseInt(a*e,10)/e},hb=this.getIntersectionList=function(a){if(ia==null)return null;var h=m||f().getCurrentLayer(),b;if(a){b=d.createSVGRect();b.x=a.x;b.y=a.y;b.width=a.width;b.height=a.height}else{b=ia.getBBox();var p;a=d.createSVGRect();for(p in b)a[p]=b[p]/
-e;b=a}p=null;if(!svgedit.browser.isIE)if(typeof B.getIntersectionList=="function"){b.x+=parseInt(d.getAttribute("x"),10);b.y+=parseInt(d.getAttribute("y"),10);p=B.getIntersectionList(b,h)}if(p==null||typeof p.item!="function"){p=[];Ga.length||(Ga=Bb(h));for(h=Ga.length;h--;)b.width&&svgedit.math.rectsIntersect(b,Ga[h].bbox)&&p.push(Ga[h].elem)}return p},wa=this.getStrokedBBox=function(a){a||(a=Xa());return svgedit.utilities.getStrokedBBox(a,O,ca)},Xa=this.getVisibleElements=function(a){a||(a=$(d).children());
-var h=[];$(a).children().each(function(b,p){p.getBBox&&h.push(p)});return h.reverse()},Bb=this.getVisibleElementsAndBBoxes=function(a){a||(a=$(d).children());var h=[];$(a).children().each(function(b,p){p.getBBox&&h.push({elem:p,bbox:wa([p])})});return h.reverse()},rb=this.groupSvgElem=function(a){var h=document.createElementNS(k.SVG,"g");a.parentNode.replaceChild(h,a);$(h).append(a).data("gsvg",a)[0].id=na()},va,na,oa,ca;(function(a){var h={};va=a.getId=function(){return f().getId()};na=a.getNextId=
-function(){return f().getNextId()};Y=a.call=function(b,p){if(h[b])return h[b](this,p)};a.bind=function(b,p){var o=h[b];h[b]=p;return o}})(u);this.prepareSvg=function(a){this.sanitizeSvg(a.documentElement);var h,b,p=a.getElementsByTagNameNS(k.SVG,"path");a=0;for(b=p.length;a<b;++a){h=p[a];h.setAttribute("d",ca.convertPath(h));ca.fixEnd(h)}};var ib=function(a){if(!svgedit.browser.isGecko())return a;var h=a.cloneNode(true);a.parentNode.insertBefore(h,a);a.parentNode.removeChild(a);ea.releaseSelector(a);
-t[0]=h;ea.requestSelector(h).showGrips(true);return h};this.setRotationAngle=function(a,h){a=parseFloat(a);var b=t[0],p=b.getAttribute("transform"),o=svgedit.utilities.getBBox(b),C=o.x+o.width/2,l=o.y+o.height/2;o=svgedit.transformlist.getTransformList(b);o.numberOfItems>0&&o.getItem(0).type==4&&o.removeItem(0);if(a!=0){C=svgedit.math.transformPoint(C,l,svgedit.math.transformListToTransform(o).matrix);l=B.createSVGTransform();l.setRotate(a,C.x,C.y);o.numberOfItems?o.insertItemBefore(l,0):o.appendItem(l)}else o.numberOfItems==
-0&&b.removeAttribute("transform");if(!h){o=b.getAttribute("transform");b.setAttribute("transform",p);sa("transform",o,t);Y("changed",t)}svgedit.utilities.getElem("pathpointgrip_container");b=ea.requestSelector(t[0]);b.resize();b.updateGripCursors(a)};var jb=this.recalculateAllSelectedDimensions=function(){for(var a=new svgedit.history.BatchCommand(za=="none"?"position":"size"),h=t.length;h--;){var b=svgedit.recalculate.recalculateDimensions(t[h]);b&&a.addSubCommand(b)}if(!a.isEmpty()){da(a);Y("changed",
-t)}},Cb=function(a){console.log([a.a,a.b,a.c,a.d,a.e,a.f])},Da=null,ha=this.clearSelection=function(a){if(t[0]!=null){var h,b,p=t.length;for(h=0;h<p;++h){b=t[h];if(b==null)break;ea.releaseSelector(b);t[h]=null}}a||Y("selected",t)},xa=this.addToSelection=function(a,h){if(a.length!=0){for(var b=0;b<t.length;){if(t[b]==null)break;++b}for(var p=a.length;p--;){var o=a[p];if(o){var C=svgedit.utilities.getBBox(o);if(C){if(o.tagName==="a"&&o.childNodes.length===1)o=o.firstChild;if(t.indexOf(o)==-1){t[b]=
-o;b++;o=ea.requestSelector(o,C);t.length>1&&o.showGrips(false)}}}}Y("selected",t);h||t.length==1?ea.requestSelector(t[0]).showGrips(true):ea.requestSelector(t[0]).showGrips(false);for(t.sort(function(l,z){if(l&&z&&l.compareDocumentPosition)return 3-(z.compareDocumentPosition(l)&6);if(l==null)return 1});t[0]==null;)t.shift(0)}},Aa=this.selectOnly=function(a,h){ha(true);xa(a,h)};this.removeFromSelection=function(a){if(t[0]!=null)if(a.length!=0){var h,b=0,p=[],o=t.length;p.length=o;for(h=0;h<o;++h){var C=
-t[h];if(C)if(a.indexOf(C)==-1){p[b]=C;b++}else ea.releaseSelector(C)}t=p}};this.selectAllInCurrentLayer=function(){var a=f().getCurrentLayer();if(a){fa="select";Aa($(m||a).children())}};var Ya=this.getMouseTarget=function(a){if(a==null)return null;a=a.target;if(a.correspondingUseElement)a=a.correspondingUseElement;if([k.MATH,k.HTML].indexOf(a.namespaceURI)>=0&&a.id!="svgcanvas")for(;a.nodeName!="foreignObject";){a=a.parentNode;if(!a)return B}var h=f().getCurrentLayer();if([B,g,d,h].indexOf(a)>=0)return B;
-if($(a).closest("#selectorParentGroup").length)return ea.selectorParentGroup;for(;a.parentNode!==(m||h);)a=a.parentNode;return a};(function(){var a=null,h=null,b=null,p=null,o=null,C={},l={minx:null,miny:null,maxx:null,maxy:null},z=0,A={x:0,y:0},E={x:0,y:0},F={x:0,y:0},J={x:0,y:0},P,R,V={x:0,y:0},W={x:0,y:0},Z=function(M){var H={x:0,y:0},D=A,G=E,I=F,S=J,X=1/6,aa=M*M,la=aa*M,U=[[-1,3,-3,1],[3,-6,3,0],[-3,0,3,0],[1,4,1,0]];H.x=X*((D.x*U[0][0]+G.x*U[0][1]+I.x*U[0][2]+S.x*U[0][3])*la+(D.x*U[1][0]+G.x*
-U[1][1]+I.x*U[1][2]+S.x*U[1][3])*aa+(D.x*U[2][0]+G.x*U[2][1]+I.x*U[2][2]+S.x*U[2][3])*M+(D.x*U[3][0]+G.x*U[3][1]+I.x*U[3][2]+S.x*U[3][3]));H.y=X*((D.y*U[0][0]+G.y*U[0][1]+I.y*U[0][2]+S.y*U[0][3])*la+(D.y*U[1][0]+G.y*U[1][1]+I.y*U[1][2]+S.y*U[1][3])*aa+(D.y*U[2][0]+G.y*U[2][1]+I.y*U[2][2]+S.y*U[2][3])*M+(D.y*U[3][0]+G.y*U[3][1]+I.y*U[3][2]+S.y*U[3][3]));return{x:H.x,y:H.y}};$(g).mousedown(function(M){if(!(u.spaceKey||M.button===1)){var H=M.button===2;M.altKey&&svgCanvas.cloneSelectedElements(0,0);
-Da=$("#svgcontent g")[0].getScreenCTM().inverse();var D=svgedit.math.transformPoint(M.pageX,M.pageY,Da),G=D.x*e,I=D.y*e;M.preventDefault();if(H){fa="select";gb=D}D=G/e;I=I/e;var S=Ya(M);if(S.tagName==="a"&&S.childNodes.length===1)S=S.firstChild;p=h=G=D;var X=I;o=b=I;if(i.gridSnapping){D=svgedit.utilities.snapToGrid(D);I=svgedit.utilities.snapToGrid(I);h=svgedit.utilities.snapToGrid(h);b=svgedit.utilities.snapToGrid(b)}if(S==ea.selectorParentGroup&&t[0]!=null){S=M.target;var aa=Ua(S,"type");if(aa==
-"rotate")fa="rotate";else if(aa=="resize"){fa="resize";za=Ua(S,"dir")}S=t[0]}Ra=S.getAttribute("transform");var la;aa=svgedit.transformlist.getTransformList(S);switch(fa){case "select":ma=true;za="none";if(H)ma=false;if(S!=B){if(t.indexOf(S)==-1){M.shiftKey||ha(true);xa([S]);eb=S;ca.clear()}if(!H)for(H=0;H<t.length;++H)if(t[H]!=null){la=svgedit.transformlist.getTransformList(t[H]);la.numberOfItems?la.insertItemBefore(B.createSVGTransform(),0):la.appendItem(B.createSVGTransform())}}else if(!H){ha();
-fa="multiselect";if(ia==null)ia=ea.getRubberBandBox();p*=e;o*=e;svgedit.utilities.assignAttributes(ia,{x:p,y:o,width:0,height:0,display:"inline"},100)}break;case "zoom":ma=true;if(ia==null)ia=ea.getRubberBandBox();svgedit.utilities.assignAttributes(ia,{x:G*e,y:G*e,width:0,height:0,display:"inline"},100);break;case "resize":ma=true;h=D;b=I;C=svgedit.utilities.getBBox($("#selectedBox0")[0]);var U={};$.each(C,function(ja,ka){U[ja]=ka/e});C=U;H=svgedit.utilities.getRotationAngle(S)?1:0;if(svgedit.math.hasMatrixTransform(aa)){aa.insertItemBefore(B.createSVGTransform(),
-H);aa.insertItemBefore(B.createSVGTransform(),H);aa.insertItemBefore(B.createSVGTransform(),H)}else{aa.appendItem(B.createSVGTransform());aa.appendItem(B.createSVGTransform());aa.appendItem(B.createSVGTransform());if(svgedit.browser.supportsNonScalingStroke()){if(D=svgedit.browser.isWebkit())la=function(ja){var ka=ja.getAttributeNS(null,"stroke");ja.removeAttributeNS(null,"stroke");ka!==null&&setTimeout(function(){ja.setAttributeNS(null,"stroke",ka)},0)};S.style.vectorEffect="non-scaling-stroke";
-D&&la(S);I=S.getElementsByTagName("*");G=I.length;for(H=0;H<G;H++){I[H].style.vectorEffect="non-scaling-stroke";D&&la(I[H])}}}break;case "fhellipse":case "fhrect":case "fhpath":F.x=G;F.y=X;ma=true;a=G+","+X+" ";la=v.stroke_width==0?1:v.stroke_width;O({element:"polyline",curStyles:true,attr:{points:a,id:na(),fill:"none",opacity:v.opacity/2,"stroke-linecap":"round",style:"pointer-events:none"}});l.minx=G;l.maxx=G;l.miny=X;l.maxy=X;break;case "image":ma=true;la=O({element:"image",attr:{x:D,y:I,width:0,
-height:0,id:na(),opacity:v.opacity/2,style:"pointer-events:inherit"}});ta(la,db);svgedit.utilities.preventClickDefault(la);break;case "square":case "rect":ma=true;h=D;b=I;O({element:"rect",curStyles:true,attr:{x:D,y:I,width:0,height:0,id:na(),opacity:v.opacity/2}});break;case "line":ma=true;la=v.stroke_width==0?1:v.stroke_width;O({element:"line",curStyles:true,attr:{x1:D,y1:I,x2:D,y2:I,id:na(),stroke:v.stroke,"stroke-width":la,"stroke-dasharray":v.stroke_dasharray,"stroke-linejoin":v.stroke_linejoin,
-"stroke-linecap":v.stroke_linecap,"stroke-opacity":v.stroke_opacity,fill:"none",opacity:v.opacity/2,style:"pointer-events:none"}});break;case "circle":ma=true;O({element:"circle",curStyles:true,attr:{cx:D,cy:I,r:0,id:na(),opacity:v.opacity/2}});break;case "ellipse":ma=true;O({element:"ellipse",curStyles:true,attr:{cx:D,cy:I,rx:0,ry:0,id:na(),opacity:v.opacity/2}});break;case "text":ma=true;O({element:"text",curStyles:true,attr:{x:D,y:I,id:na(),fill:ua.fill,"stroke-width":ua.stroke_width,"font-size":ua.font_size,
-"font-family":ua.font_family,"text-anchor":"middle","xml:space":"preserve",opacity:v.opacity}});break;case "path":case "pathedit":h*=e;b*=e;ca.mouseDown(M,S,h,b);ma=true;break;case "textedit":h*=e;b*=e;oa.mouseDown(M,S,h,b);ma=true;break;case "rotate":ma=true;u.undoMgr.beginUndoableChange("transform",t)}M=Ja("mouseDown",{event:M,start_x:h,start_y:b,selectedElements:t},true);$.each(M,function(ja,ka){if(ka&&ka.started)ma=true})}}).mousemove(function(M){if(ma)if(!(M.button===1||u.spaceKey)){var H,D,
-G,I,S,X=t[0],aa=svgedit.math.transformPoint(M.pageX,M.pageY,Da),la=aa.x*e;aa=aa.y*e;var U=svgedit.utilities.getElem(va());x=D=la/e;y=I=aa/e;if(i.gridSnapping){x=svgedit.utilities.snapToGrid(x);y=svgedit.utilities.snapToGrid(y)}M.preventDefault();switch(fa){case "select":if(t[0]!==null){D=x-h;G=y-b;if(i.gridSnapping){D=svgedit.utilities.snapToGrid(D);G=svgedit.utilities.snapToGrid(G)}if(M.shiftKey){H=svgedit.math.snapToAngle(h,b,x,y);x=H.x;y=H.y}if(D!=0||G!=0){I=t.length;for(H=0;H<I;++H){X=t[H];if(X==
-null)break;var ja=B.createSVGTransform();U=svgedit.transformlist.getTransformList(X);ja.setTranslate(D,G);U.numberOfItems?U.replaceItem(ja,0):U.appendItem(ja);ea.requestSelector(X).resize()}Y("transition",t)}}break;case "multiselect":D*=e;I*=e;svgedit.utilities.assignAttributes(ia,{x:Math.min(p,D),y:Math.min(o,I),width:Math.abs(D-p),height:Math.abs(I-o)},100);U=t.slice();D=[];ja=hb();I=ja.length;for(H=0;H<I;++H){G=ja[H];t.indexOf(G)==-1&&D.push(G);G=U.indexOf(G);G!=-1&&U.splice(G,1)}U.length>0&&u.removeFromSelection(U);
-D.length>0&&u.addToSelection(D);break;case "resize":U=svgedit.transformlist.getTransformList(X);G=(H=svgedit.math.hasMatrixTransform(U))?C:svgedit.utilities.getBBox(X);I=G.x;ja=G.y;var ka=G.width,Ba=G.height;D=x-h;G=y-b;if(i.gridSnapping){D=svgedit.utilities.snapToGrid(D);G=svgedit.utilities.snapToGrid(G);Ba=svgedit.utilities.snapToGrid(Ba);ka=svgedit.utilities.snapToGrid(ka)}if(S=svgedit.utilities.getRotationAngle(X)){var Ea=Math.sqrt(D*D+G*G);G=Math.atan2(G,D)-S*Math.PI/180;D=Ea*Math.cos(G);G=Ea*
-Math.sin(G)}if(za.indexOf("n")==-1&&za.indexOf("s")==-1)G=0;if(za.indexOf("e")==-1&&za.indexOf("w")==-1)D=0;var Pa=Ea=0,Za=Ba?(Ba+G)/Ba:1,Qa=ka?(ka+D)/ka:1;if(za.indexOf("n")>=0){Za=Ba?(Ba-G)/Ba:1;Pa=Ba}if(za.indexOf("w")>=0){Qa=ka?(ka-D)/ka:1;Ea=ka}D=B.createSVGTransform();G=B.createSVGTransform();ka=B.createSVGTransform();if(i.gridSnapping){I=svgedit.utilities.snapToGrid(I);Ea=svgedit.utilities.snapToGrid(Ea);ja=svgedit.utilities.snapToGrid(ja);Pa=svgedit.utilities.snapToGrid(Pa)}D.setTranslate(-(I+
-Ea),-(ja+Pa));if(M.shiftKey)if(Qa==1)Qa=Za;else Za=Qa;G.setScale(Qa,Za);ka.setTranslate(I+Ea,ja+Pa);if(H){H=S?1:0;U.replaceItem(D,2+H);U.replaceItem(G,1+H);U.replaceItem(ka,Number(H))}else{H=U.numberOfItems;U.replaceItem(ka,H-3);U.replaceItem(G,H-2);U.replaceItem(D,H-1)}ea.requestSelector(X).resize();Y("transition",t);break;case "zoom":D*=e;I*=e;svgedit.utilities.assignAttributes(ia,{x:Math.min(p*e,D),y:Math.min(o*e,I),width:Math.abs(D-p*e),height:Math.abs(I-o*e)},100);break;case "text":svgedit.utilities.assignAttributes(U,
-{x:x,y:y},1E3);break;case "line":if(i.gridSnapping){x=svgedit.utilities.snapToGrid(x);y=svgedit.utilities.snapToGrid(y)}D=x;H=y;if(M.shiftKey){H=svgedit.math.snapToAngle(h,b,D,H);D=H.x;H=H.y}U.setAttributeNS(null,"x2",D);U.setAttributeNS(null,"y2",H);break;case "foreignObject":case "square":case "rect":case "image":D=Math.abs(x-h);H=Math.abs(y-b);if(fa=="square"||M.shiftKey){D=H=Math.max(D,H);I=h<x?h:h-D;ja=b<y?b:b-H}else{I=Math.min(h,x);ja=Math.min(b,y)}if(i.gridSnapping){D=svgedit.utilities.snapToGrid(D);
-H=svgedit.utilities.snapToGrid(H);I=svgedit.utilities.snapToGrid(I);ja=svgedit.utilities.snapToGrid(ja)}svgedit.utilities.assignAttributes(U,{width:D,height:H,x:I,y:ja},1E3);break;case "circle":H=$(U).attr(["cx","cy"]);D=H.cx;H=H.cy;D=Math.sqrt((x-D)*(x-D)+(y-H)*(y-H));if(i.gridSnapping)D=svgedit.utilities.snapToGrid(D);U.setAttributeNS(null,"r",D);break;case "ellipse":H=$(U).attr(["cx","cy"]);D=H.cx;H=H.cy;if(i.gridSnapping){x=svgedit.utilities.snapToGrid(x);D=svgedit.utilities.snapToGrid(D);y=svgedit.utilities.snapToGrid(y);
-H=svgedit.utilities.snapToGrid(H)}U.setAttributeNS(null,"rx",Math.abs(x-D));U.setAttributeNS(null,"ry",Math.abs(M.shiftKey?x-D:y-H));break;case "fhellipse":case "fhrect":l.minx=Math.min(D,l.minx);l.maxx=Math.max(D,l.maxx);l.miny=Math.min(I,l.miny);l.maxy=Math.max(I,l.maxy);case "fhpath":J.x=D;J.y=I;if(A.x&&A.y)for(H=0;H<9;H++){P=H/10;R=(H+1)/10;W=V=Z(R);V=Z(P);z+=Math.sqrt((W.x-V.x)*(W.x-V.x)+(W.y-V.y)*(W.y-V.y));if(z>0.8){a+=+V.x+","+V.y+" ";U.setAttributeNS(null,"points",a);z-=0.8}}A={x:E.x,y:E.y};
-E={x:F.x,y:F.y};F={x:J.x,y:J.y};break;case "path":case "pathedit":x*=e;y*=e;if(i.gridSnapping){x=svgedit.utilities.snapToGrid(x);y=svgedit.utilities.snapToGrid(y);h=svgedit.utilities.snapToGrid(h);b=svgedit.utilities.snapToGrid(b)}if(M.shiftKey){if(H=svgedit.path.path){U=H.dragging?H.dragging[0]:h;H=H.dragging?H.dragging[1]:b}else{U=h;H=b}H=svgedit.math.snapToAngle(U,H,x,y);x=H.x;y=H.y}if(ia&&ia.getAttribute("display")!=="none"){D*=e;I*=e;svgedit.utilities.assignAttributes(ia,{x:Math.min(p*e,D),y:Math.min(o*
-e,I),width:Math.abs(D-p*e),height:Math.abs(I-o*e)},100)}ca.mouseMove(x,y);break;case "textedit":x*=e;y*=e;oa.mouseMove(la,aa);break;case "rotate":G=svgedit.utilities.getBBox(X);D=G.x+G.width/2;H=G.y+G.height/2;U=svgedit.math.getMatrix(X);U=svgedit.math.transformPoint(D,H,U);D=U.x;H=U.y;S=(Math.atan2(H-y,D-x)*(180/Math.PI)-90)%360;if(i.gridSnapping)S=svgedit.utilities.snapToGrid(S);if(M.shiftKey)S=Math.round(S/45)*45;u.setRotationAngle(S<-180?360+S:S,true);Y("transition",t)}Ja("mouseMove",{event:M,
-mouse_x:la,mouse_y:aa,selected:X})}}).click(function(M){M.preventDefault();return false}).dblclick(function(M){var H=M.target.parentNode;if(H!==m){var D=Ya(M),G=D.tagName;if(G==="text"&&fa!=="textedit"){M=svgedit.math.transformPoint(M.pageX,M.pageY,Da);oa.select(D,M.x,M.y)}if((G==="g"||G==="a")&&svgedit.utilities.getRotationAngle(D)){kb(D);D=t[0];ha(true)}m&&Ha();H.tagName!=="g"&&H.tagName!=="a"||H===f().getCurrentLayer()||D===ea.selectorParentGroup||Db(D)}}).mouseup(function(M){if(M.button!==2){var H=
-eb;eb=null;if(ma){var D=svgedit.math.transformPoint(M.pageX,M.pageY,Da),G=D.x*e;D=D.y*e;var I=G/e,S=D/e,X=svgedit.utilities.getElem(va()),aa=false;ma=false;switch(fa){case "resize":case "multiselect":if(ia!=null){ia.setAttribute("display","none");Ga=[]}fa="select";case "select":if(t[0]!=null){if(t[1]==null){G=t[0];switch(G.tagName){case "g":case "use":case "image":case "foreignObject":break;default:ra.fill=G.getAttribute("fill");ra.fill_opacity=G.getAttribute("fill-opacity");ra.stroke=G.getAttribute("stroke");
-ra.stroke_opacity=G.getAttribute("stroke-opacity");ra.stroke_width=G.getAttribute("stroke-width");ra.stroke_dasharray=G.getAttribute("stroke-dasharray");ra.stroke_linejoin=G.getAttribute("stroke-linejoin");ra.stroke_linecap=G.getAttribute("stroke-linecap")}if(G.tagName=="text"){ua.font_size=G.getAttribute("font-size");ua.font_family=G.getAttribute("font-family")}ea.requestSelector(G).showGrips(true)}jb();if(I!=p||S!=o){G=t.length;for(M=0;M<G;++M){if(t[M]==null)break;t[M].firstChild||ea.requestSelector(t[M]).resize()}}else{G=
-M.target;if(t[0].nodeName==="path"&&t[1]==null)ca.select(t[0]);else M.shiftKey&&H!=G&&u.removeFromSelection([G])}if(svgedit.browser.supportsNonScalingStroke())if(M=t[0]){M.removeAttribute("style");svgedit.utilities.walkTree(M,function(ja){ja.removeAttribute("style")})}}return;case "zoom":ia!=null&&ia.setAttribute("display","none");Y("zoomed",{x:Math.min(p,I),y:Math.min(o,S),width:Math.abs(I-p),height:Math.abs(S-o),factor:M.shiftKey?0.5:2});return;case "fhpath":z=0;A={x:0,y:0};E={x:0,y:0};F={x:0,y:0};
-J={x:0,y:0};H=X.getAttribute("points");I=H.indexOf(",");if(aa=I>=0?H.indexOf(",",I+1)>=0:H.indexOf(" ",H.indexOf(" ")+1)>=0)X=ca.smoothPolylineIntoPath(X);break;case "line":H=$(X).attr(["x1","x2","y1","y2"]);aa=H.x1!=H.x2||H.y1!=H.y2;break;case "foreignObject":case "square":case "rect":case "image":H=$(X).attr(["width","height"]);aa=H.width!=0||H.height!=0||fa==="image";break;case "circle":aa=X.getAttribute("r")!=0;break;case "ellipse":H=$(X).attr(["rx","ry"]);aa=H.rx!=null||H.ry!=null;break;case "fhellipse":if(l.maxx-
-l.minx>0&&l.maxy-l.miny>0){X=O({element:"ellipse",curStyles:true,attr:{cx:(l.minx+l.maxx)/2,cy:(l.miny+l.maxy)/2,rx:(l.maxx-l.minx)/2,ry:(l.maxy-l.miny)/2,id:va()}});Y("changed",[X]);aa=true}break;case "fhrect":if(l.maxx-l.minx>0&&l.maxy-l.miny>0){X=O({element:"rect",curStyles:true,attr:{x:l.minx,y:l.miny,width:l.maxx-l.minx,height:l.maxy-l.miny,id:va()}});Y("changed",[X]);aa=true}break;case "text":aa=true;Aa([X]);oa.start(X);break;case "path":X=null;ma=true;H=ca.mouseUp(M,X,G,D);X=H.element;aa=H.keep;
-break;case "pathedit":aa=true;X=null;ca.mouseUp(M);break;case "textedit":aa=false;X=null;oa.mouseUp(M,G,D);break;case "rotate":aa=true;X=null;fa="select";H=u.undoMgr.finishUndoableChange();H.isEmpty()||da(H);jb();Y("changed",t)}G=Ja("mouseUp",{event:M,mouse_x:G,mouse_y:D},true);$.each(G,function(ja,ka){if(ka){aa=ka.keep||aa;X=ka.element;ma=ka.started||ma}});if(!aa&&X!=null){f().releaseId(va());X.parentNode.removeChild(X);X=null;for(G=M.target;G.parentNode.parentNode.tagName=="g";)G=G.parentNode;if((fa!=
-"path"||!drawn_path)&&G.parentNode.id!="selectorParentGroup"&&G.id!="svgcanvas"&&G.id!="svgroot"){u.setMode("select");Aa([G],true)}}else if(X!=null){u.addedNew=true;M=0.2;var la;if(bb.beginElement&&X.getAttribute("opacity")!=v.opacity){la=$(bb).clone().attr({to:v.opacity,dur:M}).appendTo(X);try{la[0].beginElement()}catch(U){}}else M=0;setTimeout(function(){la&&la.remove();X.setAttribute("opacity",v.opacity);X.setAttribute("style","pointer-events:inherit");nb(X);if(fa==="path")ca.toEditMode(X);else i.selectNew&&
-Aa([X],true);da(new svgedit.history.InsertElementCommand(X));Y("changed",[X])},M*1E3)}Ra=null}}});$(g).bind("mousewheel DOMMouseScroll",function(M){M.preventDefault();M=M.originalEvent;Da=$("#svgcontent g")[0].getScreenCTM().inverse();var H=svgedit.math.transformPoint(M.pageX,M.pageY,Da);H={x:H.x,y:H.y,width:0,height:0};if(M=M.wheelDelta?M.wheelDelta:M.detail?-M.detail:0){H.factor=Math.max(0.75,Math.min(4/3,M));Y("zoomed",H)}})})();oa=u.textActions=function(){function a(D){var G=E.value==="";$(E).focus();
-if(!arguments.length)if(G)D=0;else{if(E.selectionEnd!==E.selectionStart)return;D=E.selectionEnd}var I;I=R[D];G||E.setSelectionRange(D,D);F=svgedit.utilities.getElem("text_cursor");if(!F){F=document.createElementNS(k.SVG,"line");svgedit.utilities.assignAttributes(F,{id:"text_cursor",stroke:"#333","stroke-width":1});F=svgedit.utilities.getElem("selectorParentGroup").appendChild(F)}P||(P=setInterval(function(){var S=F.getAttribute("display")==="none";F.setAttribute("display",S?"inline":"none")},600));
-G=C(I.x,V.y);I=C(I.x,V.y+V.height);svgedit.utilities.assignAttributes(F,{x1:G.x,y1:G.y,x2:I.x,y2:I.y,visibility:"visible",display:"inline"});J&&J.setAttribute("d","")}function h(D,G,I){if(D===G)a(G);else{I||E.setSelectionRange(D,G);J=svgedit.utilities.getElem("text_selectblock");if(!J){J=document.createElementNS(k.SVG,"path");svgedit.utilities.assignAttributes(J,{id:"text_selectblock",fill:"green",opacity:0.5,style:"pointer-events:none"});svgedit.utilities.getElem("selectorParentGroup").appendChild(J)}D=
-R[D];var S=R[G];F.setAttribute("visibility","hidden");G=C(D.x,V.y);I=C(D.x+(S.x-D.x),V.y);var X=C(D.x,V.y+V.height);D=C(D.x+(S.x-D.x),V.y+V.height);svgedit.utilities.assignAttributes(J,{d:"M"+G.x+","+G.y+" L"+I.x+","+I.y+" "+D.x+","+D.y+" "+X.x+","+X.y+"z",display:"inline"})}}function b(D,G){var I=B.createSVGPoint();I.x=D;I.y=G;if(R.length==1)return 0;I=A.getCharNumAtPosition(I);if(I<0){I=R.length-2;if(D<=R[0].x)I=0}else if(I>=R.length-2)I=R.length-2;var S=R[I];D>S.x+S.width/2&&I++;return I}function p(D,
-G,I){var S=E.selectionStart;D=b(D,G);h(Math.min(S,D),Math.max(S,D),!I)}function o(D,G){var I={x:D,y:G};I.x/=e;I.y/=e;if(W){var S=svgedit.math.transformPoint(I.x,I.y,W.inverse());I.x=S.x;I.y=S.y}return I}function C(D,G){var I={x:D,y:G};if(W){var S=svgedit.math.transformPoint(I.x,I.y,W);I.x=S.x;I.y=S.y}I.x*=e;I.y*=e;return I}function l(D){h(0,A.textContent.length);$(this).unbind(D)}function z(D){if(H&&A){var G=svgedit.math.transformPoint(D.pageX,D.pageY,Da);G=o(G.x*e,G.y*e);G=b(G.x,G.y);var I=A.textContent,
-S=I.substr(0,G).replace(/[a-z0-9]+$/i,"").length;I=I.substr(G).match(/^[a-z0-9]+/i);h(S,(I?I[0].length:0)+G);$(D.target).click(l);setTimeout(function(){$(D.target).unbind("click",l)},300)}}var A,E,F,J,P,R=[],V,W,Z,M,H;return{select:function(D,G,I){A=D;oa.toEditMode(G,I)},start:function(D){A=D;oa.toEditMode()},mouseDown:function(D,G,I,S){D=o(I,S);E.focus();a(b(D.x,D.y));Z=I;M=S},mouseMove:function(D,G){var I=o(D,G);p(I.x,I.y)},mouseUp:function(D,G,I){var S=o(G,I);p(S.x,S.y,true);D.target!==A&&G<Z+
-2&&G>Z-2&&I<M+2&&I>M-2&&oa.toSelectMode(true)},setCursor:a,toEditMode:function(D,G){H=false;fa="textedit";ea.requestSelector(A).showGrips(false);ea.requestSelector(A);oa.init();$(A).css("cursor","text");if(arguments.length){var I=o(D,G);a(b(I.x,I.y))}else a();setTimeout(function(){H=true},300)},toSelectMode:function(D){fa="select";clearInterval(P);P=null;J&&$(J).attr("display","none");F&&$(F).attr("visibility","hidden");$(A).css("cursor","move");if(D){ha();$(A).css("cursor","move");Y("selected",[A]);
-xa([A],true)}A&&!A.textContent.length&&u.deleteSelectedElements();$(E).blur();A=false},setInputElem:function(D){E=D},clear:function(){fa=="textedit"&&oa.toSelectMode()},init:function(){if(A){var D,G;if(!A.parentNode){A=t[0];ea.requestSelector(A).showGrips(false)}var I=A.textContent.length;D=A.getAttribute("transform");V=svgedit.utilities.getBBox(A);W=D?svgedit.math.getMatrix(A):null;R=[];R.length=I;E.focus();$(A).unbind("dblclick",z).dblclick(z);I||(G={x:V.x+V.width/2,width:0});for(D=0;D<I;D++){var S=
-A.getStartPositionOfChar(D);G=A.getEndPositionOfChar(D);if(!svgedit.browser.supportsGoodTextCharPos()){var X=u.contentW*e;S.x-=X;G.x-=X;S.x/=e;G.x/=e}R[D]={x:S.x,y:V.y,width:G.x-S.x,height:V.height}}R.push({x:G.x,width:0});h(E.selectionStart,E.selectionEnd,true)}}}}();ca=u.pathActions=function(){var a=false,h,b,p;svgedit.path.Path.prototype.endChanges=function(l){if(svgedit.browser.isWebkit()){var z=this.elem;z.setAttribute("d",ca.convertPath(z))}l=new svgedit.history.ChangeElementCommand(this.elem,
-{d:this.last_d},l);da(l);Y("changed",[this.elem])};svgedit.path.Path.prototype.addPtsToSelection=function(l){var z,A;$.isArray(l)||(l=[l]);for(z=0;z<l.length;z++){var E=l[z];A=this.segs[E];A.ptgrip&&this.selected_pts.indexOf(E)==-1&&E>=0&&this.selected_pts.push(E)}this.selected_pts.sort();z=this.selected_pts.length;l=[];for(l.length=z;z--;){A=this.segs[this.selected_pts[z]];A.select(true);l[z]=A.ptgrip}ca.canDeleteNodes=true;ca.closed_subpath=this.subpathIsClosed(this.selected_pts[0]);Y("selected",
-l)};var o=h=null,C=false;return{mouseDown:function(l,z,A,E){var F;if(fa==="path"){mouse_x=A;mouse_y=E;E=mouse_x/e;z=mouse_y/e;A=svgedit.utilities.getElem("path_stretch_line");b=[E,z];if(i.gridSnapping){E=svgedit.utilities.snapToGrid(E);z=svgedit.utilities.snapToGrid(z);mouse_x=svgedit.utilities.snapToGrid(mouse_x);mouse_y=svgedit.utilities.snapToGrid(mouse_y)}if(!A){A=document.createElementNS(k.SVG,"path");svgedit.utilities.assignAttributes(A,{id:"path_stretch_line",stroke:"#22C","stroke-width":"0.5",
-fill:"none"});A=svgedit.utilities.getElem("selectorParentGroup").appendChild(A)}A.setAttribute("display","inline");var J=null;if(o){J=o.pathSegList;var P=J.numberOfItems;F=6/e;for(var R=false;P;){P--;var V=J.getItem(P),W=V.x;V=V.y;if(E>=W-F&&E<=W+F&&z>=V-F&&z<=V+F){R=true;break}}F=va();svgedit.path.removePath_(F);F=svgedit.utilities.getElem(F);W=J.numberOfItems;if(R){if(P<=1&&W>=2){E=J.getItem(0).x;z=J.getItem(0).y;l=A.pathSegList.getItem(1);l=l.pathSegType===4?o.createSVGPathSegLinetoAbs(E,z):o.createSVGPathSegCurvetoCubicAbs(E,
-z,l.x1/e,l.y1/e,E,z);E=o.createSVGPathSegClosePath();J.appendItem(l);J.appendItem(E)}else if(W<3)return J=false;$(A).remove();element=F;o=null;ma=false;if(a){svgedit.path.path.matrix&&svgedit.coords.remapElement(F,{},svgedit.path.path.matrix.inverse());A=F.getAttribute("d");l=$(svgedit.path.path.elem).attr("d");$(svgedit.path.path.elem).attr("d",l+A);$(F).remove();svgedit.path.path.matrix&&svgedit.path.recalcRotatedPath();svgedit.path.path.init();ca.toEditMode(svgedit.path.path.elem);svgedit.path.path.selectPt();
-return false}}else{if(!$.contains(g,Ya(l))){console.log("Clicked outside canvas");return false}J=o.pathSegList.numberOfItems;P=o.pathSegList.getItem(J-1);F=P.x;P=P.y;if(l.shiftKey){l=svgedit.math.snapToAngle(F,P,E,z);E=l.x;z=l.y}l=A.pathSegList.getItem(1);l=l.pathSegType===4?o.createSVGPathSegLinetoAbs(Oa(E),Oa(z)):o.createSVGPathSegCurvetoCubicAbs(Oa(E),Oa(z),l.x1/e,l.y1/e,l.x2/e,l.y2/e);o.pathSegList.appendItem(l);E*=e;z*=e;A.setAttribute("d",["M",E,z,E,z].join(" "));A=J;if(a)A+=svgedit.path.path.segs.length;
-svgedit.path.addPointGrip(A,E,z)}}else{d_attr="M"+E+","+z+" ";o=O({element:"path",curStyles:true,attr:{d:d_attr,id:na(),opacity:v.opacity/2}});A.setAttribute("d",["M",mouse_x,mouse_y,mouse_x,mouse_y].join(" "));A=a?svgedit.path.path.segs.length:0;svgedit.path.addPointGrip(A,mouse_x,mouse_y)}}else if(svgedit.path.path){svgedit.path.path.storeD();F=l.target.id;if(F.substr(0,14)=="pathpointgrip_"){z=svgedit.path.path.cur_pt=parseInt(F.substr(14));svgedit.path.path.dragging=[A,E];J=svgedit.path.path.segs[z];
-if(l.shiftKey)J.selected?svgedit.path.path.removePtFromSelection(z):svgedit.path.path.addPtsToSelection(z);else{if(svgedit.path.path.selected_pts.length<=1||!J.selected)svgedit.path.path.clearSelection();svgedit.path.path.addPtsToSelection(z)}}else if(F.indexOf("ctrlpointgrip_")==0){svgedit.path.path.dragging=[A,E];l=F.split("_")[1].split("c");z=Number(l[0]);svgedit.path.path.selectPt(z,Number(l[1]))}if(!svgedit.path.path.dragging){if(ia==null)ia=ea.getRubberBandBox();svgedit.utilities.assignAttributes(ia,
-{x:A*e,y:E*e,width:0,height:0,display:"inline"},100)}}},mouseMove:function(l,z){C=true;if(fa==="path"){if(o){var A=o.pathSegList,E=A.numberOfItems-1;if(b){var F=svgedit.path.addCtrlGrip("1c1"),J=svgedit.path.addCtrlGrip("0c2");F.setAttribute("cx",l);F.setAttribute("cy",z);F.setAttribute("display","inline");F=b[0];var P=b[1];A.getItem(E);var R=F+(F-l/e),V=P+(P-z/e);J.setAttribute("cx",R*e);J.setAttribute("cy",V*e);J.setAttribute("display","inline");J=svgedit.path.getCtrlLine(1);svgedit.utilities.assignAttributes(J,
-{x1:l,y1:z,x2:R*e,y2:V*e,display:"inline"});if(E===0)p=[l,z];else{A=A.getItem(E-1);J=A.x;var W=A.y;if(A.pathSegType===6){J+=J-A.x2;W+=W-A.y2}else if(p){J=p[0]/e;W=p[1]/e}svgedit.path.replacePathSeg(6,E,[F,P,J,W,R,V],o)}}else if(F=svgedit.utilities.getElem("path_stretch_line")){E=A.getItem(E);if(E.pathSegType===6)svgedit.path.replacePathSeg(6,1,[l,z,(E.x+(E.x-E.x2))*e,(E.y+(E.y-E.y2))*e,l,z],F);else p?svgedit.path.replacePathSeg(6,1,[l,z,p[0],p[1],l,z],F):svgedit.path.replacePathSeg(4,1,[l,z],F)}}}else if(svgedit.path.path.dragging){F=
-svgedit.path.getPointFromGrip({x:svgedit.path.path.dragging[0],y:svgedit.path.path.dragging[1]},svgedit.path.path);P=svgedit.path.getPointFromGrip({x:l,y:z},svgedit.path.path);E=P.x-F.x;F=P.y-F.y;svgedit.path.path.dragging=[l,z];svgedit.path.path.dragctrl?svgedit.path.path.moveCtrl(E,F):svgedit.path.path.movePts(E,F)}else{svgedit.path.path.selected_pts=[];svgedit.path.path.eachSeg(function(){if(this.next||this.prev){var Z=ia.getBBox(),M=svgedit.path.getGripPt(this);Z=svgedit.math.rectsIntersect(Z,
-{x:M.x,y:M.y,width:0,height:0});this.select(Z);Z&&svgedit.path.path.selected_pts.push(this.index)}})}},mouseUp:function(l,z){if(fa==="path"){b=null;if(!o){z=svgedit.utilities.getElem(va());ma=false;p=null}return{keep:true,element:z}}if(svgedit.path.path.dragging){var A=svgedit.path.path.cur_pt;svgedit.path.path.dragging=false;svgedit.path.path.dragctrl=false;svgedit.path.path.update();C&&svgedit.path.path.endChanges("Move path point(s)");!l.shiftKey&&!C&&svgedit.path.path.selectPt(A)}else if(ia&&
-ia.getAttribute("display")!="none"){ia.setAttribute("display","none");ia.getAttribute("width")<=2&&ia.getAttribute("height")<=2&&ca.toSelectMode(l.target)}else ca.toSelectMode(l.target);C=false},toEditMode:function(l){svgedit.path.path=svgedit.path.getPath_(l);fa="pathedit";ha();svgedit.path.path.show(true).update();svgedit.path.path.oldbbox=svgedit.utilities.getBBox(svgedit.path.path.elem);a=false},toSelectMode:function(l){var z=l==svgedit.path.path.elem;fa="select";svgedit.path.path.show(false);
-h=false;ha();svgedit.path.path.matrix&&svgedit.path.recalcRotatedPath();if(z){Y("selected",[l]);xa([l],true)}},addSubPath:function(l){if(l){fa="path";a=true}else{ca.clear(true);ca.toEditMode(svgedit.path.path.elem)}},select:function(l){if(h===l){ca.toEditMode(l);fa="pathedit"}else h=l},reorient:function(){var l=t[0];if(l)if(svgedit.utilities.getRotationAngle(l)!=0){var z=new svgedit.history.BatchCommand("Reorient path"),A={d:l.getAttribute("d"),transform:l.getAttribute("transform")};z.addSubCommand(new svgedit.history.ChangeElementCommand(l,
-A));ha();this.resetOrientation(l);da(z);svgedit.path.getPath_(l).show(false).matrix=null;this.clear();xa([l],true);Y("changed",t)}},clear:function(){h=null;if(o){var l=svgedit.utilities.getElem(va());$(svgedit.utilities.getElem("path_stretch_line")).remove();$(l).remove();$(svgedit.utilities.getElem("pathpointgrip_container")).find("*").attr("display","none");o=p=null;ma=false}else fa=="pathedit"&&this.toSelectMode();svgedit.path.path&&svgedit.path.path.init().show(false)},resetOrientation:function(l){if(l==
-null||l.nodeName!="path")return false;var z=svgedit.transformlist.getTransformList(l),A=svgedit.math.transformListToTransform(z).matrix;z.clear();l.removeAttribute("transform");z=l.pathSegList;var E=z.numberOfItems,F;for(F=0;F<E;++F){var J=z.getItem(F),P=J.pathSegType;if(P!=1){var R=[];$.each(["",1,2],function(V,W){var Z=J["x"+W],M=J["y"+W];if(Z!==undefined&&M!==undefined){Z=svgedit.math.transformPoint(Z,M,A);R.splice(R.length,0,Z.x,Z.y)}});svgedit.path.replacePathSeg(P,F,R,l)}}c(l,A)},zoomChange:function(){fa==
-"pathedit"&&svgedit.path.path.update()},getNodePoint:function(){var l=svgedit.path.path.segs[svgedit.path.path.selected_pts.length?svgedit.path.path.selected_pts[0]:1];return{x:l.item.x,y:l.item.y,type:l.type}},linkControlPoints:function(l){svgedit.path.setLinkControlPoints(l)},clonePathNode:function(){svgedit.path.path.storeD();for(var l=svgedit.path.path.selected_pts,z=l.length,A=[];z--;){var E=l[z];svgedit.path.path.addSeg(E);A.push(E+z);A.push(E+z+1)}svgedit.path.path.init().addPtsToSelection(A);
-svgedit.path.path.endChanges("Clone path node(s)")},opencloseSubPath:function(){var l=svgedit.path.path.selected_pts;if(l.length===1){var z=svgedit.path.path.elem,A=z.pathSegList,E=l[0],F=null,J=null;svgedit.path.path.eachSeg(function(W){if(this.type===2&&W<=E)J=this.item;if(W<=E)return true;if(this.type===2){F=W;return false}if(this.type===1)return F=false});if(F==null)F=svgedit.path.path.segs.length-1;if(F!==false){var P=z.createSVGPathSegLinetoAbs(J.x,J.y),R=z.createSVGPathSegClosePath();if(F==
-svgedit.path.path.segs.length-1){A.appendItem(P);A.appendItem(R)}else{svgedit.path.insertItemBefore(z,R,F);svgedit.path.insertItemBefore(z,P,F)}svgedit.path.path.init().selectPt(F+1)}else if(svgedit.path.path.segs[E].mate){A.removeItem(E);A.removeItem(E);svgedit.path.path.init().selectPt(E-1)}else{for(l=0;l<A.numberOfItems;l++){var V=A.getItem(l);if(V.pathSegType===2)P=l;else if(l===E)A.removeItem(P);else if(V.pathSegType===1&&E<l){R=l-1;A.removeItem(l);break}}for(l=E-P-1;l--;)svgedit.path.insertItemBefore(z,
-A.getItem(P),R);z=A.getItem(P);svgedit.path.replacePathSeg(2,P,[z.x,z.y]);l=E;svgedit.path.path.init().selectPt(0)}}},deletePathNode:function(){if(ca.canDeleteNodes){svgedit.path.path.storeD();for(var l=svgedit.path.path.selected_pts,z=l.length;z--;)svgedit.path.path.deleteSeg(l[z]);var A=function(){var E=svgedit.path.path.elem.pathSegList,F=E.numberOfItems,J=function(V,W){for(;W--;)E.removeItem(V)};if(F<=1)return true;for(;F--;){var P=E.getItem(F);if(P.pathSegType===1){P=E.getItem(F-1);var R=E.getItem(F-
-2);if(P.pathSegType===2){J(F-1,2);A();break}else if(R.pathSegType===2){J(F-2,3);A();break}}else if(P.pathSegType===2)if(F>0){P=E.getItem(F-1).pathSegType;if(P===2){J(F-1,1);A();break}else if(P===1&&E.numberOfItems-1===F){J(F,1);A();break}}}return false};A();if(svgedit.path.path.elem.pathSegList.numberOfItems<=1){ca.toSelectMode(svgedit.path.path.elem);u.deleteSelectedElements()}else{svgedit.path.path.init();svgedit.path.path.clearSelection();if(window.opera){l=$(svgedit.path.path.elem);l.attr("d",
-l.attr("d"))}svgedit.path.path.endChanges("Delete path node(s)")}}},smoothPolylineIntoPath:function(l){var z=l.points,A=z.numberOfItems;if(A>=4){var E=z.getItem(0),F=null,J=[];J.push(["M",E.x,",",E.y," C"].join(""));for(l=1;l<=A-4;l+=3){var P=z.getItem(l),R=z.getItem(l+1),V=z.getItem(l+2);if(F)if((E=svgedit.path.smoothControlPoints(F,P,E))&&E.length==2){P=J[J.length-1].split(",");P[2]=E[0].x;P[3]=E[0].y;J[J.length-1]=P.join(",");P=E[1]}J.push([P.x,P.y,R.x,R.y,V.x,V.y].join(","));E=V;F=R}for(J.push("L");l<
-A;){R=z.getItem(l);J.push([R.x,R.y].join(","));l++}J=J.join(" ");l=O({element:"path",curStyles:true,attr:{id:va(),d:J,fill:"none"}})}return l},setSegType:function(l){svgedit.path.path.setSegType(l)},moveNode:function(l,z){var A=svgedit.path.path.selected_pts;if(A.length){svgedit.path.path.storeD();A=svgedit.path.path.segs[A[0]];var E={x:0,y:0};E[l]=z-A.item[l];A.move(E.x,E.y);svgedit.path.path.endChanges("Move path point")}},fixEnd:function(l){var z=l.pathSegList,A=z.numberOfItems,E,F;for(E=0;E<A;++E){var J=
-z.getItem(E);if(J.pathSegType===2)F=J;if(J.pathSegType===1){J=z.getItem(E-1);if(J.x!=F.x||J.y!=F.y){z=l.createSVGPathSegLinetoAbs(F.x,F.y);svgedit.path.insertItemBefore(l,z,E);ca.fixEnd(l);break}}}svgedit.browser.isWebkit()&&l.setAttribute("d",ca.convertPath(l))},convertPath:svgedit.utilities.convertPath}}();var sb=this.removeUnusedDefElems=function(){var a=d.getElementsByTagNameNS(k.SVG,"defs");if(!a||!a.length)return 0;var h=[],b=0,p=["fill","stroke","filter","marker-start","marker-mid","marker-end"],
-o=p.length,C=d.getElementsByTagNameNS(k.SVG,"*"),l=C.length,z,A;for(z=0;z<l;z++){var E=C[z];for(A=0;A<o;A++){var F=svgedit.utilities.getUrlFromAttr(E.getAttribute(p[A]));F&&h.push(F.substr(1))}(A=pa(E))&&A.indexOf("#")===0&&h.push(A.substr(1))}a=$(a).find("linearGradient, radialGradient, filter, marker, svg, symbol");for(z=a.length;z--;){p=a[z];o=p.id;if(h.indexOf(o)<0){cb[o]=p;p.parentNode.removeChild(p);b++}}return b};this.svgCanvasToString=function(){for(;sb()>0;);ca.clear(true);$.each(d.childNodes,
-function(b,p){b&&p.nodeType===8&&p.data.indexOf("Created with")>=0&&d.insertBefore(p,d.firstChild)});if(m){Ha();Aa([m])}var a=[];$(d).find("g:data(gsvg)").each(function(){var b=this.attributes,p=b.length,o;for(o=0;o<p;o++)if(b[o].nodeName=="id"||b[o].nodeName=="style")p--;if(p<=0){b=this.firstChild;a.push(b);$(this).replaceWith(b)}});var h=this.svgToString(d,0);a.length&&$(a).each(function(){rb(this)});return h};this.svgToString=function(a,h){var b=[],p=svgedit.utilities.toXml,o=i.baseUnit,C=RegExp("^-?[\\d\\.]+"+
-o+"$");if(a){nb(a);var l=a.attributes,z,A,E=a.childNodes;for(A=0;A<h;A++)b.push(" ");b.push("<");b.push(a.nodeName);if(a.id==="svgcontent"){A=Ia();if(o!=="px"){A.w=svgedit.units.convertUnit(A.w,o)+o;A.h=svgedit.units.convertUnit(A.h,o)+o}b.push(' width="'+A.w+'" height="'+A.h+'" xmlns="'+k.SVG+'"');var F={};$(a).find("*").andSelf().each(function(){var V=this.namespaceURI;if(V&&!F[V]&&ya[V]&&ya[V]!=="xmlns"&&ya[V]!=="xml"){F[V]=true;b.push(" xmlns:"+ya[V]+'="'+V+'"')}$.each(this.attributes,function(W,
-Z){var M=Z.namespaceURI;if(M&&!F[M]&&ya[M]!=="xmlns"&&ya[M]!=="xml"){F[M]=true;b.push(" xmlns:"+ya[M]+'="'+M+'"')}})});A=l.length;for(o=["width","height","xmlns","x","y","viewBox","id","overflow"];A--;){z=l.item(A);var J=p(z.value);if(z.nodeName.indexOf("xmlns:")!==0)if(J!=""&&o.indexOf(z.localName)==-1)if(!z.namespaceURI||ya[z.namespaceURI]){b.push(" ");b.push(z.nodeName);b.push('="');b.push(J);b.push('"')}}}else{if(a.nodeName==="defs"&&!a.firstChild)return;var P=["-moz-math-font-style","_moz-math-font-style"];
-for(A=l.length-1;A>=0;A--){z=l.item(A);J=p(z.value);if(!(P.indexOf(z.localName)>=0))if(J!="")if(J.indexOf("pointer-events")!==0)if(!(z.localName==="class"&&J.indexOf("se_")===0)){b.push(" ");if(z.localName==="d")J=ca.convertPath(a,true);if(isNaN(J)){if(C.test(J))J=svgedit.units.shortFloat(J)+o}else J=svgedit.units.shortFloat(J);if(Fa.apply&&a.nodeName==="image"&&z.localName==="href"&&Fa.images&&Fa.images==="embed"){var R=Va[J];if(R)J=R}if(!z.namespaceURI||z.namespaceURI==k.SVG||ya[z.namespaceURI]){b.push(z.nodeName);
-b.push('="');b.push(J);b.push('"')}}}}if(a.hasChildNodes()){b.push(">");h++;l=false;for(A=0;A<E.length;A++){o=E.item(A);switch(o.nodeType){case 1:b.push("\n");b.push(this.svgToString(E.item(A),h));break;case 3:o=o.nodeValue.replace(/^\s+|\s+$/g,"");if(o!=""){l=true;b.push(String(p(o)))}break;case 4:b.push("\n");b.push(Array(h+1).join(" "));b.push("<![CDATA[");b.push(o.nodeValue);b.push("]]\>");break;case 8:b.push("\n");b.push(Array(h+1).join(" "));b.push("<!--");b.push(o.data);b.push("--\>")}}h--;
-if(!l){b.push("\n");for(A=0;A<h;A++)b.push(" ")}b.push("</");b.push(a.nodeName);b.push(">")}else b.push("/>")}return b.join("")};this.embedImage=function(a,h){$(new Image).load(function(){var b=document.createElement("canvas");b.width=this.width;b.height=this.height;b.getContext("2d").drawImage(this,0,0);try{var p=";svgedit_url="+encodeURIComponent(a);p=b.toDataURL().replace(";base64",p+";base64");Va[a]=p}catch(o){Va[a]=false}db=a;h&&h(Va[a])}).attr("src",a)};this.setGoodImage=function(a){db=a};this.open=
-function(){};this.save=function(a){ha();a&&$.extend(Fa,a);Fa.apply=true;a=this.svgCanvasToString();Y("saved",a)};this.rasterExport=function(a,h,b){var p="image/"+a.toLowerCase(),o=j(),C=this.svgCanvasToString();svgedit.utilities.buildCanvgCallback(function(){var l=a||"PNG";$("#export_canvas").length||$("<canvas>",{id:"export_canvas"}).hide().appendTo("body");var z=$("#export_canvas")[0];z.width=svgCanvas.contentW;z.height=svgCanvas.contentH;canvg(z,C,{renderCallback:function(){var A=(l==="ICO"?"BMP":
-l).toLowerCase();A=h?z.toDataURL("image/"+A,h):z.toDataURL("image/"+A);Y("exported",{datauri:A,svg:C,issues:o,type:a,mimeType:p,quality:h,exportWindowName:b})}})})()};this.exportPDF=function(a,h){var b=this;svgedit.utilities.buildJSPDFCallback(function(){var p=Ia();p=jsPDF({orientation:p.w>p.h?"landscape":"portrait",unit:"pt",format:[p.w,p.h]});var o=Eb();p.setProperties({title:o});o=j();var C=b.svgCanvasToString();p.addSVG(C,0,0);o={svg:C,issues:o,exportWindowName:a};C=h||"dataurlstring";o[C]=p.output(C);
-Y("exportedPDF",o)})()};this.getSvgString=function(){Fa.apply=false;return this.svgCanvasToString()};this.randomizeIds=function(a){arguments.length>0&&a==false?svgedit.draw.randomizeIds(false,f()):svgedit.draw.randomizeIds(true,f())};var lb=this.uniquifyElems=function(a){var h={},b=["filter","linearGradient","pattern","radialGradient","symbol","textPath","use"];svgedit.utilities.walkTree(a,function(z){if(z.nodeType==1){if(z.id){z.id in h||(h[z.id]={elem:null,attrs:[],hrefs:[]});h[z.id].elem=z}$.each(qb,
-function(E,F){var J=z.getAttributeNode(F);if(J){var P=svgedit.utilities.getUrlFromAttr(J.value);if(P=P?P.substr(1):null){P in h||(h[P]={elem:null,attrs:[],hrefs:[]});h[P].attrs.push(J)}}});var A=svgedit.utilities.getHref(z);if(A&&b.indexOf(z.nodeName)>=0)if(A=A.substr(1)){A in h||(h[A]={elem:null,attrs:[],hrefs:[]});h[A].hrefs.push(z)}}});for(var p in h)if(p){var o=h[p].elem;if(o){a=na();o.id=a;o=h[p].attrs;for(var C=o.length;C--;){var l=o[C];l.ownerElement.setAttribute(l.name,"url(#"+a+")")}o=h[p].hrefs;
-for(C=o.length;C--;)svgedit.utilities.setHref(o[C],"#"+a)}}},ab=this.setUseData=function(a){var h=$(a);if(a.tagName!=="use")h=h.find("use");h.each(function(){var b=pa(this).substr(1);if(b=svgedit.utilities.getElem(b)){$(this).data("ref",b);if(b.tagName=="symbol"||b.tagName=="svg")$(this).data("symbol",b).data("ref",b)}})},mb=this.convertGradients=function(a){var h=$(a).find("linearGradient, radialGradient");if(!h.length&&svgedit.browser.isWebkit())h=$(a).find("*").filter(function(){return this.tagName.indexOf("Gradient")>=
-0});h.each(function(){if($(this).attr("gradientUnits")==="userSpaceOnUse"){var b=$(d).find('[fill="url(#'+this.id+')"],[stroke="url(#'+this.id+')"]');if(b.length)if(b=svgedit.utilities.getBBox(b[0]))if(this.tagName==="linearGradient"){var p=$(this).attr(["x1","y1","x2","y2"]),o=this.gradientTransform.baseVal;if(o&&o.numberOfItems>0){var C=svgedit.math.transformListToTransform(o).matrix;o=svgedit.math.transformPoint(p.x1,p.y1,C);C=svgedit.math.transformPoint(p.x2,p.y2,C);p.x1=o.x;p.y1=o.y;p.x2=C.x;
-p.y2=C.y;this.removeAttribute("gradientTransform")}$(this).attr({x1:(p.x1-b.x)/b.width,y1:(p.y1-b.y)/b.height,x2:(p.x2-b.x)/b.width,y2:(p.y2-b.y)/b.height});this.removeAttribute("gradientUnits")}}})},tb=this.convertToGroup=function(a){a||(a=t[0]);var h=$(a),b=new svgedit.history.BatchCommand,p;if(h.data("gsvg")){b=$(a.firstChild).attr(["x","y"]);$(a.firstChild.firstChild).unwrap();$(a).removeData("gsvg");p=svgedit.transformlist.getTransformList(a);var o=B.createSVGTransform();o.setTranslate(b.x,b.y);
-p.appendItem(o);svgedit.recalculate.recalculateDimensions(a);Y("selected",[a])}else if(h.data("symbol")){a=h.data("symbol");p=h.attr("transform");o=h.attr(["x","y"]);var C=a.getAttribute("viewBox");if(C){C=C.split(" ");o.x-=+C[0];o.y-=+C[1]}p+=" translate("+(o.x||0)+","+(o.y||0)+")";o=h.prev();b.addSubCommand(new svgedit.history.RemoveElementCommand(h[0],h[0].nextSibling,h[0].parentNode));h.remove();C=$(d).find("use:data(symbol)").length;h=K.createElementNS(k.SVG,"g");var l=a.childNodes,z;for(z=0;z<
-l.length;z++)h.appendChild(l[z].cloneNode(true));if(svgedit.browser.isGecko()){l=$(svgedit.utilities.findDefs()).children("linearGradient,radialGradient,pattern").clone();$(h).append(l)}p&&h.setAttribute("transform",p);p=a.parentNode;lb(h);svgedit.browser.isGecko()&&$(ga()).append($(h).find("linearGradient,radialGradient,pattern"));h.id=na();o.after(h);if(p){if(!C){o=a.nextSibling;p.removeChild(a);b.addSubCommand(new svgedit.history.RemoveElementCommand(a,o,p))}b.addSubCommand(new svgedit.history.InsertElementCommand(h))}ab(h);
-svgedit.browser.isGecko()?mb(svgedit.utilities.findDefs()):mb(h);svgedit.utilities.walkTreePost(h,function(A){try{svgedit.recalculate.recalculateDimensions(A)}catch(E){console.log(E)}});$(h).find("a,circle,ellipse,foreignObject,g,image,line,path,polygon,polyline,rect,svg,text,tspan,use").each(function(){if(!this.id)this.id=na()});Aa([h]);(a=kb(h,true))&&b.addSubCommand(a);da(b)}else console.log("Unexpected element to ungroup:",a)};this.setSvgString=function(a){try{var h=svgedit.utilities.text2xml(a);
-this.prepareSvg(h);var b=new svgedit.history.BatchCommand("Change Source"),p=d.nextSibling,o=B.removeChild(d);b.addSubCommand(new svgedit.history.RemoveElementCommand(o,p,B));d=K.adoptNode?K.adoptNode(h.documentElement):K.importNode(h.documentElement,true);B.appendChild(d);var C=$(d);u.current_drawing_=new svgedit.draw.Drawing(d,n);var l=f().getNonce();l?Y("setnonce",l):Y("unsetnonce");C.find("image").each(function(){var R=this;svgedit.utilities.preventClickDefault(R);var V=pa(this);if(V){if(V.indexOf("data:")===
-0){var W=V.match(/svgedit_url=(.*?);/);if(W){var Z=decodeURIComponent(W[1]);$(new Image).load(function(){R.setAttributeNS(k.XLINK,"xlink:href",Z)}).attr("src",Z)}}u.embedImage(V)}});C.find("svg").each(function(){if(!$(this).closest("defs").length){lb(this);var R=this.parentNode;if(R.childNodes.length===1&&R.nodeName==="g"){$(R).data("gsvg",this);R.id=R.id||na()}else rb(this)}});svgedit.browser.isGecko()&&C.find("linearGradient, radialGradient, pattern").appendTo(svgedit.utilities.findDefs());ab(C);
-mb(C[0]);var z={id:"svgcontent",overflow:i.show_outside_canvas?"visible":"hidden"},A=false;if(C.attr("viewBox")){var E=C.attr("viewBox").split(" ");z.width=E[2];z.height=E[3]}else $.each(["width","height"],function(R,V){var W=C.attr(V);W||(W="100%");if(String(W).substr(-1)==="%")A=true;else z[V]=svgedit.units.convertToNum(V,W)});ub();C.children().find("a,circle,ellipse,foreignObject,g,image,line,path,polygon,polyline,rect,svg,text,tspan,use").each(function(){if(!this.id)this.id=na()});if(A){var F=
-wa();z.width=F.width+F.x;z.height=F.height+F.y}if(z.width<=0)z.width=100;if(z.height<=0)z.height=100;C.attr(z);this.contentW=z.width;this.contentH=z.height;b.addSubCommand(new svgedit.history.InsertElementCommand(d));var J=C.attr(["width","height"]);b.addSubCommand(new svgedit.history.ChangeElementCommand(B,J));e=1;svgedit.transformlist.resetListMap();ha();svgedit.path.clearData();B.appendChild(ea.selectorParentGroup);da(b);Y("changed",[d])}catch(P){console.log(P);return false}return true};this.importSvgString=
-function(a){var h,b;try{var p=svgedit.utilities.encode64(a.length+a).substr(0,32),o=false;if(Na[p])if($(Na[p].symbol).parents("#svgroot").length)o=true;var C=new svgedit.history.BatchCommand("Import Image"),l;if(o){l=Na[p].symbol;b=Na[p].xform}else{var z=svgedit.utilities.text2xml(a);this.prepareSvg(z);var A;A=K.adoptNode?K.adoptNode(z.documentElement):K.importNode(z.documentElement,true);lb(A);var E=svgedit.units.convertToNum("width",A.getAttribute("width")),F=svgedit.units.convertToNum("height",
-A.getAttribute("height")),J=A.getAttribute("viewBox"),P=J?J.split(" "):[0,0,E,F];for(h=0;h<4;++h)P[h]=+P[h];d.getAttribute("width");var R=+d.getAttribute("height");b=F>E?"scale("+R/3/P[3]+")":"scale("+R/3/P[2]+")";b="translate(0) "+b+" translate(0)";l=K.createElementNS(k.SVG,"symbol");var V=svgedit.utilities.findDefs();for(svgedit.browser.isGecko()&&$(A).find("linearGradient, radialGradient, pattern").appendTo(V);A.firstChild;)l.appendChild(A.firstChild);var W=A.attributes,Z;for(Z=0;Z<W.length;Z++){var M=
-W[Z];l.setAttribute(M.nodeName,M.value)}l.id=na();Na[p]={symbol:l,xform:b};svgedit.utilities.findDefs().appendChild(l);C.addSubCommand(new svgedit.history.InsertElementCommand(l))}var H=K.createElementNS(k.SVG,"use");H.id=na();ta(H,"#"+l.id);(m||f().getCurrentLayer()).appendChild(H);C.addSubCommand(new svgedit.history.InsertElementCommand(H));ha();H.setAttribute("transform",b);svgedit.recalculate.recalculateDimensions(H);$(H).data("symbol",l).data("ref",l);xa([H]);da(C);Y("changed",[d])}catch(D){console.log(D);
-return null}return H};var ub=u.identifyLayers=function(){Ha();f().identifyLayers()};this.createLayer=function(a,h){var b=f().createLayer(a,q(h));ha();Y("changed",[b])};this.cloneLayer=function(a,h){var b=f().cloneLayer(a,q(h));ha();Ha();Y("changed",[b])};this.deleteCurrentLayer=function(){var a=f().getCurrentLayer(),h=a.nextSibling,b=a.parentNode;if(a=f().deleteCurrentLayer()){var p=new svgedit.history.BatchCommand("Delete Layer");p.addSubCommand(new svgedit.history.RemoveElementCommand(a,h,b));da(p);
-ha();Y("changed",[b]);return true}return false};this.setCurrentLayer=function(a){(a=f().setCurrentLayer(svgedit.utilities.toXml(a)))&&ha();return a};this.renameCurrentLayer=function(a){var h=f(),b=h.getCurrentLayer();if(b)if(h.setCurrentLayerName(a,q())){Y("changed",[b]);return true}return false};this.setCurrentLayerPosition=function(a){if(a=f().setCurrentLayerPosition(a)){da(new svgedit.history.MoveElementCommand(a.currentGroup,a.oldNextSibling,d));return true}return false};this.setLayerVisibility=
-function(a,h){var b=f(),p=b.getLayerVisibility(a),o=b.setLayerVisibility(a,h);if(o)da(new svgedit.history.ChangeElementCommand(o,{display:p?"inline":"none"},"Layer Visibility"));else return false;if(o==b.getCurrentLayer()){ha();ca.clear()}return true};this.moveSelectedToLayer=function(a){var h=f().getLayerByName(a);if(!h)return false;var b=new svgedit.history.BatchCommand("Move Elements to Layer"),p=t;for(a=p.length;a--;){var o=p[a];if(o){var C=o.nextSibling,l=o.parentNode;h.appendChild(o);b.addSubCommand(new svgedit.history.MoveElementCommand(o,
-C,l))}}da(b);return true};this.mergeLayer=function(a){f().mergeLayer(q(a));ha();Ha();Y("changed",[d])};this.mergeAllLayers=function(a){f().mergeAllLayers(q(a));ha();Ha();Y("changed",[d])};var Ha=this.leaveContext=function(){var a,h=Wa.length;if(h){for(a=0;a<h;a++){var b=Wa[a],p=Ua(b,"orig_opac");p!==1?b.setAttribute("opacity",p):b.removeAttribute("opacity");b.setAttribute("style","pointer-events: inherit")}Wa=[];ha(true);Y("contextset",null)}m=null},Db=this.setContext=function(a){Ha();if(typeof a===
-"string")a=svgedit.utilities.getElem(a);m=a;$(a).parentsUntil("#svgcontent").andSelf().siblings().each(function(){var h=this.getAttribute("opacity")||1;Ua(this,"orig_opac",h);this.setAttribute("opacity",h*0.33);this.setAttribute("style","pointer-events: none");Wa.push(this)});ha();Y("contextset",m)};this.clear=function(){ca.clear();ha();u.clearSvgContentElement();u.current_drawing_=new svgedit.draw.Drawing(d);u.createLayer("Layer 1");u.undoMgr.resetUndoStack();ea.initGroup();ia=ea.getRubberBandBox();
-Y("cleared")};this.linkControlPoints=ca.linkControlPoints;this.getContentElem=function(){return d};this.getRootElem=function(){return B};this.getSelectedElems=function(){return t};var Ia=this.getResolution=function(){var a=d.getAttribute("width")/e,h=d.getAttribute("height")/e;return{w:a,h:h,zoom:e}};this.getZoom=function(){return e};this.getSnapToGrid=function(){return i.gridSnapping};this.getVersion=function(){return"svgcanvas.js ($Rev$)"};this.setUiStrings=function(a){$.extend(Ma,a.notification)};
-this.setConfig=function(a){$.extend(i,a)};this.getTitle=function(a){if(a=a||t[0]){a=$(a).data("gsvg")||$(a).data("symbol")||a;var h=a.childNodes;for(a=0;a<h.length;a++)if(h[a].nodeName=="title")return h[a].textContent;return""}};this.setGroupTitle=function(a){var h=t[0];h=$(h).data("gsvg")||h;var b=$(h).children("title"),p=new svgedit.history.BatchCommand("Set Label");if(a.length)if(b.length){b=b[0];p.addSubCommand(new svgedit.history.ChangeElementCommand(b,{"#text":b.textContent}));b.textContent=
-a}else{b=K.createElementNS(k.SVG,"title");b.textContent=a;$(h).prepend(b);p.addSubCommand(new svgedit.history.InsertElementCommand(b))}else{p.addSubCommand(new svgedit.history.RemoveElementCommand(b[0],b.nextSibling,h));b.remove()}da(p)};var Eb=this.getDocumentTitle=function(){return u.getTitle(d)};this.setDocumentTitle=function(a){var h,b=d.childNodes,p=false,o="",C=new svgedit.history.BatchCommand("Change Image Title");for(h=0;h<b.length;h++)if(b[h].nodeName=="title"){p=b[h];o=p.textContent;break}if(!p){p=
-K.createElementNS(k.SVG,"title");d.insertBefore(p,d.firstChild)}if(a.length)p.textContent=a;else p.parentNode.removeChild(p);C.addSubCommand(new svgedit.history.ChangeElementCommand(p,{"#text":o}));da(C)};this.getEditorNS=function(a){a&&d.setAttribute("xmlns:se",k.SE);return k.SE};this.setResolution=function(a,h){var b=Ia(),p=b.w;b=b.h;var o;if(a=="fit"){var C=wa();if(C){o=new svgedit.history.BatchCommand("Fit Canvas to Content");var l=Xa();xa(l);var z=[],A=[];$.each(l,function(){z.push(C.x*-1);A.push(C.y*
--1)});l=u.moveSelectedElements(z,A,true);o.addSubCommand(l);ha();a=Math.round(C.width);h=Math.round(C.height)}else return false}if(a!=p||h!=b){o||(o=new svgedit.history.BatchCommand("Change Image Dimensions"));a=svgedit.units.convertToNum("width",a);h=svgedit.units.convertToNum("height",h);d.setAttribute("width",a);d.setAttribute("height",h);this.contentW=a;this.contentH=h;o.addSubCommand(new svgedit.history.ChangeElementCommand(d,{width:p,height:b}));d.setAttribute("viewBox",[0,0,a/e,h/e].join(" "));
-o.addSubCommand(new svgedit.history.ChangeElementCommand(d,{viewBox:["0 0",p,b].join(" ")}));da(o);Y("changed",[d])}return true};this.getOffset=function(){return $(d).attr(["x","y"])};this.setBBoxZoom=function(a,h,b){var p=0.85,o=function(C){if(!C)return false;var l=Math.min(Math.round(h/C.width*100*p)/100,Math.round(b/C.height*100*p)/100);u.setZoom(l);return{zoom:l,bbox:C}};if(typeof a=="object"){a=a;if(a.width==0||a.height==0){u.setZoom(a.zoom?a.zoom:e*a.factor);return{zoom:e,bbox:a}}return o(a)}switch(a){case "selection":if(!t[0])return;
-a=$.map(t,function(C){if(C)return C});a=wa(a);break;case "canvas":a=Ia();p=0.95;a={width:a.w,height:a.h,x:0,y:0};break;case "content":a=wa();break;case "layer":a=wa(Xa(f().getCurrentLayer()));break;default:return}return o(a)};this.setZoom=function(a){var h=Ia();d.setAttribute("viewBox","0 0 "+h.w/a+" "+h.h/a);e=a;$.each(t,function(b,p){p&&ea.requestSelector(p).resize()});ca.zoomChange();Ja("zoomChanged",a)};this.getMode=function(){return fa};this.setMode=function(a){ca.clear(true);oa.clear();ra=t[0]&&
-t[0].nodeName=="text"?ua:v;fa=a};this.getColor=function(a){return ra[a]};this.setColor=function(a,h,b){function p(z){z.nodeName!="g"&&o.push(z)}v[a]=h;ra[a+"_paint"]={type:"solidColor"};for(var o=[],C=t.length;C--;){var l=t[C];if(l)if(l.tagName=="g")svgedit.utilities.walkTree(l,p);else if(a=="fill")l.tagName!="polyline"&&l.tagName!="line"&&o.push(l);else o.push(l)}if(o.length>0)if(b)Ka(a,h,o);else{sa(a,h,o);Y("changed",o)}};var wb=this.setGradient=function(a){if(!(!ra[a+"_paint"]||ra[a+"_paint"].type==
-"solidColor")){var h=u[a+"Grad"],b=vb(h),p=svgedit.utilities.findDefs();if(b)h=b;else{h=p.appendChild(K.importNode(h,true));h.id=na()}u.setColor(a,"url(#"+h.id+")")}},vb=function(a){var h=svgedit.utilities.findDefs();h=$(h).find("linearGradient, radialGradient");for(var b=h.length,p=["r","cx","cy","fx","fy"];b--;){var o=h[b];if(a.tagName=="linearGradient"){if(a.getAttribute("x1")!=o.getAttribute("x1")||a.getAttribute("y1")!=o.getAttribute("y1")||a.getAttribute("x2")!=o.getAttribute("x2")||a.getAttribute("y2")!=
-o.getAttribute("y2"))continue}else{var C=$(a).attr(p),l=$(o).attr(p),z=false;$.each(p,function(R,V){if(C[V]!=l[V])z=true});if(z)continue}var A=a.getElementsByTagNameNS(k.SVG,"stop"),E=o.getElementsByTagNameNS(k.SVG,"stop");if(A.length==E.length){for(var F=A.length;F--;){var J=A[F],P=E[F];if(J.getAttribute("offset")!=P.getAttribute("offset")||J.getAttribute("stop-opacity")!=P.getAttribute("stop-opacity")||J.getAttribute("stop-color")!=P.getAttribute("stop-color"))break}if(F==-1)return o}}return null};
-this.setPaint=function(a,h){var b=new $.jGraduate.Paint(h);this.setPaintOpacity(a,b.alpha/100,true);ra[a+"_paint"]=b;switch(b.type){case "solidColor":this.setColor(a,b.solidColor!="none"?"#"+b.solidColor:"none");break;case "linearGradient":case "radialGradient":u[a+"Grad"]=b[b.type];wb(a)}};this.setStrokePaint=function(a){this.setPaint("stroke",a)};this.setFillPaint=function(a){this.setPaint("fill",a)};this.getStrokeWidth=function(){return ra.stroke_width};this.setStrokeWidth=function(a){function h(C){C.nodeName!=
-"g"&&b.push(C)}if(a==0&&["line","path"].indexOf(fa)>=0)u.setStrokeWidth(1);else{ra.stroke_width=a;for(var b=[],p=t.length;p--;){var o=t[p];if(o)o.tagName=="g"?svgedit.utilities.walkTree(o,h):b.push(o)}if(b.length>0){sa("stroke-width",a,b);Y("changed",t)}}};this.setStrokeAttr=function(a,h){v[a.replace("-","_")]=h;for(var b=[],p=t.length;p--;){var o=t[p];if(o)o.tagName=="g"?svgedit.utilities.walkTree(o,function(C){C.nodeName!="g"&&b.push(C)}):b.push(o)}if(b.length>0){sa(a,h,b);Y("changed",t)}};this.getStyle=
-function(){return v};this.getOpacity=function(){return v.opacity};this.setOpacity=function(a){v.opacity=a;sa("opacity",a)};this.getFillOpacity=function(){return v.fill_opacity};this.getStrokeOpacity=function(){return v.stroke_opacity};this.setPaintOpacity=function(a,h,b){v[a+"_opacity"]=h;b?Ka(a+"-opacity",h):sa(a+"-opacity",h)};this.getPaintOpacity=function(a){return a==="fill"?this.getFillOpacity():this.getStrokeOpacity()};this.getBlur=function(a){var h=0;if(a)if(a.getAttribute("filter"))if(a=svgedit.utilities.getElem(a.id+
-"_blur"))h=a.firstChild.getAttribute("stdDeviation");return h};(function(){function a(){var o=u.undoMgr.finishUndoableChange();h.addSubCommand(o);da(h);b=h=null}var h=null,b=null,p=false;u.setBlurNoUndo=function(o){if(b)if(o===0){Ka("filter","");p=true}else{var C=t[0];p&&Ka("filter","url(#"+C.id+"_blur)");if(svgedit.browser.isWebkit()){console.log("e",C);C.removeAttribute("filter");C.setAttribute("filter","url(#"+C.id+"_blur)")}Ka("stdDeviation",o,[b.firstChild]);u.setBlurOffsets(b,o)}else u.setBlur(o)};
-u.setBlurOffsets=function(o,C){if(C>3)svgedit.utilities.assignAttributes(o,{x:"-50%",y:"-50%",width:"200%",height:"200%"},100);else if(!svgedit.browser.isWebkit()){o.removeAttribute("x");o.removeAttribute("y");o.removeAttribute("width");o.removeAttribute("height")}};u.setBlur=function(o,C){if(h)a();else{var l=t[0],z=l.id;b=svgedit.utilities.getElem(z+"_blur");o-=0;var A=new svgedit.history.BatchCommand;if(b){if(o===0)b=null}else{var E=O({element:"feGaussianBlur",attr:{"in":"SourceGraphic",stdDeviation:o}});
-b=O({element:"filter",attr:{id:z+"_blur"}});b.appendChild(E);svgedit.utilities.findDefs().appendChild(b);A.addSubCommand(new svgedit.history.InsertElementCommand(b))}E={filter:l.getAttribute("filter")};if(o===0){l.removeAttribute("filter");A.addSubCommand(new svgedit.history.ChangeElementCommand(l,E))}else{sa("filter","url(#"+z+"_blur)");A.addSubCommand(new svgedit.history.ChangeElementCommand(l,E));u.setBlurOffsets(b,o);h=A;u.undoMgr.beginUndoableChange("stdDeviation",[b?b.firstChild:null]);if(C){u.setBlurNoUndo(o);
-a()}}}}})();this.getBold=function(){var a=t[0];if(a!=null&&a.tagName=="text"&&t[1]==null)return a.getAttribute("font-weight")=="bold";return false};this.setBold=function(a){var h=t[0];if(h!=null&&h.tagName=="text"&&t[1]==null)sa("font-weight",a?"bold":"normal");t[0].textContent||oa.setCursor()};this.getItalic=function(){var a=t[0];if(a!=null&&a.tagName=="text"&&t[1]==null)return a.getAttribute("font-style")=="italic";return false};this.setItalic=function(a){var h=t[0];if(h!=null&&h.tagName=="text"&&
-t[1]==null)sa("font-style",a?"italic":"normal");t[0].textContent||oa.setCursor()};this.getFontFamily=function(){return ua.font_family};this.setFontFamily=function(a){ua.font_family=a;sa("font-family",a);t[0]&&!t[0].textContent&&oa.setCursor()};this.setFontColor=function(a){ua.fill=a;sa("fill",a)};this.getFontColor=function(){return ua.fill};this.getFontSize=function(){return ua.font_size};this.setFontSize=function(a){ua.font_size=a;sa("font-size",a);t[0].textContent||oa.setCursor()};this.getText=
-function(){var a=t[0];if(a==null)return"";return a.textContent};this.setTextContent=function(a){sa("#text",a);oa.init(a);oa.setCursor()};this.setImageURL=function(a){var h=t[0];if(h){var b=$(h).attr(["width","height"]);b=!b.width||!b.height;var p=pa(h);if(p!==a)b=true;else if(!b)return;var o=new svgedit.history.BatchCommand("Change Image URL");ta(h,a);o.addSubCommand(new svgedit.history.ChangeElementCommand(h,{"#href":p}));b?$(new Image).load(function(){var C=$(h).attr(["width","height"]);$(h).attr({width:this.width,
-height:this.height});ea.requestSelector(h).resize();o.addSubCommand(new svgedit.history.ChangeElementCommand(h,C));da(o);Y("changed",[h])}).attr("src",a):da(o)}};this.setLinkURL=function(a){var h=t[0];if(h){if(h.tagName!=="a"){h=$(h).parents("a");if(h.length)h=h[0];else return}var b=pa(h);if(b!==a){var p=new svgedit.history.BatchCommand("Change Link URL");ta(h,a);p.addSubCommand(new svgedit.history.ChangeElementCommand(h,{"#href":b}));da(p)}}};this.setRectRadius=function(a){var h=t[0];if(h!=null&&
-h.tagName=="rect"){var b=h.getAttribute("rx");if(b!=a){h.setAttribute("rx",a);h.setAttribute("ry",a);da(new svgedit.history.ChangeElementCommand(h,{rx:b,ry:b},"Radius"));Y("changed",[h])}}};this.makeHyperlink=function(a){u.groupSelectedElements("a",a)};this.removeHyperlink=function(){u.ungroupSelectedElement()};this.setSegType=function(a){ca.setSegType(a)};this.convertToPath=function(a,h){if(a==null)$.each(t,function(b,p){p&&u.convertToPath(p)});else return h?svgedit.utilities.getBBoxOfElementAsPath(a,
-O,ca):svgedit.utilities.convertToPath(a,{fill:v.fill,"fill-opacity":v.fill_opacity,stroke:v.stroke,"stroke-width":v.stroke_width,"stroke-dasharray":v.stroke_dasharray,"stroke-linejoin":v.stroke_linejoin,"stroke-linecap":v.stroke_linecap,"stroke-opacity":v.stroke_opacity,opacity:v.opacity,visibility:"hidden"},O,ca,ha,xa,svgedit.history,da)};var Ka=function(a,h,b){fa=="pathedit"&&ca.moveNode(a,h);b=b||t;for(var p=b.length,o=["g","polyline","path"],C=["transform","opacity","filter"];p--;){var l=b[p];
-if(l!=null)if((a==="x"||a==="y")&&o.indexOf(l.tagName)>=0){var z=wa([l]);u.moveSelectedElements((a==="x"?h-z.x:0)*e,(a==="y"?h-z.y:0)*e,true)}else{l.tagName==="g"&&C.indexOf(a);z=a==="#text"?l.textContent:l.getAttribute(a);if(z==null)z="";if(z!==String(h)){if(a=="#text"){svgedit.utilities.getBBox(l);l.textContent=h;if(/rotate/.test(l.getAttribute("transform")))l=ib(l)}else a=="#href"?ta(l,h):l.setAttribute(a,h);fa==="textedit"&&a!=="#text"&&l.textContent.length&&oa.toSelectMode(l);if(svgedit.browser.isGecko()&&
-l.nodeName==="text"&&/rotate/.test(l.getAttribute("transform")))if(String(h).indexOf("url")===0||["font-size","font-family","x","y"].indexOf(a)>=0&&l.textContent)l=ib(l);t.indexOf(l)>=0&&setTimeout(function(){l.parentNode&&ea.requestSelector(l).resize()},0);z=svgedit.utilities.getRotationAngle(l);if(z!=0&&a!="transform")for(var A=svgedit.transformlist.getTransformList(l),E=A.numberOfItems;E--;)if(A.getItem(E).type==4){A.removeItem(E);var F=svgedit.utilities.getBBox(l),J=svgedit.math.transformPoint(F.x+
-F.width/2,F.y+F.height/2,svgedit.math.transformListToTransform(A).matrix);F=J.x;J=J.y;var P=B.createSVGTransform();P.setRotate(z,F,J);A.insertItemBefore(P,E);break}}}}},sa=this.changeSelectedAttribute=function(a,h,b){b=b||t;u.undoMgr.beginUndoableChange(a,b);Ka(a,h,b);a=u.undoMgr.finishUndoableChange();a.isEmpty()||da(a)};this.deleteSelectedElements=function(){var a,h=new svgedit.history.BatchCommand("Delete Elements"),b=t.length,p=[];for(a=0;a<b;++a){var o=t[a];if(o==null)break;var C=o.parentNode,
-l=o;ea.releaseSelector(l);svgedit.path.removePath_(l.id);if(C.tagName==="a"&&C.childNodes.length===1){l=C;C=C.parentNode}var z=l.nextSibling;l=C.removeChild(l);p.push(o);t[a]=null;h.addSubCommand(new Sa(l,z,C))}h.isEmpty()||da(h);Y("changed",p);ha()};this.cutSelectedElements=function(){var a,h=new svgedit.history.BatchCommand("Cut Elements"),b=t.length,p=[];for(a=0;a<b;++a){var o=t[a];if(o==null)break;var C=o.parentNode,l=o;ea.releaseSelector(l);svgedit.path.removePath_(l.id);var z=l.nextSibling;
-l=C.removeChild(l);p.push(o);t[a]=null;h.addSubCommand(new Sa(l,z,C))}h.isEmpty()||da(h);Y("changed",p);ha();u.clipBoard=p};this.copySelectedElements=function(){u.clipBoard=$.merge([],t)};this.pasteElements=function(a,h,b){var p=u.clipBoard,o=p.length;if(o){for(var C=[],l=new svgedit.history.BatchCommand("Paste elements"),z=f();o--;){var A=p[o];if(A){var E=z.copyElem(A);if(!svgedit.utilities.getElem(A.id))E.id=A.id;C.push(E);(m||z.getCurrentLayer()).appendChild(E);l.addSubCommand(new svgedit.history.InsertElementCommand(E));
-Ta(E)}}Aa(C);if(a!=="in_place"){var F,J;if(a){if(a==="point"){F=h;J=b}}else{F=gb.x;J=gb.y}a=wa(C);var P=F-(a.x+a.width/2),R=J-(a.y+a.height/2),V=[],W=[];$.each(C,function(){V.push(P);W.push(R)});F=u.moveSelectedElements(V,W,false);l.addSubCommand(F)}da(l);Y("changed",C)}};this.groupSelectedElements=function(a,h){a||(a="g");var b="";switch(a){case "a":b="Make hyperlink";var p="";if(arguments.length>1)p=h;break;default:a="g";b="Group Elements"}b=new svgedit.history.BatchCommand(b);var o=O({element:a,
-attr:{id:na()}});a==="a"&&ta(o,p);b.addSubCommand(new svgedit.history.InsertElementCommand(o));for(p=t.length;p--;){var C=t[p];if(C!=null){if(C.parentNode.tagName==="a"&&C.parentNode.childNodes.length===1)C=C.parentNode;var l=C.nextSibling,z=C.parentNode;o.appendChild(C);b.addSubCommand(new svgedit.history.MoveElementCommand(C,l,z))}}b.isEmpty()||da(b);Aa([o],true)};var kb=this.pushGroupProperties=function(a,h){var b=a.childNodes,p=b.length,o=a.getAttribute("transform"),C=svgedit.transformlist.getTransformList(a),
-l=svgedit.math.transformListToTransform(C).matrix,z=new svgedit.history.BatchCommand("Push group properties"),A=0,E=svgedit.utilities.getRotationAngle(a),F=$(a).attr(["filter","opacity"]),J,P,R,V=f();for(A=0;A<p;A++){var W=b[A];if(W.nodeType===1){if(F.opacity!==null&&F.opacity!==1){W.getAttribute("opacity");var Z=Math.round((W.getAttribute("opacity")||1)*F.opacity*100)/100;sa("opacity",Z,[W])}if(F.filter){R=Z=this.getBlur(W);P||(P=this.getBlur(a));if(Z)Z=Number(P)+Number(Z);else if(Z===0)Z=P;if(R)J=
-svgedit.utilities.getRefElem(W.getAttribute("filter"));else if(J){J=V.copyElem(J);svgedit.utilities.findDefs().appendChild(J)}else J=svgedit.utilities.getRefElem(F.filter);J.id=W.id+"_"+(J.firstChild.tagName==="feGaussianBlur"?"blur":"filter");sa("filter","url(#"+J.id+")",[W]);if(Z){sa("stdDeviation",Z,[J.firstChild]);u.setBlurOffsets(J,Z)}}Z=svgedit.transformlist.getTransformList(W);if(~W.tagName.indexOf("Gradient"))Z=null;if(Z)if(W.tagName!=="defs")if(C.numberOfItems){if(E&&C.numberOfItems==1){var M=
-C.getItem(0).matrix,H=B.createSVGMatrix();if(R=svgedit.utilities.getRotationAngle(W))H=Z.getItem(0).matrix;var D=svgedit.utilities.getBBox(W),G=svgedit.math.transformListToTransform(Z).matrix,I=svgedit.math.transformPoint(D.x+D.width/2,D.y+D.height/2,G);D=E+R;G=B.createSVGTransform();G.setRotate(D,I.x,I.y);M=svgedit.math.matrixMultiply(M,H,G.matrix.inverse());R&&Z.removeItem(0);if(D)Z.numberOfItems?Z.insertItemBefore(G,0):Z.appendItem(G);if(M.e||M.f){R=B.createSVGTransform();R.setTranslate(M.e,M.f);
-Z.numberOfItems?Z.insertItemBefore(R,0):Z.appendItem(R)}}else{M=W.getAttribute("transform");R={};R.transform=M||"";R=B.createSVGTransform();M=svgedit.math.transformListToTransform(Z).matrix;H=M.inverse();M=svgedit.math.matrixMultiply(H,l,M);R.setMatrix(M);Z.appendItem(R)}(W=svgedit.recalculate.recalculateDimensions(W))&&z.addSubCommand(W)}}}if(o){R={};R.transform=o;a.setAttribute("transform","");a.removeAttribute("transform");z.addSubCommand(new svgedit.history.ChangeElementCommand(a,R))}if(h&&!z.isEmpty())return z};
-this.ungroupSelectedElement=function(){var a=t[0];if(a)if($(a).data("gsvg")||$(a).data("symbol"))tb(a);else if(a.tagName==="use"){var h=svgedit.utilities.getElem(pa(a).substr(1));$(a).data("symbol",h).data("ref",h);tb(a)}else{h=$(a).parents("a");if(h.length)a=h[0];if(a.tagName==="g"||a.tagName==="a"){h=new svgedit.history.BatchCommand("Ungroup Elements");var b=kb(a,true);b&&h.addSubCommand(b);b=a.parentNode;for(var p=a.nextSibling,o=Array(a.childNodes.length),C=0;a.firstChild;){var l=a.firstChild,
-z=l.nextSibling,A=l.parentNode;if(l.tagName==="title"){h.addSubCommand(new svgedit.history.RemoveElementCommand(l,l.nextSibling,A));A.removeChild(l)}else{o[C++]=l=b.insertBefore(l,p);h.addSubCommand(new svgedit.history.MoveElementCommand(l,z,A))}}ha();p=a.nextSibling;a=b.removeChild(a);h.addSubCommand(new svgedit.history.RemoveElementCommand(a,p,b));h.isEmpty()||da(h);xa(o)}}};this.moveToTopSelectedElement=function(){var a=t[0];if(a!=null){a=a;var h=a.parentNode,b=a.nextSibling;a=a.parentNode.appendChild(a);
-if(b!=a.nextSibling){da(new svgedit.history.MoveElementCommand(a,b,h,"top"));Y("changed",[a])}}};this.moveToBottomSelectedElement=function(){var a=t[0];if(a!=null){a=a;var h=a.parentNode,b=a.nextSibling,p=a.parentNode.firstChild;if(p.tagName=="title")p=p.nextSibling;if(p.tagName=="defs")p=p.nextSibling;a=a.parentNode.insertBefore(a,p);if(b!=a.nextSibling){da(new svgedit.history.MoveElementCommand(a,b,h,"bottom"));Y("changed",[a])}}};this.moveUpDownSelected=function(a){var h=t[0];if(h){Ga=[];var b,
-p,o=$(hb(wa([h]))).toArray();a=="Down"&&o.reverse();$.each(o,function(){if(p){b=this;return false}else if(this==h)p=true});if(b){o=h.parentNode;var C=h.nextSibling;$(b)[a=="Down"?"before":"after"](h);if(C!=h.nextSibling){da(new svgedit.history.MoveElementCommand(h,C,o,"Move "+a));Y("changed",[h])}}}};this.moveSelectedElements=function(a,h,b){if(a.constructor!=Array){a/=e;h/=e}b=b||true;for(var p=new svgedit.history.BatchCommand("position"),o=t.length;o--;){var C=t[o];if(C!=null){var l=B.createSVGTransform(),
-z=svgedit.transformlist.getTransformList(C);a.constructor==Array?l.setTranslate(a[o],h[o]):l.setTranslate(a,h);z.numberOfItems?z.insertItemBefore(l,0):z.appendItem(l);(l=svgedit.recalculate.recalculateDimensions(C))&&p.addSubCommand(l);ea.requestSelector(C).resize()}}if(!p.isEmpty()){b&&da(p);Y("changed",t);return p}};this.cloneSelectedElements=function(a,h){var b,p,o=new svgedit.history.BatchCommand("Clone Elements"),C=t.length;t.sort(function(z,A){return $(A).index()-$(z).index()});for(b=0;b<C;++b){p=
-t[b];if(p==null)break}C=t.slice(0,b);this.clearSelection(true);var l=f();for(b=C.length;b--;){p=C[b]=l.copyElem(C[b]);(m||l.getCurrentLayer()).appendChild(p);o.addSubCommand(new svgedit.history.InsertElementCommand(p))}if(!o.isEmpty()){xa(C.reverse());this.moveSelectedElements(a,h,false);da(o)}};this.alignSelectedElements=function(a,h){var b,p,o=[],C=Number.MAX_VALUE,l=Number.MIN_VALUE,z=Number.MAX_VALUE,A=Number.MIN_VALUE,E=Number.MIN_VALUE,F=Number.MIN_VALUE,J=t.length;if(J){for(b=0;b<J;++b){if(t[b]==
-null)break;p=t[b];o[b]=wa([p]);switch(h){case "smallest":if((a=="l"||a=="c"||a=="r")&&(E==Number.MIN_VALUE||E>o[b].width)||(a=="t"||a=="m"||a=="b")&&(F==Number.MIN_VALUE||F>o[b].height)){C=o[b].x;z=o[b].y;l=o[b].x+o[b].width;A=o[b].y+o[b].height;E=o[b].width;F=o[b].height}break;case "largest":if((a=="l"||a=="c"||a=="r")&&(E==Number.MIN_VALUE||E<o[b].width)||(a=="t"||a=="m"||a=="b")&&(F==Number.MIN_VALUE||F<o[b].height)){C=o[b].x;z=o[b].y;l=o[b].x+o[b].width;A=o[b].y+o[b].height;E=o[b].width;F=o[b].height}break;
-default:if(o[b].x<C)C=o[b].x;if(o[b].y<z)z=o[b].y;if(o[b].x+o[b].width>l)l=o[b].x+o[b].width;if(o[b].y+o[b].height>A)A=o[b].y+o[b].height}}if(h=="page"){z=C=0;l=u.contentW;A=u.contentH}p=Array(J);E=Array(J);for(b=0;b<J;++b){if(t[b]==null)break;F=o[b];p[b]=0;E[b]=0;switch(a){case "l":p[b]=C-F.x;break;case "c":p[b]=(C+l)/2-(F.x+F.width/2);break;case "r":p[b]=l-(F.x+F.width);break;case "t":E[b]=z-F.y;break;case "m":E[b]=(z+A)/2-(F.y+F.height/2);break;case "b":E[b]=A-(F.y+F.height)}}this.moveSelectedElements(p,
-E)}};this.contentW=Ia().w;this.contentH=Ia().h;this.updateCanvas=function(a,h){B.setAttribute("width",a);B.setAttribute("height",h);var b=$("#canvasBackground")[0],p=d.getAttribute("x"),o=d.getAttribute("y"),C=a/2-this.contentW*e/2,l=h/2-this.contentH*e/2;svgedit.utilities.assignAttributes(d,{width:this.contentW*e,height:this.contentH*e,x:C,y:l,viewBox:"0 0 "+this.contentW+" "+this.contentH});svgedit.utilities.assignAttributes(b,{width:d.getAttribute("width"),height:d.getAttribute("height"),x:C,y:l});
-(b=svgedit.utilities.getElem("background_image"))&&svgedit.utilities.assignAttributes(b,{width:"100%",height:"100%"});ea.selectorParentGroup.setAttribute("transform","translate("+C+","+l+")");Ja("canvasUpdated",{new_x:C,new_y:l,old_x:p,old_y:o,d_x:C-p,d_y:l-o});return{x:C,y:l,old_x:p,old_y:o,d_x:C-p,d_y:l-o}};this.setBackground=function(a,h){var b=svgedit.utilities.getElem("canvasBackground"),p=$(b).find("rect")[0],o=svgedit.utilities.getElem("background_image");p.setAttribute("fill",a);if(h){if(!o){o=
-K.createElementNS(k.SVG,"image");svgedit.utilities.assignAttributes(o,{id:"background_image",width:"100%",height:"100%",preserveAspectRatio:"xMinYMin",style:"pointer-events:none"})}ta(o,h);b.appendChild(o)}else o&&o.parentNode.removeChild(o)};this.cycleElement=function(a){var h=t[0],b=false,p=Xa(m||f().getCurrentLayer());if(p.length){if(h==null){a=a?p.length-1:0;b=p[a]}else for(var o=p.length;o--;)if(p[o]==h){a=a?o-1:o+1;if(a>=p.length)a=0;else if(a<0)a=p.length-1;b=p[a];break}Aa([b],true);Y("selected",
-t)}};this.clear();this.getPrivateMethods=function(){return{addCommandToHistory:da,setGradient:wb,addSvgElementFromJson:O,assignAttributes:La,BatchCommand:Ab,call:Y,ChangeElementCommand:pb,copyElem:function(a){return f().copyElem(a)},ffClone:ib,findDefs:ga,findDuplicateGradient:vb,getElem:Ca,getId:va,getIntersectionList:hb,getMouseTarget:Ya,getNextId:na,getPathBBox:qa,getUrlFromAttr:ba,hasMatrixTransform:N,identifyLayers:ub,InsertElementCommand:$a,isIdentity:svgedit.math.isIdentity,logMatrix:Cb,matrixMultiply:L,
-MoveElementCommand:ob,preventClickDefault:svgedit.utilities.preventClickDefault,recalculateAllSelectedDimensions:jb,recalculateDimensions:yb,remapElement:xb,RemoveElementCommand:Sa,removeUnusedDefElems:sb,round:Oa,runExtensions:Ja,sanitizeSvg:zb,SVGEditTransformList:svgedit.transformlist.SVGTransformList,toString:toString,transformBox:svgedit.math.transformBox,transformListToTransform:T,transformPoint:Q,walkTree:svgedit.utilities.walkTree}}};;module.exports = svgedit; }());
+const jquery = require('jquery'); const jQuery = jquery; const $ = jquery; (function() { var svgedit = {NS:{HTML:"http://www.w3.org/1999/xhtml", MATH:"http://www.w3.org/1998/Math/MathML", SE:"http://svg-edit.googlecode.com", SVG:"http://www.w3.org/2000/svg", XLINK:"http://www.w3.org/1999/xlink", XML:"http://www.w3.org/XML/1998/namespace", XMLNS:"http://www.w3.org/2000/xmlns/"}};
+svgedit.getReverseNS = function() {
+  var reverseNS = {};
+  $.each(this.NS, function(name, URI) {
+    reverseNS[URI] = name.toLowerCase()
+  });
+  return reverseNS
+};(function() {
+  var proxied = jQuery.fn.attr, svgns = "http://www.w3.org/2000/svg";
+  jQuery.fn.attr = function(key, value) {
+    var i, attr;
+    var len = this.length;
+    if(!len) {
+      return proxied.apply(this, arguments)
+    }
+    for(i = 0;i < len;++i) {
+      var elem = this[i];
+      if(elem.namespaceURI === svgns) {
+        if(value !== undefined) {
+          elem.setAttribute(key, value)
+        }else {
+          if($.isArray(key)) {
+            var j = key.length, obj = {};
+            while(j--) {
+              var aname = key[j];
+              attr = elem.getAttribute(aname);
+              if(attr || attr === "0") {
+                attr = isNaN(attr) ? attr : attr - 0
+              }
+              obj[aname] = attr
+            }
+            return obj
+          }
+        }
+        if(typeof key === "object") {
+          var v;
+          for(v in key) {
+            elem.setAttribute(v, key[v])
+          }
+        }else {
+          attr = elem.getAttribute(key);
+          if(attr || attr === "0") {
+            attr = isNaN(attr) ? attr : attr - 0
+          }
+          return attr
+        }
+      }else {
+        return proxied.apply(this, arguments)
+      }
+    }
+    return this
+  }
+})();(function() {
+  if(!window.SVGPathSeg) {
+    window.SVGPathSeg = function(type, typeAsLetter, owningPathSegList) {
+      this.pathSegType = type;
+      this.pathSegTypeAsLetter = typeAsLetter;
+      this._owningPathSegList = owningPathSegList
+    };
+    SVGPathSeg.PATHSEG_UNKNOWN = 0;
+    SVGPathSeg.PATHSEG_CLOSEPATH = 1;
+    SVGPathSeg.PATHSEG_MOVETO_ABS = 2;
+    SVGPathSeg.PATHSEG_MOVETO_REL = 3;
+    SVGPathSeg.PATHSEG_LINETO_ABS = 4;
+    SVGPathSeg.PATHSEG_LINETO_REL = 5;
+    SVGPathSeg.PATHSEG_CURVETO_CUBIC_ABS = 6;
+    SVGPathSeg.PATHSEG_CURVETO_CUBIC_REL = 7;
+    SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_ABS = 8;
+    SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_REL = 9;
+    SVGPathSeg.PATHSEG_ARC_ABS = 10;
+    SVGPathSeg.PATHSEG_ARC_REL = 11;
+    SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_ABS = 12;
+    SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_REL = 13;
+    SVGPathSeg.PATHSEG_LINETO_VERTICAL_ABS = 14;
+    SVGPathSeg.PATHSEG_LINETO_VERTICAL_REL = 15;
+    SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_ABS = 16;
+    SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_REL = 17;
+    SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS = 18;
+    SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL = 19;
+    SVGPathSeg.prototype._segmentChanged = function() {
+      if(this._owningPathSegList) {
+        this._owningPathSegList.segmentChanged(this)
+      }
+    };
+    window.SVGPathSegClosePath = function(owningPathSegList) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_CLOSEPATH, "z", owningPathSegList)
+    };
+    SVGPathSegClosePath.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegClosePath.prototype.toString = function() {
+      return"[object SVGPathSegClosePath]"
+    };
+    SVGPathSegClosePath.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter
+    };
+    SVGPathSegClosePath.prototype.clone = function() {
+      return new SVGPathSegClosePath(undefined)
+    };
+    window.SVGPathSegMovetoAbs = function(owningPathSegList, x, y) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_MOVETO_ABS, "M", owningPathSegList);
+      this._x = x;
+      this._y = y
+    };
+    SVGPathSegMovetoAbs.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegMovetoAbs.prototype.toString = function() {
+      return"[object SVGPathSegMovetoAbs]"
+    };
+    SVGPathSegMovetoAbs.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter + " " + this._x + " " + this._y
+    };
+    SVGPathSegMovetoAbs.prototype.clone = function() {
+      return new SVGPathSegMovetoAbs(undefined, this._x, this._y)
+    };
+    Object.defineProperty(SVGPathSegMovetoAbs.prototype, "x", {get:function() {
+      return this._x
+    }, set:function(x) {
+      this._x = x;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegMovetoAbs.prototype, "y", {get:function() {
+      return this._y
+    }, set:function(y) {
+      this._y = y;
+      this._segmentChanged()
+    }, enumerable:true});
+    window.SVGPathSegMovetoRel = function(owningPathSegList, x, y) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_MOVETO_REL, "m", owningPathSegList);
+      this._x = x;
+      this._y = y
+    };
+    SVGPathSegMovetoRel.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegMovetoRel.prototype.toString = function() {
+      return"[object SVGPathSegMovetoRel]"
+    };
+    SVGPathSegMovetoRel.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter + " " + this._x + " " + this._y
+    };
+    SVGPathSegMovetoRel.prototype.clone = function() {
+      return new SVGPathSegMovetoRel(undefined, this._x, this._y)
+    };
+    Object.defineProperty(SVGPathSegMovetoRel.prototype, "x", {get:function() {
+      return this._x
+    }, set:function(x) {
+      this._x = x;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegMovetoRel.prototype, "y", {get:function() {
+      return this._y
+    }, set:function(y) {
+      this._y = y;
+      this._segmentChanged()
+    }, enumerable:true});
+    window.SVGPathSegLinetoAbs = function(owningPathSegList, x, y) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_LINETO_ABS, "L", owningPathSegList);
+      this._x = x;
+      this._y = y
+    };
+    SVGPathSegLinetoAbs.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegLinetoAbs.prototype.toString = function() {
+      return"[object SVGPathSegLinetoAbs]"
+    };
+    SVGPathSegLinetoAbs.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter + " " + this._x + " " + this._y
+    };
+    SVGPathSegLinetoAbs.prototype.clone = function() {
+      return new SVGPathSegLinetoAbs(undefined, this._x, this._y)
+    };
+    Object.defineProperty(SVGPathSegLinetoAbs.prototype, "x", {get:function() {
+      return this._x
+    }, set:function(x) {
+      this._x = x;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegLinetoAbs.prototype, "y", {get:function() {
+      return this._y
+    }, set:function(y) {
+      this._y = y;
+      this._segmentChanged()
+    }, enumerable:true});
+    window.SVGPathSegLinetoRel = function(owningPathSegList, x, y) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_LINETO_REL, "l", owningPathSegList);
+      this._x = x;
+      this._y = y
+    };
+    SVGPathSegLinetoRel.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegLinetoRel.prototype.toString = function() {
+      return"[object SVGPathSegLinetoRel]"
+    };
+    SVGPathSegLinetoRel.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter + " " + this._x + " " + this._y
+    };
+    SVGPathSegLinetoRel.prototype.clone = function() {
+      return new SVGPathSegLinetoRel(undefined, this._x, this._y)
+    };
+    Object.defineProperty(SVGPathSegLinetoRel.prototype, "x", {get:function() {
+      return this._x
+    }, set:function(x) {
+      this._x = x;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegLinetoRel.prototype, "y", {get:function() {
+      return this._y
+    }, set:function(y) {
+      this._y = y;
+      this._segmentChanged()
+    }, enumerable:true});
+    window.SVGPathSegCurvetoCubicAbs = function(owningPathSegList, x, y, x1, y1, x2, y2) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_CURVETO_CUBIC_ABS, "C", owningPathSegList);
+      this._x = x;
+      this._y = y;
+      this._x1 = x1;
+      this._y1 = y1;
+      this._x2 = x2;
+      this._y2 = y2
+    };
+    SVGPathSegCurvetoCubicAbs.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegCurvetoCubicAbs.prototype.toString = function() {
+      return"[object SVGPathSegCurvetoCubicAbs]"
+    };
+    SVGPathSegCurvetoCubicAbs.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter + " " + this._x1 + " " + this._y1 + " " + this._x2 + " " + this._y2 + " " + this._x + " " + this._y
+    };
+    SVGPathSegCurvetoCubicAbs.prototype.clone = function() {
+      return new SVGPathSegCurvetoCubicAbs(undefined, this._x, this._y, this._x1, this._y1, this._x2, this._y2)
+    };
+    Object.defineProperty(SVGPathSegCurvetoCubicAbs.prototype, "x", {get:function() {
+      return this._x
+    }, set:function(x) {
+      this._x = x;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoCubicAbs.prototype, "y", {get:function() {
+      return this._y
+    }, set:function(y) {
+      this._y = y;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoCubicAbs.prototype, "x1", {get:function() {
+      return this._x1
+    }, set:function(x1) {
+      this._x1 = x1;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoCubicAbs.prototype, "y1", {get:function() {
+      return this._y1
+    }, set:function(y1) {
+      this._y1 = y1;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoCubicAbs.prototype, "x2", {get:function() {
+      return this._x2
+    }, set:function(x2) {
+      this._x2 = x2;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoCubicAbs.prototype, "y2", {get:function() {
+      return this._y2
+    }, set:function(y2) {
+      this._y2 = y2;
+      this._segmentChanged()
+    }, enumerable:true});
+    window.SVGPathSegCurvetoCubicRel = function(owningPathSegList, x, y, x1, y1, x2, y2) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_CURVETO_CUBIC_REL, "c", owningPathSegList);
+      this._x = x;
+      this._y = y;
+      this._x1 = x1;
+      this._y1 = y1;
+      this._x2 = x2;
+      this._y2 = y2
+    };
+    SVGPathSegCurvetoCubicRel.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegCurvetoCubicRel.prototype.toString = function() {
+      return"[object SVGPathSegCurvetoCubicRel]"
+    };
+    SVGPathSegCurvetoCubicRel.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter + " " + this._x1 + " " + this._y1 + " " + this._x2 + " " + this._y2 + " " + this._x + " " + this._y
+    };
+    SVGPathSegCurvetoCubicRel.prototype.clone = function() {
+      return new SVGPathSegCurvetoCubicRel(undefined, this._x, this._y, this._x1, this._y1, this._x2, this._y2)
+    };
+    Object.defineProperty(SVGPathSegCurvetoCubicRel.prototype, "x", {get:function() {
+      return this._x
+    }, set:function(x) {
+      this._x = x;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoCubicRel.prototype, "y", {get:function() {
+      return this._y
+    }, set:function(y) {
+      this._y = y;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoCubicRel.prototype, "x1", {get:function() {
+      return this._x1
+    }, set:function(x1) {
+      this._x1 = x1;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoCubicRel.prototype, "y1", {get:function() {
+      return this._y1
+    }, set:function(y1) {
+      this._y1 = y1;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoCubicRel.prototype, "x2", {get:function() {
+      return this._x2
+    }, set:function(x2) {
+      this._x2 = x2;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoCubicRel.prototype, "y2", {get:function() {
+      return this._y2
+    }, set:function(y2) {
+      this._y2 = y2;
+      this._segmentChanged()
+    }, enumerable:true});
+    window.SVGPathSegCurvetoQuadraticAbs = function(owningPathSegList, x, y, x1, y1) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_ABS, "Q", owningPathSegList);
+      this._x = x;
+      this._y = y;
+      this._x1 = x1;
+      this._y1 = y1
+    };
+    SVGPathSegCurvetoQuadraticAbs.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegCurvetoQuadraticAbs.prototype.toString = function() {
+      return"[object SVGPathSegCurvetoQuadraticAbs]"
+    };
+    SVGPathSegCurvetoQuadraticAbs.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter + " " + this._x1 + " " + this._y1 + " " + this._x + " " + this._y
+    };
+    SVGPathSegCurvetoQuadraticAbs.prototype.clone = function() {
+      return new SVGPathSegCurvetoQuadraticAbs(undefined, this._x, this._y, this._x1, this._y1)
+    };
+    Object.defineProperty(SVGPathSegCurvetoQuadraticAbs.prototype, "x", {get:function() {
+      return this._x
+    }, set:function(x) {
+      this._x = x;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoQuadraticAbs.prototype, "y", {get:function() {
+      return this._y
+    }, set:function(y) {
+      this._y = y;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoQuadraticAbs.prototype, "x1", {get:function() {
+      return this._x1
+    }, set:function(x1) {
+      this._x1 = x1;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoQuadraticAbs.prototype, "y1", {get:function() {
+      return this._y1
+    }, set:function(y1) {
+      this._y1 = y1;
+      this._segmentChanged()
+    }, enumerable:true});
+    window.SVGPathSegCurvetoQuadraticRel = function(owningPathSegList, x, y, x1, y1) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_REL, "q", owningPathSegList);
+      this._x = x;
+      this._y = y;
+      this._x1 = x1;
+      this._y1 = y1
+    };
+    SVGPathSegCurvetoQuadraticRel.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegCurvetoQuadraticRel.prototype.toString = function() {
+      return"[object SVGPathSegCurvetoQuadraticRel]"
+    };
+    SVGPathSegCurvetoQuadraticRel.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter + " " + this._x1 + " " + this._y1 + " " + this._x + " " + this._y
+    };
+    SVGPathSegCurvetoQuadraticRel.prototype.clone = function() {
+      return new SVGPathSegCurvetoQuadraticRel(undefined, this._x, this._y, this._x1, this._y1)
+    };
+    Object.defineProperty(SVGPathSegCurvetoQuadraticRel.prototype, "x", {get:function() {
+      return this._x
+    }, set:function(x) {
+      this._x = x;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoQuadraticRel.prototype, "y", {get:function() {
+      return this._y
+    }, set:function(y) {
+      this._y = y;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoQuadraticRel.prototype, "x1", {get:function() {
+      return this._x1
+    }, set:function(x1) {
+      this._x1 = x1;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoQuadraticRel.prototype, "y1", {get:function() {
+      return this._y1
+    }, set:function(y1) {
+      this._y1 = y1;
+      this._segmentChanged()
+    }, enumerable:true});
+    window.SVGPathSegArcAbs = function(owningPathSegList, x, y, r1, r2, angle, largeArcFlag, sweepFlag) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_ARC_ABS, "A", owningPathSegList);
+      this._x = x;
+      this._y = y;
+      this._r1 = r1;
+      this._r2 = r2;
+      this._angle = angle;
+      this._largeArcFlag = largeArcFlag;
+      this._sweepFlag = sweepFlag
+    };
+    SVGPathSegArcAbs.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegArcAbs.prototype.toString = function() {
+      return"[object SVGPathSegArcAbs]"
+    };
+    SVGPathSegArcAbs.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter + " " + this._r1 + " " + this._r2 + " " + this._angle + " " + (this._largeArcFlag ? "1" : "0") + " " + (this._sweepFlag ? "1" : "0") + " " + this._x + " " + this._y
+    };
+    SVGPathSegArcAbs.prototype.clone = function() {
+      return new SVGPathSegArcAbs(undefined, this._x, this._y, this._r1, this._r2, this._angle, this._largeArcFlag, this._sweepFlag)
+    };
+    Object.defineProperty(SVGPathSegArcAbs.prototype, "x", {get:function() {
+      return this._x
+    }, set:function(x) {
+      this._x = x;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegArcAbs.prototype, "y", {get:function() {
+      return this._y
+    }, set:function(y) {
+      this._y = y;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegArcAbs.prototype, "r1", {get:function() {
+      return this._r1
+    }, set:function(r1) {
+      this._r1 = r1;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegArcAbs.prototype, "r2", {get:function() {
+      return this._r2
+    }, set:function(r2) {
+      this._r2 = r2;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegArcAbs.prototype, "angle", {get:function() {
+      return this._angle
+    }, set:function(angle) {
+      this._angle = angle;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegArcAbs.prototype, "largeArcFlag", {get:function() {
+      return this._largeArcFlag
+    }, set:function(largeArcFlag) {
+      this._largeArcFlag = largeArcFlag;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegArcAbs.prototype, "sweepFlag", {get:function() {
+      return this._sweepFlag
+    }, set:function(sweepFlag) {
+      this._sweepFlag = sweepFlag;
+      this._segmentChanged()
+    }, enumerable:true});
+    window.SVGPathSegArcRel = function(owningPathSegList, x, y, r1, r2, angle, largeArcFlag, sweepFlag) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_ARC_REL, "a", owningPathSegList);
+      this._x = x;
+      this._y = y;
+      this._r1 = r1;
+      this._r2 = r2;
+      this._angle = angle;
+      this._largeArcFlag = largeArcFlag;
+      this._sweepFlag = sweepFlag
+    };
+    SVGPathSegArcRel.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegArcRel.prototype.toString = function() {
+      return"[object SVGPathSegArcRel]"
+    };
+    SVGPathSegArcRel.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter + " " + this._r1 + " " + this._r2 + " " + this._angle + " " + (this._largeArcFlag ? "1" : "0") + " " + (this._sweepFlag ? "1" : "0") + " " + this._x + " " + this._y
+    };
+    SVGPathSegArcRel.prototype.clone = function() {
+      return new SVGPathSegArcRel(undefined, this._x, this._y, this._r1, this._r2, this._angle, this._largeArcFlag, this._sweepFlag)
+    };
+    Object.defineProperty(SVGPathSegArcRel.prototype, "x", {get:function() {
+      return this._x
+    }, set:function(x) {
+      this._x = x;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegArcRel.prototype, "y", {get:function() {
+      return this._y
+    }, set:function(y) {
+      this._y = y;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegArcRel.prototype, "r1", {get:function() {
+      return this._r1
+    }, set:function(r1) {
+      this._r1 = r1;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegArcRel.prototype, "r2", {get:function() {
+      return this._r2
+    }, set:function(r2) {
+      this._r2 = r2;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegArcRel.prototype, "angle", {get:function() {
+      return this._angle
+    }, set:function(angle) {
+      this._angle = angle;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegArcRel.prototype, "largeArcFlag", {get:function() {
+      return this._largeArcFlag
+    }, set:function(largeArcFlag) {
+      this._largeArcFlag = largeArcFlag;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegArcRel.prototype, "sweepFlag", {get:function() {
+      return this._sweepFlag
+    }, set:function(sweepFlag) {
+      this._sweepFlag = sweepFlag;
+      this._segmentChanged()
+    }, enumerable:true});
+    window.SVGPathSegLinetoHorizontalAbs = function(owningPathSegList, x) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_ABS, "H", owningPathSegList);
+      this._x = x
+    };
+    SVGPathSegLinetoHorizontalAbs.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegLinetoHorizontalAbs.prototype.toString = function() {
+      return"[object SVGPathSegLinetoHorizontalAbs]"
+    };
+    SVGPathSegLinetoHorizontalAbs.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter + " " + this._x
+    };
+    SVGPathSegLinetoHorizontalAbs.prototype.clone = function() {
+      return new SVGPathSegLinetoHorizontalAbs(undefined, this._x)
+    };
+    Object.defineProperty(SVGPathSegLinetoHorizontalAbs.prototype, "x", {get:function() {
+      return this._x
+    }, set:function(x) {
+      this._x = x;
+      this._segmentChanged()
+    }, enumerable:true});
+    window.SVGPathSegLinetoHorizontalRel = function(owningPathSegList, x) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_REL, "h", owningPathSegList);
+      this._x = x
+    };
+    SVGPathSegLinetoHorizontalRel.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegLinetoHorizontalRel.prototype.toString = function() {
+      return"[object SVGPathSegLinetoHorizontalRel]"
+    };
+    SVGPathSegLinetoHorizontalRel.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter + " " + this._x
+    };
+    SVGPathSegLinetoHorizontalRel.prototype.clone = function() {
+      return new SVGPathSegLinetoHorizontalRel(undefined, this._x)
+    };
+    Object.defineProperty(SVGPathSegLinetoHorizontalRel.prototype, "x", {get:function() {
+      return this._x
+    }, set:function(x) {
+      this._x = x;
+      this._segmentChanged()
+    }, enumerable:true});
+    window.SVGPathSegLinetoVerticalAbs = function(owningPathSegList, y) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_LINETO_VERTICAL_ABS, "V", owningPathSegList);
+      this._y = y
+    };
+    SVGPathSegLinetoVerticalAbs.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegLinetoVerticalAbs.prototype.toString = function() {
+      return"[object SVGPathSegLinetoVerticalAbs]"
+    };
+    SVGPathSegLinetoVerticalAbs.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter + " " + this._y
+    };
+    SVGPathSegLinetoVerticalAbs.prototype.clone = function() {
+      return new SVGPathSegLinetoVerticalAbs(undefined, this._y)
+    };
+    Object.defineProperty(SVGPathSegLinetoVerticalAbs.prototype, "y", {get:function() {
+      return this._y
+    }, set:function(y) {
+      this._y = y;
+      this._segmentChanged()
+    }, enumerable:true});
+    window.SVGPathSegLinetoVerticalRel = function(owningPathSegList, y) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_LINETO_VERTICAL_REL, "v", owningPathSegList);
+      this._y = y
+    };
+    SVGPathSegLinetoVerticalRel.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegLinetoVerticalRel.prototype.toString = function() {
+      return"[object SVGPathSegLinetoVerticalRel]"
+    };
+    SVGPathSegLinetoVerticalRel.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter + " " + this._y
+    };
+    SVGPathSegLinetoVerticalRel.prototype.clone = function() {
+      return new SVGPathSegLinetoVerticalRel(undefined, this._y)
+    };
+    Object.defineProperty(SVGPathSegLinetoVerticalRel.prototype, "y", {get:function() {
+      return this._y
+    }, set:function(y) {
+      this._y = y;
+      this._segmentChanged()
+    }, enumerable:true});
+    window.SVGPathSegCurvetoCubicSmoothAbs = function(owningPathSegList, x, y, x2, y2) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_ABS, "S", owningPathSegList);
+      this._x = x;
+      this._y = y;
+      this._x2 = x2;
+      this._y2 = y2
+    };
+    SVGPathSegCurvetoCubicSmoothAbs.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegCurvetoCubicSmoothAbs.prototype.toString = function() {
+      return"[object SVGPathSegCurvetoCubicSmoothAbs]"
+    };
+    SVGPathSegCurvetoCubicSmoothAbs.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter + " " + this._x2 + " " + this._y2 + " " + this._x + " " + this._y
+    };
+    SVGPathSegCurvetoCubicSmoothAbs.prototype.clone = function() {
+      return new SVGPathSegCurvetoCubicSmoothAbs(undefined, this._x, this._y, this._x2, this._y2)
+    };
+    Object.defineProperty(SVGPathSegCurvetoCubicSmoothAbs.prototype, "x", {get:function() {
+      return this._x
+    }, set:function(x) {
+      this._x = x;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoCubicSmoothAbs.prototype, "y", {get:function() {
+      return this._y
+    }, set:function(y) {
+      this._y = y;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoCubicSmoothAbs.prototype, "x2", {get:function() {
+      return this._x2
+    }, set:function(x2) {
+      this._x2 = x2;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoCubicSmoothAbs.prototype, "y2", {get:function() {
+      return this._y2
+    }, set:function(y2) {
+      this._y2 = y2;
+      this._segmentChanged()
+    }, enumerable:true});
+    window.SVGPathSegCurvetoCubicSmoothRel = function(owningPathSegList, x, y, x2, y2) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_REL, "s", owningPathSegList);
+      this._x = x;
+      this._y = y;
+      this._x2 = x2;
+      this._y2 = y2
+    };
+    SVGPathSegCurvetoCubicSmoothRel.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegCurvetoCubicSmoothRel.prototype.toString = function() {
+      return"[object SVGPathSegCurvetoCubicSmoothRel]"
+    };
+    SVGPathSegCurvetoCubicSmoothRel.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter + " " + this._x2 + " " + this._y2 + " " + this._x + " " + this._y
+    };
+    SVGPathSegCurvetoCubicSmoothRel.prototype.clone = function() {
+      return new SVGPathSegCurvetoCubicSmoothRel(undefined, this._x, this._y, this._x2, this._y2)
+    };
+    Object.defineProperty(SVGPathSegCurvetoCubicSmoothRel.prototype, "x", {get:function() {
+      return this._x
+    }, set:function(x) {
+      this._x = x;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoCubicSmoothRel.prototype, "y", {get:function() {
+      return this._y
+    }, set:function(y) {
+      this._y = y;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoCubicSmoothRel.prototype, "x2", {get:function() {
+      return this._x2
+    }, set:function(x2) {
+      this._x2 = x2;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoCubicSmoothRel.prototype, "y2", {get:function() {
+      return this._y2
+    }, set:function(y2) {
+      this._y2 = y2;
+      this._segmentChanged()
+    }, enumerable:true});
+    window.SVGPathSegCurvetoQuadraticSmoothAbs = function(owningPathSegList, x, y) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS, "T", owningPathSegList);
+      this._x = x;
+      this._y = y
+    };
+    SVGPathSegCurvetoQuadraticSmoothAbs.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegCurvetoQuadraticSmoothAbs.prototype.toString = function() {
+      return"[object SVGPathSegCurvetoQuadraticSmoothAbs]"
+    };
+    SVGPathSegCurvetoQuadraticSmoothAbs.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter + " " + this._x + " " + this._y
+    };
+    SVGPathSegCurvetoQuadraticSmoothAbs.prototype.clone = function() {
+      return new SVGPathSegCurvetoQuadraticSmoothAbs(undefined, this._x, this._y)
+    };
+    Object.defineProperty(SVGPathSegCurvetoQuadraticSmoothAbs.prototype, "x", {get:function() {
+      return this._x
+    }, set:function(x) {
+      this._x = x;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoQuadraticSmoothAbs.prototype, "y", {get:function() {
+      return this._y
+    }, set:function(y) {
+      this._y = y;
+      this._segmentChanged()
+    }, enumerable:true});
+    window.SVGPathSegCurvetoQuadraticSmoothRel = function(owningPathSegList, x, y) {
+      SVGPathSeg.call(this, SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL, "t", owningPathSegList);
+      this._x = x;
+      this._y = y
+    };
+    SVGPathSegCurvetoQuadraticSmoothRel.prototype = Object.create(SVGPathSeg.prototype);
+    SVGPathSegCurvetoQuadraticSmoothRel.prototype.toString = function() {
+      return"[object SVGPathSegCurvetoQuadraticSmoothRel]"
+    };
+    SVGPathSegCurvetoQuadraticSmoothRel.prototype._asPathString = function() {
+      return this.pathSegTypeAsLetter + " " + this._x + " " + this._y
+    };
+    SVGPathSegCurvetoQuadraticSmoothRel.prototype.clone = function() {
+      return new SVGPathSegCurvetoQuadraticSmoothRel(undefined, this._x, this._y)
+    };
+    Object.defineProperty(SVGPathSegCurvetoQuadraticSmoothRel.prototype, "x", {get:function() {
+      return this._x
+    }, set:function(x) {
+      this._x = x;
+      this._segmentChanged()
+    }, enumerable:true});
+    Object.defineProperty(SVGPathSegCurvetoQuadraticSmoothRel.prototype, "y", {get:function() {
+      return this._y
+    }, set:function(y) {
+      this._y = y;
+      this._segmentChanged()
+    }, enumerable:true});
+    SVGPathElement.prototype.createSVGPathSegClosePath = function() {
+      return new SVGPathSegClosePath(undefined)
+    };
+    SVGPathElement.prototype.createSVGPathSegMovetoAbs = function(x, y) {
+      return new SVGPathSegMovetoAbs(undefined, x, y)
+    };
+    SVGPathElement.prototype.createSVGPathSegMovetoRel = function(x, y) {
+      return new SVGPathSegMovetoRel(undefined, x, y)
+    };
+    SVGPathElement.prototype.createSVGPathSegLinetoAbs = function(x, y) {
+      return new SVGPathSegLinetoAbs(undefined, x, y)
+    };
+    SVGPathElement.prototype.createSVGPathSegLinetoRel = function(x, y) {
+      return new SVGPathSegLinetoRel(undefined, x, y)
+    };
+    SVGPathElement.prototype.createSVGPathSegCurvetoCubicAbs = function(x, y, x1, y1, x2, y2) {
+      return new SVGPathSegCurvetoCubicAbs(undefined, x, y, x1, y1, x2, y2)
+    };
+    SVGPathElement.prototype.createSVGPathSegCurvetoCubicRel = function(x, y, x1, y1, x2, y2) {
+      return new SVGPathSegCurvetoCubicRel(undefined, x, y, x1, y1, x2, y2)
+    };
+    SVGPathElement.prototype.createSVGPathSegCurvetoQuadraticAbs = function(x, y, x1, y1) {
+      return new SVGPathSegCurvetoQuadraticAbs(undefined, x, y, x1, y1)
+    };
+    SVGPathElement.prototype.createSVGPathSegCurvetoQuadraticRel = function(x, y, x1, y1) {
+      return new SVGPathSegCurvetoQuadraticRel(undefined, x, y, x1, y1)
+    };
+    SVGPathElement.prototype.createSVGPathSegArcAbs = function(x, y, r1, r2, angle, largeArcFlag, sweepFlag) {
+      return new SVGPathSegArcAbs(undefined, x, y, r1, r2, angle, largeArcFlag, sweepFlag)
+    };
+    SVGPathElement.prototype.createSVGPathSegArcRel = function(x, y, r1, r2, angle, largeArcFlag, sweepFlag) {
+      return new SVGPathSegArcRel(undefined, x, y, r1, r2, angle, largeArcFlag, sweepFlag)
+    };
+    SVGPathElement.prototype.createSVGPathSegLinetoHorizontalAbs = function(x) {
+      return new SVGPathSegLinetoHorizontalAbs(undefined, x)
+    };
+    SVGPathElement.prototype.createSVGPathSegLinetoHorizontalRel = function(x) {
+      return new SVGPathSegLinetoHorizontalRel(undefined, x)
+    };
+    SVGPathElement.prototype.createSVGPathSegLinetoVerticalAbs = function(y) {
+      return new SVGPathSegLinetoVerticalAbs(undefined, y)
+    };
+    SVGPathElement.prototype.createSVGPathSegLinetoVerticalRel = function(y) {
+      return new SVGPathSegLinetoVerticalRel(undefined, y)
+    };
+    SVGPathElement.prototype.createSVGPathSegCurvetoCubicSmoothAbs = function(x, y, x2, y2) {
+      return new SVGPathSegCurvetoCubicSmoothAbs(undefined, x, y, x2, y2)
+    };
+    SVGPathElement.prototype.createSVGPathSegCurvetoCubicSmoothRel = function(x, y, x2, y2) {
+      return new SVGPathSegCurvetoCubicSmoothRel(undefined, x, y, x2, y2)
+    };
+    SVGPathElement.prototype.createSVGPathSegCurvetoQuadraticSmoothAbs = function(x, y) {
+      return new SVGPathSegCurvetoQuadraticSmoothAbs(undefined, x, y)
+    };
+    SVGPathElement.prototype.createSVGPathSegCurvetoQuadraticSmoothRel = function(x, y) {
+      return new SVGPathSegCurvetoQuadraticSmoothRel(undefined, x, y)
+    }
+  }
+  if(!window.SVGPathSegList) {
+    window.SVGPathSegList = function(pathElement) {
+      this._pathElement = pathElement;
+      this._list = this._parsePath(this._pathElement.getAttribute("d"));
+      this._mutationObserverConfig = {attributes:true, attributeFilter:["d"]};
+      this._pathElementMutationObserver = new MutationObserver(this._updateListFromPathMutations.bind(this));
+      this._pathElementMutationObserver.observe(this._pathElement, this._mutationObserverConfig)
+    };
+    Object.defineProperty(SVGPathSegList.prototype, "numberOfItems", {get:function() {
+      this._checkPathSynchronizedToList();
+      return this._list.length
+    }});
+    SVGPathSegList.prototype._checkPathSynchronizedToList = function() {
+      this._updateListFromPathMutations(this._pathElementMutationObserver.takeRecords())
+    };
+    SVGPathSegList.prototype._updateListFromPathMutations = function(mutationRecords) {
+      if(!this._pathElement) {
+        return
+      }
+      var hasPathMutations = false;
+      mutationRecords.forEach(function(record) {
+        if(record.attributeName == "d") {
+          hasPathMutations = true
+        }
+      });
+      if(hasPathMutations) {
+        this._list = this._parsePath(this._pathElement.getAttribute("d"))
+      }
+    };
+    SVGPathSegList.prototype._writeListToPath = function() {
+      this._pathElementMutationObserver.disconnect();
+      this._pathElement.setAttribute("d", SVGPathSegList._pathSegArrayAsString(this._list));
+      this._pathElementMutationObserver.observe(this._pathElement, this._mutationObserverConfig)
+    };
+    SVGPathSegList.prototype.segmentChanged = function(pathSeg) {
+      this._writeListToPath()
+    };
+    SVGPathSegList.prototype.clear = function() {
+      this._checkPathSynchronizedToList();
+      this._list.forEach(function(pathSeg) {
+        pathSeg._owningPathSegList = null
+      });
+      this._list = [];
+      this._writeListToPath()
+    };
+    SVGPathSegList.prototype.initialize = function(newItem) {
+      this._checkPathSynchronizedToList();
+      this._list = [newItem];
+      newItem._owningPathSegList = this;
+      this._writeListToPath();
+      return newItem
+    };
+    SVGPathSegList.prototype._checkValidIndex = function(index) {
+      if(isNaN(index) || index < 0 || index >= this.numberOfItems) {
+        throw"INDEX_SIZE_ERR";
+      }
+    };
+    SVGPathSegList.prototype.getItem = function(index) {
+      this._checkPathSynchronizedToList();
+      this._checkValidIndex(index);
+      return this._list[index]
+    };
+    SVGPathSegList.prototype.insertItemBefore = function(newItem, index) {
+      this._checkPathSynchronizedToList();
+      if(index > this.numberOfItems) {
+        index = this.numberOfItems
+      }
+      if(newItem._owningPathSegList) {
+        newItem = newItem.clone()
+      }
+      this._list.splice(index, 0, newItem);
+      newItem._owningPathSegList = this;
+      this._writeListToPath();
+      return newItem
+    };
+    SVGPathSegList.prototype.replaceItem = function(newItem, index) {
+      this._checkPathSynchronizedToList();
+      if(newItem._owningPathSegList) {
+        newItem = newItem.clone()
+      }
+      this._checkValidIndex(index);
+      this._list[index] = newItem;
+      newItem._owningPathSegList = this;
+      this._writeListToPath();
+      return newItem
+    };
+    SVGPathSegList.prototype.removeItem = function(index) {
+      this._checkPathSynchronizedToList();
+      this._checkValidIndex(index);
+      var item = this._list[index];
+      this._list.splice(index, 1);
+      this._writeListToPath();
+      return item
+    };
+    SVGPathSegList.prototype.appendItem = function(newItem) {
+      this._checkPathSynchronizedToList();
+      if(newItem._owningPathSegList) {
+        newItem = newItem.clone()
+      }
+      this._list.push(newItem);
+      newItem._owningPathSegList = this;
+      this._writeListToPath();
+      return newItem
+    };
+    SVGPathSegList._pathSegArrayAsString = function(pathSegArray) {
+      var string = "";
+      var first = true;
+      pathSegArray.forEach(function(pathSeg) {
+        if(first) {
+          first = false;
+          string += pathSeg._asPathString()
+        }else {
+          string += " " + pathSeg._asPathString()
+        }
+      });
+      return string
+    };
+    SVGPathSegList.prototype._parsePath = function(string) {
+      if(!string || string.length == 0) {
+        return[]
+      }
+      var owningPathSegList = this;
+      var Builder = function() {
+        this.pathSegList = []
+      };
+      Builder.prototype.appendSegment = function(pathSeg) {
+        this.pathSegList.push(pathSeg)
+      };
+      var Source = function(string) {
+        this._string = string;
+        this._currentIndex = 0;
+        this._endIndex = this._string.length;
+        this._previousCommand = SVGPathSeg.PATHSEG_UNKNOWN;
+        this._skipOptionalSpaces()
+      };
+      Source.prototype._isCurrentSpace = function() {
+        var character = this._string[this._currentIndex];
+        return character <= " " && (character == " " || character == "\n" || character == "\t" || character == "\r" || character == "\u000c")
+      };
+      Source.prototype._skipOptionalSpaces = function() {
+        while(this._currentIndex < this._endIndex && this._isCurrentSpace()) {
+          this._currentIndex++
+        }
+        return this._currentIndex < this._endIndex
+      };
+      Source.prototype._skipOptionalSpacesOrDelimiter = function() {
+        if(this._currentIndex < this._endIndex && !this._isCurrentSpace() && this._string.charAt(this._currentIndex) != ",") {
+          return false
+        }
+        if(this._skipOptionalSpaces()) {
+          if(this._currentIndex < this._endIndex && this._string.charAt(this._currentIndex) == ",") {
+            this._currentIndex++;
+            this._skipOptionalSpaces()
+          }
+        }
+        return this._currentIndex < this._endIndex
+      };
+      Source.prototype.hasMoreData = function() {
+        return this._currentIndex < this._endIndex
+      };
+      Source.prototype.peekSegmentType = function() {
+        var lookahead = this._string[this._currentIndex];
+        return this._pathSegTypeFromChar(lookahead)
+      };
+      Source.prototype._pathSegTypeFromChar = function(lookahead) {
+        switch(lookahead) {
+          case "Z":
+          ;
+          case "z":
+            return SVGPathSeg.PATHSEG_CLOSEPATH;
+          case "M":
+            return SVGPathSeg.PATHSEG_MOVETO_ABS;
+          case "m":
+            return SVGPathSeg.PATHSEG_MOVETO_REL;
+          case "L":
+            return SVGPathSeg.PATHSEG_LINETO_ABS;
+          case "l":
+            return SVGPathSeg.PATHSEG_LINETO_REL;
+          case "C":
+            return SVGPathSeg.PATHSEG_CURVETO_CUBIC_ABS;
+          case "c":
+            return SVGPathSeg.PATHSEG_CURVETO_CUBIC_REL;
+          case "Q":
+            return SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_ABS;
+          case "q":
+            return SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_REL;
+          case "A":
+            return SVGPathSeg.PATHSEG_ARC_ABS;
+          case "a":
+            return SVGPathSeg.PATHSEG_ARC_REL;
+          case "H":
+            return SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_ABS;
+          case "h":
+            return SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_REL;
+          case "V":
+            return SVGPathSeg.PATHSEG_LINETO_VERTICAL_ABS;
+          case "v":
+            return SVGPathSeg.PATHSEG_LINETO_VERTICAL_REL;
+          case "S":
+            return SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_ABS;
+          case "s":
+            return SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_REL;
+          case "T":
+            return SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS;
+          case "t":
+            return SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL;
+          default:
+            return SVGPathSeg.PATHSEG_UNKNOWN
+        }
+      };
+      Source.prototype._nextCommandHelper = function(lookahead, previousCommand) {
+        if((lookahead == "+" || lookahead == "-" || lookahead == "." || lookahead >= "0" && lookahead <= "9") && previousCommand != SVGPathSeg.PATHSEG_CLOSEPATH) {
+          if(previousCommand == SVGPathSeg.PATHSEG_MOVETO_ABS) {
+            return SVGPathSeg.PATHSEG_LINETO_ABS
+          }
+          if(previousCommand == SVGPathSeg.PATHSEG_MOVETO_REL) {
+            return SVGPathSeg.PATHSEG_LINETO_REL
+          }
+          return previousCommand
+        }
+        return SVGPathSeg.PATHSEG_UNKNOWN
+      };
+      Source.prototype.initialCommandIsMoveTo = function() {
+        if(!this.hasMoreData()) {
+          return true
+        }
+        var command = this.peekSegmentType();
+        return command == SVGPathSeg.PATHSEG_MOVETO_ABS || command == SVGPathSeg.PATHSEG_MOVETO_REL
+      };
+      Source.prototype._parseNumber = function() {
+        var exponent = 0;
+        var integer = 0;
+        var frac = 1;
+        var decimal = 0;
+        var sign = 1;
+        var expsign = 1;
+        var startIndex = this._currentIndex;
+        this._skipOptionalSpaces();
+        if(this._currentIndex < this._endIndex && this._string.charAt(this._currentIndex) == "+") {
+          this._currentIndex++
+        }else {
+          if(this._currentIndex < this._endIndex && this._string.charAt(this._currentIndex) == "-") {
+            this._currentIndex++;
+            sign = -1
+          }
+        }
+        if(this._currentIndex == this._endIndex || (this._string.charAt(this._currentIndex) < "0" || this._string.charAt(this._currentIndex) > "9") && this._string.charAt(this._currentIndex) != ".") {
+          return undefined
+        }
+        var startIntPartIndex = this._currentIndex;
+        while(this._currentIndex < this._endIndex && this._string.charAt(this._currentIndex) >= "0" && this._string.charAt(this._currentIndex) <= "9") {
+          this._currentIndex++
+        }
+        if(this._currentIndex != startIntPartIndex) {
+          var scanIntPartIndex = this._currentIndex - 1;
+          var multiplier = 1;
+          while(scanIntPartIndex >= startIntPartIndex) {
+            integer += multiplier * (this._string.charAt(scanIntPartIndex--) - "0");
+            multiplier *= 10
+          }
+        }
+        if(this._currentIndex < this._endIndex && this._string.charAt(this._currentIndex) == ".") {
+          this._currentIndex++;
+          if(this._currentIndex >= this._endIndex || this._string.charAt(this._currentIndex) < "0" || this._string.charAt(this._currentIndex) > "9") {
+            return undefined
+          }
+          while(this._currentIndex < this._endIndex && this._string.charAt(this._currentIndex) >= "0" && this._string.charAt(this._currentIndex) <= "9") {
+            decimal += (this._string.charAt(this._currentIndex++) - "0") * (frac *= 0.1)
+          }
+        }
+        if(this._currentIndex != startIndex && this._currentIndex + 1 < this._endIndex && (this._string.charAt(this._currentIndex) == "e" || this._string.charAt(this._currentIndex) == "E") && this._string.charAt(this._currentIndex + 1) != "x" && this._string.charAt(this._currentIndex + 1) != "m") {
+          this._currentIndex++;
+          if(this._string.charAt(this._currentIndex) == "+") {
+            this._currentIndex++
+          }else {
+            if(this._string.charAt(this._currentIndex) == "-") {
+              this._currentIndex++;
+              expsign = -1
+            }
+          }
+          if(this._currentIndex >= this._endIndex || this._string.charAt(this._currentIndex) < "0" || this._string.charAt(this._currentIndex) > "9") {
+            return undefined
+          }
+          while(this._currentIndex < this._endIndex && this._string.charAt(this._currentIndex) >= "0" && this._string.charAt(this._currentIndex) <= "9") {
+            exponent *= 10;
+            exponent += this._string.charAt(this._currentIndex) - "0";
+            this._currentIndex++
+          }
+        }
+        var number = integer + decimal;
+        number *= sign;
+        if(exponent) {
+          number *= Math.pow(10, expsign * exponent)
+        }
+        if(startIndex == this._currentIndex) {
+          return undefined
+        }
+        this._skipOptionalSpacesOrDelimiter();
+        return number
+      };
+      Source.prototype._parseArcFlag = function() {
+        if(this._currentIndex >= this._endIndex) {
+          return undefined
+        }
+        var flag = false;
+        var flagChar = this._string.charAt(this._currentIndex++);
+        if(flagChar == "0") {
+          flag = false
+        }else {
+          if(flagChar == "1") {
+            flag = true
+          }else {
+            return undefined
+          }
+        }
+        this._skipOptionalSpacesOrDelimiter();
+        return flag
+      };
+      Source.prototype.parseSegment = function() {
+        var lookahead = this._string[this._currentIndex];
+        var command = this._pathSegTypeFromChar(lookahead);
+        if(command == SVGPathSeg.PATHSEG_UNKNOWN) {
+          if(this._previousCommand == SVGPathSeg.PATHSEG_UNKNOWN) {
+            return null
+          }
+          command = this._nextCommandHelper(lookahead, this._previousCommand);
+          if(command == SVGPathSeg.PATHSEG_UNKNOWN) {
+            return null
+          }
+        }else {
+          this._currentIndex++
+        }
+        this._previousCommand = command;
+        switch(command) {
+          case SVGPathSeg.PATHSEG_MOVETO_REL:
+            return new SVGPathSegMovetoRel(owningPathSegList, this._parseNumber(), this._parseNumber());
+          case SVGPathSeg.PATHSEG_MOVETO_ABS:
+            return new SVGPathSegMovetoAbs(owningPathSegList, this._parseNumber(), this._parseNumber());
+          case SVGPathSeg.PATHSEG_LINETO_REL:
+            return new SVGPathSegLinetoRel(owningPathSegList, this._parseNumber(), this._parseNumber());
+          case SVGPathSeg.PATHSEG_LINETO_ABS:
+            return new SVGPathSegLinetoAbs(owningPathSegList, this._parseNumber(), this._parseNumber());
+          case SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_REL:
+            return new SVGPathSegLinetoHorizontalRel(owningPathSegList, this._parseNumber());
+          case SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_ABS:
+            return new SVGPathSegLinetoHorizontalAbs(owningPathSegList, this._parseNumber());
+          case SVGPathSeg.PATHSEG_LINETO_VERTICAL_REL:
+            return new SVGPathSegLinetoVerticalRel(owningPathSegList, this._parseNumber());
+          case SVGPathSeg.PATHSEG_LINETO_VERTICAL_ABS:
+            return new SVGPathSegLinetoVerticalAbs(owningPathSegList, this._parseNumber());
+          case SVGPathSeg.PATHSEG_CLOSEPATH:
+            this._skipOptionalSpaces();
+            return new SVGPathSegClosePath(owningPathSegList);
+          case SVGPathSeg.PATHSEG_CURVETO_CUBIC_REL:
+            var points = {x1:this._parseNumber(), y1:this._parseNumber(), x2:this._parseNumber(), y2:this._parseNumber(), x:this._parseNumber(), y:this._parseNumber()};
+            return new SVGPathSegCurvetoCubicRel(owningPathSegList, points.x, points.y, points.x1, points.y1, points.x2, points.y2);
+          case SVGPathSeg.PATHSEG_CURVETO_CUBIC_ABS:
+            var points = {x1:this._parseNumber(), y1:this._parseNumber(), x2:this._parseNumber(), y2:this._parseNumber(), x:this._parseNumber(), y:this._parseNumber()};
+            return new SVGPathSegCurvetoCubicAbs(owningPathSegList, points.x, points.y, points.x1, points.y1, points.x2, points.y2);
+          case SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_REL:
+            var points = {x2:this._parseNumber(), y2:this._parseNumber(), x:this._parseNumber(), y:this._parseNumber()};
+            return new SVGPathSegCurvetoCubicSmoothRel(owningPathSegList, points.x, points.y, points.x2, points.y2);
+          case SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_ABS:
+            var points = {x2:this._parseNumber(), y2:this._parseNumber(), x:this._parseNumber(), y:this._parseNumber()};
+            return new SVGPathSegCurvetoCubicSmoothAbs(owningPathSegList, points.x, points.y, points.x2, points.y2);
+          case SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_REL:
+            var points = {x1:this._parseNumber(), y1:this._parseNumber(), x:this._parseNumber(), y:this._parseNumber()};
+            return new SVGPathSegCurvetoQuadraticRel(owningPathSegList, points.x, points.y, points.x1, points.y1);
+          case SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_ABS:
+            var points = {x1:this._parseNumber(), y1:this._parseNumber(), x:this._parseNumber(), y:this._parseNumber()};
+            return new SVGPathSegCurvetoQuadraticAbs(owningPathSegList, points.x, points.y, points.x1, points.y1);
+          case SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL:
+            return new SVGPathSegCurvetoQuadraticSmoothRel(owningPathSegList, this._parseNumber(), this._parseNumber());
+          case SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS:
+            return new SVGPathSegCurvetoQuadraticSmoothAbs(owningPathSegList, this._parseNumber(), this._parseNumber());
+          case SVGPathSeg.PATHSEG_ARC_REL:
+            var points = {x1:this._parseNumber(), y1:this._parseNumber(), arcAngle:this._parseNumber(), arcLarge:this._parseArcFlag(), arcSweep:this._parseArcFlag(), x:this._parseNumber(), y:this._parseNumber()};
+            return new SVGPathSegArcRel(owningPathSegList, points.x, points.y, points.x1, points.y1, points.arcAngle, points.arcLarge, points.arcSweep);
+          case SVGPathSeg.PATHSEG_ARC_ABS:
+            var points = {x1:this._parseNumber(), y1:this._parseNumber(), arcAngle:this._parseNumber(), arcLarge:this._parseArcFlag(), arcSweep:this._parseArcFlag(), x:this._parseNumber(), y:this._parseNumber()};
+            return new SVGPathSegArcAbs(owningPathSegList, points.x, points.y, points.x1, points.y1, points.arcAngle, points.arcLarge, points.arcSweep);
+          default:
+            throw"Unknown path seg type.";
+        }
+      };
+      var builder = new Builder;
+      var source = new Source(string);
+      if(!source.initialCommandIsMoveTo()) {
+        return[]
+      }
+      while(source.hasMoreData()) {
+        var pathSeg = source.parseSegment();
+        if(!pathSeg) {
+          return[]
+        }
+        builder.appendSegment(pathSeg)
+      }
+      return builder.pathSegList
+    };
+    Object.defineProperty(SVGPathElement.prototype, "pathSegList", {get:function() {
+      if(!this._pathSegList) {
+        this._pathSegList = new SVGPathSegList(this)
+      }
+      return this._pathSegList
+    }, enumerable:true});
+    Object.defineProperty(SVGPathElement.prototype, "normalizedPathSegList", {get:function() {
+      return this.pathSegList
+    }, enumerable:true});
+    Object.defineProperty(SVGPathElement.prototype, "animatedPathSegList", {get:function() {
+      return this.pathSegList
+    }, enumerable:true});
+    Object.defineProperty(SVGPathElement.prototype, "animatedNormalizedPathSegList", {get:function() {
+      return this.pathSegList
+    }, enumerable:true})
+  }
+})();(function() {
+  if(!svgedit.browser) {
+    svgedit.browser = {}
+  }
+  var NS = svgedit.NS;
+  var supportsSvg_ = function() {
+    return!!document.createElementNS && !!document.createElementNS(NS.SVG, "svg").createSVGRect
+  }();
+  svgedit.browser.supportsSvg = function() {
+    return supportsSvg_
+  };
+  if(!svgedit.browser.supportsSvg()) {
+    window.location = "browser-not-supported.html";
+    return
+  }
+  var userAgent = navigator.userAgent;
+  var svg = document.createElementNS(NS.SVG, "svg");
+  var isOpera_ = !!window.opera;
+  var isWebkit_ = userAgent.indexOf("AppleWebKit") >= 0;
+  var isGecko_ = userAgent.indexOf("Gecko/") >= 0;
+  var isIE_ = userAgent.indexOf("MSIE") >= 0;
+  var isChrome_ = userAgent.indexOf("Chrome/") >= 0;
+  var isWindows_ = userAgent.indexOf("Windows") >= 0;
+  var isMac_ = userAgent.indexOf("Macintosh") >= 0;
+  var isTouch_ = "ontouchstart" in window;
+  var supportsSelectors_ = function() {
+    return!!svg.querySelector
+  }();
+  var supportsXpath_ = function() {
+    return!!document.evaluate
+  }();
+  var supportsPathReplaceItem_ = function() {
+    var path = document.createElementNS(NS.SVG, "path");
+    path.setAttribute("d", "M0,0 10,10");
+    var seglist = path.pathSegList;
+    var seg = path.createSVGPathSegLinetoAbs(5, 5);
+    try {
+      seglist.replaceItem(seg, 1);
+      return true
+    }catch(err) {
+    }
+    return false
+  }();
+  var supportsPathInsertItemBefore_ = function() {
+    var path = document.createElementNS(NS.SVG, "path");
+    path.setAttribute("d", "M0,0 10,10");
+    var seglist = path.pathSegList;
+    var seg = path.createSVGPathSegLinetoAbs(5, 5);
+    try {
+      seglist.insertItemBefore(seg, 1);
+      return true
+    }catch(err) {
+    }
+    return false
+  }();
+  var supportsGoodTextCharPos_ = function() {
+    var svgroot = document.createElementNS(NS.SVG, "svg");
+    var svgcontent = document.createElementNS(NS.SVG, "svg");
+    document.documentElement.appendChild(svgroot);
+    svgcontent.setAttribute("x", 5);
+    svgroot.appendChild(svgcontent);
+    var text = document.createElementNS(NS.SVG, "text");
+    text.textContent = "a";
+    svgcontent.appendChild(text);
+    var pos = text.getStartPositionOfChar(0).x;
+    document.documentElement.removeChild(svgroot);
+    return pos === 0
+  }();
+  var supportsPathBBox_ = function() {
+    var svgcontent = document.createElementNS(NS.SVG, "svg");
+    document.documentElement.appendChild(svgcontent);
+    var path = document.createElementNS(NS.SVG, "path");
+    path.setAttribute("d", "M0,0 C0,0 10,10 10,0");
+    svgcontent.appendChild(path);
+    var bbox = path.getBBox();
+    document.documentElement.removeChild(svgcontent);
+    return bbox.height > 4 && bbox.height < 5
+  }();
+  var supportsHVLineContainerBBox_ = function() {
+    var svgcontent = document.createElementNS(NS.SVG, "svg");
+    document.documentElement.appendChild(svgcontent);
+    var path = document.createElementNS(NS.SVG, "path");
+    path.setAttribute("d", "M0,0 10,0");
+    var path2 = document.createElementNS(NS.SVG, "path");
+    path2.setAttribute("d", "M5,0 15,0");
+    var g = document.createElementNS(NS.SVG, "g");
+    g.appendChild(path);
+    g.appendChild(path2);
+    svgcontent.appendChild(g);
+    var bbox = g.getBBox();
+    document.documentElement.removeChild(svgcontent);
+    return bbox.width == 15
+  }();
+  var supportsEditableText_ = function() {
+    return isOpera_
+  }();
+  var supportsGoodDecimals_ = function() {
+    var rect = document.createElementNS(NS.SVG, "rect");
+    rect.setAttribute("x", 0.1);
+    var crect = rect.cloneNode(false);
+    var retValue = crect.getAttribute("x").indexOf(",") == -1;
+    if(!retValue) {
+      $.alert("NOTE: This version of Opera is known to contain bugs in SVG-edit.\n" + 'Please upgrade to the <a href="http://opera.com">latest version</a> in which the problems have been fixed.')
+    }
+    return retValue
+  }();
+  var supportsNonScalingStroke_ = function() {
+    var rect = document.createElementNS(NS.SVG, "rect");
+    rect.setAttribute("style", "vector-effect:non-scaling-stroke");
+    return rect.style.vectorEffect === "non-scaling-stroke"
+  }();
+  var supportsNativeSVGTransformLists_ = function() {
+    var rect = document.createElementNS(NS.SVG, "rect");
+    var rxform = rect.transform.baseVal;
+    var t1 = svg.createSVGTransform();
+    rxform.appendItem(t1);
+    return rxform.getItem(0) == t1
+  }();
+  svgedit.browser.isOpera = function() {
+    return isOpera_
+  };
+  svgedit.browser.isWebkit = function() {
+    return isWebkit_
+  };
+  svgedit.browser.isGecko = function() {
+    return isGecko_
+  };
+  svgedit.browser.isIE = function() {
+    return isIE_
+  };
+  svgedit.browser.isChrome = function() {
+    return isChrome_
+  };
+  svgedit.browser.isWindows = function() {
+    return isWindows_
+  };
+  svgedit.browser.isMac = function() {
+    return isMac_
+  };
+  svgedit.browser.isTouch = function() {
+    return isTouch_
+  };
+  svgedit.browser.supportsSelectors = function() {
+    return supportsSelectors_
+  };
+  svgedit.browser.supportsXpath = function() {
+    return supportsXpath_
+  };
+  svgedit.browser.supportsPathReplaceItem = function() {
+    return supportsPathReplaceItem_
+  };
+  svgedit.browser.supportsPathInsertItemBefore = function() {
+    return supportsPathInsertItemBefore_
+  };
+  svgedit.browser.supportsPathBBox = function() {
+    return supportsPathBBox_
+  };
+  svgedit.browser.supportsHVLineContainerBBox = function() {
+    return supportsHVLineContainerBBox_
+  };
+  svgedit.browser.supportsGoodTextCharPos = function() {
+    return supportsGoodTextCharPos_
+  };
+  svgedit.browser.supportsEditableText = function() {
+    return supportsEditableText_
+  };
+  svgedit.browser.supportsGoodDecimals = function() {
+    return supportsGoodDecimals_
+  };
+  svgedit.browser.supportsNonScalingStroke = function() {
+    return supportsNonScalingStroke_
+  };
+  svgedit.browser.supportsNativeTransformLists = function() {
+    return supportsNativeSVGTransformLists_
+  }
+})();(function() {
+  if(!svgedit.transformlist) {
+    svgedit.transformlist = {}
+  }
+  var svgroot = document.createElementNS(svgedit.NS.SVG, "svg");
+  function transformToString(xform) {
+    var m = xform.matrix, text = "";
+    switch(xform.type) {
+      case 1:
+        text = "matrix(" + [m.a, m.b, m.c, m.d, m.e, m.f].join(",") + ")";
+        break;
+      case 2:
+        text = "translate(" + m.e + "," + m.f + ")";
+        break;
+      case 3:
+        if(m.a == m.d) {
+          text = "scale(" + m.a + ")"
+        }else {
+          text = "scale(" + m.a + "," + m.d + ")"
+        }
+        break;
+      case 4:
+        var cx = 0, cy = 0;
+        if(xform.angle != 0) {
+          var K = 1 - m.a;
+          cy = (K * m.f + m.b * m.e) / (K * K + m.b * m.b);
+          cx = (m.e - m.b * cy) / K
+        }
+        text = "rotate(" + xform.angle + " " + cx + "," + cy + ")";
+        break
+    }
+    return text
+  }
+  var listMap_ = {};
+  svgedit.transformlist.SVGTransformList = function(elem) {
+    this._elem = elem || null;
+    this._xforms = [];
+    this._update = function() {
+      var tstr = "";
+      var concatMatrix = svgroot.createSVGMatrix();
+      var i;
+      for(i = 0;i < this.numberOfItems;++i) {
+        var xform = this._list.getItem(i);
+        tstr += transformToString(xform) + " "
+      }
+      this._elem.setAttribute("transform", tstr)
+    };
+    this._list = this;
+    this._init = function() {
+      var str = this._elem.getAttribute("transform");
+      if(!str) {
+        return
+      }
+      var re = /\s*((scale|matrix|rotate|translate)\s*\(.*?\))\s*,?\s*/;
+      var m = true;
+      while(m) {
+        m = str.match(re);
+        str = str.replace(re, "");
+        if(m && m[1]) {
+          var x = m[1];
+          var bits = x.split(/\s*\(/);
+          var name = bits[0];
+          var val_bits = bits[1].match(/\s*(.*?)\s*\)/);
+          val_bits[1] = val_bits[1].replace(/(\d)-/g, "$1 -");
+          var val_arr = val_bits[1].split(/[, ]+/);
+          var letters = "abcdef".split("");
+          var mtx = svgroot.createSVGMatrix();
+          $.each(val_arr, function(i, item) {
+            val_arr[i] = parseFloat(item);
+            if(name == "matrix") {
+              mtx[letters[i]] = val_arr[i]
+            }
+          });
+          var xform = svgroot.createSVGTransform();
+          var fname = "set" + name.charAt(0).toUpperCase() + name.slice(1);
+          var values = name == "matrix" ? [mtx] : val_arr;
+          if(name == "scale" && values.length == 1) {
+            values.push(values[0])
+          }else {
+            if(name == "translate" && values.length == 1) {
+              values.push(0)
+            }else {
+              if(name == "rotate" && values.length == 1) {
+                values.push(0, 0)
+              }
+            }
+          }
+          xform[fname].apply(xform, values);
+          this._list.appendItem(xform)
+        }
+      }
+    };
+    this._removeFromOtherLists = function(item) {
+      if(item) {
+        var found = false;
+        var id;
+        for(id in listMap_) {
+          var tl = listMap_[id];
+          var i, len;
+          for(i = 0, len = tl._xforms.length;i < len;++i) {
+            if(tl._xforms[i] == item) {
+              found = true;
+              tl.removeItem(i);
+              break
+            }
+          }
+          if(found) {
+            break
+          }
+        }
+      }
+    };
+    this.numberOfItems = 0;
+    this.clear = function() {
+      this.numberOfItems = 0;
+      this._xforms = []
+    };
+    this.initialize = function(newItem) {
+      this.numberOfItems = 1;
+      this._removeFromOtherLists(newItem);
+      this._xforms = [newItem]
+    };
+    this.getItem = function(index) {
+      if(index < this.numberOfItems && index >= 0) {
+        return this._xforms[index]
+      }
+      throw{code:1};
+    };
+    this.insertItemBefore = function(newItem, index) {
+      var retValue = null;
+      if(index >= 0) {
+        if(index < this.numberOfItems) {
+          this._removeFromOtherLists(newItem);
+          var newxforms = new Array(this.numberOfItems + 1);
+          var i;
+          for(i = 0;i < index;++i) {
+            newxforms[i] = this._xforms[i]
+          }
+          newxforms[i] = newItem;
+          var j;
+          for(j = i + 1;i < this.numberOfItems;++j, ++i) {
+            newxforms[j] = this._xforms[i]
+          }
+          this.numberOfItems++;
+          this._xforms = newxforms;
+          retValue = newItem;
+          this._list._update()
+        }else {
+          retValue = this._list.appendItem(newItem)
+        }
+      }
+      return retValue
+    };
+    this.replaceItem = function(newItem, index) {
+      var retValue = null;
+      if(index < this.numberOfItems && index >= 0) {
+        this._removeFromOtherLists(newItem);
+        this._xforms[index] = newItem;
+        retValue = newItem;
+        this._list._update()
+      }
+      return retValue
+    };
+    this.removeItem = function(index) {
+      if(index < this.numberOfItems && index >= 0) {
+        var retValue = this._xforms[index];
+        var newxforms = new Array(this.numberOfItems - 1);
+        var i, j;
+        for(i = 0;i < index;++i) {
+          newxforms[i] = this._xforms[i]
+        }
+        for(j = i;j < this.numberOfItems - 1;++j, ++i) {
+          newxforms[j] = this._xforms[i + 1]
+        }
+        this.numberOfItems--;
+        this._xforms = newxforms;
+        this._list._update();
+        return retValue
+      }
+      throw{code:1};
+    };
+    this.appendItem = function(newItem) {
+      this._removeFromOtherLists(newItem);
+      this._xforms.push(newItem);
+      this.numberOfItems++;
+      this._list._update();
+      return newItem
+    }
+  };
+  svgedit.transformlist.resetListMap = function() {
+    listMap_ = {}
+  };
+  svgedit.transformlist.removeElementFromListMap = function(elem) {
+    if(elem.id && listMap_[elem.id]) {
+      delete listMap_[elem.id]
+    }
+  };
+  svgedit.transformlist.getTransformList = function(elem) {
+    if(!svgedit.browser.supportsNativeTransformLists()) {
+      var id = elem.id || "temp";
+      var t = listMap_[id];
+      if(!t || id === "temp") {
+        listMap_[id] = new svgedit.transformlist.SVGTransformList(elem);
+        listMap_[id]._init();
+        t = listMap_[id]
+      }
+      return t
+    }
+    if(elem.transform) {
+      return elem.transform.baseVal
+    }
+    if(elem.gradientTransform) {
+      return elem.gradientTransform.baseVal
+    }
+    if(elem.patternTransform) {
+      return elem.patternTransform.baseVal
+    }
+    return null
+  }
+})();(function() {
+  if(!svgedit.math) {
+    svgedit.math = {}
+  }
+  var NEAR_ZERO = 1.0E-14;
+  var svg = document.createElementNS(svgedit.NS.SVG, "svg");
+  svgedit.math.transformPoint = function(x, y, m) {
+    return{x:m.a * x + m.c * y + m.e, y:m.b * x + m.d * y + m.f}
+  };
+  svgedit.math.isIdentity = function(m) {
+    return m.a === 1 && m.b === 0 && m.c === 0 && m.d === 1 && m.e === 0 && m.f === 0
+  };
+  svgedit.math.matrixMultiply = function(matr) {
+    var args = arguments, i = args.length, m = args[i - 1];
+    while(i-- > 1) {
+      var m1 = args[i - 1];
+      m = m1.multiply(m)
+    }
+    if(Math.abs(m.a) < NEAR_ZERO) {
+      m.a = 0
+    }
+    if(Math.abs(m.b) < NEAR_ZERO) {
+      m.b = 0
+    }
+    if(Math.abs(m.c) < NEAR_ZERO) {
+      m.c = 0
+    }
+    if(Math.abs(m.d) < NEAR_ZERO) {
+      m.d = 0
+    }
+    if(Math.abs(m.e) < NEAR_ZERO) {
+      m.e = 0
+    }
+    if(Math.abs(m.f) < NEAR_ZERO) {
+      m.f = 0
+    }
+    return m
+  };
+  svgedit.math.hasMatrixTransform = function(tlist) {
+    if(!tlist) {
+      return false
+    }
+    var num = tlist.numberOfItems;
+    while(num--) {
+      var xform = tlist.getItem(num);
+      if(xform.type == 1 && !svgedit.math.isIdentity(xform.matrix)) {
+        return true
+      }
+    }
+    return false
+  };
+  svgedit.math.transformBox = function(l, t, w, h, m) {
+    var transformPoint = svgedit.math.transformPoint, tl = transformPoint(l, t, m), tr = transformPoint(l + w, t, m), bl = transformPoint(l, t + h, m), br = transformPoint(l + w, t + h, m), minx = Math.min(tl.x, tr.x, bl.x, br.x), maxx = Math.max(tl.x, tr.x, bl.x, br.x), miny = Math.min(tl.y, tr.y, bl.y, br.y), maxy = Math.max(tl.y, tr.y, bl.y, br.y);
+    return{tl:tl, tr:tr, bl:bl, br:br, aabox:{x:minx, y:miny, width:maxx - minx, height:maxy - miny}}
+  };
+  svgedit.math.transformListToTransform = function(tlist, min, max) {
+    if(tlist == null) {
+      return svg.createSVGTransformFromMatrix(svg.createSVGMatrix())
+    }
+    min = min || 0;
+    max = max || tlist.numberOfItems - 1;
+    min = parseInt(min, 10);
+    max = parseInt(max, 10);
+    if(min > max) {
+      var temp = max;
+      max = min;
+      min = temp
+    }
+    var m = svg.createSVGMatrix();
+    var i;
+    for(i = min;i <= max;++i) {
+      var mtom = i >= 0 && i < tlist.numberOfItems ? tlist.getItem(i).matrix : svg.createSVGMatrix();
+      m = svgedit.math.matrixMultiply(m, mtom)
+    }
+    return svg.createSVGTransformFromMatrix(m)
+  };
+  svgedit.math.getMatrix = function(elem) {
+    var tlist = svgedit.transformlist.getTransformList(elem);
+    return svgedit.math.transformListToTransform(tlist).matrix
+  };
+  svgedit.math.snapToAngle = function(x1, y1, x2, y2) {
+    var snap = Math.PI / 4;
+    var dx = x2 - x1;
+    var dy = y2 - y1;
+    var angle = Math.atan2(dy, dx);
+    var dist = Math.sqrt(dx * dx + dy * dy);
+    var snapangle = Math.round(angle / snap) * snap;
+    return{x:x1 + dist * Math.cos(snapangle), y:y1 + dist * Math.sin(snapangle), a:snapangle}
+  };
+  svgedit.math.rectsIntersect = function(r1, r2) {
+    return r2.x < r1.x + r1.width && r2.x + r2.width > r1.x && r2.y < r1.y + r1.height && r2.y + r2.height > r1.y
+  }
+})();(function() {
+  if(!svgedit.units) {
+    svgedit.units = {}
+  }
+  var NS = svgedit.NS;
+  var wAttrs = ["x", "x1", "cx", "rx", "width"];
+  var hAttrs = ["y", "y1", "cy", "ry", "height"];
+  var unitAttrs = ["r", "radius"].concat(wAttrs, hAttrs);
+  var unitNumMap = {"%":2, em:3, ex:4, px:5, cm:6, mm:7, "in":8, pt:9, pc:10};
+  var elementContainer_;
+  var typeMap_ = {};
+  svgedit.units.init = function(elementContainer) {
+    elementContainer_ = elementContainer;
+    var svg = document.createElementNS(NS.SVG, "svg");
+    document.body.appendChild(svg);
+    var rect = document.createElementNS(NS.SVG, "rect");
+    rect.setAttribute("width", "1em");
+    rect.setAttribute("height", "1ex");
+    rect.setAttribute("x", "1in");
+    svg.appendChild(rect);
+    var bb = rect.getBBox();
+    document.body.removeChild(svg);
+    var inch = bb.x;
+    typeMap_ = {em:bb.width, ex:bb.height, "in":inch, cm:inch / 2.54, mm:inch / 25.4, pt:inch / 72, pc:inch / 6, px:1, "%":0}
+  };
+  svgedit.units.getTypeMap = function() {
+    return typeMap_
+  };
+  svgedit.units.shortFloat = function(val) {
+    var digits = elementContainer_.getRoundDigits();
+    if(!isNaN(val)) {
+      return+(+val).toFixed(digits)
+    }
+    if($.isArray(val)) {
+      return svgedit.units.shortFloat(val[0]) + "," + svgedit.units.shortFloat(val[1])
+    }
+    return parseFloat(val).toFixed(digits) - 0
+  };
+  svgedit.units.convertUnit = function(val, unit) {
+    unit = unit || elementContainer_.getBaseUnit();
+    return svgedit.units.shortFloat(val / typeMap_[unit])
+  };
+  svgedit.units.setUnitAttr = function(elem, attr, val) {
+    elem.setAttribute(attr, val)
+  };
+  var attrsToConvert = {line:["x1", "x2", "y1", "y2"], circle:["cx", "cy", "r"], ellipse:["cx", "cy", "rx", "ry"], foreignObject:["x", "y", "width", "height"], rect:["x", "y", "width", "height"], image:["x", "y", "width", "height"], use:["x", "y", "width", "height"], text:["x", "y"]};
+  svgedit.units.convertAttrs = function(element) {
+    var elName = element.tagName;
+    var unit = elementContainer_.getBaseUnit();
+    var attrs = attrsToConvert[elName];
+    if(!attrs) {
+      return
+    }
+    var len = attrs.length;
+    var i;
+    for(i = 0;i < len;i++) {
+      var attr = attrs[i];
+      var cur = element.getAttribute(attr);
+      if(cur) {
+        if(!isNaN(cur)) {
+          element.setAttribute(attr, cur / typeMap_[unit] + unit)
+        }
+      }
+    }
+  };
+  svgedit.units.convertToNum = function(attr, val) {
+    if(!isNaN(val)) {
+      return val - 0
+    }
+    var num;
+    if(val.substr(-1) === "%") {
+      num = val.substr(0, val.length - 1) / 100;
+      var width = elementContainer_.getWidth();
+      var height = elementContainer_.getHeight();
+      if(wAttrs.indexOf(attr) >= 0) {
+        return num * width
+      }
+      if(hAttrs.indexOf(attr) >= 0) {
+        return num * height
+      }
+      return num * Math.sqrt(width * width + height * height) / Math.sqrt(2)
+    }
+    var unit = val.substr(-2);
+    num = val.substr(0, val.length - 2);
+    return num * typeMap_[unit]
+  };
+  svgedit.units.isValidUnit = function(attr, val, selectedElement) {
+    var valid = false;
+    if(unitAttrs.indexOf(attr) >= 0) {
+      if(!isNaN(val)) {
+        valid = true
+      }else {
+        val = val.toLowerCase();
+        $.each(typeMap_, function(unit) {
+          if(valid) {
+            return
+          }
+          var re = new RegExp("^-?[\\d\\.]+" + unit + "$");
+          if(re.test(val)) {
+            valid = true
+          }
+        })
+      }
+    }else {
+      if(attr == "id") {
+        var result = false;
+        try {
+          var elem = elementContainer_.getElement(val);
+          result = elem == null || elem === selectedElement
+        }catch(e) {
+        }
+        return result
+      }
+    }
+    valid = true;
+    return valid
+  }
+})();(function(undef) {
+  if(!svgedit.utilities) {
+    svgedit.utilities = {}
+  }
+  var KEYSTR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+  var NS = svgedit.NS;
+  var visElems = "a,circle,ellipse,foreignObject,g,image,line,path,polygon,polyline,rect,svg,text,tspan,use";
+  var visElems_arr = visElems.split(",");
+  var editorContext_ = null;
+  var domdoc_ = null;
+  var domcontainer_ = null;
+  var svgroot_ = null;
+  svgedit.utilities.init = function(editorContext) {
+    editorContext_ = editorContext;
+    domdoc_ = editorContext.getDOMDocument();
+    domcontainer_ = editorContext.getDOMContainer();
+    svgroot_ = editorContext.getSVGRoot()
+  };
+  svgedit.utilities.toXml = function(str) {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/, "&#x27;")
+  };
+  svgedit.utilities.fromXml = function(str) {
+    return $("<p/>").html(str).text()
+  };
+  svgedit.utilities.encode64 = function(input) {
+    input = svgedit.utilities.encodeUTF8(input);
+    if(window.btoa) {
+      return window.btoa(input)
+    }
+    var output = [];
+    output.length = Math.floor((input.length + 2) / 3) * 4;
+    var chr1, chr2, chr3;
+    var enc1, enc2, enc3, enc4;
+    var i = 0, p = 0;
+    do {
+      chr1 = input.charCodeAt(i++);
+      chr2 = input.charCodeAt(i++);
+      chr3 = input.charCodeAt(i++);
+      enc1 = chr1 >> 2;
+      enc2 = (chr1 & 3) << 4 | chr2 >> 4;
+      enc3 = (chr2 & 15) << 2 | chr3 >> 6;
+      enc4 = chr3 & 63;
+      if(isNaN(chr2)) {
+        enc3 = enc4 = 64
+      }else {
+        if(isNaN(chr3)) {
+          enc4 = 64
+        }
+      }
+      output[p++] = KEYSTR.charAt(enc1);
+      output[p++] = KEYSTR.charAt(enc2);
+      output[p++] = KEYSTR.charAt(enc3);
+      output[p++] = KEYSTR.charAt(enc4)
+    }while(i < input.length);
+    return output.join("")
+  };
+  svgedit.utilities.decode64 = function(input) {
+    if(window.atob) {
+      return svgedit.utilities.decodeUTF8(window.atob(input))
+    }
+    var output = "";
+    var chr1, chr2, chr3 = "";
+    var enc1, enc2, enc3, enc4 = "";
+    var i = 0;
+    input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+    do {
+      enc1 = KEYSTR.indexOf(input.charAt(i++));
+      enc2 = KEYSTR.indexOf(input.charAt(i++));
+      enc3 = KEYSTR.indexOf(input.charAt(i++));
+      enc4 = KEYSTR.indexOf(input.charAt(i++));
+      chr1 = enc1 << 2 | enc2 >> 4;
+      chr2 = (enc2 & 15) << 4 | enc3 >> 2;
+      chr3 = (enc3 & 3) << 6 | enc4;
+      output = output + String.fromCharCode(chr1);
+      if(enc3 != 64) {
+        output = output + String.fromCharCode(chr2)
+      }
+      if(enc4 != 64) {
+        output = output + String.fromCharCode(chr3)
+      }
+      chr1 = chr2 = chr3 = "";
+      enc1 = enc2 = enc3 = enc4 = ""
+    }while(i < input.length);
+    return svgedit.utilities.decodeUTF8(output)
+  };
+  svgedit.utilities.decodeUTF8 = function(argString) {
+    return decodeURIComponent(escape(argString))
+  };
+  svgedit.utilities.encodeUTF8 = function(argString) {
+    return unescape(encodeURIComponent(argString))
+  };
+  svgedit.utilities.convertToXMLReferences = function(input) {
+    var n, output = "";
+    for(n = 0;n < input.length;n++) {
+      var c = input.charCodeAt(n);
+      if(c < 128) {
+        output += input[n]
+      }else {
+        if(c > 127) {
+          output += "&#" + c + ";"
+        }
+      }
+    }
+    return output
+  };
+  svgedit.utilities.text2xml = function(sXML) {
+    if(sXML.indexOf("<svg:svg") >= 0) {
+      sXML = sXML.replace(/<(\/?)svg:/g, "<$1").replace("xmlns:svg", "xmlns")
+    }
+    var out, dXML;
+    try {
+      dXML = window.DOMParser ? new DOMParser : new ActiveXObject("Microsoft.XMLDOM");
+      dXML.async = false
+    }catch(e) {
+      throw new Error("XML Parser could not be instantiated");
+    }
+    try {
+      if(dXML.loadXML) {
+        out = dXML.loadXML(sXML) ? dXML : false
+      }else {
+        out = dXML.parseFromString(sXML, "text/xml")
+      }
+    }catch(e2) {
+      throw new Error("Error parsing XML string");
+    }
+    return out
+  };
+  svgedit.utilities.bboxToObj = function(bbox) {
+    return{x:bbox.x, y:bbox.y, width:bbox.width, height:bbox.height}
+  };
+  svgedit.utilities.walkTree = function(elem, cbFn) {
+    if(elem && elem.nodeType == 1) {
+      cbFn(elem);
+      var i = elem.childNodes.length;
+      while(i--) {
+        svgedit.utilities.walkTree(elem.childNodes.item(i), cbFn)
+      }
+    }
+  };
+  svgedit.utilities.walkTreePost = function(elem, cbFn) {
+    if(elem && elem.nodeType == 1) {
+      var i = elem.childNodes.length;
+      while(i--) {
+        svgedit.utilities.walkTree(elem.childNodes.item(i), cbFn)
+      }
+      cbFn(elem)
+    }
+  };
+  svgedit.utilities.getUrlFromAttr = function(attrVal) {
+    if(attrVal) {
+      if(attrVal.indexOf('url("') === 0) {
+        return attrVal.substring(5, attrVal.indexOf('"', 6))
+      }
+      if(attrVal.indexOf("url('") === 0) {
+        return attrVal.substring(5, attrVal.indexOf("'", 6))
+      }
+      if(attrVal.indexOf("url(") === 0) {
+        return attrVal.substring(4, attrVal.indexOf(")"))
+      }
+    }
+    return null
+  };
+  svgedit.utilities.getHref = function(elem) {
+    return elem.getAttributeNS(NS.XLINK, "href")
+  };
+  svgedit.utilities.setHref = function(elem, val) {
+    elem.setAttributeNS(NS.XLINK, "xlink:href", val)
+  };
+  svgedit.utilities.findDefs = function() {
+    var svgElement = editorContext_.getSVGContent();
+    var defs = svgElement.getElementsByTagNameNS(NS.SVG, "defs");
+    if(defs.length > 0) {
+      defs = defs[0]
+    }else {
+      defs = svgElement.ownerDocument.createElementNS(NS.SVG, "defs");
+      if(svgElement.firstChild) {
+        svgElement.insertBefore(defs, svgElement.firstChild.nextSibling)
+      }else {
+        svgElement.appendChild(defs)
+      }
+    }
+    return defs
+  };
+  svgedit.utilities.getPathBBox = function(path) {
+    var seglist = path.pathSegList;
+    var tot = seglist.numberOfItems;
+    var bounds = [[], []];
+    var start = seglist.getItem(0);
+    var P0 = [start.x, start.y];
+    var i;
+    for(i = 0;i < tot;i++) {
+      var seg = seglist.getItem(i);
+      if(seg.x === undef) {
+        continue
+      }
+      bounds[0].push(P0[0]);
+      bounds[1].push(P0[1]);
+      if(seg.x1) {
+        var P1 = [seg.x1, seg.y1], P2 = [seg.x2, seg.y2], P3 = [seg.x, seg.y];
+        var j;
+        for(j = 0;j < 2;j++) {
+          var calc = function(t) {
+            return Math.pow(1 - t, 3) * P0[j] + 3 * Math.pow(1 - t, 2) * t * P1[j] + 3 * (1 - t) * Math.pow(t, 2) * P2[j] + Math.pow(t, 3) * P3[j]
+          };
+          var b = 6 * P0[j] - 12 * P1[j] + 6 * P2[j];
+          var a = -3 * P0[j] + 9 * P1[j] - 9 * P2[j] + 3 * P3[j];
+          var c = 3 * P1[j] - 3 * P0[j];
+          if(a == 0) {
+            if(b == 0) {
+              continue
+            }
+            var t = -c / b;
+            if(0 < t && t < 1) {
+              bounds[j].push(calc(t))
+            }
+            continue
+          }
+          var b2ac = Math.pow(b, 2) - 4 * c * a;
+          if(b2ac < 0) {
+            continue
+          }
+          var t1 = (-b + Math.sqrt(b2ac)) / (2 * a);
+          if(0 < t1 && t1 < 1) {
+            bounds[j].push(calc(t1))
+          }
+          var t2 = (-b - Math.sqrt(b2ac)) / (2 * a);
+          if(0 < t2 && t2 < 1) {
+            bounds[j].push(calc(t2))
+          }
+        }
+        P0 = P3
+      }else {
+        bounds[0].push(seg.x);
+        bounds[1].push(seg.y)
+      }
+    }
+    var x = Math.min.apply(null, bounds[0]);
+    var w = Math.max.apply(null, bounds[0]) - x;
+    var y = Math.min.apply(null, bounds[1]);
+    var h = Math.max.apply(null, bounds[1]) - y;
+    return{x:x, y:y, width:w, height:h}
+  };
+  function groupBBFix(selected) {
+    if(svgedit.browser.supportsHVLineContainerBBox()) {
+      try {
+        return selected.getBBox()
+      }catch(e) {
+      }
+    }
+    var ref = $.data(selected, "ref");
+    var matched = null;
+    var ret, copy;
+    if(ref) {
+      copy = $(ref).children().clone().attr("visibility", "hidden");
+      $(svgroot_).append(copy);
+      matched = copy.filter("line, path")
+    }else {
+      matched = $(selected).find("line, path")
+    }
+    var issue = false;
+    if(matched.length) {
+      matched.each(function() {
+        var bb = this.getBBox();
+        if(!bb.width || !bb.height) {
+          issue = true
+        }
+      });
+      if(issue) {
+        var elems = ref ? copy : $(selected).children();
+        ret = getStrokedBBox(elems)
+      }else {
+        ret = selected.getBBox()
+      }
+    }else {
+      ret = selected.getBBox()
+    }
+    if(ref) {
+      copy.remove()
+    }
+    return ret
+  }
+  svgedit.utilities.getBBox = function(elem) {
+    var selected = elem || editorContext_.geSelectedElements()[0];
+    if(elem.nodeType != 1) {
+      return null
+    }
+    var ret = null;
+    var elname = selected.nodeName;
+    switch(elname) {
+      case "text":
+        if(selected.textContent === "") {
+          selected.textContent = "a";
+          ret = selected.getBBox();
+          selected.textContent = ""
+        }else {
+          if(selected.getBBox) {
+            ret = selected.getBBox()
+          }
+        }
+        break;
+      case "path":
+        if(!svgedit.browser.supportsPathBBox()) {
+          ret = svgedit.utilities.getPathBBox(selected)
+        }else {
+          if(selected.getBBox) {
+            ret = selected.getBBox()
+          }
+        }
+        break;
+      case "g":
+      ;
+      case "a":
+        ret = groupBBFix(selected);
+        break;
+      default:
+        if(elname === "use") {
+          ret = groupBBFix(selected, true)
+        }
+        if(elname === "use" || elname === "foreignObject" && svgedit.browser.isWebkit()) {
+          if(!ret) {
+            ret = selected.getBBox()
+          }
+          if(!svgedit.browser.isWebkit()) {
+            var bb = {};
+            bb.width = ret.width;
+            bb.height = ret.height;
+            bb.x = ret.x + parseFloat(selected.getAttribute("x") || 0);
+            bb.y = ret.y + parseFloat(selected.getAttribute("y") || 0);
+            ret = bb
+          }
+        }else {
+          if(~visElems_arr.indexOf(elname)) {
+            if(selected) {
+              ret = selected.getBBox()
+            }else {
+              var fo = $(selected).closest("foreignObject");
+              if(fo.length) {
+                if(fo[0].getBBox) {
+                  ret = fo[0].getBBox()
+                }
+              }
+            }
+          }
+        }
+    }
+    if(ret) {
+      ret = svgedit.utilities.bboxToObj(ret)
+    }
+    return ret
+  };
+  svgedit.utilities.getPathDFromSegments = function(pathSegments) {
+    var d = "";
+    $.each(pathSegments, function(j, seg) {
+      var i;
+      var pts = seg[1];
+      d += seg[0];
+      for(i = 0;i < pts.length;i += 2) {
+        d += pts[i] + "," + pts[i + 1] + " "
+      }
+    });
+    return d
+  };
+  svgedit.utilities.getPathDFromElement = function(elem) {
+    var num = 1.81;
+    var d, a, rx, ry;
+    switch(elem.tagName) {
+      case "ellipse":
+      ;
+      case "circle":
+        a = $(elem).attr(["rx", "ry", "cx", "cy"]);
+        var cx = a.cx, cy = a.cy;
+        rx = a.rx;
+        ry = a.ry;
+        if(elem.tagName == "circle") {
+          rx = ry = $(elem).attr("r")
+        }
+        d = svgedit.utilities.getPathDFromSegments([["M", [cx - rx, cy]], ["C", [cx - rx, cy - ry / num, cx - rx / num, cy - ry, cx, cy - ry]], ["C", [cx + rx / num, cy - ry, cx + rx, cy - ry / num, cx + rx, cy]], ["C", [cx + rx, cy + ry / num, cx + rx / num, cy + ry, cx, cy + ry]], ["C", [cx - rx / num, cy + ry, cx - rx, cy + ry / num, cx - rx, cy]], ["Z", []]]);
+        break;
+      case "path":
+        d = elem.getAttribute("d");
+        break;
+      case "line":
+        a = $(elem).attr(["x1", "y1", "x2", "y2"]);
+        d = "M" + a.x1 + "," + a.y1 + "L" + a.x2 + "," + a.y2;
+        break;
+      case "polyline":
+        d = "M" + elem.getAttribute("points");
+        break;
+      case "polygon":
+        d = "M" + elem.getAttribute("points") + " Z";
+        break;
+      case "rect":
+        var r = $(elem).attr(["rx", "ry"]);
+        rx = r.rx;
+        ry = r.ry;
+        var b = elem.getBBox();
+        var x = b.x, y = b.y, w = b.width, h = b.height;
+        num = 4 - num;
+        if(!rx && !ry) {
+          d = svgedit.utilities.getPathDFromSegments([["M", [x, y]], ["L", [x + w, y]], ["L", [x + w, y + h]], ["L", [x, y + h]], ["L", [x, y]], ["Z", []]])
+        }else {
+          d = svgedit.utilities.getPathDFromSegments([["M", [x, y + ry]], ["C", [x, y + ry / num, x + rx / num, y, x + rx, y]], ["L", [x + w - rx, y]], ["C", [x + w - rx / num, y, x + w, y + ry / num, x + w, y + ry]], ["L", [x + w, y + h - ry]], ["C", [x + w, y + h - ry / num, x + w - rx / num, y + h, x + w - rx, y + h]], ["L", [x + rx, y + h]], ["C", [x + rx / num, y + h, x, y + h - ry / num, x, y + h - ry]], ["L", [x, y + ry]], ["Z", []]])
+        }
+        break;
+      default:
+        break
+    }
+    return d
+  };
+  svgedit.utilities.getExtraAttributesForConvertToPath = function(elem) {
+    var attrs = {};
+    $.each(["marker-start", "marker-end", "marker-mid", "filter", "clip-path"], function() {
+      var a = elem.getAttribute(this);
+      if(a) {
+        attrs[this] = a
+      }
+    });
+    return attrs
+  };
+  svgedit.utilities.getBBoxOfElementAsPath = function(elem, addSvgElementFromJson, pathActions) {
+    var path = addSvgElementFromJson({element:"path", attr:svgedit.utilities.getExtraAttributesForConvertToPath(elem)});
+    var eltrans = elem.getAttribute("transform");
+    if(eltrans) {
+      path.setAttribute("transform", eltrans)
+    }
+    var parent = elem.parentNode;
+    if(elem.nextSibling) {
+      parent.insertBefore(path, elem)
+    }else {
+      parent.appendChild(path)
+    }
+    var d = svgedit.utilities.getPathDFromElement(elem);
+    if(d) {
+      path.setAttribute("d", d)
+    }else {
+      path.parentNode.removeChild(path)
+    }
+    pathActions.resetOrientation(path);
+    var bb = false;
+    try {
+      bb = path.getBBox()
+    }catch(e) {
+    }
+    path.parentNode.removeChild(path);
+    return bb
+  };
+  svgedit.utilities.convertToPath = function(elem, attrs, addSvgElementFromJson, pathActions, clearSelection, addToSelection, history, addCommandToHistory) {
+    var batchCmd = new history.BatchCommand("Convert element to Path");
+    attrs = $.extend({}, attrs, svgedit.utilities.getExtraAttributesForConvertToPath(elem));
+    var path = addSvgElementFromJson({element:"path", attr:attrs});
+    var eltrans = elem.getAttribute("transform");
+    if(eltrans) {
+      path.setAttribute("transform", eltrans)
+    }
+    var id = elem.id;
+    var parent = elem.parentNode;
+    if(elem.nextSibling) {
+      parent.insertBefore(path, elem)
+    }else {
+      parent.appendChild(path)
+    }
+    var d = svgedit.utilities.getPathDFromElement(elem);
+    if(d) {
+      path.setAttribute("d", d);
+      if(eltrans) {
+        var tlist = svgedit.transformlist.getTransformList(path);
+        if(svgedit.math.hasMatrixTransform(tlist)) {
+          pathActions.resetOrientation(path)
+        }
+      }
+      var nextSibling = elem.nextSibling;
+      batchCmd.addSubCommand(new history.RemoveElementCommand(elem, nextSibling, parent));
+      batchCmd.addSubCommand(new history.InsertElementCommand(path));
+      clearSelection();
+      elem.parentNode.removeChild(elem);
+      path.setAttribute("id", id);
+      path.removeAttribute("visibility");
+      addToSelection([path], true);
+      addCommandToHistory(batchCmd);
+      return path
+    }else {
+      path.parentNode.removeChild(path);
+      return null
+    }
+  };
+  function bBoxCanBeOptimizedOverNativeGetBBox(angle, hasMatrixTransform) {
+    var angleModulo90 = angle % 90;
+    var closeTo90 = angleModulo90 < -89.99 || angleModulo90 > 89.99;
+    var closeTo0 = angleModulo90 > -0.001 && angleModulo90 < 0.001;
+    return hasMatrixTransform || !(closeTo0 || closeTo90)
+  }
+  svgedit.utilities.getBBoxWithTransform = function(elem, addSvgElementFromJson, pathActions) {
+    var bb = svgedit.utilities.getBBox(elem);
+    if(!bb) {
+      return null
+    }
+    var tlist = svgedit.transformlist.getTransformList(elem);
+    var angle = svgedit.utilities.getRotationAngleFromTransformList(tlist);
+    var hasMatrixTransform = svgedit.math.hasMatrixTransform(tlist);
+    if(angle || hasMatrixTransform) {
+      var good_bb = false;
+      if(bBoxCanBeOptimizedOverNativeGetBBox(angle, hasMatrixTransform)) {
+        var elemNames = ["ellipse", "path", "line", "polyline", "polygon"];
+        if(elemNames.indexOf(elem.tagName) >= 0) {
+          bb = good_bb = svgedit.utilities.getBBoxOfElementAsPath(elem, addSvgElementFromJson, pathActions)
+        }else {
+          if(elem.tagName == "rect") {
+            var rx = elem.getAttribute("rx");
+            var ry = elem.getAttribute("ry");
+            if(rx || ry) {
+              bb = good_bb = svgedit.utilities.getBBoxOfElementAsPath(elem, addSvgElementFromJson, pathActions)
+            }
+          }
+        }
+      }
+      if(!good_bb) {
+        var matrix = svgedit.math.transformListToTransform(tlist).matrix;
+        bb = svgedit.math.transformBox(bb.x, bb.y, bb.width, bb.height, matrix).aabox
+      }
+    }
+    return bb
+  };
+  function getStrokeOffsetForBBox(elem) {
+    var sw = elem.getAttribute("stroke-width");
+    return!isNaN(sw) && elem.getAttribute("stroke") != "none" ? sw / 2 : 0
+  }
+  svgedit.utilities.getStrokedBBox = function(elems, addSvgElementFromJson, pathActions) {
+    if(!elems || !elems.length) {
+      return false
+    }
+    var full_bb;
+    $.each(elems, function() {
+      if(full_bb) {
+        return
+      }
+      if(!this.parentNode) {
+        return
+      }
+      full_bb = svgedit.utilities.getBBoxWithTransform(this, addSvgElementFromJson, pathActions)
+    });
+    if(full_bb === undefined) {
+      return null
+    }
+    var max_x = full_bb.x + full_bb.width;
+    var max_y = full_bb.y + full_bb.height;
+    var min_x = full_bb.x;
+    var min_y = full_bb.y;
+    if(elems.length === 1) {
+      var offset = getStrokeOffsetForBBox(elems[0]);
+      min_x -= offset;
+      min_y -= offset;
+      max_x += offset;
+      max_y += offset
+    }else {
+      $.each(elems, function(i, elem) {
+        var cur_bb = svgedit.utilities.getBBoxWithTransform(elem, addSvgElementFromJson, pathActions);
+        if(cur_bb) {
+          var offset = getStrokeOffsetForBBox(elem);
+          min_x = Math.min(min_x, cur_bb.x - offset);
+          min_y = Math.min(min_y, cur_bb.y - offset);
+          if(elem.nodeType == 1) {
+            max_x = Math.max(max_x, cur_bb.x + cur_bb.width + offset);
+            max_y = Math.max(max_y, cur_bb.y + cur_bb.height + offset)
+          }
+        }
+      })
+    }
+    full_bb.x = min_x;
+    full_bb.y = min_y;
+    full_bb.width = max_x - min_x;
+    full_bb.height = max_y - min_y;
+    return full_bb
+  };
+  svgedit.utilities.getRotationAngleFromTransformList = function(tlist, to_rad) {
+    if(!tlist) {
+      return 0
+    }
+    var N = tlist.numberOfItems;
+    var i;
+    for(i = 0;i < N;++i) {
+      var xform = tlist.getItem(i);
+      if(xform.type == 4) {
+        return to_rad ? xform.angle * Math.PI / 180 : xform.angle
+      }
+    }
+    return 0
+  };
+  svgedit.utilities.getRotationAngle = function(elem, to_rad) {
+    var selected = elem || editorContext_.getSelectedElements()[0];
+    var tlist = svgedit.transformlist.getTransformList(selected);
+    return svgedit.utilities.getRotationAngleFromTransformList(tlist, to_rad)
+  };
+  svgedit.utilities.getRefElem = function(attrVal) {
+    return svgedit.utilities.getElem(svgedit.utilities.getUrlFromAttr(attrVal).substr(1))
+  };
+  if(svgedit.browser.supportsSelectors()) {
+    svgedit.utilities.getElem = function(id) {
+      return svgroot_.querySelector("#" + id)
+    }
+  }else {
+    if(svgedit.browser.supportsXpath()) {
+      svgedit.utilities.getElem = function(id) {
+        return domdoc_.evaluate('svg:svg[@id="svgroot"]//svg:*[@id="' + id + '"]', domcontainer_, function() {
+          return svgedit.NS.SVG
+        }, 9, null).singleNodeValue
+      }
+    }else {
+      svgedit.utilities.getElem = function(id) {
+        return $(svgroot_).find("[id=" + id + "]")[0]
+      }
+    }
+  }
+  svgedit.utilities.assignAttributes = function(node, attrs, suspendLength, unitCheck) {
+    var i;
+    for(i in attrs) {
+      var ns = i.substr(0, 4) === "xml:" ? NS.XML : i.substr(0, 6) === "xlink:" ? NS.XLINK : null;
+      if(ns) {
+        node.setAttributeNS(ns, i, attrs[i])
+      }else {
+        if(!unitCheck) {
+          node.setAttribute(i, attrs[i])
+        }else {
+          svgedit.units.setUnitAttr(node, i, attrs[i])
+        }
+      }
+    }
+  };
+  svgedit.utilities.cleanupElement = function(element) {
+    var defaults = {"fill-opacity":1, "stop-opacity":1, opacity:1, stroke:"none", "stroke-dasharray":"none", "stroke-linejoin":"miter", "stroke-linecap":"butt", "stroke-opacity":1, "stroke-width":1, rx:0, ry:0};
+    if(element.nodeName === "ellipse") {
+      delete defaults.rx;
+      delete defaults.ry
+    }
+    var attr;
+    for(attr in defaults) {
+      var val = defaults[attr];
+      if(element.getAttribute(attr) == val) {
+        element.removeAttribute(attr)
+      }
+    }
+  };
+  svgedit.utilities.snapToGrid = function(value) {
+    var stepSize = editorContext_.getSnappingStep();
+    var unit = editorContext_.getBaseUnit();
+    if(unit !== "px") {
+      stepSize *= svgedit.units.getTypeMap()[unit]
+    }
+    value = Math.round(value / stepSize) * stepSize;
+    return value
+  };
+  svgedit.utilities.preg_quote = function(str, delimiter) {
+    return String(str).replace(new RegExp("[.\\\\+*?\\[\\^\\]$(){}=!<>|:\\" + (delimiter || "") + "-]", "g"), "\\$&")
+  };
+  svgedit.utilities.executeAfterLoads = function(globalCheck, scripts, cb) {
+    return function() {
+      var args = arguments;
+      function endCallback() {
+        cb.apply(null, args)
+      }
+      if(window[globalCheck]) {
+        endCallback()
+      }else {
+        scripts.reduceRight(function(oldFunc, script) {
+          return function() {
+            $.getScript(script, oldFunc)
+          }
+        }, endCallback)()
+      }
+    }
+  };
+  svgedit.utilities.buildCanvgCallback = function(callCanvg) {
+    return svgedit.utilities.executeAfterLoads("canvg", ["canvg/rgbcolor.js", "canvg/canvg.js"], callCanvg)
+  };
+  svgedit.utilities.buildJSPDFCallback = function(callJSPDF) {
+    return svgedit.utilities.executeAfterLoads("RGBColor", ["canvg/rgbcolor.js"], function() {
+      var arr = [];
+      if(!RGBColor || RGBColor.ok === undef) {
+        arr.push("canvg/rgbcolor.js")
+      }
+      svgedit.utilities.executeAfterLoads("jsPDF", arr.concat("jspdf/underscore-min.js", "jspdf/jspdf.min.js", "jspdf/jspdf.plugin.svgToPdf.js"), callJSPDF)()
+    })
+  };
+  svgedit.utilities.preventClickDefault = function(img) {
+    $(img).click(function(e) {
+      e.preventDefault()
+    })
+  };
+  svgedit.utilities.copyElem = function(el, getNextId) {
+    var new_el = document.createElementNS(el.namespaceURI, el.nodeName);
+    $.each(el.attributes, function(i, attr) {
+      if(attr.localName != "-moz-math-font-style") {
+        new_el.setAttributeNS(attr.namespaceURI, attr.nodeName, attr.value)
+      }
+    });
+    new_el.removeAttribute("id");
+    new_el.id = getNextId();
+    if(svgedit.browser.isWebkit() && el.nodeName == "path") {
+      var fixed_d = svgedit.utilities.convertPath(el);
+      new_el.setAttribute("d", fixed_d)
+    }
+    $.each(el.childNodes, function(i, child) {
+      switch(child.nodeType) {
+        case 1:
+          new_el.appendChild(svgedit.utilities.copyElem(child, getNextId));
+          break;
+        case 3:
+          new_el.appendChild(document.createTextNode(child.textContent));
+          break;
+        default:
+          break
+      }
+    });
+    if($(el).data("gsvg")) {
+      $(new_el).data("gsvg", new_el.firstChild)
+    }else {
+      if($(el).data("symbol")) {
+        var ref = $(el).data("symbol");
+        $(new_el).data("ref", ref).data("symbol", ref)
+      }else {
+        if(new_el.tagName == "image") {
+          preventClickDefault(new_el)
+        }
+      }
+    }
+    return new_el
+  };
+  function pathDSegment(letter, points, morePoints, lastPoint) {
+    $.each(points, function(i, pnt) {
+      points[i] = svgedit.units.shortFloat(pnt)
+    });
+    var segment = letter + points.join(" ");
+    if(morePoints) {
+      segment += " " + morePoints.join(" ")
+    }
+    if(lastPoint) {
+      segment += " " + svgedit.units.shortFloat(lastPoint)
+    }
+    return segment
+  }
+  var pathMap = [0, "z", "M", "m", "L", "l", "C", "c", "Q", "q", "A", "a", "H", "h", "V", "v", "S", "s", "T", "t"];
+  svgedit.utilities.convertPath = function(path, toRel) {
+    var i;
+    var segList = path.pathSegList;
+    var len = segList.numberOfItems;
+    var curx = 0, cury = 0;
+    var d = "";
+    var last_m = null;
+    for(i = 0;i < len;++i) {
+      var seg = segList.getItem(i);
+      var x = seg.x || 0, y = seg.y || 0, x1 = seg.x1 || 0, y1 = seg.y1 || 0, x2 = seg.x2 || 0, y2 = seg.y2 || 0;
+      var type = seg.pathSegType;
+      var letter = pathMap[type]["to" + (toRel ? "Lower" : "Upper") + "Case"]();
+      switch(type) {
+        case 1:
+          d += "z";
+          break;
+        case 12:
+          x -= curx;
+        case 13:
+          if(toRel) {
+            curx += x;
+            letter = "l"
+          }else {
+            x += curx;
+            curx = x;
+            letter = "L"
+          }
+          d += pathDSegment(letter, [[x, cury]]);
+          break;
+        case 14:
+          y -= cury;
+        case 15:
+          if(toRel) {
+            cury += y;
+            letter = "l"
+          }else {
+            y += cury;
+            cury = y;
+            letter = "L"
+          }
+          d += pathDSegment(letter, [[curx, y]]);
+          break;
+        case 2:
+        ;
+        case 4:
+        ;
+        case 18:
+          x -= curx;
+          y -= cury;
+        case 5:
+        ;
+        case 3:
+          if(last_m && segList.getItem(i - 1).pathSegType === 1 && !toRel) {
+            curx = last_m[0];
+            cury = last_m[1]
+          }
+        ;
+        case 19:
+          if(toRel) {
+            curx += x;
+            cury += y
+          }else {
+            x += curx;
+            y += cury;
+            curx = x;
+            cury = y
+          }
+          if(type === 3) {
+            last_m = [curx, cury]
+          }
+          d += pathDSegment(letter, [[x, y]]);
+          break;
+        case 6:
+          x -= curx;
+          x1 -= curx;
+          x2 -= curx;
+          y -= cury;
+          y1 -= cury;
+          y2 -= cury;
+        case 7:
+          if(toRel) {
+            curx += x;
+            cury += y
+          }else {
+            x += curx;
+            x1 += curx;
+            x2 += curx;
+            y += cury;
+            y1 += cury;
+            y2 += cury;
+            curx = x;
+            cury = y
+          }
+          d += pathDSegment(letter, [[x1, y1], [x2, y2], [x, y]]);
+          break;
+        case 8:
+          x -= curx;
+          x1 -= curx;
+          y -= cury;
+          y1 -= cury;
+        case 9:
+          if(toRel) {
+            curx += x;
+            cury += y
+          }else {
+            x += curx;
+            x1 += curx;
+            y += cury;
+            y1 += cury;
+            curx = x;
+            cury = y
+          }
+          d += pathDSegment(letter, [[x1, y1], [x, y]]);
+          break;
+        case 10:
+          x -= curx;
+          y -= cury;
+        case 11:
+          if(toRel) {
+            curx += x;
+            cury += y
+          }else {
+            x += curx;
+            y += cury;
+            curx = x;
+            cury = y
+          }
+          d += pathDSegment(letter, [[seg.r1, seg.r2]], [seg.angle, seg.largeArcFlag ? 1 : 0, seg.sweepFlag ? 1 : 0], [x, y]);
+          break;
+        case 16:
+          x -= curx;
+          x2 -= curx;
+          y -= cury;
+          y2 -= cury;
+        case 17:
+          if(toRel) {
+            curx += x;
+            cury += y
+          }else {
+            x += curx;
+            x2 += curx;
+            y += cury;
+            y2 += cury;
+            curx = x;
+            cury = y
+          }
+          d += pathDSegment(letter, [[x2, y2], [x, y]]);
+          break
+      }
+    }
+    return d
+  }
+})();(function() {
+  if(!svgedit.sanitize) {
+    svgedit.sanitize = {}
+  }
+  var NS = svgedit.NS, REVERSE_NS = svgedit.getReverseNS();
+  var svgWhiteList_ = {a:["class", "clip-path", "clip-rule", "fill", "fill-opacity", "fill-rule", "filter", "id", "mask", "opacity", "stroke", "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit", "stroke-opacity", "stroke-width", "style", "systemLanguage", "transform", "xlink:href", "xlink:title"], circle:["class", "clip-path", "clip-rule", "cx", "cy", "fill", "fill-opacity", "fill-rule", "filter", "id", "mask", "opacity", "r", "requiredFeatures", "stroke", 
+  "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit", "stroke-opacity", "stroke-width", "style", "systemLanguage", "transform"], clipPath:["class", "clipPathUnits", "id"], defs:[], style:["type"], desc:[], ellipse:["class", "clip-path", "clip-rule", "cx", "cy", "fill", "fill-opacity", "fill-rule", "filter", "id", "mask", "opacity", "requiredFeatures", "rx", "ry", "stroke", "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", 
+  "stroke-miterlimit", "stroke-opacity", "stroke-width", "style", "systemLanguage", "transform"], feGaussianBlur:["class", "color-interpolation-filters", "id", "requiredFeatures", "stdDeviation"], filter:["class", "color-interpolation-filters", "filterRes", "filterUnits", "height", "id", "primitiveUnits", "requiredFeatures", "width", "x", "xlink:href", "y"], foreignObject:["class", "font-size", "height", "id", "opacity", "requiredFeatures", "style", "transform", "width", "x", "y"], g:["class", "clip-path", 
+  "clip-rule", "id", "display", "fill", "fill-opacity", "fill-rule", "filter", "mask", "opacity", "requiredFeatures", "stroke", "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit", "stroke-opacity", "stroke-width", "style", "systemLanguage", "transform", "font-family", "font-size", "font-style", "font-weight", "text-anchor"], image:["class", "clip-path", "clip-rule", "filter", "height", "id", "mask", "opacity", "requiredFeatures", "style", "systemLanguage", 
+  "transform", "width", "x", "xlink:href", "xlink:title", "y"], line:["class", "clip-path", "clip-rule", "fill", "fill-opacity", "fill-rule", "filter", "id", "marker-end", "marker-mid", "marker-start", "mask", "opacity", "requiredFeatures", "stroke", "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit", "stroke-opacity", "stroke-width", "style", "systemLanguage", "transform", "x1", "x2", "y1", "y2"], linearGradient:["class", "id", "gradientTransform", 
+  "gradientUnits", "requiredFeatures", "spreadMethod", "systemLanguage", "x1", "x2", "xlink:href", "y1", "y2"], marker:["id", "class", "markerHeight", "markerUnits", "markerWidth", "orient", "preserveAspectRatio", "refX", "refY", "systemLanguage", "viewBox"], mask:["class", "height", "id", "maskContentUnits", "maskUnits", "width", "x", "y"], metadata:["class", "id"], path:["class", "clip-path", "clip-rule", "d", "fill", "fill-opacity", "fill-rule", "filter", "id", "marker-end", "marker-mid", "marker-start", 
+  "mask", "opacity", "requiredFeatures", "stroke", "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit", "stroke-opacity", "stroke-width", "style", "systemLanguage", "transform"], pattern:["class", "height", "id", "patternContentUnits", "patternTransform", "patternUnits", "requiredFeatures", "style", "systemLanguage", "viewBox", "width", "x", "xlink:href", "y"], polygon:["class", "clip-path", "clip-rule", "id", "fill", "fill-opacity", "fill-rule", "filter", 
+  "id", "class", "marker-end", "marker-mid", "marker-start", "mask", "opacity", "points", "requiredFeatures", "stroke", "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit", "stroke-opacity", "stroke-width", "style", "systemLanguage", "transform"], polyline:["class", "clip-path", "clip-rule", "id", "fill", "fill-opacity", "fill-rule", "filter", "marker-end", "marker-mid", "marker-start", "mask", "opacity", "points", "requiredFeatures", "stroke", "stroke-dasharray", 
+  "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit", "stroke-opacity", "stroke-width", "style", "systemLanguage", "transform"], radialGradient:["class", "cx", "cy", "fx", "fy", "gradientTransform", "gradientUnits", "id", "r", "requiredFeatures", "spreadMethod", "systemLanguage", "xlink:href"], rect:["class", "clip-path", "clip-rule", "fill", "fill-opacity", "fill-rule", "filter", "height", "id", "mask", "opacity", "requiredFeatures", "rx", "ry", "stroke", "stroke-dasharray", 
+  "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit", "stroke-opacity", "stroke-width", "style", "systemLanguage", "transform", "width", "x", "y"], stop:["class", "id", "offset", "requiredFeatures", "stop-color", "stop-opacity", "style", "systemLanguage"], svg:["class", "clip-path", "clip-rule", "filter", "id", "height", "mask", "preserveAspectRatio", "requiredFeatures", "style", "systemLanguage", "viewBox", "width", "x", "xmlns", "xmlns:se", "xmlns:xlink", "y"], "switch":["class", 
+  "id", "requiredFeatures", "systemLanguage"], symbol:["class", "fill", "fill-opacity", "fill-rule", "filter", "font-family", "font-size", "font-style", "font-weight", "id", "opacity", "preserveAspectRatio", "requiredFeatures", "stroke", "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit", "stroke-opacity", "stroke-width", "style", "systemLanguage", "transform", "viewBox"], text:["class", "clip-path", "clip-rule", "fill", "fill-opacity", "fill-rule", 
+  "filter", "font-family", "font-size", "font-style", "font-weight", "id", "mask", "opacity", "requiredFeatures", "stroke", "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit", "stroke-opacity", "stroke-width", "style", "systemLanguage", "text-anchor", "transform", "x", "xml:space", "y"], textPath:["class", "id", "method", "requiredFeatures", "spacing", "startOffset", "style", "systemLanguage", "transform", "xlink:href"], title:[], tspan:["class", "clip-path", 
+  "clip-rule", "dx", "dy", "fill", "fill-opacity", "fill-rule", "filter", "font-family", "font-size", "font-style", "font-weight", "id", "mask", "opacity", "requiredFeatures", "rotate", "stroke", "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit", "stroke-opacity", "stroke-width", "style", "systemLanguage", "text-anchor", "textLength", "transform", "x", "xml:space", "y"], use:["class", "clip-path", "clip-rule", "fill", "fill-opacity", "fill-rule", "filter", 
+  "height", "id", "mask", "stroke", "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit", "stroke-opacity", "stroke-width", "style", "transform", "width", "x", "xlink:href", "y"], annotation:["encoding"], "annotation-xml":["encoding"], maction:["actiontype", "other", "selection"], math:["class", "id", "display", "xmlns"], menclose:["notation"], merror:[], mfrac:["linethickness"], mi:["mathvariant"], mmultiscripts:[], mn:[], mo:["fence", "lspace", "maxsize", 
+  "minsize", "rspace", "stretchy"], mover:[], mpadded:["lspace", "width", "height", "depth", "voffset"], mphantom:[], mprescripts:[], mroot:[], mrow:["xlink:href", "xlink:type", "xmlns:xlink"], mspace:["depth", "height", "width"], msqrt:[], mstyle:["displaystyle", "mathbackground", "mathcolor", "mathvariant", "scriptlevel"], msub:[], msubsup:[], msup:[], mtable:["align", "columnalign", "columnlines", "columnspacing", "displaystyle", "equalcolumns", "equalrows", "frame", "rowalign", "rowlines", "rowspacing", 
+  "width"], mtd:["columnalign", "columnspan", "rowalign", "rowspan"], mtext:[], mtr:["columnalign", "rowalign"], munder:[], munderover:[], none:[], semantics:[]};
+  var svgWhiteListNS_ = {};
+  $.each(svgWhiteList_, function(elt, atts) {
+    var attNS = {};
+    $.each(atts, function(i, att) {
+      if(att.indexOf(":") >= 0) {
+        var v = att.split(":");
+        attNS[v[1]] = NS[v[0].toUpperCase()]
+      }else {
+        attNS[att] = att == "xmlns" ? NS.XMLNS : null
+      }
+    });
+    svgWhiteListNS_[elt] = attNS
+  });
+  svgedit.sanitize.sanitizeSvg = function(node) {
+    if(node.nodeType == 3) {
+      node.nodeValue = node.nodeValue.replace(/^\s+|\s+$/g, "");
+      if(node.nodeValue.length === 0) {
+        node.parentNode.removeChild(node)
+      }
+    }
+    if(node.nodeType != 1) {
+      return
+    }
+    var doc = node.ownerDocument;
+    var parent = node.parentNode;
+    if(!doc || !parent) {
+      return
+    }
+    var allowedAttrs = svgWhiteList_[node.nodeName];
+    var allowedAttrsNS = svgWhiteListNS_[node.nodeName];
+    var i;
+    if(typeof allowedAttrs !== "undefined") {
+      var seAttrs = [];
+      i = node.attributes.length;
+      while(i--) {
+        var attr = node.attributes.item(i);
+        var attrName = attr.nodeName;
+        var attrLocalName = attr.localName;
+        var attrNsURI = attr.namespaceURI;
+        if(!(allowedAttrsNS.hasOwnProperty(attrLocalName) && attrNsURI == allowedAttrsNS[attrLocalName] && attrNsURI != NS.XMLNS) && !(attrNsURI == NS.XMLNS && REVERSE_NS[attr.value])) {
+          if(attrName.indexOf("se:") === 0) {
+            seAttrs.push([attrName, attr.value])
+          }
+          node.removeAttributeNS(attrNsURI, attrLocalName)
+        }
+        if(svgedit.browser.isGecko()) {
+          switch(attrName) {
+            case "transform":
+            ;
+            case "gradientTransform":
+            ;
+            case "patternTransform":
+              var val = attr.value.replace(/(\d)-/g, "$1 -");
+              node.setAttribute(attrName, val);
+              break
+          }
+        }
+        if(attrName == "style") {
+          var props = attr.value.split(";"), p = props.length;
+          while(p--) {
+            var nv = props[p].split(":");
+            var styleAttrName = $.trim(nv[0]);
+            var styleAttrVal = $.trim(nv[1]);
+            if(allowedAttrs.indexOf(styleAttrName) >= 0) {
+              node.setAttribute(styleAttrName, styleAttrVal)
+            }
+          }
+          node.removeAttribute("style")
+        }
+      }
+      $.each(seAttrs, function(i, attr) {
+        node.setAttributeNS(NS.SE, attr[0], attr[1])
+      });
+      var href = svgedit.utilities.getHref(node);
+      if(href && ["filter", "linearGradient", "pattern", "radialGradient", "textPath", "use"].indexOf(node.nodeName) >= 0) {
+        if(href[0] != "#") {
+          svgedit.utilities.setHref(node, "");
+          node.removeAttributeNS(NS.XLINK, "href")
+        }
+      }
+      if(node.nodeName == "use" && !svgedit.utilities.getHref(node)) {
+        parent.removeChild(node);
+        return
+      }
+      $.each(["clip-path", "fill", "filter", "marker-end", "marker-mid", "marker-start", "mask", "stroke"], function(i, attr) {
+        var val = node.getAttribute(attr);
+        if(val) {
+          val = svgedit.utilities.getUrlFromAttr(val);
+          if(val && val[0] !== "#") {
+            node.setAttribute(attr, "");
+            node.removeAttribute(attr)
+          }
+        }
+      });
+      i = node.childNodes.length;
+      while(i--) {
+        svgedit.sanitize.sanitizeSvg(node.childNodes.item(i))
+      }
+    }else {
+      var children = [];
+      while(node.hasChildNodes()) {
+        children.push(parent.insertBefore(node.firstChild, node))
+      }
+      parent.removeChild(node);
+      i = children.length;
+      while(i--) {
+        svgedit.sanitize.sanitizeSvg(children[i])
+      }
+    }
+  }
+})();(function() {
+  if(!svgedit.history) {
+    svgedit.history = {}
+  }
+  svgedit.history.HistoryEventTypes = {BEFORE_APPLY:"before_apply", AFTER_APPLY:"after_apply", BEFORE_UNAPPLY:"before_unapply", AFTER_UNAPPLY:"after_unapply"};
+  var removedElements = {};
+  svgedit.history.MoveElementCommand = function(elem, oldNextSibling, oldParent, text) {
+    this.elem = elem;
+    this.text = text ? "Move " + elem.tagName + " to " + text : "Move " + elem.tagName;
+    this.oldNextSibling = oldNextSibling;
+    this.oldParent = oldParent;
+    this.newNextSibling = elem.nextSibling;
+    this.newParent = elem.parentNode
+  };
+  svgedit.history.MoveElementCommand.type = function() {
+    return"svgedit.history.MoveElementCommand"
+  };
+  svgedit.history.MoveElementCommand.prototype.type = svgedit.history.MoveElementCommand.type;
+  svgedit.history.MoveElementCommand.prototype.getText = function() {
+    return this.text
+  };
+  svgedit.history.MoveElementCommand.prototype.apply = function(handler) {
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_APPLY, this)
+    }
+    this.elem = this.newParent.insertBefore(this.elem, this.newNextSibling);
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_APPLY, this)
+    }
+  };
+  svgedit.history.MoveElementCommand.prototype.unapply = function(handler) {
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_UNAPPLY, this)
+    }
+    this.elem = this.oldParent.insertBefore(this.elem, this.oldNextSibling);
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_UNAPPLY, this)
+    }
+  };
+  svgedit.history.MoveElementCommand.prototype.elements = function() {
+    return[this.elem]
+  };
+  svgedit.history.InsertElementCommand = function(elem, text) {
+    this.elem = elem;
+    this.text = text || "Create " + elem.tagName;
+    this.parent = elem.parentNode;
+    this.nextSibling = this.elem.nextSibling
+  };
+  svgedit.history.InsertElementCommand.type = function() {
+    return"svgedit.history.InsertElementCommand"
+  };
+  svgedit.history.InsertElementCommand.prototype.type = svgedit.history.InsertElementCommand.type;
+  svgedit.history.InsertElementCommand.prototype.getText = function() {
+    return this.text
+  };
+  svgedit.history.InsertElementCommand.prototype.apply = function(handler) {
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_APPLY, this)
+    }
+    this.elem = this.parent.insertBefore(this.elem, this.nextSibling);
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_APPLY, this)
+    }
+  };
+  svgedit.history.InsertElementCommand.prototype.unapply = function(handler) {
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_UNAPPLY, this)
+    }
+    this.parent = this.elem.parentNode;
+    this.elem = this.elem.parentNode.removeChild(this.elem);
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_UNAPPLY, this)
+    }
+  };
+  svgedit.history.InsertElementCommand.prototype.elements = function() {
+    return[this.elem]
+  };
+  svgedit.history.RemoveElementCommand = function(elem, oldNextSibling, oldParent, text) {
+    this.elem = elem;
+    this.text = text || "Delete " + elem.tagName;
+    this.nextSibling = oldNextSibling;
+    this.parent = oldParent;
+    svgedit.transformlist.removeElementFromListMap(elem)
+  };
+  svgedit.history.RemoveElementCommand.type = function() {
+    return"svgedit.history.RemoveElementCommand"
+  };
+  svgedit.history.RemoveElementCommand.prototype.type = svgedit.history.RemoveElementCommand.type;
+  svgedit.history.RemoveElementCommand.prototype.getText = function() {
+    return this.text
+  };
+  svgedit.history.RemoveElementCommand.prototype.apply = function(handler) {
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_APPLY, this)
+    }
+    svgedit.transformlist.removeElementFromListMap(this.elem);
+    this.parent = this.elem.parentNode;
+    this.elem = this.parent.removeChild(this.elem);
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_APPLY, this)
+    }
+  };
+  svgedit.history.RemoveElementCommand.prototype.unapply = function(handler) {
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_UNAPPLY, this)
+    }
+    svgedit.transformlist.removeElementFromListMap(this.elem);
+    if(this.nextSibling == null) {
+      if(window.console) {
+        console.log("Error: reference element was lost")
+      }
+    }
+    this.parent.insertBefore(this.elem, this.nextSibling);
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_UNAPPLY, this)
+    }
+  };
+  svgedit.history.RemoveElementCommand.prototype.elements = function() {
+    return[this.elem]
+  };
+  svgedit.history.ChangeElementCommand = function(elem, attrs, text) {
+    this.elem = elem;
+    this.text = text ? "Change " + elem.tagName + " " + text : "Change " + elem.tagName;
+    this.newValues = {};
+    this.oldValues = attrs;
+    var attr;
+    for(attr in attrs) {
+      if(attr == "#text") {
+        this.newValues[attr] = elem.textContent
+      }else {
+        if(attr == "#href") {
+          this.newValues[attr] = svgedit.utilities.getHref(elem)
+        }else {
+          this.newValues[attr] = elem.getAttribute(attr)
+        }
+      }
+    }
+  };
+  svgedit.history.ChangeElementCommand.type = function() {
+    return"svgedit.history.ChangeElementCommand"
+  };
+  svgedit.history.ChangeElementCommand.prototype.type = svgedit.history.ChangeElementCommand.type;
+  svgedit.history.ChangeElementCommand.prototype.getText = function() {
+    return this.text
+  };
+  svgedit.history.ChangeElementCommand.prototype.apply = function(handler) {
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_APPLY, this)
+    }
+    var bChangedTransform = false;
+    var attr;
+    for(attr in this.newValues) {
+      if(this.newValues[attr]) {
+        if(attr == "#text") {
+          this.elem.textContent = this.newValues[attr]
+        }else {
+          if(attr == "#href") {
+            svgedit.utilities.setHref(this.elem, this.newValues[attr])
+          }else {
+            this.elem.setAttribute(attr, this.newValues[attr])
+          }
+        }
+      }else {
+        if(attr == "#text") {
+          this.elem.textContent = ""
+        }else {
+          this.elem.setAttribute(attr, "");
+          this.elem.removeAttribute(attr)
+        }
+      }
+      if(attr == "transform") {
+        bChangedTransform = true
+      }
+    }
+    if(!bChangedTransform) {
+      var angle = svgedit.utilities.getRotationAngle(this.elem);
+      if(angle) {
+        var bbox = elem.getBBox();
+        var cx = bbox.x + bbox.width / 2, cy = bbox.y + bbox.height / 2;
+        var rotate = ["rotate(", angle, " ", cx, ",", cy, ")"].join("");
+        if(rotate != elem.getAttribute("transform")) {
+          elem.setAttribute("transform", rotate)
+        }
+      }
+    }
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_APPLY, this)
+    }
+    return true
+  };
+  svgedit.history.ChangeElementCommand.prototype.unapply = function(handler) {
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_UNAPPLY, this)
+    }
+    var bChangedTransform = false;
+    var attr;
+    for(attr in this.oldValues) {
+      if(this.oldValues[attr]) {
+        if(attr == "#text") {
+          this.elem.textContent = this.oldValues[attr]
+        }else {
+          if(attr == "#href") {
+            svgedit.utilities.setHref(this.elem, this.oldValues[attr])
+          }else {
+            this.elem.setAttribute(attr, this.oldValues[attr])
+          }
+        }
+      }else {
+        if(attr == "#text") {
+          this.elem.textContent = ""
+        }else {
+          this.elem.removeAttribute(attr)
+        }
+      }
+      if(attr == "transform") {
+        bChangedTransform = true
+      }
+    }
+    if(!bChangedTransform) {
+      var angle = svgedit.utilities.getRotationAngle(this.elem);
+      if(angle) {
+        var bbox = elem.getBBox();
+        var cx = bbox.x + bbox.width / 2, cy = bbox.y + bbox.height / 2;
+        var rotate = ["rotate(", angle, " ", cx, ",", cy, ")"].join("");
+        if(rotate != elem.getAttribute("transform")) {
+          elem.setAttribute("transform", rotate)
+        }
+      }
+    }
+    svgedit.transformlist.removeElementFromListMap(this.elem);
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_UNAPPLY, this)
+    }
+    return true
+  };
+  svgedit.history.ChangeElementCommand.prototype.elements = function() {
+    return[this.elem]
+  };
+  svgedit.history.BatchCommand = function(text) {
+    this.text = text || "Batch Command";
+    this.stack = []
+  };
+  svgedit.history.BatchCommand.type = function() {
+    return"svgedit.history.BatchCommand"
+  };
+  svgedit.history.BatchCommand.prototype.type = svgedit.history.BatchCommand.type;
+  svgedit.history.BatchCommand.prototype.getText = function() {
+    return this.text
+  };
+  svgedit.history.BatchCommand.prototype.apply = function(handler) {
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_APPLY, this)
+    }
+    var i, len = this.stack.length;
+    for(i = 0;i < len;++i) {
+      this.stack[i].apply(handler)
+    }
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_APPLY, this)
+    }
+  };
+  svgedit.history.BatchCommand.prototype.unapply = function(handler) {
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.BEFORE_UNAPPLY, this)
+    }
+    var i;
+    for(i = this.stack.length - 1;i >= 0;i--) {
+      this.stack[i].unapply(handler)
+    }
+    if(handler) {
+      handler.handleHistoryEvent(svgedit.history.HistoryEventTypes.AFTER_UNAPPLY, this)
+    }
+  };
+  svgedit.history.BatchCommand.prototype.elements = function() {
+    var elems = [];
+    var cmd = this.stack.length;
+    while(cmd--) {
+      var thisElems = this.stack[cmd].elements();
+      var elem = thisElems.length;
+      while(elem--) {
+        if(elems.indexOf(thisElems[elem]) == -1) {
+          elems.push(thisElems[elem])
+        }
+      }
+    }
+    return elems
+  };
+  svgedit.history.BatchCommand.prototype.addSubCommand = function(cmd) {
+    this.stack.push(cmd)
+  };
+  svgedit.history.BatchCommand.prototype.isEmpty = function() {
+    return this.stack.length === 0
+  };
+  svgedit.history.UndoManager = function(historyEventHandler) {
+    this.handler_ = historyEventHandler || null;
+    this.undoStackPointer = 0;
+    this.undoStack = [];
+    this.undoChangeStackPointer = -1;
+    this.undoableChangeStack = []
+  };
+  svgedit.history.UndoManager.prototype.resetUndoStack = function() {
+    this.undoStack = [];
+    this.undoStackPointer = 0
+  };
+  svgedit.history.UndoManager.prototype.getUndoStackSize = function() {
+    return this.undoStackPointer
+  };
+  svgedit.history.UndoManager.prototype.getRedoStackSize = function() {
+    return this.undoStack.length - this.undoStackPointer
+  };
+  svgedit.history.UndoManager.prototype.getNextUndoCommandText = function() {
+    return this.undoStackPointer > 0 ? this.undoStack[this.undoStackPointer - 1].getText() : ""
+  };
+  svgedit.history.UndoManager.prototype.getNextRedoCommandText = function() {
+    return this.undoStackPointer < this.undoStack.length ? this.undoStack[this.undoStackPointer].getText() : ""
+  };
+  svgedit.history.UndoManager.prototype.undo = function() {
+    if(this.undoStackPointer > 0) {
+      var cmd = this.undoStack[--this.undoStackPointer];
+      cmd.unapply(this.handler_)
+    }
+  };
+  svgedit.history.UndoManager.prototype.redo = function() {
+    if(this.undoStackPointer < this.undoStack.length && this.undoStack.length > 0) {
+      var cmd = this.undoStack[this.undoStackPointer++];
+      cmd.apply(this.handler_)
+    }
+  };
+  svgedit.history.UndoManager.prototype.addCommandToHistory = function(cmd) {
+    if(this.undoStackPointer < this.undoStack.length && this.undoStack.length > 0) {
+      this.undoStack = this.undoStack.splice(0, this.undoStackPointer)
+    }
+    this.undoStack.push(cmd);
+    this.undoStackPointer = this.undoStack.length
+  };
+  svgedit.history.UndoManager.prototype.beginUndoableChange = function(attrName, elems) {
+    var p = ++this.undoChangeStackPointer;
+    var i = elems.length;
+    var oldValues = new Array(i), elements = new Array(i);
+    while(i--) {
+      var elem = elems[i];
+      if(elem == null) {
+        continue
+      }
+      elements[i] = elem;
+      oldValues[i] = elem.getAttribute(attrName)
+    }
+    this.undoableChangeStack[p] = {attrName:attrName, oldValues:oldValues, elements:elements}
+  };
+  svgedit.history.UndoManager.prototype.finishUndoableChange = function() {
+    var p = this.undoChangeStackPointer--;
+    var changeset = this.undoableChangeStack[p];
+    var i = changeset.elements.length;
+    var attrName = changeset.attrName;
+    var batchCmd = new svgedit.history.BatchCommand("Change " + attrName);
+    while(i--) {
+      var elem = changeset.elements[i];
+      if(elem == null) {
+        continue
+      }
+      var changes = {};
+      changes[attrName] = changeset.oldValues[i];
+      if(changes[attrName] != elem.getAttribute(attrName)) {
+        batchCmd.addSubCommand(new svgedit.history.ChangeElementCommand(elem, changes, attrName))
+      }
+    }
+    this.undoableChangeStack[p] = null;
+    return batchCmd
+  }
+})();(function() {
+  if(!svgedit.history) {
+    svgedit.history = {}
+  }
+  var history = svgedit.history;
+  var HistoryRecordingService = history.HistoryRecordingService = function(undoManager) {
+    this.undoManager_ = undoManager;
+    this.currentBatchCommand_ = null;
+    this.batchCommandStack_ = []
+  };
+  HistoryRecordingService.NO_HISTORY = new HistoryRecordingService;
+  HistoryRecordingService.prototype.startBatchCommand = function(text) {
+    if(!this.undoManager_) {
+      return this
+    }
+    this.currentBatchCommand_ = new history.BatchCommand(text);
+    this.batchCommandStack_.push(this.currentBatchCommand_);
+    return this
+  };
+  HistoryRecordingService.prototype.endBatchCommand = function() {
+    if(!this.undoManager_) {
+      return this
+    }
+    if(this.currentBatchCommand_) {
+      var batchCommand = this.currentBatchCommand_;
+      this.batchCommandStack_.pop();
+      var length = this.batchCommandStack_.length;
+      this.currentBatchCommand_ = length ? this.batchCommandStack_[length - 1] : null;
+      this.addCommand_(batchCommand)
+    }
+    return this
+  };
+  HistoryRecordingService.prototype.moveElement = function(elem, oldNextSibling, oldParent, text) {
+    if(!this.undoManager_) {
+      return this
+    }
+    this.addCommand_(new history.MoveElementCommand(elem, oldNextSibling, oldParent, text));
+    return this
+  };
+  HistoryRecordingService.prototype.insertElement = function(elem, text) {
+    if(!this.undoManager_) {
+      return this
+    }
+    this.addCommand_(new history.InsertElementCommand(elem, text));
+    return this
+  };
+  HistoryRecordingService.prototype.removeElement = function(elem, oldNextSibling, oldParent, text) {
+    if(!this.undoManager_) {
+      return this
+    }
+    this.addCommand_(new history.RemoveElementCommand(elem, oldNextSibling, oldParent, text));
+    return this
+  };
+  HistoryRecordingService.prototype.changeElement = function(elem, attrs, text) {
+    if(!this.undoManager_) {
+      return this
+    }
+    this.addCommand_(new history.ChangeElementCommand(elem, attrs, text));
+    return this
+  };
+  HistoryRecordingService.prototype.addCommand_ = function(cmd) {
+    if(!this.undoManager_) {
+      return this
+    }
+    if(this.currentBatchCommand_) {
+      this.currentBatchCommand_.addSubCommand(cmd)
+    }else {
+      this.undoManager_.addCommandToHistory(cmd)
+    }
+  }
+})();var svgedit = svgedit || {};
+(function() {
+  if(!svgedit.coords) {
+    svgedit.coords = {}
+  }
+  var pathMap = [0, "z", "M", "m", "L", "l", "C", "c", "Q", "q", "A", "a", "H", "h", "V", "v", "S", "s", "T", "t"];
+  var editorContext_ = null;
+  svgedit.coords.init = function(editorContext) {
+    editorContext_ = editorContext
+  };
+  svgedit.coords.remapElement = function(selected, changes, m) {
+    var i, type, remap = function(x, y) {
+      return svgedit.math.transformPoint(x, y, m)
+    }, scalew = function(w) {
+      return m.a * w
+    }, scaleh = function(h) {
+      return m.d * h
+    }, doSnapping = editorContext_.getGridSnapping() && selected.parentNode.parentNode.localName === "svg", finishUp = function() {
+      var o;
+      if(doSnapping) {
+        for(o in changes) {
+          changes[o] = svgedit.utilities.snapToGrid(changes[o])
+        }
+      }
+      svgedit.utilities.assignAttributes(selected, changes, 1E3, true)
+    }, box = svgedit.utilities.getBBox(selected);
+    for(i = 0;i < 2;i++) {
+      type = i === 0 ? "fill" : "stroke";
+      var attrVal = selected.getAttribute(type);
+      if(attrVal && attrVal.indexOf("url(") === 0) {
+        if(m.a < 0 || m.d < 0) {
+          var grad = svgedit.utilities.getRefElem(attrVal);
+          var newgrad = grad.cloneNode(true);
+          if(m.a < 0) {
+            var x1 = newgrad.getAttribute("x1");
+            var x2 = newgrad.getAttribute("x2");
+            newgrad.setAttribute("x1", -(x1 - 1));
+            newgrad.setAttribute("x2", -(x2 - 1))
+          }
+          if(m.d < 0) {
+            var y1 = newgrad.getAttribute("y1");
+            var y2 = newgrad.getAttribute("y2");
+            newgrad.setAttribute("y1", -(y1 - 1));
+            newgrad.setAttribute("y2", -(y2 - 1))
+          }
+          newgrad.id = editorContext_.getDrawing().getNextId();
+          svgedit.utilities.findDefs().appendChild(newgrad);
+          selected.setAttribute(type, "url(#" + newgrad.id + ")")
+        }
+      }
+    }
+    var elName = selected.tagName;
+    var chlist, mt;
+    if(elName === "g" || elName === "text" || elName == "tspan" || elName === "use") {
+      if(m.a == 1 && m.b == 0 && m.c == 0 && m.d == 1 && (m.e != 0 || m.f != 0)) {
+        var existing = svgedit.math.transformListToTransform(selected).matrix, t_new = svgedit.math.matrixMultiply(existing.inverse(), m, existing);
+        changes.x = parseFloat(changes.x) + t_new.e;
+        changes.y = parseFloat(changes.y) + t_new.f
+      }else {
+        chlist = svgedit.transformlist.getTransformList(selected);
+        mt = svgroot.createSVGTransform();
+        mt.setMatrix(svgedit.math.matrixMultiply(svgedit.math.transformListToTransform(chlist).matrix, m));
+        chlist.clear();
+        chlist.appendItem(mt)
+      }
+    }
+    var c, pt, pt1, pt2, len;
+    switch(elName) {
+      case "foreignObject":
+      ;
+      case "rect":
+      ;
+      case "image":
+        if(elName === "image" && (m.a < 0 || m.d < 0)) {
+          chlist = svgedit.transformlist.getTransformList(selected);
+          mt = svgroot.createSVGTransform();
+          mt.setMatrix(svgedit.math.matrixMultiply(svgedit.math.transformListToTransform(chlist).matrix, m));
+          chlist.clear();
+          chlist.appendItem(mt)
+        }else {
+          pt1 = remap(changes.x, changes.y);
+          changes.width = scalew(changes.width);
+          changes.height = scaleh(changes.height);
+          changes.x = pt1.x + Math.min(0, changes.width);
+          changes.y = pt1.y + Math.min(0, changes.height);
+          changes.width = Math.abs(changes.width);
+          changes.height = Math.abs(changes.height)
+        }
+        finishUp();
+        break;
+      case "ellipse":
+        c = remap(changes.cx, changes.cy);
+        changes.cx = c.x;
+        changes.cy = c.y;
+        changes.rx = scalew(changes.rx);
+        changes.ry = scaleh(changes.ry);
+        changes.rx = Math.abs(changes.rx);
+        changes.ry = Math.abs(changes.ry);
+        finishUp();
+        break;
+      case "circle":
+        c = remap(changes.cx, changes.cy);
+        changes.cx = c.x;
+        changes.cy = c.y;
+        var tbox = svgedit.math.transformBox(box.x, box.y, box.width, box.height, m);
+        var w = tbox.tr.x - tbox.tl.x, h = tbox.bl.y - tbox.tl.y;
+        changes.r = Math.min(w / 2, h / 2);
+        if(changes.r) {
+          changes.r = Math.abs(changes.r)
+        }
+        finishUp();
+        break;
+      case "line":
+        pt1 = remap(changes.x1, changes.y1);
+        pt2 = remap(changes.x2, changes.y2);
+        changes.x1 = pt1.x;
+        changes.y1 = pt1.y;
+        changes.x2 = pt2.x;
+        changes.y2 = pt2.y;
+      case "text":
+      ;
+      case "tspan":
+      ;
+      case "use":
+        finishUp();
+        break;
+      case "g":
+        var gsvg = $(selected).data("gsvg");
+        if(gsvg) {
+          svgedit.utilities.assignAttributes(gsvg, changes, 1E3, true)
+        }
+        break;
+      case "polyline":
+      ;
+      case "polygon":
+        len = changes.points.length;
+        for(i = 0;i < len;++i) {
+          pt = changes.points[i];
+          pt = remap(pt.x, pt.y);
+          changes.points[i].x = pt.x;
+          changes.points[i].y = pt.y
+        }
+        len = changes.points.length;
+        var pstr = "";
+        for(i = 0;i < len;++i) {
+          pt = changes.points[i];
+          pstr += pt.x + "," + pt.y + " "
+        }
+        selected.setAttribute("points", pstr);
+        break;
+      case "path":
+        var seg;
+        var segList = selected.pathSegList;
+        len = segList.numberOfItems;
+        changes.d = [];
+        for(i = 0;i < len;++i) {
+          seg = segList.getItem(i);
+          changes.d[i] = {type:seg.pathSegType, x:seg.x, y:seg.y, x1:seg.x1, y1:seg.y1, x2:seg.x2, y2:seg.y2, r1:seg.r1, r2:seg.r2, angle:seg.angle, largeArcFlag:seg.largeArcFlag, sweepFlag:seg.sweepFlag}
+        }
+        len = changes.d.length;
+        var firstseg = changes.d[0], currentpt = remap(firstseg.x, firstseg.y);
+        changes.d[0].x = currentpt.x;
+        changes.d[0].y = currentpt.y;
+        for(i = 1;i < len;++i) {
+          seg = changes.d[i];
+          type = seg.type;
+          if(type % 2 == 0) {
+            var thisx = seg.x != undefined ? seg.x : currentpt.x, thisy = seg.y != undefined ? seg.y : currentpt.y;
+            pt = remap(thisx, thisy);
+            pt1 = remap(seg.x1, seg.y1);
+            pt2 = remap(seg.x2, seg.y2);
+            seg.x = pt.x;
+            seg.y = pt.y;
+            seg.x1 = pt1.x;
+            seg.y1 = pt1.y;
+            seg.x2 = pt2.x;
+            seg.y2 = pt2.y;
+            seg.r1 = scalew(seg.r1);
+            seg.r2 = scaleh(seg.r2)
+          }else {
+            seg.x = scalew(seg.x);
+            seg.y = scaleh(seg.y);
+            seg.x1 = scalew(seg.x1);
+            seg.y1 = scaleh(seg.y1);
+            seg.x2 = scalew(seg.x2);
+            seg.y2 = scaleh(seg.y2);
+            seg.r1 = scalew(seg.r1);
+            seg.r2 = scaleh(seg.r2)
+          }
+        }
+        var dstr = "";
+        len = changes.d.length;
+        for(i = 0;i < len;++i) {
+          seg = changes.d[i];
+          type = seg.type;
+          dstr += pathMap[type];
+          switch(type) {
+            case 13:
+            ;
+            case 12:
+              dstr += seg.x + " ";
+              break;
+            case 15:
+            ;
+            case 14:
+              dstr += seg.y + " ";
+              break;
+            case 3:
+            ;
+            case 5:
+            ;
+            case 19:
+            ;
+            case 2:
+            ;
+            case 4:
+            ;
+            case 18:
+              dstr += seg.x + "," + seg.y + " ";
+              break;
+            case 7:
+            ;
+            case 6:
+              dstr += seg.x1 + "," + seg.y1 + " " + seg.x2 + "," + seg.y2 + " " + seg.x + "," + seg.y + " ";
+              break;
+            case 9:
+            ;
+            case 8:
+              dstr += seg.x1 + "," + seg.y1 + " " + seg.x + "," + seg.y + " ";
+              break;
+            case 11:
+            ;
+            case 10:
+              dstr += seg.r1 + "," + seg.r2 + " " + seg.angle + " " + +seg.largeArcFlag + " " + +seg.sweepFlag + " " + seg.x + "," + seg.y + " ";
+              break;
+            case 17:
+            ;
+            case 16:
+              dstr += seg.x2 + "," + seg.y2 + " " + seg.x + "," + seg.y + " ";
+              break
+          }
+        }
+        selected.setAttribute("d", dstr);
+        break
+    }
+  }
+})();var svgedit = svgedit || {};
+(function() {
+  if(!svgedit.recalculate) {
+    svgedit.recalculate = {}
+  }
+  var NS = svgedit.NS;
+  var context_;
+  svgedit.recalculate.init = function(editorContext) {
+    context_ = editorContext
+  };
+  svgedit.recalculate.updateClipPath = function(attr, tx, ty) {
+    var path = getRefElem(attr).firstChild;
+    var cp_xform = svgedit.transformlist.getTransformList(path);
+    var newxlate = context_.getSVGRoot().createSVGTransform();
+    newxlate.setTranslate(tx, ty);
+    cp_xform.appendItem(newxlate);
+    svgedit.recalculate.recalculateDimensions(path)
+  };
+  svgedit.recalculate.recalculateDimensions = function(selected) {
+    if(selected == null) {
+      return null
+    }
+    if(selected.nodeName == "svg" && navigator.userAgent.indexOf("Firefox/20") >= 0) {
+      return null
+    }
+    var svgroot = context_.getSVGRoot();
+    var tlist = svgedit.transformlist.getTransformList(selected);
+    var k;
+    if(tlist && tlist.numberOfItems > 0) {
+      k = tlist.numberOfItems;
+      while(k--) {
+        var xform = tlist.getItem(k);
+        if(xform.type === 0) {
+          tlist.removeItem(k)
+        }else {
+          if(xform.type === 1) {
+            if(svgedit.math.isIdentity(xform.matrix)) {
+              tlist.removeItem(k)
+            }
+          }else {
+            if(xform.type === 4) {
+              if(xform.angle === 0) {
+                tlist.removeItem(k)
+              }
+            }
+          }
+        }
+      }
+      if(tlist.numberOfItems === 1 && svgedit.utilities.getRotationAngle(selected)) {
+        return null
+      }
+    }
+    if(!tlist || tlist.numberOfItems == 0) {
+      selected.setAttribute("transform", "");
+      selected.removeAttribute("transform");
+      return null
+    }
+    if(tlist) {
+      k = tlist.numberOfItems;
+      var mxs = [];
+      while(k--) {
+        var xform = tlist.getItem(k);
+        if(xform.type === 1) {
+          mxs.push([xform.matrix, k])
+        }else {
+          if(mxs.length) {
+            mxs = []
+          }
+        }
+      }
+      if(mxs.length === 2) {
+        var m_new = svgroot.createSVGTransformFromMatrix(svgedit.math.matrixMultiply(mxs[1][0], mxs[0][0]));
+        tlist.removeItem(mxs[0][1]);
+        tlist.removeItem(mxs[1][1]);
+        tlist.insertItemBefore(m_new, mxs[1][1])
+      }
+      k = tlist.numberOfItems;
+      if(k >= 2 && tlist.getItem(k - 2).type === 1 && tlist.getItem(k - 1).type === 2) {
+        var mt = svgroot.createSVGTransform();
+        var m = svgedit.math.matrixMultiply(tlist.getItem(k - 2).matrix, tlist.getItem(k - 1).matrix);
+        mt.setMatrix(m);
+        tlist.removeItem(k - 2);
+        tlist.removeItem(k - 2);
+        tlist.appendItem(mt)
+      }
+    }
+    switch(selected.tagName) {
+      case "line":
+      ;
+      case "polyline":
+      ;
+      case "polygon":
+      ;
+      case "path":
+        break;
+      default:
+        if(tlist.numberOfItems === 1 && tlist.getItem(0).type === 1 || tlist.numberOfItems === 2 && tlist.getItem(0).type === 1 && tlist.getItem(0).type === 4) {
+          return null
+        }
+    }
+    var gsvg = $(selected).data("gsvg");
+    var batchCmd = new svgedit.history.BatchCommand("Transform");
+    var changes = {}, initial = null, attrs = [];
+    switch(selected.tagName) {
+      case "line":
+        attrs = ["x1", "y1", "x2", "y2"];
+        break;
+      case "circle":
+        attrs = ["cx", "cy", "r"];
+        break;
+      case "ellipse":
+        attrs = ["cx", "cy", "rx", "ry"];
+        break;
+      case "foreignObject":
+      ;
+      case "rect":
+      ;
+      case "image":
+        attrs = ["width", "height", "x", "y"];
+        break;
+      case "use":
+      ;
+      case "text":
+      ;
+      case "tspan":
+        attrs = ["x", "y"];
+        break;
+      case "polygon":
+      ;
+      case "polyline":
+        initial = {};
+        initial.points = selected.getAttribute("points");
+        var list = selected.points;
+        var len = list.numberOfItems;
+        changes.points = new Array(len);
+        var i;
+        for(i = 0;i < len;++i) {
+          var pt = list.getItem(i);
+          changes.points[i] = {x:pt.x, y:pt.y}
+        }
+        break;
+      case "path":
+        initial = {};
+        initial.d = selected.getAttribute("d");
+        changes.d = selected.getAttribute("d");
+        break
+    }
+    if(attrs.length) {
+      changes = $(selected).attr(attrs);
+      $.each(changes, function(attr, val) {
+        changes[attr] = svgedit.units.convertToNum(attr, val)
+      })
+    }else {
+      if(gsvg) {
+        changes = {x:$(gsvg).attr("x") || 0, y:$(gsvg).attr("y") || 0}
+      }
+    }
+    if(initial == null) {
+      initial = $.extend(true, {}, changes);
+      $.each(initial, function(attr, val) {
+        initial[attr] = svgedit.units.convertToNum(attr, val)
+      })
+    }
+    initial.transform = context_.getStartTransform() || "";
+    if(selected.tagName == "g" && !gsvg || selected.tagName == "a") {
+      var box = svgedit.utilities.getBBox(selected), oldcenter = {x:box.x + box.width / 2, y:box.y + box.height / 2}, newcenter = svgedit.math.transformPoint(box.x + box.width / 2, box.y + box.height / 2, svgedit.math.transformListToTransform(tlist).matrix), m = svgroot.createSVGMatrix();
+      var gangle = svgedit.utilities.getRotationAngle(selected);
+      if(gangle) {
+        var a = gangle * Math.PI / 180;
+        if(Math.abs(a) > 1.0E-10) {
+          var s = Math.sin(a) / (1 - Math.cos(a))
+        }else {
+          var s = 2 / a
+        }
+        var i;
+        for(i = 0;i < tlist.numberOfItems;++i) {
+          var xform = tlist.getItem(i);
+          if(xform.type == 4) {
+            var rm = xform.matrix;
+            oldcenter.y = (s * rm.e + rm.f) / 2;
+            oldcenter.x = (rm.e - s * rm.f) / 2;
+            tlist.removeItem(i);
+            break
+          }
+        }
+      }
+      var tx = 0, ty = 0, operation = 0, N = tlist.numberOfItems;
+      if(N) {
+        var first_m = tlist.getItem(0).matrix
+      }
+      if(N >= 3 && tlist.getItem(N - 2).type == 3 && tlist.getItem(N - 3).type == 2 && tlist.getItem(N - 1).type == 2) {
+        operation = 3;
+        var tm = tlist.getItem(N - 3).matrix, sm = tlist.getItem(N - 2).matrix, tmn = tlist.getItem(N - 1).matrix;
+        var children = selected.childNodes;
+        var c = children.length;
+        while(c--) {
+          var child = children.item(c);
+          tx = 0;
+          ty = 0;
+          if(child.nodeType == 1) {
+            var childTlist = svgedit.transformlist.getTransformList(child);
+            if(!childTlist) {
+              continue
+            }
+            var m = svgedit.math.transformListToTransform(childTlist).matrix;
+            var angle = svgedit.utilities.getRotationAngle(child);
+            var oldStartTransform = context_.getStartTransform();
+            var childxforms = [];
+            context_.setStartTransform(child.getAttribute("transform"));
+            if(angle || svgedit.math.hasMatrixTransform(childTlist)) {
+              var e2t = svgroot.createSVGTransform();
+              e2t.setMatrix(svgedit.math.matrixMultiply(tm, sm, tmn, m));
+              childTlist.clear();
+              childTlist.appendItem(e2t);
+              childxforms.push(e2t)
+            }else {
+              var t2n = svgedit.math.matrixMultiply(m.inverse(), tmn, m);
+              var t2 = svgroot.createSVGMatrix();
+              t2.e = -t2n.e;
+              t2.f = -t2n.f;
+              var s2 = svgedit.math.matrixMultiply(t2.inverse(), m.inverse(), tm, sm, tmn, m, t2n.inverse());
+              var translateOrigin = svgroot.createSVGTransform(), scale = svgroot.createSVGTransform(), translateBack = svgroot.createSVGTransform();
+              translateOrigin.setTranslate(t2n.e, t2n.f);
+              scale.setScale(s2.a, s2.d);
+              translateBack.setTranslate(t2.e, t2.f);
+              childTlist.appendItem(translateBack);
+              childTlist.appendItem(scale);
+              childTlist.appendItem(translateOrigin);
+              childxforms.push(translateBack);
+              childxforms.push(scale);
+              childxforms.push(translateOrigin)
+            }
+            batchCmd.addSubCommand(svgedit.recalculate.recalculateDimensions(child));
+            context_.setStartTransform(oldStartTransform)
+          }
+        }
+        tlist.removeItem(N - 1);
+        tlist.removeItem(N - 2);
+        tlist.removeItem(N - 3)
+      }else {
+        if(N >= 3 && tlist.getItem(N - 1).type == 1) {
+          operation = 3;
+          m = svgedit.math.transformListToTransform(tlist).matrix;
+          var e2t = svgroot.createSVGTransform();
+          e2t.setMatrix(m);
+          tlist.clear();
+          tlist.appendItem(e2t)
+        }else {
+          if((N == 1 || N > 1 && tlist.getItem(1).type != 3) && tlist.getItem(0).type == 2) {
+            operation = 2;
+            var T_M = svgedit.math.transformListToTransform(tlist).matrix;
+            tlist.removeItem(0);
+            var M_inv = svgedit.math.transformListToTransform(tlist).matrix.inverse();
+            var M2 = svgedit.math.matrixMultiply(M_inv, T_M);
+            tx = M2.e;
+            ty = M2.f;
+            if(tx != 0 || ty != 0) {
+              var children = selected.childNodes;
+              var c = children.length;
+              var clipPaths_done = [];
+              while(c--) {
+                var child = children.item(c);
+                if(child.nodeType == 1) {
+                  if(child.getAttribute("clip-path")) {
+                    var attr = child.getAttribute("clip-path");
+                    if(clipPaths_done.indexOf(attr) === -1) {
+                      svgedit.recalculate.updateClipPath(attr, tx, ty);
+                      clipPaths_done.push(attr)
+                    }
+                  }
+                  var oldStartTransform = context_.getStartTransform();
+                  context_.setStartTransform(child.getAttribute("transform"));
+                  var childTlist = svgedit.transformlist.getTransformList(child);
+                  if(childTlist) {
+                    var newxlate = svgroot.createSVGTransform();
+                    newxlate.setTranslate(tx, ty);
+                    if(childTlist.numberOfItems) {
+                      childTlist.insertItemBefore(newxlate, 0)
+                    }else {
+                      childTlist.appendItem(newxlate)
+                    }
+                    batchCmd.addSubCommand(svgedit.recalculate.recalculateDimensions(child));
+                    var uses = selected.getElementsByTagNameNS(NS.SVG, "use");
+                    var href = "#" + child.id;
+                    var u = uses.length;
+                    while(u--) {
+                      var useElem = uses.item(u);
+                      if(href == svgedit.utilities.getHref(useElem)) {
+                        var usexlate = svgroot.createSVGTransform();
+                        usexlate.setTranslate(-tx, -ty);
+                        svgedit.transformlist.getTransformList(useElem).insertItemBefore(usexlate, 0);
+                        batchCmd.addSubCommand(svgedit.recalculate.recalculateDimensions(useElem))
+                      }
+                    }
+                    context_.setStartTransform(oldStartTransform)
+                  }
+                }
+              }
+              clipPaths_done = [];
+              context_.setStartTransform(oldStartTransform)
+            }
+          }else {
+            if(N == 1 && tlist.getItem(0).type == 1 && !gangle) {
+              operation = 1;
+              var m = tlist.getItem(0).matrix, children = selected.childNodes, c = children.length;
+              while(c--) {
+                var child = children.item(c);
+                if(child.nodeType == 1) {
+                  var oldStartTransform = context_.getStartTransform();
+                  context_.setStartTransform(child.getAttribute("transform"));
+                  var childTlist = svgedit.transformlist.getTransformList(child);
+                  if(!childTlist) {
+                    continue
+                  }
+                  var em = svgedit.math.matrixMultiply(m, svgedit.math.transformListToTransform(childTlist).matrix);
+                  var e2m = svgroot.createSVGTransform();
+                  e2m.setMatrix(em);
+                  childTlist.clear();
+                  childTlist.appendItem(e2m, 0);
+                  batchCmd.addSubCommand(svgedit.recalculate.recalculateDimensions(child));
+                  context_.setStartTransform(oldStartTransform);
+                  var sw = child.getAttribute("stroke-width");
+                  if(child.getAttribute("stroke") !== "none" && !isNaN(sw)) {
+                    var avg = (Math.abs(em.a) + Math.abs(em.d)) / 2;
+                    child.setAttribute("stroke-width", sw * avg)
+                  }
+                }
+              }
+              tlist.clear()
+            }else {
+              if(gangle) {
+                var newRot = svgroot.createSVGTransform();
+                newRot.setRotate(gangle, newcenter.x, newcenter.y);
+                if(tlist.numberOfItems) {
+                  tlist.insertItemBefore(newRot, 0)
+                }else {
+                  tlist.appendItem(newRot)
+                }
+              }
+              if(tlist.numberOfItems == 0) {
+                selected.removeAttribute("transform")
+              }
+              return null
+            }
+          }
+        }
+      }
+      if(operation == 2) {
+        if(gangle) {
+          newcenter = {x:oldcenter.x + first_m.e, y:oldcenter.y + first_m.f};
+          var newRot = svgroot.createSVGTransform();
+          newRot.setRotate(gangle, newcenter.x, newcenter.y);
+          if(tlist.numberOfItems) {
+            tlist.insertItemBefore(newRot, 0)
+          }else {
+            tlist.appendItem(newRot)
+          }
+        }
+      }else {
+        if(operation == 3) {
+          var m = svgedit.math.transformListToTransform(tlist).matrix;
+          var roldt = svgroot.createSVGTransform();
+          roldt.setRotate(gangle, oldcenter.x, oldcenter.y);
+          var rold = roldt.matrix;
+          var rnew = svgroot.createSVGTransform();
+          rnew.setRotate(gangle, newcenter.x, newcenter.y);
+          var rnew_inv = rnew.matrix.inverse(), m_inv = m.inverse(), extrat = svgedit.math.matrixMultiply(m_inv, rnew_inv, rold, m);
+          tx = extrat.e;
+          ty = extrat.f;
+          if(tx != 0 || ty != 0) {
+            var children = selected.childNodes;
+            var c = children.length;
+            while(c--) {
+              var child = children.item(c);
+              if(child.nodeType == 1) {
+                var oldStartTransform = context_.getStartTransform();
+                context_.setStartTransform(child.getAttribute("transform"));
+                var childTlist = svgedit.transformlist.getTransformList(child);
+                var newxlate = svgroot.createSVGTransform();
+                newxlate.setTranslate(tx, ty);
+                if(childTlist.numberOfItems) {
+                  childTlist.insertItemBefore(newxlate, 0)
+                }else {
+                  childTlist.appendItem(newxlate)
+                }
+                batchCmd.addSubCommand(svgedit.recalculate.recalculateDimensions(child));
+                context_.setStartTransform(oldStartTransform)
+              }
+            }
+          }
+          if(gangle) {
+            if(tlist.numberOfItems) {
+              tlist.insertItemBefore(rnew, 0)
+            }else {
+              tlist.appendItem(rnew)
+            }
+          }
+        }
+      }
+    }else {
+      var box = svgedit.utilities.getBBox(selected);
+      if(!box && selected.tagName != "path") {
+        return null
+      }
+      var m = svgroot.createSVGMatrix(), angle = svgedit.utilities.getRotationAngle(selected);
+      if(angle) {
+        var oldcenter = {x:box.x + box.width / 2, y:box.y + box.height / 2}, newcenter = svgedit.math.transformPoint(box.x + box.width / 2, box.y + box.height / 2, svgedit.math.transformListToTransform(tlist).matrix);
+        var a = angle * Math.PI / 180;
+        if(Math.abs(a) > 1.0E-10) {
+          var s = Math.sin(a) / (1 - Math.cos(a))
+        }else {
+          var s = 2 / a
+        }
+        for(var i = 0;i < tlist.numberOfItems;++i) {
+          var xform = tlist.getItem(i);
+          if(xform.type == 4) {
+            var rm = xform.matrix;
+            oldcenter.y = (s * rm.e + rm.f) / 2;
+            oldcenter.x = (rm.e - s * rm.f) / 2;
+            tlist.removeItem(i);
+            break
+          }
+        }
+      }
+      var operation = 0;
+      var N = tlist.numberOfItems;
+      if(!svgedit.browser.isWebkit()) {
+        var fill = selected.getAttribute("fill");
+        if(fill && fill.indexOf("url(") === 0) {
+          var paint = getRefElem(fill);
+          var type = "pattern";
+          if(paint.tagName !== type) {
+            type = "gradient"
+          }
+          var attrVal = paint.getAttribute(type + "Units");
+          if(attrVal === "userSpaceOnUse") {
+            m = svgedit.math.transformListToTransform(tlist).matrix;
+            var gtlist = svgedit.transformlist.getTransformList(paint);
+            var gmatrix = svgedit.math.transformListToTransform(gtlist).matrix;
+            m = svgedit.math.matrixMultiply(m, gmatrix);
+            var m_str = "matrix(" + [m.a, m.b, m.c, m.d, m.e, m.f].join(",") + ")";
+            paint.setAttribute(type + "Transform", m_str)
+          }
+        }
+      }
+      if(N >= 3 && tlist.getItem(N - 2).type == 3 && tlist.getItem(N - 3).type == 2 && tlist.getItem(N - 1).type == 2) {
+        operation = 3;
+        m = svgedit.math.transformListToTransform(tlist, N - 3, N - 1).matrix;
+        tlist.removeItem(N - 1);
+        tlist.removeItem(N - 2);
+        tlist.removeItem(N - 3)
+      }else {
+        if(N == 4 && tlist.getItem(N - 1).type == 1) {
+          operation = 3;
+          m = svgedit.math.transformListToTransform(tlist).matrix;
+          var e2t = svgroot.createSVGTransform();
+          e2t.setMatrix(m);
+          tlist.clear();
+          tlist.appendItem(e2t);
+          m = svgroot.createSVGMatrix()
+        }else {
+          if((N == 1 || N > 1 && tlist.getItem(1).type != 3) && tlist.getItem(0).type == 2) {
+            operation = 2;
+            var oldxlate = tlist.getItem(0).matrix, meq = svgedit.math.transformListToTransform(tlist, 1).matrix, meq_inv = meq.inverse();
+            m = svgedit.math.matrixMultiply(meq_inv, oldxlate, meq);
+            tlist.removeItem(0)
+          }else {
+            if(N == 1 && tlist.getItem(0).type == 1 && !angle) {
+              m = svgedit.math.transformListToTransform(tlist).matrix;
+              switch(selected.tagName) {
+                case "line":
+                  changes = $(selected).attr(["x1", "y1", "x2", "y2"]);
+                case "polyline":
+                ;
+                case "polygon":
+                  changes.points = selected.getAttribute("points");
+                  if(changes.points) {
+                    var list = selected.points;
+                    var len = list.numberOfItems;
+                    changes.points = new Array(len);
+                    for(var i = 0;i < len;++i) {
+                      var pt = list.getItem(i);
+                      changes.points[i] = {x:pt.x, y:pt.y}
+                    }
+                  }
+                ;
+                case "path":
+                  changes.d = selected.getAttribute("d");
+                  operation = 1;
+                  tlist.clear();
+                  break;
+                default:
+                  break
+              }
+            }else {
+              operation = 4;
+              if(angle) {
+                var newRot = svgroot.createSVGTransform();
+                newRot.setRotate(angle, newcenter.x, newcenter.y);
+                if(tlist.numberOfItems) {
+                  tlist.insertItemBefore(newRot, 0)
+                }else {
+                  tlist.appendItem(newRot)
+                }
+              }
+              if(tlist.numberOfItems == 0) {
+                selected.removeAttribute("transform")
+              }
+              return null
+            }
+          }
+        }
+      }
+      if(operation == 1 || operation == 2 || operation == 3) {
+        svgedit.coords.remapElement(selected, changes, m)
+      }
+      if(operation == 2) {
+        if(angle) {
+          if(!svgedit.math.hasMatrixTransform(tlist)) {
+            newcenter = {x:oldcenter.x + m.e, y:oldcenter.y + m.f}
+          }
+          var newRot = svgroot.createSVGTransform();
+          newRot.setRotate(angle, newcenter.x, newcenter.y);
+          if(tlist.numberOfItems) {
+            tlist.insertItemBefore(newRot, 0)
+          }else {
+            tlist.appendItem(newRot)
+          }
+        }
+        if(selected.tagName == "text") {
+          var children = selected.childNodes;
+          var c = children.length;
+          while(c--) {
+            var child = children.item(c);
+            if(child.tagName == "tspan") {
+              var tspanChanges = {x:$(child).attr("x") || 0, y:$(child).attr("y") || 0};
+              svgedit.coords.remapElement(child, tspanChanges, m)
+            }
+          }
+        }
+      }else {
+        if(operation == 3 && angle) {
+          var m = svgedit.math.transformListToTransform(tlist).matrix;
+          var roldt = svgroot.createSVGTransform();
+          roldt.setRotate(angle, oldcenter.x, oldcenter.y);
+          var rold = roldt.matrix;
+          var rnew = svgroot.createSVGTransform();
+          rnew.setRotate(angle, newcenter.x, newcenter.y);
+          var rnew_inv = rnew.matrix.inverse();
+          var m_inv = m.inverse();
+          var extrat = svgedit.math.matrixMultiply(m_inv, rnew_inv, rold, m);
+          svgedit.coords.remapElement(selected, changes, extrat);
+          if(angle) {
+            if(tlist.numberOfItems) {
+              tlist.insertItemBefore(rnew, 0)
+            }else {
+              tlist.appendItem(rnew)
+            }
+          }
+        }
+      }
+    }
+    if(tlist.numberOfItems == 0) {
+      selected.removeAttribute("transform")
+    }
+    batchCmd.addSubCommand(new svgedit.history.ChangeElementCommand(selected, initial));
+    return batchCmd
+  }
+})();(function() {
+  if(!svgedit.select) {
+    svgedit.select = {}
+  }
+  var svgFactory_;
+  var config_;
+  var selectorManager_;
+  var gripRadius = svgedit.browser.isTouch() ? 10 : 4;
+  svgedit.select.Selector = function(id, elem, bbox) {
+    this.id = id;
+    this.selectedElement = elem;
+    this.locked = true;
+    this.selectorGroup = svgFactory_.createSVGElement({element:"g", attr:{id:"selectorGroup" + this.id}});
+    this.selectorRect = this.selectorGroup.appendChild(svgFactory_.createSVGElement({element:"path", attr:{id:"selectedBox" + this.id, fill:"none", stroke:"#22C", "stroke-width":"1", "stroke-dasharray":"5,5", style:"pointer-events:none"}}));
+    this.gripCoords = {nw:null, n:null, ne:null, e:null, se:null, s:null, sw:null, w:null};
+    this.reset(this.selectedElement, bbox)
+  };
+  svgedit.select.Selector.prototype.reset = function(e, bbox) {
+    this.locked = true;
+    this.selectedElement = e;
+    this.resize(bbox);
+    this.selectorGroup.setAttribute("display", "inline")
+  };
+  svgedit.select.Selector.prototype.updateGripCursors = function(angle) {
+    var dir, dir_arr = [], steps = Math.round(angle / 45);
+    if(steps < 0) {
+      steps += 8
+    }
+    for(dir in selectorManager_.selectorGrips) {
+      dir_arr.push(dir)
+    }
+    while(steps > 0) {
+      dir_arr.push(dir_arr.shift());
+      steps--
+    }
+    var i = 0;
+    for(dir in selectorManager_.selectorGrips) {
+      selectorManager_.selectorGrips[dir].setAttribute("style", "cursor:" + dir_arr[i] + "-resize");
+      i++
+    }
+  };
+  svgedit.select.Selector.prototype.showGrips = function(show) {
+    var bShow = show ? "inline" : "none";
+    selectorManager_.selectorGripsGroup.setAttribute("display", bShow);
+    var elem = this.selectedElement;
+    this.hasGrips = show;
+    if(elem && show) {
+      this.selectorGroup.appendChild(selectorManager_.selectorGripsGroup);
+      this.updateGripCursors(svgedit.utilities.getRotationAngle(elem))
+    }
+  };
+  svgedit.select.Selector.prototype.resize = function(bbox) {
+    var selectedBox = this.selectorRect, mgr = selectorManager_, selectedGrips = mgr.selectorGrips, selected = this.selectedElement, sw = selected.getAttribute("stroke-width"), current_zoom = svgFactory_.currentZoom();
+    var offset = 1 / current_zoom;
+    if(selected.getAttribute("stroke") !== "none" && !isNaN(sw)) {
+      offset += sw / 2
+    }
+    var tagName = selected.tagName;
+    if(tagName === "text") {
+      offset += 2 / current_zoom
+    }
+    var tlist = svgedit.transformlist.getTransformList(selected);
+    var m = svgedit.math.transformListToTransform(tlist).matrix;
+    m.e *= current_zoom;
+    m.f *= current_zoom;
+    if(!bbox) {
+      bbox = svgedit.utilities.getBBox(selected)
+    }
+    if(tagName === "g" && !$.data(selected, "gsvg")) {
+      var stroked_bbox = svgFactory_.getStrokedBBox(selected.childNodes);
+      if(stroked_bbox) {
+        bbox = stroked_bbox
+      }
+    }
+    var l = bbox.x, t = bbox.y, w = bbox.width, h = bbox.height;
+    bbox = {x:l, y:t, width:w, height:h};
+    offset *= current_zoom;
+    var nbox = svgedit.math.transformBox(l * current_zoom, t * current_zoom, w * current_zoom, h * current_zoom, m), aabox = nbox.aabox, nbax = aabox.x - offset, nbay = aabox.y - offset, nbaw = aabox.width + offset * 2, nbah = aabox.height + offset * 2;
+    var cx = nbax + nbaw / 2, cy = nbay + nbah / 2;
+    var angle = svgedit.utilities.getRotationAngle(selected);
+    if(angle) {
+      var rot = svgFactory_.svgRoot().createSVGTransform();
+      rot.setRotate(-angle, cx, cy);
+      var rotm = rot.matrix;
+      nbox.tl = svgedit.math.transformPoint(nbox.tl.x, nbox.tl.y, rotm);
+      nbox.tr = svgedit.math.transformPoint(nbox.tr.x, nbox.tr.y, rotm);
+      nbox.bl = svgedit.math.transformPoint(nbox.bl.x, nbox.bl.y, rotm);
+      nbox.br = svgedit.math.transformPoint(nbox.br.x, nbox.br.y, rotm);
+      var tl = nbox.tl;
+      var minx = tl.x, miny = tl.y, maxx = tl.x, maxy = tl.y;
+      var min = Math.min, max = Math.max;
+      minx = min(minx, min(nbox.tr.x, min(nbox.bl.x, nbox.br.x))) - offset;
+      miny = min(miny, min(nbox.tr.y, min(nbox.bl.y, nbox.br.y))) - offset;
+      maxx = max(maxx, max(nbox.tr.x, max(nbox.bl.x, nbox.br.x))) + offset;
+      maxy = max(maxy, max(nbox.tr.y, max(nbox.bl.y, nbox.br.y))) + offset;
+      nbax = minx;
+      nbay = miny;
+      nbaw = maxx - minx;
+      nbah = maxy - miny
+    }
+    var dstr = "M" + nbax + "," + nbay + " L" + (nbax + nbaw) + "," + nbay + " " + (nbax + nbaw) + "," + (nbay + nbah) + " " + nbax + "," + (nbay + nbah) + "z";
+    selectedBox.setAttribute("d", dstr);
+    var xform = angle ? "rotate(" + [angle, cx, cy].join(",") + ")" : "";
+    this.selectorGroup.setAttribute("transform", xform);
+    this.gripCoords = {nw:[nbax, nbay], ne:[nbax + nbaw, nbay], sw:[nbax, nbay + nbah], se:[nbax + nbaw, nbay + nbah], n:[nbax + nbaw / 2, nbay], w:[nbax, nbay + nbah / 2], e:[nbax + nbaw, nbay + nbah / 2], s:[nbax + nbaw / 2, nbay + nbah]};
+    var dir;
+    for(dir in this.gripCoords) {
+      var coords = this.gripCoords[dir];
+      selectedGrips[dir].setAttribute("cx", coords[0]);
+      selectedGrips[dir].setAttribute("cy", coords[1])
+    }
+    mgr.rotateGripConnector.setAttribute("x1", nbax + nbaw / 2);
+    mgr.rotateGripConnector.setAttribute("y1", nbay);
+    mgr.rotateGripConnector.setAttribute("x2", nbax + nbaw / 2);
+    mgr.rotateGripConnector.setAttribute("y2", nbay - gripRadius * 5);
+    mgr.rotateGrip.setAttribute("cx", nbax + nbaw / 2);
+    mgr.rotateGrip.setAttribute("cy", nbay - gripRadius * 5)
+  };
+  svgedit.select.SelectorManager = function() {
+    this.selectorParentGroup = null;
+    this.rubberBandBox = null;
+    this.selectors = [];
+    this.selectorMap = {};
+    this.selectorGrips = {nw:null, n:null, ne:null, e:null, se:null, s:null, sw:null, w:null};
+    this.selectorGripsGroup = null;
+    this.rotateGripConnector = null;
+    this.rotateGrip = null;
+    this.initGroup()
+  };
+  svgedit.select.SelectorManager.prototype.initGroup = function() {
+    if(this.selectorParentGroup && this.selectorParentGroup.parentNode) {
+      this.selectorParentGroup.parentNode.removeChild(this.selectorParentGroup)
+    }
+    this.selectorParentGroup = svgFactory_.createSVGElement({element:"g", attr:{id:"selectorParentGroup"}});
+    this.selectorGripsGroup = svgFactory_.createSVGElement({element:"g", attr:{display:"none"}});
+    this.selectorParentGroup.appendChild(this.selectorGripsGroup);
+    svgFactory_.svgRoot().appendChild(this.selectorParentGroup);
+    this.selectorMap = {};
+    this.selectors = [];
+    this.rubberBandBox = null;
+    var dir;
+    for(dir in this.selectorGrips) {
+      var grip = svgFactory_.createSVGElement({element:"circle", attr:{id:"selectorGrip_resize_" + dir, fill:"#22C", r:gripRadius, style:"cursor:" + dir + "-resize", "stroke-width":2, "pointer-events":"all"}});
+      $.data(grip, "dir", dir);
+      $.data(grip, "type", "resize");
+      this.selectorGrips[dir] = this.selectorGripsGroup.appendChild(grip)
+    }
+    this.rotateGripConnector = this.selectorGripsGroup.appendChild(svgFactory_.createSVGElement({element:"line", attr:{id:"selectorGrip_rotateconnector", stroke:"#22C", "stroke-width":"1"}}));
+    this.rotateGrip = this.selectorGripsGroup.appendChild(svgFactory_.createSVGElement({element:"circle", attr:{id:"selectorGrip_rotate", fill:"lime", r:gripRadius, stroke:"#22C", "stroke-width":2, style:"cursor:url(" + config_.imgPath + "rotate.png) 12 12, auto;"}}));
+    $.data(this.rotateGrip, "type", "rotate");
+    if($("#canvasBackground").length) {
+      return
+    }
+    var dims = config_.dimensions;
+    var canvasbg = svgFactory_.createSVGElement({element:"svg", attr:{id:"canvasBackground", width:dims[0], height:dims[1], x:0, y:0, overflow:svgedit.browser.isWebkit() ? "none" : "visible", style:"pointer-events:none"}});
+    var rect = svgFactory_.createSVGElement({element:"rect", attr:{width:"100%", height:"100%", x:0, y:0, "stroke-width":1, stroke:"#000", fill:"#FFF", style:"pointer-events:none"}});
+    canvasbg.appendChild(rect);
+    svgFactory_.svgRoot().insertBefore(canvasbg, svgFactory_.svgContent())
+  };
+  svgedit.select.SelectorManager.prototype.requestSelector = function(elem, bbox) {
+    if(elem == null) {
+      return null
+    }
+    var i, N = this.selectors.length;
+    if(typeof this.selectorMap[elem.id] == "object") {
+      this.selectorMap[elem.id].locked = true;
+      return this.selectorMap[elem.id]
+    }
+    for(i = 0;i < N;++i) {
+      if(this.selectors[i] && !this.selectors[i].locked) {
+        this.selectors[i].locked = true;
+        this.selectors[i].reset(elem, bbox);
+        this.selectorMap[elem.id] = this.selectors[i];
+        return this.selectors[i]
+      }
+    }
+    this.selectors[N] = new svgedit.select.Selector(N, elem, bbox);
+    this.selectorParentGroup.appendChild(this.selectors[N].selectorGroup);
+    this.selectorMap[elem.id] = this.selectors[N];
+    return this.selectors[N]
+  };
+  svgedit.select.SelectorManager.prototype.releaseSelector = function(elem) {
+    if(elem == null) {
+      return
+    }
+    var i, N = this.selectors.length, sel = this.selectorMap[elem.id];
+    if(!sel.locked) {
+      console.log("WARNING! selector was released but was already unlocked")
+    }
+    for(i = 0;i < N;++i) {
+      if(this.selectors[i] && this.selectors[i] == sel) {
+        delete this.selectorMap[elem.id];
+        sel.locked = false;
+        sel.selectedElement = null;
+        sel.showGrips(false);
+        try {
+          sel.selectorGroup.setAttribute("display", "none")
+        }catch(e) {
+        }
+        break
+      }
+    }
+  };
+  svgedit.select.SelectorManager.prototype.getRubberBandBox = function() {
+    if(!this.rubberBandBox) {
+      this.rubberBandBox = this.selectorParentGroup.appendChild(svgFactory_.createSVGElement({element:"rect", attr:{id:"selectorRubberBand", fill:"#22C", "fill-opacity":0.15, stroke:"#22C", "stroke-width":0.5, display:"none", style:"pointer-events:none"}}))
+    }
+    return this.rubberBandBox
+  };
+  svgedit.select.init = function(config, svgFactory) {
+    config_ = config;
+    svgFactory_ = svgFactory;
+    selectorManager_ = new svgedit.select.SelectorManager
+  };
+  svgedit.select.getSelectorManager = function() {
+    return selectorManager_
+  }
+})();(function() {
+  if(!svgedit.draw) {
+    svgedit.draw = {}
+  }
+  var NS = svgedit.NS;
+  var visElems = "a,circle,ellipse,foreignObject,g,image,line,path,polygon,polyline,rect,svg,text,tspan,use".split(",");
+  var RandomizeModes = {LET_DOCUMENT_DECIDE:0, ALWAYS_RANDOMIZE:1, NEVER_RANDOMIZE:2};
+  var randomize_ids = RandomizeModes.LET_DOCUMENT_DECIDE;
+  svgedit.draw.randomizeIds = function(enableRandomization, currentDrawing) {
+    randomize_ids = enableRandomization === false ? RandomizeModes.NEVER_RANDOMIZE : RandomizeModes.ALWAYS_RANDOMIZE;
+    if(randomize_ids == RandomizeModes.ALWAYS_RANDOMIZE && !currentDrawing.getNonce()) {
+      currentDrawing.setNonce(Math.floor(Math.random() * 100001))
+    }else {
+      if(randomize_ids == RandomizeModes.NEVER_RANDOMIZE && currentDrawing.getNonce()) {
+        currentDrawing.clearNonce()
+      }
+    }
+  };
+  svgedit.draw.Drawing = function(svgElem, opt_idPrefix) {
+    if(!svgElem || !svgElem.tagName || !svgElem.namespaceURI || svgElem.tagName != "svg" || svgElem.namespaceURI != NS.SVG) {
+      throw"Error: svgedit.draw.Drawing instance initialized without a <svg> element";
+    }
+    this.svgElem_ = svgElem;
+    this.obj_num = 0;
+    this.idPrefix = opt_idPrefix || "svg_";
+    this.releasedNums = [];
+    this.all_layers = [];
+    this.layer_map = {};
+    this.current_layer = null;
+    this.nonce_ = "";
+    var n = this.svgElem_.getAttributeNS(NS.SE, "nonce");
+    if(!!n && randomize_ids != RandomizeModes.NEVER_RANDOMIZE) {
+      this.nonce_ = n
+    }else {
+      if(randomize_ids == RandomizeModes.ALWAYS_RANDOMIZE) {
+        this.setNonce(Math.floor(Math.random() * 100001))
+      }
+    }
+  };
+  svgedit.draw.Drawing.prototype.getElem_ = function(id) {
+    if(this.svgElem_.querySelector) {
+      return this.svgElem_.querySelector("#" + id)
+    }
+    return $(this.svgElem_).find("[id=" + id + "]")[0]
+  };
+  svgedit.draw.Drawing.prototype.getSvgElem = function() {
+    return this.svgElem_
+  };
+  svgedit.draw.Drawing.prototype.getNonce = function() {
+    return this.nonce_
+  };
+  svgedit.draw.Drawing.prototype.setNonce = function(n) {
+    this.svgElem_.setAttributeNS(NS.XMLNS, "xmlns:se", NS.SE);
+    this.svgElem_.setAttributeNS(NS.SE, "se:nonce", n);
+    this.nonce_ = n
+  };
+  svgedit.draw.Drawing.prototype.clearNonce = function() {
+    this.nonce_ = ""
+  };
+  svgedit.draw.Drawing.prototype.getId = function() {
+    return this.nonce_ ? this.idPrefix + this.nonce_ + "_" + this.obj_num : this.idPrefix + this.obj_num
+  };
+  svgedit.draw.Drawing.prototype.getNextId = function() {
+    var oldObjNum = this.obj_num;
+    var restoreOldObjNum = false;
+    if(this.releasedNums.length > 0) {
+      this.obj_num = this.releasedNums.pop();
+      restoreOldObjNum = true
+    }else {
+      this.obj_num++
+    }
+    var id = this.getId();
+    while(this.getElem_(id)) {
+      if(restoreOldObjNum) {
+        this.obj_num = oldObjNum;
+        restoreOldObjNum = false
+      }
+      this.obj_num++;
+      id = this.getId()
+    }
+    if(restoreOldObjNum) {
+      this.obj_num = oldObjNum
+    }
+    return id
+  };
+  svgedit.draw.Drawing.prototype.releaseId = function(id) {
+    var front = this.idPrefix + (this.nonce_ ? this.nonce_ + "_" : "");
+    if(typeof id !== "string" || id.indexOf(front) !== 0) {
+      return false
+    }
+    var num = parseInt(id.substr(front.length), 10);
+    if(typeof num !== "number" || num <= 0 || this.releasedNums.indexOf(num) != -1) {
+      return false
+    }
+    this.releasedNums.push(num);
+    return true
+  };
+  svgedit.draw.Drawing.prototype.getNumLayers = function() {
+    return this.all_layers.length
+  };
+  svgedit.draw.Drawing.prototype.hasLayer = function(name) {
+    return this.layer_map[name] !== undefined
+  };
+  svgedit.draw.Drawing.prototype.getLayerName = function(i) {
+    return i >= 0 && i < this.getNumLayers() ? this.all_layers[i].getName() : ""
+  };
+  svgedit.draw.Drawing.prototype.getCurrentLayer = function() {
+    return this.current_layer ? this.current_layer.getGroup() : null
+  };
+  svgedit.draw.Drawing.prototype.getLayerByName = function(name) {
+    var layer = this.layer_map[name];
+    return layer ? layer.getGroup() : null
+  };
+  svgedit.draw.Drawing.prototype.getCurrentLayerName = function() {
+    return this.current_layer ? this.current_layer.getName() : ""
+  };
+  svgedit.draw.Drawing.prototype.setCurrentLayerName = function(name, hrService) {
+    var finalName = null;
+    if(this.current_layer) {
+      var oldName = this.current_layer.getName();
+      finalName = this.current_layer.setName(name, hrService);
+      if(finalName) {
+        delete this.layer_map[oldName];
+        this.layer_map[finalName] = this.current_layer
+      }
+    }
+    return finalName
+  };
+  svgedit.draw.Drawing.prototype.setCurrentLayerPosition = function(newpos) {
+    var layer_count = this.getNumLayers();
+    if(!this.current_layer || newpos < 0 || newpos >= layer_count) {
+      return null
+    }
+    var oldpos;
+    for(oldpos = 0;oldpos < layer_count;++oldpos) {
+      if(this.all_layers[oldpos] == this.current_layer) {
+        break
+      }
+    }
+    if(oldpos == layer_count) {
+      return null
+    }
+    if(oldpos != newpos) {
+      var refGroup = null;
+      var current_group = this.current_layer.getGroup();
+      var oldNextSibling = current_group.nextSibling;
+      if(newpos > oldpos) {
+        if(newpos < layer_count - 1) {
+          refGroup = this.all_layers[newpos + 1].getGroup()
+        }
+      }else {
+        refGroup = this.all_layers[newpos].getGroup()
+      }
+      this.svgElem_.insertBefore(current_group, refGroup);
+      this.identifyLayers();
+      this.setCurrentLayer(this.getLayerName(newpos));
+      return{currentGroup:current_group, oldNextSibling:oldNextSibling}
+    }
+    return null
+  };
+  svgedit.draw.Drawing.prototype.mergeLayer = function(hrService) {
+    var current_group = this.current_layer.getGroup();
+    var prevGroup = $(current_group).prev()[0];
+    if(!prevGroup) {
+      return
+    }
+    hrService.startBatchCommand("Merge Layer");
+    var layerNextSibling = current_group.nextSibling;
+    hrService.removeElement(current_group, layerNextSibling, this.svgElem_);
+    while(current_group.firstChild) {
+      var child = current_group.firstChild;
+      if(child.localName == "title") {
+        hrService.removeElement(child, child.nextSibling, current_group);
+        current_group.removeChild(child);
+        continue
+      }
+      var oldNextSibling = child.nextSibling;
+      prevGroup.appendChild(child);
+      hrService.moveElement(child, oldNextSibling, current_group)
+    }
+    this.current_layer.removeGroup();
+    var index = this.all_layers.indexOf(this.current_layer);
+    if(index > 0) {
+      var name = this.current_layer.getName();
+      this.current_layer = this.all_layers[index - 1];
+      this.all_layers.splice(index, 1);
+      delete this.layer_map[name]
+    }
+    hrService.endBatchCommand()
+  };
+  svgedit.draw.Drawing.prototype.mergeAllLayers = function(hrService) {
+    this.current_layer = this.all_layers[this.all_layers.length - 1];
+    hrService.startBatchCommand("Merge all Layers");
+    while(this.all_layers.length > 1) {
+      this.mergeLayer(hrService)
+    }
+    hrService.endBatchCommand()
+  };
+  svgedit.draw.Drawing.prototype.setCurrentLayer = function(name) {
+    var layer = this.layer_map[name];
+    if(layer) {
+      if(this.current_layer) {
+        this.current_layer.deactivate()
+      }
+      this.current_layer = layer;
+      this.current_layer.activate();
+      return true
+    }
+    return false
+  };
+  svgedit.draw.Drawing.prototype.deleteCurrentLayer = function() {
+    if(this.current_layer && this.getNumLayers() > 1) {
+      var oldLayerGroup = this.current_layer.removeGroup();
+      this.identifyLayers();
+      return oldLayerGroup
+    }
+    return null
+  };
+  function findLayerNameInGroup(group) {
+    var name = $("title", group).text();
+    if(!name && svgedit.browser.isOpera() && group.querySelectorAll) {
+      name = $(group.querySelectorAll("title")).text()
+    }
+    return name
+  }
+  function getNewLayerName(existingLayerNames) {
+    var i = 1;
+    while(existingLayerNames.indexOf("Layer " + i) >= 0) {
+      i++
+    }
+    return"Layer " + i
+  }
+  svgedit.draw.Drawing.prototype.identifyLayers = function() {
+    this.all_layers = [];
+    this.layer_map = {};
+    var numchildren = this.svgElem_.childNodes.length;
+    var orphans = [], layernames = [];
+    var layer = null;
+    var childgroups = false;
+    for(var i = 0;i < numchildren;++i) {
+      var child = this.svgElem_.childNodes.item(i);
+      if(child && child.nodeType == 1) {
+        if(child.tagName == "g") {
+          childgroups = true;
+          var name = findLayerNameInGroup(child);
+          if(name) {
+            layernames.push(name);
+            layer = new svgedit.draw.Layer(name, child);
+            this.all_layers.push(layer);
+            this.layer_map[name] = layer
+          }else {
+            orphans.push(child)
+          }
+        }else {
+          if(~visElems.indexOf(child.nodeName)) {
+            orphans.push(child)
+          }
+        }
+      }
+    }
+    if(orphans.length > 0 || !childgroups) {
+      layer = new svgedit.draw.Layer(getNewLayerName(layernames), null, this.svgElem_);
+      layer.appendChildren(orphans);
+      this.all_layers.push(layer);
+      this.layer_map[name] = layer
+    }else {
+      layer.activate()
+    }
+    this.current_layer = layer
+  };
+  svgedit.draw.Drawing.prototype.createLayer = function(name, hrService) {
+    if(this.current_layer) {
+      this.current_layer.deactivate()
+    }
+    if(name === undefined || name === null || name === "" || this.layer_map[name]) {
+      name = getNewLayerName(Object.keys(this.layer_map))
+    }
+    var layer = new svgedit.draw.Layer(name, null, this.svgElem_);
+    if(hrService) {
+      hrService.startBatchCommand("Create Layer");
+      hrService.insertElement(layer.getGroup());
+      hrService.endBatchCommand()
+    }
+    this.all_layers.push(layer);
+    this.layer_map[name] = layer;
+    this.current_layer = layer;
+    return layer.getGroup()
+  };
+  svgedit.draw.Drawing.prototype.cloneLayer = function(name, hrService) {
+    if(!this.current_layer) {
+      return null
+    }
+    this.current_layer.deactivate();
+    if(name === undefined || name === null || name === "" || this.layer_map[name]) {
+      name = getNewLayerName(Object.keys(this.layer_map))
+    }
+    var currentGroup = this.current_layer.getGroup();
+    var layer = new svgedit.draw.Layer(name, currentGroup, this.svgElem_);
+    var group = layer.getGroup();
+    var children = currentGroup.childNodes;
+    var index;
+    for(index = 0;index < children.length;index++) {
+      var ch = children[index];
+      if(ch.localName == "title") {
+        continue
+      }
+      group.appendChild(this.copyElem(ch))
+    }
+    if(hrService) {
+      hrService.startBatchCommand("Duplicate Layer");
+      hrService.insertElement(group);
+      hrService.endBatchCommand()
+    }
+    index = this.all_layers.indexOf(this.current_layer);
+    if(index >= 0) {
+      this.all_layers.splice(index + 1, 0, layer)
+    }else {
+      this.all_layers.push(layer)
+    }
+    this.layer_map[name] = layer;
+    this.current_layer = layer;
+    return group
+  };
+  svgedit.draw.Drawing.prototype.getLayerVisibility = function(layername) {
+    var layer = this.layer_map[layername];
+    return layer ? layer.isVisible() : false
+  };
+  svgedit.draw.Drawing.prototype.setLayerVisibility = function(layername, bVisible) {
+    if(typeof bVisible !== "boolean") {
+      return null
+    }
+    var layer = this.layer_map[layername];
+    if(!layer) {
+      return null
+    }
+    layer.setVisible(bVisible);
+    return layer.getGroup()
+  };
+  svgedit.draw.Drawing.prototype.getLayerOpacity = function(layername) {
+    var layer = this.layer_map[layername];
+    if(!layer) {
+      return null
+    }
+    return layer.getOpacity()
+  };
+  svgedit.draw.Drawing.prototype.setLayerOpacity = function(layername, opacity) {
+    if(typeof opacity !== "number" || opacity < 0 || opacity > 1) {
+      return
+    }
+    var layer = this.layer_map[layername];
+    if(layer) {
+      layer.setOpacity(opacity)
+    }
+  };
+  svgedit.draw.Drawing.prototype.copyElem = function(el) {
+    var self = this;
+    var getNextIdClosure = function() {
+      return self.getNextId()
+    };
+    return svgedit.utilities.copyElem(el, getNextIdClosure)
+  }
+})();(function() {
+  if(!svgedit.draw) {
+    svgedit.draw = {}
+  }
+  var NS = svgedit.NS;
+  var Layer = svgedit.draw.Layer = function(name, group, svgElem) {
+    this.name_ = name;
+    this.group_ = svgElem ? null : group;
+    if(svgElem) {
+      var svgdoc = svgElem.ownerDocument;
+      this.group_ = svgdoc.createElementNS(NS.SVG, "g");
+      var layer_title = svgdoc.createElementNS(NS.SVG, "title");
+      layer_title.textContent = name;
+      this.group_.appendChild(layer_title);
+      if(group) {
+        $(group).after(this.group_)
+      }else {
+        svgElem.appendChild(this.group_)
+      }
+    }
+    addLayerClass(this.group_);
+    svgedit.utilities.walkTree(this.group_, function(e) {
+      e.setAttribute("style", "pointer-events:inherit")
+    });
+    this.group_.setAttribute("style", svgElem ? "pointer-events:all" : "pointer-events:none")
+  };
+  Layer.CLASS_NAME = "layer";
+  Layer.CLASS_REGEX = new RegExp("(\\s|^)" + Layer.CLASS_NAME + "(\\s|$)");
+  Layer.prototype.getName = function() {
+    return this.name_
+  };
+  Layer.prototype.getGroup = function() {
+    return this.group_
+  };
+  Layer.prototype.activate = function() {
+    this.group_.setAttribute("style", "pointer-events:all")
+  };
+  Layer.prototype.deactivate = function() {
+    this.group_.setAttribute("style", "pointer-events:none")
+  };
+  Layer.prototype.setVisible = function(visible) {
+    var expected = visible === undefined || visible ? "inline" : "none";
+    var oldDisplay = this.group_.getAttribute("display");
+    if(oldDisplay !== expected) {
+      this.group_.setAttribute("display", expected)
+    }
+  };
+  Layer.prototype.isVisible = function() {
+    return this.group_.getAttribute("display") !== "none"
+  };
+  Layer.prototype.getOpacity = function() {
+    var opacity = this.group_.getAttribute("opacity");
+    if(opacity === null || opacity === undefined) {
+      return 1
+    }
+    return parseFloat(opacity)
+  };
+  Layer.prototype.setOpacity = function(opacity) {
+    if(typeof opacity === "number" && opacity >= 0 && opacity <= 1) {
+      this.group_.setAttribute("opacity", opacity)
+    }
+  };
+  Layer.prototype.appendChildren = function(children) {
+    for(var i = 0;i < children.length;++i) {
+      this.group_.appendChild(children[i])
+    }
+  };
+  Layer.prototype.getTitleElement = function() {
+    var len = this.group_.childNodes.length;
+    for(var i = 0;i < len;++i) {
+      var child = this.group_.childNodes.item(i);
+      if(child && child.tagName === "title") {
+        return child
+      }
+    }
+    return null
+  };
+  Layer.prototype.setName = function(name, hrService) {
+    var previousName = this.name_;
+    name = svgedit.utilities.toXml(name);
+    var title = this.getTitleElement();
+    if(title) {
+      while(title.firstChild) {
+        title.removeChild(title.firstChild)
+      }
+      title.textContent = name;
+      this.name_ = name;
+      if(hrService) {
+        hrService.changeElement(title, {"#text":previousName})
+      }
+      return this.name_
+    }
+    return null
+  };
+  Layer.prototype.removeGroup = function() {
+    var parent = this.group_.parentNode;
+    var group = parent.removeChild(this.group_);
+    this.group_ = undefined;
+    return group
+  };
+  function addLayerClass(elem) {
+    var classes = elem.getAttribute("class");
+    if(classes === null || classes === undefined || classes.length === 0) {
+      elem.setAttribute("class", Layer.CLASS_NAME)
+    }else {
+      if(!Layer.CLASS_REGEX.test(classes)) {
+        elem.setAttribute("class", classes + " " + Layer.CLASS_NAME)
+      }
+    }
+  }
+})();(function() {
+  if(!svgedit.path) {
+    svgedit.path = {}
+  }
+  var NS = svgedit.NS;
+  var uiStrings = {pathNodeTooltip:"Drag node to move it. Double-click node to change segment type", pathCtrlPtTooltip:"Drag control point to adjust curve properties"};
+  var segData = {2:["x", "y"], 4:["x", "y"], 6:["x", "y", "x1", "y1", "x2", "y2"], 8:["x", "y", "x1", "y1"], 10:["x", "y", "r1", "r2", "angle", "largeArcFlag", "sweepFlag"], 12:["x"], 14:["y"], 16:["x", "y", "x2", "y2"], 18:["x", "y"]};
+  var pathFuncs = [];
+  var link_control_pts = true;
+  var pathData = {};
+  svgedit.path.setLinkControlPoints = function(lcp) {
+    link_control_pts = lcp
+  };
+  svgedit.path.path = null;
+  var editorContext_ = null;
+  svgedit.path.init = function(editorContext) {
+    editorContext_ = editorContext;
+    pathFuncs = [0, "ClosePath"];
+    var pathFuncsStrs = ["Moveto", "Lineto", "CurvetoCubic", "CurvetoQuadratic", "Arc", "LinetoHorizontal", "LinetoVertical", "CurvetoCubicSmooth", "CurvetoQuadraticSmooth"];
+    $.each(pathFuncsStrs, function(i, s) {
+      pathFuncs.push(s + "Abs");
+      pathFuncs.push(s + "Rel")
+    })
+  };
+  svgedit.path.insertItemBefore = function(elem, newseg, index) {
+    var list = elem.pathSegList;
+    if(svgedit.browser.supportsPathInsertItemBefore()) {
+      list.insertItemBefore(newseg, index);
+      return
+    }
+    var len = list.numberOfItems;
+    var arr = [];
+    var i;
+    for(i = 0;i < len;i++) {
+      var cur_seg = list.getItem(i);
+      arr.push(cur_seg)
+    }
+    list.clear();
+    for(i = 0;i < len;i++) {
+      if(i == index) {
+        list.appendItem(newseg)
+      }
+      list.appendItem(arr[i])
+    }
+  };
+  svgedit.path.ptObjToArr = function(type, seg_item) {
+    var arr = segData[type], len = arr.length;
+    var i, out = [];
+    for(i = 0;i < len;i++) {
+      out[i] = seg_item[arr[i]]
+    }
+    return out
+  };
+  svgedit.path.getGripPt = function(seg, alt_pt) {
+    var out = {x:alt_pt ? alt_pt.x : seg.item.x, y:alt_pt ? alt_pt.y : seg.item.y}, path = seg.path;
+    if(path.matrix) {
+      var pt = svgedit.math.transformPoint(out.x, out.y, path.matrix);
+      out = pt
+    }
+    out.x *= editorContext_.getCurrentZoom();
+    out.y *= editorContext_.getCurrentZoom();
+    return out
+  };
+  svgedit.path.getPointFromGrip = function(pt, path) {
+    var out = {x:pt.x, y:pt.y};
+    if(path.matrix) {
+      pt = svgedit.math.transformPoint(out.x, out.y, path.imatrix);
+      out.x = pt.x;
+      out.y = pt.y
+    }
+    out.x /= editorContext_.getCurrentZoom();
+    out.y /= editorContext_.getCurrentZoom();
+    return out
+  };
+  svgedit.path.addPointGrip = function(index, x, y) {
+    var pointGripContainer = svgedit.path.getGripContainer();
+    var pointGrip = svgedit.utilities.getElem("pathpointgrip_" + index);
+    if(!pointGrip) {
+      pointGrip = document.createElementNS(NS.SVG, "circle");
+      svgedit.utilities.assignAttributes(pointGrip, {id:"pathpointgrip_" + index, display:"none", r:4, fill:"#0FF", stroke:"#00F", "stroke-width":2, cursor:"move", style:"pointer-events:all", "xlink:title":uiStrings.pathNodeTooltip});
+      pointGrip = pointGripContainer.appendChild(pointGrip);
+      var grip = $("#pathpointgrip_" + index);
+      grip.dblclick(function() {
+        if(svgedit.path.path) {
+          svgedit.path.path.setSegType()
+        }
+      })
+    }
+    if(x && y) {
+      svgedit.utilities.assignAttributes(pointGrip, {cx:x, cy:y, display:"inline"})
+    }
+    return pointGrip
+  };
+  svgedit.path.getGripContainer = function() {
+    var c = svgedit.utilities.getElem("pathpointgrip_container");
+    if(!c) {
+      var parent = svgedit.utilities.getElem("selectorParentGroup");
+      c = parent.appendChild(document.createElementNS(NS.SVG, "g"));
+      c.id = "pathpointgrip_container"
+    }
+    return c
+  };
+  svgedit.path.addCtrlGrip = function(id) {
+    var pointGrip = svgedit.utilities.getElem("ctrlpointgrip_" + id);
+    if(pointGrip) {
+      return pointGrip
+    }
+    pointGrip = document.createElementNS(NS.SVG, "circle");
+    svgedit.utilities.assignAttributes(pointGrip, {id:"ctrlpointgrip_" + id, display:"none", r:4, fill:"#0FF", stroke:"#55F", "stroke-width":1, cursor:"move", style:"pointer-events:all", "xlink:title":uiStrings.pathCtrlPtTooltip});
+    svgedit.path.getGripContainer().appendChild(pointGrip);
+    return pointGrip
+  };
+  svgedit.path.getCtrlLine = function(id) {
+    var ctrlLine = svgedit.utilities.getElem("ctrlLine_" + id);
+    if(ctrlLine) {
+      return ctrlLine
+    }
+    ctrlLine = document.createElementNS(NS.SVG, "line");
+    svgedit.utilities.assignAttributes(ctrlLine, {id:"ctrlLine_" + id, stroke:"#555", "stroke-width":1, style:"pointer-events:none"});
+    svgedit.path.getGripContainer().appendChild(ctrlLine);
+    return ctrlLine
+  };
+  svgedit.path.getPointGrip = function(seg, update) {
+    var index = seg.index;
+    var pointGrip = svgedit.path.addPointGrip(index);
+    if(update) {
+      var pt = svgedit.path.getGripPt(seg);
+      svgedit.utilities.assignAttributes(pointGrip, {cx:pt.x, cy:pt.y, display:"inline"})
+    }
+    return pointGrip
+  };
+  svgedit.path.getControlPoints = function(seg) {
+    var item = seg.item;
+    var index = seg.index;
+    if(!("x1" in item) || !("x2" in item)) {
+      return null
+    }
+    var cpt = {};
+    var pointGripContainer = svgedit.path.getGripContainer();
+    var prev = svgedit.path.path.segs[index - 1].item;
+    var seg_items = [prev, item];
+    var i;
+    for(i = 1;i < 3;i++) {
+      var id = index + "c" + i;
+      var ctrlLine = cpt["c" + i + "_line"] = svgedit.path.getCtrlLine(id);
+      var pt = svgedit.path.getGripPt(seg, {x:item["x" + i], y:item["y" + i]});
+      var gpt = svgedit.path.getGripPt(seg, {x:seg_items[i - 1].x, y:seg_items[i - 1].y});
+      svgedit.utilities.assignAttributes(ctrlLine, {x1:pt.x, y1:pt.y, x2:gpt.x, y2:gpt.y, display:"inline"});
+      cpt["c" + i + "_line"] = ctrlLine;
+      var pointGrip = cpt["c" + i] = svgedit.path.addCtrlGrip(id);
+      svgedit.utilities.assignAttributes(pointGrip, {cx:pt.x, cy:pt.y, display:"inline"});
+      cpt["c" + i] = pointGrip
+    }
+    return cpt
+  };
+  svgedit.path.replacePathSeg = function(type, index, pts, elem) {
+    var path = elem || svgedit.path.path.elem;
+    var func = "createSVGPathSeg" + pathFuncs[type];
+    var seg = path[func].apply(path, pts);
+    if(svgedit.browser.supportsPathReplaceItem()) {
+      path.pathSegList.replaceItem(seg, index)
+    }else {
+      var segList = path.pathSegList;
+      var len = segList.numberOfItems;
+      var arr = [];
+      var i;
+      for(i = 0;i < len;i++) {
+        var cur_seg = segList.getItem(i);
+        arr.push(cur_seg)
+      }
+      segList.clear();
+      for(i = 0;i < len;i++) {
+        if(i == index) {
+          segList.appendItem(seg)
+        }else {
+          segList.appendItem(arr[i])
+        }
+      }
+    }
+  };
+  svgedit.path.getSegSelector = function(seg, update) {
+    var index = seg.index;
+    var segLine = svgedit.utilities.getElem("segline_" + index);
+    if(!segLine) {
+      var pointGripContainer = svgedit.path.getGripContainer();
+      segLine = document.createElementNS(NS.SVG, "path");
+      svgedit.utilities.assignAttributes(segLine, {id:"segline_" + index, display:"none", fill:"none", stroke:"#0FF", "stroke-width":2, style:"pointer-events:none", d:"M0,0 0,0"});
+      pointGripContainer.appendChild(segLine)
+    }
+    if(update) {
+      var prev = seg.prev;
+      if(!prev) {
+        segLine.setAttribute("display", "none");
+        return segLine
+      }
+      var pt = svgedit.path.getGripPt(prev);
+      svgedit.path.replacePathSeg(2, 0, [pt.x, pt.y], segLine);
+      var pts = svgedit.path.ptObjToArr(seg.type, seg.item, true);
+      var i;
+      for(i = 0;i < pts.length;i += 2) {
+        pt = svgedit.path.getGripPt(seg, {x:pts[i], y:pts[i + 1]});
+        pts[i] = pt.x;
+        pts[i + 1] = pt.y
+      }
+      svgedit.path.replacePathSeg(seg.type, 1, pts, segLine)
+    }
+    return segLine
+  };
+  svgedit.path.smoothControlPoints = function(ct1, ct2, pt) {
+    var x1 = ct1.x - pt.x, y1 = ct1.y - pt.y, x2 = ct2.x - pt.x, y2 = ct2.y - pt.y;
+    if((x1 != 0 || y1 != 0) && (x2 != 0 || y2 != 0)) {
+      var anglea = Math.atan2(y1, x1), angleb = Math.atan2(y2, x2), r1 = Math.sqrt(x1 * x1 + y1 * y1), r2 = Math.sqrt(x2 * x2 + y2 * y2), nct1 = editorContext_.getSVGRoot().createSVGPoint(), nct2 = editorContext_.getSVGRoot().createSVGPoint();
+      if(anglea < 0) {
+        anglea += 2 * Math.PI
+      }
+      if(angleb < 0) {
+        angleb += 2 * Math.PI
+      }
+      var angleBetween = Math.abs(anglea - angleb), angleDiff = Math.abs(Math.PI - angleBetween) / 2;
+      var new_anglea, new_angleb;
+      if(anglea - angleb > 0) {
+        new_anglea = angleBetween < Math.PI ? anglea + angleDiff : anglea - angleDiff;
+        new_angleb = angleBetween < Math.PI ? angleb - angleDiff : angleb + angleDiff
+      }else {
+        new_anglea = angleBetween < Math.PI ? anglea - angleDiff : anglea + angleDiff;
+        new_angleb = angleBetween < Math.PI ? angleb + angleDiff : angleb - angleDiff
+      }
+      nct1.x = r1 * Math.cos(new_anglea) + pt.x;
+      nct1.y = r1 * Math.sin(new_anglea) + pt.y;
+      nct2.x = r2 * Math.cos(new_angleb) + pt.x;
+      nct2.y = r2 * Math.sin(new_angleb) + pt.y;
+      return[nct1, nct2]
+    }
+    return undefined
+  };
+  svgedit.path.Segment = function(index, item) {
+    this.selected = false;
+    this.index = index;
+    this.item = item;
+    this.type = item.pathSegType;
+    this.ctrlpts = [];
+    this.ptgrip = null;
+    this.segsel = null
+  };
+  svgedit.path.Segment.prototype.showCtrlPts = function(y) {
+    var i;
+    for(i in this.ctrlpts) {
+      if(this.ctrlpts.hasOwnProperty(i)) {
+        this.ctrlpts[i].setAttribute("display", y ? "inline" : "none")
+      }
+    }
+  };
+  svgedit.path.Segment.prototype.selectCtrls = function(y) {
+    $("#ctrlpointgrip_" + this.index + "c1, #ctrlpointgrip_" + this.index + "c2").attr("fill", y ? "#0FF" : "#EEE")
+  };
+  svgedit.path.Segment.prototype.show = function(y) {
+    if(this.ptgrip) {
+      this.ptgrip.setAttribute("display", y ? "inline" : "none");
+      this.segsel.setAttribute("display", y ? "inline" : "none");
+      this.showCtrlPts(y)
+    }
+  };
+  svgedit.path.Segment.prototype.select = function(y) {
+    if(this.ptgrip) {
+      this.ptgrip.setAttribute("stroke", y ? "#0FF" : "#00F");
+      this.segsel.setAttribute("display", y ? "inline" : "none");
+      if(this.ctrlpts) {
+        this.selectCtrls(y)
+      }
+      this.selected = y
+    }
+  };
+  svgedit.path.Segment.prototype.addGrip = function() {
+    this.ptgrip = svgedit.path.getPointGrip(this, true);
+    this.ctrlpts = svgedit.path.getControlPoints(this, true);
+    this.segsel = svgedit.path.getSegSelector(this, true)
+  };
+  svgedit.path.Segment.prototype.update = function(full) {
+    if(this.ptgrip) {
+      var pt = svgedit.path.getGripPt(this);
+      svgedit.utilities.assignAttributes(this.ptgrip, {cx:pt.x, cy:pt.y});
+      svgedit.path.getSegSelector(this, true);
+      if(this.ctrlpts) {
+        if(full) {
+          this.item = svgedit.path.path.elem.pathSegList.getItem(this.index);
+          this.type = this.item.pathSegType
+        }
+        svgedit.path.getControlPoints(this)
+      }
+    }
+  };
+  svgedit.path.Segment.prototype.move = function(dx, dy) {
+    var cur_pts, item = this.item;
+    if(this.ctrlpts) {
+      cur_pts = [item.x += dx, item.y += dy, item.x1, item.y1, item.x2 += dx, item.y2 += dy]
+    }else {
+      cur_pts = [item.x += dx, item.y += dy]
+    }
+    svgedit.path.replacePathSeg(this.type, this.index, cur_pts);
+    if(this.next && this.next.ctrlpts) {
+      var next = this.next.item;
+      var next_pts = [next.x, next.y, next.x1 += dx, next.y1 += dy, next.x2, next.y2];
+      svgedit.path.replacePathSeg(this.next.type, this.next.index, next_pts)
+    }
+    if(this.mate) {
+      item = this.mate.item;
+      var pts = [item.x += dx, item.y += dy];
+      svgedit.path.replacePathSeg(this.mate.type, this.mate.index, pts)
+    }
+    this.update(true);
+    if(this.next) {
+      this.next.update(true)
+    }
+  };
+  svgedit.path.Segment.prototype.setLinked = function(num) {
+    var seg, anum, pt;
+    if(num == 2) {
+      anum = 1;
+      seg = this.next;
+      if(!seg) {
+        return
+      }
+      pt = this.item
+    }else {
+      anum = 2;
+      seg = this.prev;
+      if(!seg) {
+        return
+      }
+      pt = seg.item
+    }
+    var item = seg.item;
+    item["x" + anum] = pt.x + (pt.x - this.item["x" + num]);
+    item["y" + anum] = pt.y + (pt.y - this.item["y" + num]);
+    var pts = [item.x, item.y, item.x1, item.y1, item.x2, item.y2];
+    svgedit.path.replacePathSeg(seg.type, seg.index, pts);
+    seg.update(true)
+  };
+  svgedit.path.Segment.prototype.moveCtrl = function(num, dx, dy) {
+    var item = this.item;
+    item["x" + num] += dx;
+    item["y" + num] += dy;
+    var pts = [item.x, item.y, item.x1, item.y1, item.x2, item.y2];
+    svgedit.path.replacePathSeg(this.type, this.index, pts);
+    this.update(true)
+  };
+  svgedit.path.Segment.prototype.setType = function(new_type, pts) {
+    svgedit.path.replacePathSeg(new_type, this.index, pts);
+    this.type = new_type;
+    this.item = svgedit.path.path.elem.pathSegList.getItem(this.index);
+    this.showCtrlPts(new_type === 6);
+    this.ctrlpts = svgedit.path.getControlPoints(this);
+    this.update(true)
+  };
+  svgedit.path.Path = function(elem) {
+    if(!elem || elem.tagName !== "path") {
+      throw"svgedit.path.Path constructed without a <path> element";
+    }
+    this.elem = elem;
+    this.segs = [];
+    this.selected_pts = [];
+    svgedit.path.path = this;
+    this.init()
+  };
+  svgedit.path.Path.prototype.init = function() {
+    $(svgedit.path.getGripContainer()).find("*").each(function() {
+      $(this).attr("display", "none")
+    });
+    var segList = this.elem.pathSegList;
+    var len = segList.numberOfItems;
+    this.segs = [];
+    this.selected_pts = [];
+    this.first_seg = null;
+    var i;
+    for(i = 0;i < len;i++) {
+      var item = segList.getItem(i);
+      var segment = new svgedit.path.Segment(i, item);
+      segment.path = this;
+      this.segs.push(segment)
+    }
+    var segs = this.segs;
+    var start_i = null;
+    for(i = 0;i < len;i++) {
+      var seg = segs[i];
+      var next_seg = i + 1 >= len ? null : segs[i + 1];
+      var prev_seg = i - 1 < 0 ? null : segs[i - 1];
+      var start_seg;
+      if(seg.type === 2) {
+        if(prev_seg && prev_seg.type !== 1) {
+          start_seg = segs[start_i];
+          start_seg.next = segs[start_i + 1];
+          start_seg.next.prev = start_seg;
+          start_seg.addGrip()
+        }
+        start_i = i
+      }else {
+        if(next_seg && next_seg.type === 1) {
+          seg.next = segs[start_i + 1];
+          seg.next.prev = seg;
+          seg.mate = segs[start_i];
+          seg.addGrip();
+          if(this.first_seg == null) {
+            this.first_seg = seg
+          }
+        }else {
+          if(!next_seg) {
+            if(seg.type !== 1) {
+              start_seg = segs[start_i];
+              start_seg.next = segs[start_i + 1];
+              start_seg.next.prev = start_seg;
+              start_seg.addGrip();
+              seg.addGrip();
+              if(!this.first_seg) {
+                this.first_seg = segs[start_i]
+              }
+            }
+          }else {
+            if(seg.type !== 1) {
+              seg.addGrip();
+              if(next_seg && next_seg.type !== 2) {
+                seg.next = next_seg;
+                seg.next.prev = seg
+              }
+            }
+          }
+        }
+      }
+    }
+    return this
+  };
+  svgedit.path.Path.prototype.eachSeg = function(fn) {
+    var i;
+    var len = this.segs.length;
+    for(i = 0;i < len;i++) {
+      var ret = fn.call(this.segs[i], i);
+      if(ret === false) {
+        break
+      }
+    }
+  };
+  svgedit.path.Path.prototype.addSeg = function(index) {
+    var seg = this.segs[index];
+    if(!seg.prev) {
+      return
+    }
+    var prev = seg.prev;
+    var newseg, new_x, new_y;
+    switch(seg.item.pathSegType) {
+      case 4:
+        new_x = (seg.item.x + prev.item.x) / 2;
+        new_y = (seg.item.y + prev.item.y) / 2;
+        newseg = this.elem.createSVGPathSegLinetoAbs(new_x, new_y);
+        break;
+      case 6:
+        var p0_x = (prev.item.x + seg.item.x1) / 2;
+        var p1_x = (seg.item.x1 + seg.item.x2) / 2;
+        var p2_x = (seg.item.x2 + seg.item.x) / 2;
+        var p01_x = (p0_x + p1_x) / 2;
+        var p12_x = (p1_x + p2_x) / 2;
+        new_x = (p01_x + p12_x) / 2;
+        var p0_y = (prev.item.y + seg.item.y1) / 2;
+        var p1_y = (seg.item.y1 + seg.item.y2) / 2;
+        var p2_y = (seg.item.y2 + seg.item.y) / 2;
+        var p01_y = (p0_y + p1_y) / 2;
+        var p12_y = (p1_y + p2_y) / 2;
+        new_y = (p01_y + p12_y) / 2;
+        newseg = this.elem.createSVGPathSegCurvetoCubicAbs(new_x, new_y, p0_x, p0_y, p01_x, p01_y);
+        var pts = [seg.item.x, seg.item.y, p12_x, p12_y, p2_x, p2_y];
+        svgedit.path.replacePathSeg(seg.type, index, pts);
+        break
+    }
+    svgedit.path.insertItemBefore(this.elem, newseg, index)
+  };
+  svgedit.path.Path.prototype.deleteSeg = function(index) {
+    var seg = this.segs[index];
+    var list = this.elem.pathSegList;
+    seg.show(false);
+    var next = seg.next;
+    var pt;
+    if(seg.mate) {
+      pt = [next.item.x, next.item.y];
+      svgedit.path.replacePathSeg(2, next.index, pt);
+      svgedit.path.replacePathSeg(4, seg.index, pt);
+      list.removeItem(seg.mate.index)
+    }else {
+      if(!seg.prev) {
+        var item = seg.item;
+        pt = [next.item.x, next.item.y];
+        svgedit.path.replacePathSeg(2, seg.next.index, pt);
+        list.removeItem(index)
+      }else {
+        list.removeItem(index)
+      }
+    }
+  };
+  svgedit.path.Path.prototype.subpathIsClosed = function(index) {
+    var closed = false;
+    svgedit.path.path.eachSeg(function(i) {
+      if(i <= index) {
+        return true
+      }
+      if(this.type === 2) {
+        return false
+      }
+      if(this.type === 1) {
+        closed = true;
+        return false
+      }
+    });
+    return closed
+  };
+  svgedit.path.Path.prototype.removePtFromSelection = function(index) {
+    var pos = this.selected_pts.indexOf(index);
+    if(pos == -1) {
+      return
+    }
+    this.segs[index].select(false);
+    this.selected_pts.splice(pos, 1)
+  };
+  svgedit.path.Path.prototype.clearSelection = function() {
+    this.eachSeg(function() {
+      this.select(false)
+    });
+    this.selected_pts = []
+  };
+  svgedit.path.Path.prototype.storeD = function() {
+    this.last_d = this.elem.getAttribute("d")
+  };
+  svgedit.path.Path.prototype.show = function(y) {
+    this.eachSeg(function() {
+      this.show(y)
+    });
+    if(y) {
+      this.selectPt(this.first_seg.index)
+    }
+    return this
+  };
+  svgedit.path.Path.prototype.movePts = function(d_x, d_y) {
+    var i = this.selected_pts.length;
+    while(i--) {
+      var seg = this.segs[this.selected_pts[i]];
+      seg.move(d_x, d_y)
+    }
+  };
+  svgedit.path.Path.prototype.moveCtrl = function(d_x, d_y) {
+    var seg = this.segs[this.selected_pts[0]];
+    seg.moveCtrl(this.dragctrl, d_x, d_y);
+    if(link_control_pts) {
+      seg.setLinked(this.dragctrl)
+    }
+  };
+  svgedit.path.Path.prototype.setSegType = function(new_type) {
+    this.storeD();
+    var i = this.selected_pts.length;
+    var text;
+    while(i--) {
+      var sel_pt = this.selected_pts[i];
+      var cur = this.segs[sel_pt];
+      var prev = cur.prev;
+      if(!prev) {
+        continue
+      }
+      if(!new_type) {
+        text = "Toggle Path Segment Type";
+        var old_type = cur.type;
+        new_type = old_type == 6 ? 4 : 6
+      }
+      new_type = Number(new_type);
+      var cur_x = cur.item.x;
+      var cur_y = cur.item.y;
+      var prev_x = prev.item.x;
+      var prev_y = prev.item.y;
+      var points;
+      switch(new_type) {
+        case 6:
+          if(cur.olditem) {
+            var old = cur.olditem;
+            points = [cur_x, cur_y, old.x1, old.y1, old.x2, old.y2]
+          }else {
+            var diff_x = cur_x - prev_x;
+            var diff_y = cur_y - prev_y;
+            var ct1_x = prev_x + diff_x / 3;
+            var ct1_y = prev_y + diff_y / 3;
+            var ct2_x = cur_x - diff_x / 3;
+            var ct2_y = cur_y - diff_y / 3;
+            points = [cur_x, cur_y, ct1_x, ct1_y, ct2_x, ct2_y]
+          }
+          break;
+        case 4:
+          points = [cur_x, cur_y];
+          cur.olditem = cur.item;
+          break
+      }
+      cur.setType(new_type, points)
+    }
+    svgedit.path.path.endChanges(text)
+  };
+  svgedit.path.Path.prototype.selectPt = function(pt, ctrl_num) {
+    this.clearSelection();
+    if(pt == null) {
+      this.eachSeg(function(i) {
+        if(this.prev) {
+          pt = i
+        }
+      })
+    }
+    this.addPtsToSelection(pt);
+    if(ctrl_num) {
+      this.dragctrl = ctrl_num;
+      if(link_control_pts) {
+        this.segs[pt].setLinked(ctrl_num)
+      }
+    }
+  };
+  svgedit.path.Path.prototype.update = function() {
+    var elem = this.elem;
+    if(svgedit.utilities.getRotationAngle(elem)) {
+      this.matrix = svgedit.math.getMatrix(elem);
+      this.imatrix = this.matrix.inverse()
+    }else {
+      this.matrix = null;
+      this.imatrix = null
+    }
+    this.eachSeg(function(i) {
+      this.item = elem.pathSegList.getItem(i);
+      this.update()
+    });
+    return this
+  };
+  svgedit.path.getPath_ = function(elem) {
+    var p = pathData[elem.id];
+    if(!p) {
+      p = pathData[elem.id] = new svgedit.path.Path(elem)
+    }
+    return p
+  };
+  svgedit.path.removePath_ = function(id) {
+    if(id in pathData) {
+      delete pathData[id]
+    }
+  };
+  var newcx, newcy, oldcx, oldcy, angle;
+  var getRotVals = function(x, y) {
+    var dx = x - oldcx;
+    var dy = y - oldcy;
+    var r = Math.sqrt(dx * dx + dy * dy);
+    var theta = Math.atan2(dy, dx) + angle;
+    dx = r * Math.cos(theta) + oldcx;
+    dy = r * Math.sin(theta) + oldcy;
+    dx -= newcx;
+    dy -= newcy;
+    r = Math.sqrt(dx * dx + dy * dy);
+    theta = Math.atan2(dy, dx) - angle;
+    return{x:r * Math.cos(theta) + newcx, y:r * Math.sin(theta) + newcy}
+  };
+  svgedit.path.recalcRotatedPath = function() {
+    var current_path = svgedit.path.path.elem;
+    angle = svgedit.utilities.getRotationAngle(current_path, true);
+    if(!angle) {
+      return
+    }
+    var box = svgedit.utilities.getBBox(current_path), oldbox = svgedit.path.path.oldbbox;
+    oldcx = oldbox.x + oldbox.width / 2;
+    oldcy = oldbox.y + oldbox.height / 2;
+    newcx = box.x + box.width / 2;
+    newcy = box.y + box.height / 2;
+    var dx = newcx - oldcx, dy = newcy - oldcy, r = Math.sqrt(dx * dx + dy * dy), theta = Math.atan2(dy, dx) + angle;
+    newcx = r * Math.cos(theta) + oldcx;
+    newcy = r * Math.sin(theta) + oldcy;
+    var list = current_path.pathSegList, i = list.numberOfItems;
+    while(i) {
+      i -= 1;
+      var seg = list.getItem(i), type = seg.pathSegType;
+      if(type == 1) {
+        continue
+      }
+      var rvals = getRotVals(seg.x, seg.y), points = [rvals.x, rvals.y];
+      if(seg.x1 != null && seg.x2 != null) {
+        var c_vals1 = getRotVals(seg.x1, seg.y1);
+        var c_vals2 = getRotVals(seg.x2, seg.y2);
+        points.splice(points.length, 0, c_vals1.x, c_vals1.y, c_vals2.x, c_vals2.y)
+      }
+      svgedit.path.replacePathSeg(type, i, points)
+    }
+    box = svgedit.utilities.getBBox(current_path);
+    var R_nc = svgroot.createSVGTransform(), tlist = svgedit.transformlist.getTransformList(current_path);
+    R_nc.setRotate(angle * 180 / Math.PI, newcx, newcy);
+    tlist.replaceItem(R_nc, 0)
+  };
+  svgedit.path.clearData = function() {
+    pathData = {}
+  }
+})();(function() {
+  if(!window.console) {
+    window.console = {};
+    window.console.log = function(str) {
+    };
+    window.console.dir = function(str) {
+    }
+  }
+  if(window.opera) {
+    window.console.log = function(str) {
+      opera.postError(str)
+    };
+    window.console.dir = function(str) {
+    }
+  }
+})();
+$.SvgCanvas = function(container, config) {
+  var NS = svgedit.NS;
+  var curConfig = {show_outside_canvas:true, selectNew:true, dimensions:[640, 480]};
+  if(config) {
+    $.extend(curConfig, config)
+  }
+  var dimensions = curConfig.dimensions;
+  var canvas = this;
+  var svgdoc = container.ownerDocument;
+  var svgroot = svgdoc.importNode(svgedit.utilities.text2xml('<svg id="svgroot" xmlns="' + NS.SVG + '" xlinkns="' + NS.XLINK + '" ' + 'width="' + dimensions[0] + '" height="' + dimensions[1] + '" x="' + dimensions[0] + '" y="' + dimensions[1] + '" overflow="visible">' + "<defs>" + '<filter id="canvashadow" filterUnits="objectBoundingBox">' + '<feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/>' + '<feOffset in="blur" dx="5" dy="5" result="offsetBlur"/>' + "<feMerge>" + '<feMergeNode in="offsetBlur"/>' + 
+  '<feMergeNode in="SourceGraphic"/>' + "</feMerge>" + "</filter>" + "</defs>" + "</svg>").documentElement, true);
+  container.appendChild(svgroot);
+  var svgcontent = svgdoc.createElementNS(NS.SVG, "svg");
+  var clearSvgContentElement = canvas.clearSvgContentElement = function() {
+    while(svgcontent.firstChild) {
+      svgcontent.removeChild(svgcontent.firstChild)
+    }
+    $(svgcontent).attr({id:"svgcontent", width:dimensions[0], height:dimensions[1], x:dimensions[0], y:dimensions[1], overflow:curConfig.show_outside_canvas ? "visible" : "hidden", xmlns:NS.SVG, "xmlns:se":NS.SE, "xmlns:xlink":NS.XLINK}).appendTo(svgroot);
+    var comment = svgdoc.createComment(" Created with SVG-edit - https://github.com/SVG-Edit/svgedit");
+    svgcontent.appendChild(comment)
+  };
+  clearSvgContentElement();
+  var idprefix = "svg_";
+  canvas.setIdPrefix = function(p) {
+    idprefix = p
+  };
+  canvas.current_drawing_ = new svgedit.draw.Drawing(svgcontent, idprefix);
+  var getCurrentDrawing = canvas.getCurrentDrawing = function() {
+    return canvas.current_drawing_
+  };
+  var current_zoom = 1;
+  var current_group = null;
+  var all_properties = {shape:{fill:(curConfig.initFill.color == "none" ? "" : "#") + curConfig.initFill.color, fill_paint:null, fill_opacity:curConfig.initFill.opacity, stroke:"#" + curConfig.initStroke.color, stroke_paint:null, stroke_opacity:curConfig.initStroke.opacity, stroke_width:curConfig.initStroke.width, stroke_dasharray:"none", stroke_linejoin:"miter", stroke_linecap:"butt", opacity:curConfig.initOpacity}};
+  all_properties.text = $.extend(true, {}, all_properties.shape);
+  $.extend(all_properties.text, {fill:"#000000", stroke_width:curConfig.text.stroke_width, font_size:curConfig.text.font_size, font_family:curConfig.text.font_family});
+  var cur_shape = all_properties.shape;
+  var selectedElements = [];
+  var addSvgElementFromJson = this.addSvgElementFromJson = function(data) {
+    if(typeof data == "string") {
+      return svgdoc.createTextNode(data)
+    }
+    var shape = svgedit.utilities.getElem(data.attr.id);
+    var current_layer = getCurrentDrawing().getCurrentLayer();
+    if(shape && data.element != shape.tagName) {
+      current_layer.removeChild(shape);
+      shape = null
+    }
+    if(!shape) {
+      shape = svgdoc.createElementNS(NS.SVG, data.element);
+      if(current_layer) {
+        (current_group || current_layer).appendChild(shape)
+      }
+    }
+    if(data.curStyles) {
+      svgedit.utilities.assignAttributes(shape, {fill:cur_shape.fill, stroke:cur_shape.stroke, "stroke-width":cur_shape.stroke_width, "stroke-dasharray":cur_shape.stroke_dasharray, "stroke-linejoin":cur_shape.stroke_linejoin, "stroke-linecap":cur_shape.stroke_linecap, "stroke-opacity":cur_shape.stroke_opacity, "fill-opacity":cur_shape.fill_opacity, opacity:cur_shape.opacity / 2, style:"pointer-events:inherit"}, 100)
+    }
+    svgedit.utilities.assignAttributes(shape, data.attr, 100);
+    svgedit.utilities.cleanupElement(shape);
+    if(data.children) {
+      data.children.forEach(function(child) {
+        shape.appendChild(addSvgElementFromJson(child))
+      })
+    }
+    return shape
+  };
+  var getTransformList = canvas.getTransformList = svgedit.transformlist.getTransformList;
+  var transformPoint = svgedit.math.transformPoint;
+  var matrixMultiply = canvas.matrixMultiply = svgedit.math.matrixMultiply;
+  var hasMatrixTransform = canvas.hasMatrixTransform = svgedit.math.hasMatrixTransform;
+  var transformListToTransform = canvas.transformListToTransform = svgedit.math.transformListToTransform;
+  var snapToAngle = svgedit.math.snapToAngle;
+  var getMatrix = svgedit.math.getMatrix;
+  svgedit.units.init({getBaseUnit:function() {
+    return curConfig.baseUnit
+  }, getElement:svgedit.utilities.getElem, getHeight:function() {
+    return svgcontent.getAttribute("height") / current_zoom
+  }, getWidth:function() {
+    return svgcontent.getAttribute("width") / current_zoom
+  }, getRoundDigits:function() {
+    return save_options.round_digits
+  }});
+  var convertToNum = canvas.convertToNum = svgedit.units.convertToNum;
+  svgedit.utilities.init({getDOMDocument:function() {
+    return svgdoc
+  }, getDOMContainer:function() {
+    return container
+  }, getSVGRoot:function() {
+    return svgroot
+  }, getSelectedElements:function() {
+    return selectedElements
+  }, getSVGContent:function() {
+    return svgcontent
+  }, getBaseUnit:function() {
+    return curConfig.baseUnit
+  }, getSnappingStep:function() {
+    return curConfig.snappingStep
+  }});
+  var findDefs = canvas.findDefs = svgedit.utilities.findDefs;
+  var getUrlFromAttr = canvas.getUrlFromAttr = svgedit.utilities.getUrlFromAttr;
+  var getHref = canvas.getHref = svgedit.utilities.getHref;
+  var setHref = canvas.setHref = svgedit.utilities.setHref;
+  var getPathBBox = svgedit.utilities.getPathBBox;
+  var getBBox = canvas.getBBox = svgedit.utilities.getBBox;
+  var getRotationAngle = canvas.getRotationAngle = svgedit.utilities.getRotationAngle;
+  var getElem = canvas.getElem = svgedit.utilities.getElem;
+  var getRefElem = canvas.getRefElem = svgedit.utilities.getRefElem;
+  var assignAttributes = canvas.assignAttributes = svgedit.utilities.assignAttributes;
+  var cleanupElement = this.cleanupElement = svgedit.utilities.cleanupElement;
+  svgedit.coords.init({getDrawing:function() {
+    return getCurrentDrawing()
+  }, getGridSnapping:function() {
+    return curConfig.gridSnapping
+  }});
+  var remapElement = this.remapElement = svgedit.coords.remapElement;
+  svgedit.recalculate.init({getSVGRoot:function() {
+    return svgroot
+  }, getStartTransform:function() {
+    return startTransform
+  }, setStartTransform:function(transform) {
+    startTransform = transform
+  }});
+  var recalculateDimensions = this.recalculateDimensions = svgedit.recalculate.recalculateDimensions;
+  var nsMap = svgedit.getReverseNS();
+  var sanitizeSvg = canvas.sanitizeSvg = svgedit.sanitize.sanitizeSvg;
+  var MoveElementCommand = svgedit.history.MoveElementCommand;
+  var InsertElementCommand = svgedit.history.InsertElementCommand;
+  var RemoveElementCommand = svgedit.history.RemoveElementCommand;
+  var ChangeElementCommand = svgedit.history.ChangeElementCommand;
+  var BatchCommand = svgedit.history.BatchCommand;
+  var call;
+  canvas.undoMgr = new svgedit.history.UndoManager({handleHistoryEvent:function(eventType, cmd) {
+    var EventTypes = svgedit.history.HistoryEventTypes;
+    if(eventType == EventTypes.BEFORE_UNAPPLY || eventType == EventTypes.BEFORE_APPLY) {
+      canvas.clearSelection()
+    }else {
+      if(eventType == EventTypes.AFTER_APPLY || eventType == EventTypes.AFTER_UNAPPLY) {
+        var elems = cmd.elements();
+        canvas.pathActions.clear();
+        call("changed", elems);
+        var cmdType = cmd.type();
+        var isApply = eventType == EventTypes.AFTER_APPLY;
+        if(cmdType == MoveElementCommand.type()) {
+          var parent = isApply ? cmd.newParent : cmd.oldParent;
+          if(parent == svgcontent) {
+            canvas.identifyLayers()
+          }
+        }else {
+          if(cmdType == InsertElementCommand.type() || cmdType == RemoveElementCommand.type()) {
+            if(cmd.parent == svgcontent) {
+              canvas.identifyLayers()
+            }
+            if(cmdType == InsertElementCommand.type()) {
+              if(isApply) {
+                restoreRefElems(cmd.elem)
+              }
+            }else {
+              if(!isApply) {
+                restoreRefElems(cmd.elem)
+              }
+            }
+            if(cmd.elem.tagName === "use") {
+              setUseData(cmd.elem)
+            }
+          }else {
+            if(cmdType == ChangeElementCommand.type()) {
+              if(cmd.elem.tagName == "title" && cmd.elem.parentNode.parentNode == svgcontent) {
+                canvas.identifyLayers()
+              }
+              var values = isApply ? cmd.newValues : cmd.oldValues;
+              if(values.stdDeviation) {
+                canvas.setBlurOffsets(cmd.elem.parentNode, values.stdDeviation)
+              }
+            }
+          }
+        }
+      }
+    }
+  }});
+  var addCommandToHistory = function(cmd) {
+    canvas.undoMgr.addCommandToHistory(cmd)
+  };
+  function historyRecordingService(hrService) {
+    return hrService ? hrService : new svgedit.history.HistoryRecordingService(canvas.undoMgr)
+  }
+  svgedit.select.init(curConfig, {createSVGElement:function(jsonMap) {
+    return canvas.addSvgElementFromJson(jsonMap)
+  }, svgRoot:function() {
+    return svgroot
+  }, svgContent:function() {
+    return svgcontent
+  }, currentZoom:function() {
+    return current_zoom
+  }, getStrokedBBox:function(elems) {
+    return canvas.getStrokedBBox([elems])
+  }});
+  var selectorManager = this.selectorManager = svgedit.select.getSelectorManager();
+  svgedit.path.init({getCurrentZoom:function() {
+    return current_zoom
+  }, getSVGRoot:function() {
+    return svgroot
+  }});
+  var uiStrings = {exportNoBlur:"Blurred elements will appear as un-blurred", exportNoforeignObject:"foreignObject elements will not appear", exportNoDashArray:"Strokes will appear filled", exportNoText:"Text may not appear as expected"};
+  var visElems = "a,circle,ellipse,foreignObject,g,image,line,path,polygon,polyline,rect,svg,text,tspan,use";
+  var ref_attrs = ["clip-path", "fill", "filter", "marker-end", "marker-mid", "marker-start", "mask", "stroke"];
+  var elData = $.data;
+  var opac_ani = document.createElementNS(NS.SVG, "animate");
+  $(opac_ani).attr({attributeName:"opacity", begin:"indefinite", dur:1, fill:"freeze"}).appendTo(svgroot);
+  var restoreRefElems = function(elem) {
+    var o, i, l, attrs = $(elem).attr(ref_attrs);
+    for(o in attrs) {
+      var val = attrs[o];
+      if(val && val.indexOf("url(") === 0) {
+        var id = svgedit.utilities.getUrlFromAttr(val).substr(1);
+        var ref = getElem(id);
+        if(!ref) {
+          svgedit.utilities.findDefs().appendChild(removedElements[id]);
+          delete removedElements[id]
+        }
+      }
+    }
+    var childs = elem.getElementsByTagName("*");
+    if(childs.length) {
+      for(i = 0, l = childs.length;i < l;i++) {
+        restoreRefElems(childs[i])
+      }
+    }
+  };
+  (function() {
+  })();
+  var encodableImages = {}, last_good_img_url = curConfig.imgPath + "logo.png", disabled_elems = [], save_options = {round_digits:5}, started = false, startTransform = null, current_mode = "select", current_resize_mode = "none", import_ids = {}, cur_text = all_properties.text, cur_properties = cur_shape, justSelected = null, rubberBox = null, curBBoxes = [], extensions = {}, lastClickPoint = null, removedElements = {};
+  canvas.clipBoard = [];
+  var runExtensions = this.runExtensions = function(action, vars, returnArray) {
+    var result = returnArray ? [] : false;
+    $.each(extensions, function(name, opts) {
+      if(opts && action in opts) {
+        if(returnArray) {
+          result.push(opts[action](vars))
+        }else {
+          result = opts[action](vars)
+        }
+      }
+    });
+    return result
+  };
+  this.addExtension = function(name, ext_func) {
+    var ext;
+    if(!(name in extensions)) {
+      if($.isFunction(ext_func)) {
+        ext = ext_func($.extend(canvas.getPrivateMethods(), {svgroot:svgroot, svgcontent:svgcontent, nonce:getCurrentDrawing().getNonce(), selectorManager:selectorManager}))
+      }else {
+        ext = ext_func
+      }
+      extensions[name] = ext;
+      call("extension_added", ext)
+    }else {
+      console.log('Cannot add extension "' + name + '", an extension by that name already exists.')
+    }
+  };
+  var round = this.round = function(val) {
+    return parseInt(val * current_zoom, 10) / current_zoom
+  };
+  var getIntersectionList = this.getIntersectionList = function(rect) {
+    if(rubberBox == null) {
+      return null
+    }
+    var parent = current_group || getCurrentDrawing().getCurrentLayer();
+    var rubberBBox;
+    if(!rect) {
+      rubberBBox = rubberBox.getBBox();
+      var o, bb = svgcontent.createSVGRect();
+      for(o in rubberBBox) {
+        bb[o] = rubberBBox[o] / current_zoom
+      }
+      rubberBBox = bb
+    }else {
+      rubberBBox = svgcontent.createSVGRect();
+      rubberBBox.x = rect.x;
+      rubberBBox.y = rect.y;
+      rubberBBox.width = rect.width;
+      rubberBBox.height = rect.height
+    }
+    var resultList = null;
+    if(!svgedit.browser.isIE) {
+      if(typeof svgroot.getIntersectionList == "function") {
+        rubberBBox.x += parseInt(svgcontent.getAttribute("x"), 10);
+        rubberBBox.y += parseInt(svgcontent.getAttribute("y"), 10);
+        resultList = svgroot.getIntersectionList(rubberBBox, parent)
+      }
+    }
+    if(resultList == null || typeof resultList.item != "function") {
+      resultList = [];
+      if(!curBBoxes.length) {
+        curBBoxes = getVisibleElementsAndBBoxes(parent)
+      }
+      var i = curBBoxes.length;
+      while(i--) {
+        if(!rubberBBox.width) {
+          continue
+        }
+        if(svgedit.math.rectsIntersect(rubberBBox, curBBoxes[i].bbox)) {
+          resultList.push(curBBoxes[i].elem)
+        }
+      }
+    }
+    return resultList
+  };
+  var getStrokedBBox = this.getStrokedBBox = function(elems) {
+    if(!elems) {
+      elems = getVisibleElements()
+    }
+    return svgedit.utilities.getStrokedBBox(elems, addSvgElementFromJson, pathActions)
+  };
+  var getVisibleElements = this.getVisibleElements = function(parent) {
+    if(!parent) {
+      parent = $(svgcontent).children()
+    }
+    var contentElems = [];
+    $(parent).children().each(function(i, elem) {
+      if(elem.getBBox) {
+        contentElems.push(elem)
+      }
+    });
+    return contentElems.reverse()
+  };
+  var getVisibleElementsAndBBoxes = this.getVisibleElementsAndBBoxes = function(parent) {
+    if(!parent) {
+      parent = $(svgcontent).children()
+    }
+    var contentElems = [];
+    $(parent).children().each(function(i, elem) {
+      if(elem.getBBox) {
+        contentElems.push({elem:elem, bbox:getStrokedBBox([elem])})
+      }
+    });
+    return contentElems.reverse()
+  };
+  var groupSvgElem = this.groupSvgElem = function(elem) {
+    var g = document.createElementNS(NS.SVG, "g");
+    elem.parentNode.replaceChild(g, elem);
+    $(g).append(elem).data("gsvg", elem)[0].id = getNextId()
+  };
+  var getId, getNextId;
+  var textActions, pathActions;
+  (function(c) {
+    var events = {};
+    getId = c.getId = function() {
+      return getCurrentDrawing().getId()
+    };
+    getNextId = c.getNextId = function() {
+      return getCurrentDrawing().getNextId()
+    };
+    call = c.call = function(event, arg) {
+      if(events[event]) {
+        return events[event](this, arg)
+      }
+    };
+    c.bind = function(event, f) {
+      var old = events[event];
+      events[event] = f;
+      return old
+    }
+  })(canvas);
+  this.prepareSvg = function(newDoc) {
+    this.sanitizeSvg(newDoc.documentElement);
+    var i, path, len, paths = newDoc.getElementsByTagNameNS(NS.SVG, "path");
+    for(i = 0, len = paths.length;i < len;++i) {
+      path = paths[i];
+      path.setAttribute("d", pathActions.convertPath(path));
+      pathActions.fixEnd(path)
+    }
+  };
+  var ffClone = function(elem) {
+    if(!svgedit.browser.isGecko()) {
+      return elem
+    }
+    var clone = elem.cloneNode(true);
+    elem.parentNode.insertBefore(clone, elem);
+    elem.parentNode.removeChild(elem);
+    selectorManager.releaseSelector(elem);
+    selectedElements[0] = clone;
+    selectorManager.requestSelector(clone).showGrips(true);
+    return clone
+  };
+  this.setRotationAngle = function(val, preventUndo) {
+    val = parseFloat(val);
+    var elem = selectedElements[0];
+    var oldTransform = elem.getAttribute("transform");
+    var bbox = svgedit.utilities.getBBox(elem);
+    var cx = bbox.x + bbox.width / 2, cy = bbox.y + bbox.height / 2;
+    var tlist = svgedit.transformlist.getTransformList(elem);
+    if(tlist.numberOfItems > 0) {
+      var xform = tlist.getItem(0);
+      if(xform.type == 4) {
+        tlist.removeItem(0)
+      }
+    }
+    if(val != 0) {
+      var center = svgedit.math.transformPoint(cx, cy, svgedit.math.transformListToTransform(tlist).matrix);
+      var R_nc = svgroot.createSVGTransform();
+      R_nc.setRotate(val, center.x, center.y);
+      if(tlist.numberOfItems) {
+        tlist.insertItemBefore(R_nc, 0)
+      }else {
+        tlist.appendItem(R_nc)
+      }
+    }else {
+      if(tlist.numberOfItems == 0) {
+        elem.removeAttribute("transform")
+      }
+    }
+    if(!preventUndo) {
+      var newTransform = elem.getAttribute("transform");
+      elem.setAttribute("transform", oldTransform);
+      changeSelectedAttribute("transform", newTransform, selectedElements);
+      call("changed", selectedElements)
+    }
+    var pointGripContainer = svgedit.utilities.getElem("pathpointgrip_container");
+    var selector = selectorManager.requestSelector(selectedElements[0]);
+    selector.resize();
+    selector.updateGripCursors(val)
+  };
+  var recalculateAllSelectedDimensions = this.recalculateAllSelectedDimensions = function() {
+    var text = current_resize_mode == "none" ? "position" : "size";
+    var batchCmd = new svgedit.history.BatchCommand(text);
+    var i = selectedElements.length;
+    while(i--) {
+      var elem = selectedElements[i];
+      var cmd = svgedit.recalculate.recalculateDimensions(elem);
+      if(cmd) {
+        batchCmd.addSubCommand(cmd)
+      }
+    }
+    if(!batchCmd.isEmpty()) {
+      addCommandToHistory(batchCmd);
+      call("changed", selectedElements)
+    }
+  };
+  var logMatrix = function(m) {
+    console.log([m.a, m.b, m.c, m.d, m.e, m.f])
+  };
+  var root_sctm = null;
+  var clearSelection = this.clearSelection = function(noCall) {
+    if(selectedElements[0] != null) {
+      var i, elem, len = selectedElements.length;
+      for(i = 0;i < len;++i) {
+        elem = selectedElements[i];
+        if(elem == null) {
+          break
+        }
+        selectorManager.releaseSelector(elem);
+        selectedElements[i] = null
+      }
+    }
+    if(!noCall) {
+      call("selected", selectedElements)
+    }
+  };
+  var addToSelection = this.addToSelection = function(elemsToAdd, showGrips) {
+    if(elemsToAdd.length == 0) {
+      return
+    }
+    var j = 0;
+    while(j < selectedElements.length) {
+      if(selectedElements[j] == null) {
+        break
+      }
+      ++j
+    }
+    var i = elemsToAdd.length;
+    while(i--) {
+      var elem = elemsToAdd[i];
+      if(!elem) {
+        continue
+      }
+      var bbox = svgedit.utilities.getBBox(elem);
+      if(!bbox) {
+        continue
+      }
+      if(elem.tagName === "a" && elem.childNodes.length === 1) {
+        elem = elem.firstChild
+      }
+      if(selectedElements.indexOf(elem) == -1) {
+        selectedElements[j] = elem;
+        j++;
+        var sel = selectorManager.requestSelector(elem, bbox);
+        if(selectedElements.length > 1) {
+          sel.showGrips(false)
+        }
+      }
+    }
+    call("selected", selectedElements);
+    if(showGrips || selectedElements.length == 1) {
+      selectorManager.requestSelector(selectedElements[0]).showGrips(true)
+    }else {
+      selectorManager.requestSelector(selectedElements[0]).showGrips(false)
+    }
+    selectedElements.sort(function(a, b) {
+      if(a && b && a.compareDocumentPosition) {
+        return 3 - (b.compareDocumentPosition(a) & 6)
+      }
+      if(a == null) {
+        return 1
+      }
+    });
+    while(selectedElements[0] == null) {
+      selectedElements.shift(0)
+    }
+  };
+  var selectOnly = this.selectOnly = function(elems, showGrips) {
+    clearSelection(true);
+    addToSelection(elems, showGrips)
+  };
+  var removeFromSelection = this.removeFromSelection = function(elemsToRemove) {
+    if(selectedElements[0] == null) {
+      return
+    }
+    if(elemsToRemove.length == 0) {
+      return
+    }
+    var i, j = 0, newSelectedItems = [], len = selectedElements.length;
+    newSelectedItems.length = len;
+    for(i = 0;i < len;++i) {
+      var elem = selectedElements[i];
+      if(elem) {
+        if(elemsToRemove.indexOf(elem) == -1) {
+          newSelectedItems[j] = elem;
+          j++
+        }else {
+          selectorManager.releaseSelector(elem)
+        }
+      }
+    }
+    selectedElements = newSelectedItems
+  };
+  this.selectAllInCurrentLayer = function() {
+    var current_layer = getCurrentDrawing().getCurrentLayer();
+    if(current_layer) {
+      current_mode = "select";
+      selectOnly($(current_group || current_layer).children())
+    }
+  };
+  var getMouseTarget = this.getMouseTarget = function(evt) {
+    if(evt == null) {
+      return null
+    }
+    var mouse_target = evt.target;
+    if(mouse_target.correspondingUseElement) {
+      mouse_target = mouse_target.correspondingUseElement
+    }
+    if([NS.MATH, NS.HTML].indexOf(mouse_target.namespaceURI) >= 0 && mouse_target.id != "svgcanvas") {
+      while(mouse_target.nodeName != "foreignObject") {
+        mouse_target = mouse_target.parentNode;
+        if(!mouse_target) {
+          return svgroot
+        }
+      }
+    }
+    var current_layer = getCurrentDrawing().getCurrentLayer();
+    if([svgroot, container, svgcontent, current_layer].indexOf(mouse_target) >= 0) {
+      return svgroot
+    }
+    var $target = $(mouse_target);
+    if($target.closest("#selectorParentGroup").length) {
+      return selectorManager.selectorParentGroup
+    }
+    while(mouse_target.parentNode !== (current_group || current_layer)) {
+      mouse_target = mouse_target.parentNode
+    }
+    return mouse_target
+  };
+  (function() {
+    var d_attr = null, start_x = null, start_y = null, r_start_x = null, r_start_y = null, init_bbox = {}, freehand = {minx:null, miny:null, maxx:null, maxy:null}, sumDistance = 0, controllPoint2 = {x:0, y:0}, controllPoint1 = {x:0, y:0}, start = {x:0, y:0}, end = {x:0, y:0}, parameter, nextParameter, bSpline = {x:0, y:0}, nextPos = {x:0, y:0}, THRESHOLD_DIST = 0.8, STEP_COUNT = 10;
+    var getBsplinePoint = function(t) {
+      var spline = {x:0, y:0}, p0 = controllPoint2, p1 = controllPoint1, p2 = start, p3 = end, S = 1 / 6, t2 = t * t, t3 = t2 * t;
+      var m = [[-1, 3, -3, 1], [3, -6, 3, 0], [-3, 0, 3, 0], [1, 4, 1, 0]];
+      spline.x = S * ((p0.x * m[0][0] + p1.x * m[0][1] + p2.x * m[0][2] + p3.x * m[0][3]) * t3 + (p0.x * m[1][0] + p1.x * m[1][1] + p2.x * m[1][2] + p3.x * m[1][3]) * t2 + (p0.x * m[2][0] + p1.x * m[2][1] + p2.x * m[2][2] + p3.x * m[2][3]) * t + (p0.x * m[3][0] + p1.x * m[3][1] + p2.x * m[3][2] + p3.x * m[3][3]));
+      spline.y = S * ((p0.y * m[0][0] + p1.y * m[0][1] + p2.y * m[0][2] + p3.y * m[0][3]) * t3 + (p0.y * m[1][0] + p1.y * m[1][1] + p2.y * m[1][2] + p3.y * m[1][3]) * t2 + (p0.y * m[2][0] + p1.y * m[2][1] + p2.y * m[2][2] + p3.y * m[2][3]) * t + (p0.y * m[3][0] + p1.y * m[3][1] + p2.y * m[3][2] + p3.y * m[3][3]));
+      return{x:spline.x, y:spline.y}
+    };
+    var mouseDown = function(evt) {
+      if(canvas.spaceKey || evt.button === 1) {
+        return
+      }
+      var right_click = evt.button === 2;
+      if(evt.altKey) {
+        svgCanvas.cloneSelectedElements(0, 0)
+      }
+      root_sctm = $("#svgcontent g")[0].getScreenCTM().inverse();
+      var pt = svgedit.math.transformPoint(evt.pageX, evt.pageY, root_sctm), mouse_x = pt.x * current_zoom, mouse_y = pt.y * current_zoom;
+      evt.preventDefault();
+      if(right_click) {
+        current_mode = "select";
+        lastClickPoint = pt
+      }
+      var x = mouse_x / current_zoom, y = mouse_y / current_zoom, mouse_target = getMouseTarget(evt);
+      if(mouse_target.tagName === "a" && mouse_target.childNodes.length === 1) {
+        mouse_target = mouse_target.firstChild
+      }
+      var real_x = x;
+      r_start_x = start_x = x;
+      var real_y = y;
+      r_start_y = start_y = y;
+      if(curConfig.gridSnapping) {
+        x = svgedit.utilities.snapToGrid(x);
+        y = svgedit.utilities.snapToGrid(y);
+        start_x = svgedit.utilities.snapToGrid(start_x);
+        start_y = svgedit.utilities.snapToGrid(start_y)
+      }
+      if(mouse_target == selectorManager.selectorParentGroup && selectedElements[0] != null) {
+        var grip = evt.target;
+        var griptype = elData(grip, "type");
+        if(griptype == "rotate") {
+          current_mode = "rotate"
+        }else {
+          if(griptype == "resize") {
+            current_mode = "resize";
+            current_resize_mode = elData(grip, "dir")
+          }
+        }
+        mouse_target = selectedElements[0]
+      }
+      startTransform = mouse_target.getAttribute("transform");
+      var i, stroke_w, tlist = svgedit.transformlist.getTransformList(mouse_target);
+      switch(current_mode) {
+        case "select":
+          started = true;
+          current_resize_mode = "none";
+          if(right_click) {
+            started = false
+          }
+          if(mouse_target != svgroot) {
+            if(selectedElements.indexOf(mouse_target) == -1) {
+              if(!evt.shiftKey) {
+                clearSelection(true)
+              }
+              addToSelection([mouse_target]);
+              justSelected = mouse_target;
+              pathActions.clear()
+            }
+            if(!right_click) {
+              for(i = 0;i < selectedElements.length;++i) {
+                if(selectedElements[i] == null) {
+                  continue
+                }
+                var slist = svgedit.transformlist.getTransformList(selectedElements[i]);
+                if(slist.numberOfItems) {
+                  slist.insertItemBefore(svgroot.createSVGTransform(), 0)
+                }else {
+                  slist.appendItem(svgroot.createSVGTransform())
+                }
+              }
+            }
+          }else {
+            if(!right_click) {
+              clearSelection();
+              current_mode = "multiselect";
+              if(rubberBox == null) {
+                rubberBox = selectorManager.getRubberBandBox()
+              }
+              r_start_x *= current_zoom;
+              r_start_y *= current_zoom;
+              svgedit.utilities.assignAttributes(rubberBox, {x:r_start_x, y:r_start_y, width:0, height:0, display:"inline"}, 100)
+            }
+          }
+          break;
+        case "zoom":
+          started = true;
+          if(rubberBox == null) {
+            rubberBox = selectorManager.getRubberBandBox()
+          }
+          svgedit.utilities.assignAttributes(rubberBox, {x:real_x * current_zoom, y:real_x * current_zoom, width:0, height:0, display:"inline"}, 100);
+          break;
+        case "resize":
+          started = true;
+          start_x = x;
+          start_y = y;
+          init_bbox = svgedit.utilities.getBBox($("#selectedBox0")[0]);
+          var bb = {};
+          $.each(init_bbox, function(key, val) {
+            bb[key] = val / current_zoom
+          });
+          init_bbox = bb;
+          var pos = svgedit.utilities.getRotationAngle(mouse_target) ? 1 : 0;
+          if(svgedit.math.hasMatrixTransform(tlist)) {
+            tlist.insertItemBefore(svgroot.createSVGTransform(), pos);
+            tlist.insertItemBefore(svgroot.createSVGTransform(), pos);
+            tlist.insertItemBefore(svgroot.createSVGTransform(), pos)
+          }else {
+            tlist.appendItem(svgroot.createSVGTransform());
+            tlist.appendItem(svgroot.createSVGTransform());
+            tlist.appendItem(svgroot.createSVGTransform());
+            if(svgedit.browser.supportsNonScalingStroke()) {
+              var isWebkit = svgedit.browser.isWebkit();
+              if(isWebkit) {
+                var delayedStroke = function(ele) {
+                  var _stroke = ele.getAttributeNS(null, "stroke");
+                  ele.removeAttributeNS(null, "stroke");
+                  if(_stroke !== null) {
+                    setTimeout(function() {
+                      ele.setAttributeNS(null, "stroke", _stroke)
+                    }, 0)
+                  }
+                }
+              }
+              mouse_target.style.vectorEffect = "non-scaling-stroke";
+              if(isWebkit) {
+                delayedStroke(mouse_target)
+              }
+              var all = mouse_target.getElementsByTagName("*"), len = all.length;
+              for(i = 0;i < len;i++) {
+                all[i].style.vectorEffect = "non-scaling-stroke";
+                if(isWebkit) {
+                  delayedStroke(all[i])
+                }
+              }
+            }
+          }
+          break;
+        case "fhellipse":
+        ;
+        case "fhrect":
+        ;
+        case "fhpath":
+          start.x = real_x;
+          start.y = real_y;
+          started = true;
+          d_attr = real_x + "," + real_y + " ";
+          stroke_w = cur_shape.stroke_width == 0 ? 1 : cur_shape.stroke_width;
+          addSvgElementFromJson({element:"polyline", curStyles:true, attr:{points:d_attr, id:getNextId(), fill:"none", opacity:cur_shape.opacity / 2, "stroke-linecap":"round", style:"pointer-events:none"}});
+          freehand.minx = real_x;
+          freehand.maxx = real_x;
+          freehand.miny = real_y;
+          freehand.maxy = real_y;
+          break;
+        case "image":
+          started = true;
+          var newImage = addSvgElementFromJson({element:"image", attr:{x:x, y:y, width:0, height:0, id:getNextId(), opacity:cur_shape.opacity / 2, style:"pointer-events:inherit"}});
+          setHref(newImage, last_good_img_url);
+          svgedit.utilities.preventClickDefault(newImage);
+          break;
+        case "square":
+        ;
+        case "rect":
+          started = true;
+          start_x = x;
+          start_y = y;
+          addSvgElementFromJson({element:"rect", curStyles:true, attr:{x:x, y:y, width:0, height:0, id:getNextId(), opacity:cur_shape.opacity / 2}});
+          break;
+        case "line":
+          started = true;
+          stroke_w = cur_shape.stroke_width == 0 ? 1 : cur_shape.stroke_width;
+          addSvgElementFromJson({element:"line", curStyles:true, attr:{x1:x, y1:y, x2:x, y2:y, id:getNextId(), stroke:cur_shape.stroke, "stroke-width":stroke_w, "stroke-dasharray":cur_shape.stroke_dasharray, "stroke-linejoin":cur_shape.stroke_linejoin, "stroke-linecap":cur_shape.stroke_linecap, "stroke-opacity":cur_shape.stroke_opacity, fill:"none", opacity:cur_shape.opacity / 2, style:"pointer-events:none"}});
+          break;
+        case "circle":
+          started = true;
+          addSvgElementFromJson({element:"circle", curStyles:true, attr:{cx:x, cy:y, r:0, id:getNextId(), opacity:cur_shape.opacity / 2}});
+          break;
+        case "ellipse":
+          started = true;
+          addSvgElementFromJson({element:"ellipse", curStyles:true, attr:{cx:x, cy:y, rx:0, ry:0, id:getNextId(), opacity:cur_shape.opacity / 2}});
+          break;
+        case "text":
+          started = true;
+          var newText = addSvgElementFromJson({element:"text", curStyles:true, attr:{x:x, y:y, id:getNextId(), fill:cur_text.fill, "stroke-width":cur_text.stroke_width, "font-size":cur_text.font_size, "font-family":cur_text.font_family, "text-anchor":"middle", "xml:space":"preserve", opacity:cur_shape.opacity}});
+          break;
+        case "path":
+        ;
+        case "pathedit":
+          start_x *= current_zoom;
+          start_y *= current_zoom;
+          pathActions.mouseDown(evt, mouse_target, start_x, start_y);
+          started = true;
+          break;
+        case "textedit":
+          start_x *= current_zoom;
+          start_y *= current_zoom;
+          textActions.mouseDown(evt, mouse_target, start_x, start_y);
+          started = true;
+          break;
+        case "rotate":
+          started = true;
+          canvas.undoMgr.beginUndoableChange("transform", selectedElements);
+          break;
+        default:
+          break
+      }
+      var ext_result = runExtensions("mouseDown", {event:evt, start_x:start_x, start_y:start_y, selectedElements:selectedElements}, true);
+      $.each(ext_result, function(i, r) {
+        if(r && r.started) {
+          started = true
+        }
+      })
+    };
+    var mouseMove = function(evt) {
+      if(!started) {
+        return
+      }
+      if(evt.button === 1 || canvas.spaceKey) {
+        return
+      }
+      var i, xya, c, cx, cy, dx, dy, len, angle, box, selected = selectedElements[0], pt = svgedit.math.transformPoint(evt.pageX, evt.pageY, root_sctm), mouse_x = pt.x * current_zoom, mouse_y = pt.y * current_zoom, shape = svgedit.utilities.getElem(getId());
+      var real_x = mouse_x / current_zoom;
+      x = real_x;
+      var real_y = mouse_y / current_zoom;
+      y = real_y;
+      if(curConfig.gridSnapping) {
+        x = svgedit.utilities.snapToGrid(x);
+        y = svgedit.utilities.snapToGrid(y)
+      }
+      evt.preventDefault();
+      var tlist;
+      switch(current_mode) {
+        case "select":
+          if(selectedElements[0] !== null) {
+            dx = x - start_x;
+            dy = y - start_y;
+            if(curConfig.gridSnapping) {
+              dx = svgedit.utilities.snapToGrid(dx);
+              dy = svgedit.utilities.snapToGrid(dy)
+            }
+            if(evt.shiftKey) {
+              xya = svgedit.math.snapToAngle(start_x, start_y, x, y);
+              x = xya.x;
+              y = xya.y
+            }
+            if(dx != 0 || dy != 0) {
+              len = selectedElements.length;
+              for(i = 0;i < len;++i) {
+                selected = selectedElements[i];
+                if(selected == null) {
+                  break
+                }
+                var xform = svgroot.createSVGTransform();
+                tlist = svgedit.transformlist.getTransformList(selected);
+                xform.setTranslate(dx, dy);
+                if(tlist.numberOfItems) {
+                  tlist.replaceItem(xform, 0)
+                }else {
+                  tlist.appendItem(xform)
+                }
+                selectorManager.requestSelector(selected).resize()
+              }
+              call("transition", selectedElements)
+            }
+          }
+          break;
+        case "multiselect":
+          real_x *= current_zoom;
+          real_y *= current_zoom;
+          svgedit.utilities.assignAttributes(rubberBox, {x:Math.min(r_start_x, real_x), y:Math.min(r_start_y, real_y), width:Math.abs(real_x - r_start_x), height:Math.abs(real_y - r_start_y)}, 100);
+          var elemsToRemove = selectedElements.slice(), elemsToAdd = [], newList = getIntersectionList();
+          len = newList.length;
+          for(i = 0;i < len;++i) {
+            var intElem = newList[i];
+            if(selectedElements.indexOf(intElem) == -1) {
+              elemsToAdd.push(intElem)
+            }
+            var foundInd = elemsToRemove.indexOf(intElem);
+            if(foundInd != -1) {
+              elemsToRemove.splice(foundInd, 1)
+            }
+          }
+          if(elemsToRemove.length > 0) {
+            canvas.removeFromSelection(elemsToRemove)
+          }
+          if(elemsToAdd.length > 0) {
+            canvas.addToSelection(elemsToAdd)
+          }
+          break;
+        case "resize":
+          tlist = svgedit.transformlist.getTransformList(selected);
+          var hasMatrix = svgedit.math.hasMatrixTransform(tlist);
+          box = hasMatrix ? init_bbox : svgedit.utilities.getBBox(selected);
+          var left = box.x, top = box.y, width = box.width, height = box.height;
+          dx = x - start_x;
+          dy = y - start_y;
+          if(curConfig.gridSnapping) {
+            dx = svgedit.utilities.snapToGrid(dx);
+            dy = svgedit.utilities.snapToGrid(dy);
+            height = svgedit.utilities.snapToGrid(height);
+            width = svgedit.utilities.snapToGrid(width)
+          }
+          angle = svgedit.utilities.getRotationAngle(selected);
+          if(angle) {
+            var r = Math.sqrt(dx * dx + dy * dy), theta = Math.atan2(dy, dx) - angle * Math.PI / 180;
+            dx = r * Math.cos(theta);
+            dy = r * Math.sin(theta)
+          }
+          if(current_resize_mode.indexOf("n") == -1 && current_resize_mode.indexOf("s") == -1) {
+            dy = 0
+          }
+          if(current_resize_mode.indexOf("e") == -1 && current_resize_mode.indexOf("w") == -1) {
+            dx = 0
+          }
+          var ts = null, tx = 0, ty = 0, sy = height ? (height + dy) / height : 1, sx = width ? (width + dx) / width : 1;
+          if(current_resize_mode.indexOf("n") >= 0) {
+            sy = height ? (height - dy) / height : 1;
+            ty = height
+          }
+          if(current_resize_mode.indexOf("w") >= 0) {
+            sx = width ? (width - dx) / width : 1;
+            tx = width
+          }
+          var translateOrigin = svgroot.createSVGTransform(), scale = svgroot.createSVGTransform(), translateBack = svgroot.createSVGTransform();
+          if(curConfig.gridSnapping) {
+            left = svgedit.utilities.snapToGrid(left);
+            tx = svgedit.utilities.snapToGrid(tx);
+            top = svgedit.utilities.snapToGrid(top);
+            ty = svgedit.utilities.snapToGrid(ty)
+          }
+          translateOrigin.setTranslate(-(left + tx), -(top + ty));
+          if(evt.shiftKey) {
+            if(sx == 1) {
+              sx = sy
+            }else {
+              sy = sx
+            }
+          }
+          scale.setScale(sx, sy);
+          translateBack.setTranslate(left + tx, top + ty);
+          if(hasMatrix) {
+            var diff = angle ? 1 : 0;
+            tlist.replaceItem(translateOrigin, 2 + diff);
+            tlist.replaceItem(scale, 1 + diff);
+            tlist.replaceItem(translateBack, Number(diff))
+          }else {
+            var N = tlist.numberOfItems;
+            tlist.replaceItem(translateBack, N - 3);
+            tlist.replaceItem(scale, N - 2);
+            tlist.replaceItem(translateOrigin, N - 1)
+          }
+          selectorManager.requestSelector(selected).resize();
+          call("transition", selectedElements);
+          break;
+        case "zoom":
+          real_x *= current_zoom;
+          real_y *= current_zoom;
+          svgedit.utilities.assignAttributes(rubberBox, {x:Math.min(r_start_x * current_zoom, real_x), y:Math.min(r_start_y * current_zoom, real_y), width:Math.abs(real_x - r_start_x * current_zoom), height:Math.abs(real_y - r_start_y * current_zoom)}, 100);
+          break;
+        case "text":
+          svgedit.utilities.assignAttributes(shape, {x:x, y:y}, 1E3);
+          break;
+        case "line":
+          if(curConfig.gridSnapping) {
+            x = svgedit.utilities.snapToGrid(x);
+            y = svgedit.utilities.snapToGrid(y)
+          }
+          var x2 = x;
+          var y2 = y;
+          if(evt.shiftKey) {
+            xya = svgedit.math.snapToAngle(start_x, start_y, x2, y2);
+            x2 = xya.x;
+            y2 = xya.y
+          }
+          shape.setAttributeNS(null, "x2", x2);
+          shape.setAttributeNS(null, "y2", y2);
+          break;
+        case "foreignObject":
+        ;
+        case "square":
+        ;
+        case "rect":
+        ;
+        case "image":
+          var square = current_mode == "square" || evt.shiftKey, w = Math.abs(x - start_x), h = Math.abs(y - start_y), new_x, new_y;
+          if(square) {
+            w = h = Math.max(w, h);
+            new_x = start_x < x ? start_x : start_x - w;
+            new_y = start_y < y ? start_y : start_y - h
+          }else {
+            new_x = Math.min(start_x, x);
+            new_y = Math.min(start_y, y)
+          }
+          if(curConfig.gridSnapping) {
+            w = svgedit.utilities.snapToGrid(w);
+            h = svgedit.utilities.snapToGrid(h);
+            new_x = svgedit.utilities.snapToGrid(new_x);
+            new_y = svgedit.utilities.snapToGrid(new_y)
+          }
+          svgedit.utilities.assignAttributes(shape, {width:w, height:h, x:new_x, y:new_y}, 1E3);
+          break;
+        case "circle":
+          c = $(shape).attr(["cx", "cy"]);
+          cx = c.cx;
+          cy = c.cy;
+          var rad = Math.sqrt((x - cx) * (x - cx) + (y - cy) * (y - cy));
+          if(curConfig.gridSnapping) {
+            rad = svgedit.utilities.snapToGrid(rad)
+          }
+          shape.setAttributeNS(null, "r", rad);
+          break;
+        case "ellipse":
+          c = $(shape).attr(["cx", "cy"]);
+          cx = c.cx;
+          cy = c.cy;
+          if(curConfig.gridSnapping) {
+            x = svgedit.utilities.snapToGrid(x);
+            cx = svgedit.utilities.snapToGrid(cx);
+            y = svgedit.utilities.snapToGrid(y);
+            cy = svgedit.utilities.snapToGrid(cy)
+          }
+          shape.setAttributeNS(null, "rx", Math.abs(x - cx));
+          var ry = Math.abs(evt.shiftKey ? x - cx : y - cy);
+          shape.setAttributeNS(null, "ry", ry);
+          break;
+        case "fhellipse":
+        ;
+        case "fhrect":
+          freehand.minx = Math.min(real_x, freehand.minx);
+          freehand.maxx = Math.max(real_x, freehand.maxx);
+          freehand.miny = Math.min(real_y, freehand.miny);
+          freehand.maxy = Math.max(real_y, freehand.maxy);
+        case "fhpath":
+          end.x = real_x;
+          end.y = real_y;
+          if(controllPoint2.x && controllPoint2.y) {
+            for(i = 0;i < STEP_COUNT - 1;i++) {
+              parameter = i / STEP_COUNT;
+              nextParameter = (i + 1) / STEP_COUNT;
+              bSpline = getBsplinePoint(nextParameter);
+              nextPos = bSpline;
+              bSpline = getBsplinePoint(parameter);
+              sumDistance += Math.sqrt((nextPos.x - bSpline.x) * (nextPos.x - bSpline.x) + (nextPos.y - bSpline.y) * (nextPos.y - bSpline.y));
+              if(sumDistance > THRESHOLD_DIST) {
+                d_attr += +bSpline.x + "," + bSpline.y + " ";
+                shape.setAttributeNS(null, "points", d_attr);
+                sumDistance -= THRESHOLD_DIST
+              }
+            }
+          }
+          controllPoint2 = {x:controllPoint1.x, y:controllPoint1.y};
+          controllPoint1 = {x:start.x, y:start.y};
+          start = {x:end.x, y:end.y};
+          break;
+        case "path":
+        ;
+        case "pathedit":
+          x *= current_zoom;
+          y *= current_zoom;
+          if(curConfig.gridSnapping) {
+            x = svgedit.utilities.snapToGrid(x);
+            y = svgedit.utilities.snapToGrid(y);
+            start_x = svgedit.utilities.snapToGrid(start_x);
+            start_y = svgedit.utilities.snapToGrid(start_y)
+          }
+          if(evt.shiftKey) {
+            var path = svgedit.path.path;
+            var x1, y1;
+            if(path) {
+              x1 = path.dragging ? path.dragging[0] : start_x;
+              y1 = path.dragging ? path.dragging[1] : start_y
+            }else {
+              x1 = start_x;
+              y1 = start_y
+            }
+            xya = svgedit.math.snapToAngle(x1, y1, x, y);
+            x = xya.x;
+            y = xya.y
+          }
+          if(rubberBox && rubberBox.getAttribute("display") !== "none") {
+            real_x *= current_zoom;
+            real_y *= current_zoom;
+            svgedit.utilities.assignAttributes(rubberBox, {x:Math.min(r_start_x * current_zoom, real_x), y:Math.min(r_start_y * current_zoom, real_y), width:Math.abs(real_x - r_start_x * current_zoom), height:Math.abs(real_y - r_start_y * current_zoom)}, 100)
+          }
+          pathActions.mouseMove(x, y);
+          break;
+        case "textedit":
+          x *= current_zoom;
+          y *= current_zoom;
+          textActions.mouseMove(mouse_x, mouse_y);
+          break;
+        case "rotate":
+          box = svgedit.utilities.getBBox(selected);
+          cx = box.x + box.width / 2;
+          cy = box.y + box.height / 2;
+          var m = svgedit.math.getMatrix(selected), center = svgedit.math.transformPoint(cx, cy, m);
+          cx = center.x;
+          cy = center.y;
+          angle = (Math.atan2(cy - y, cx - x) * (180 / Math.PI) - 90) % 360;
+          if(curConfig.gridSnapping) {
+            angle = svgedit.utilities.snapToGrid(angle)
+          }
+          if(evt.shiftKey) {
+            var snap = 45;
+            angle = Math.round(angle / snap) * snap
+          }
+          canvas.setRotationAngle(angle < -180 ? 360 + angle : angle, true);
+          call("transition", selectedElements);
+          break;
+        default:
+          break
+      }
+      runExtensions("mouseMove", {event:evt, mouse_x:mouse_x, mouse_y:mouse_y, selected:selected})
+    };
+    var mouseUp = function(evt) {
+      if(evt.button === 2) {
+        return
+      }
+      var tempJustSelected = justSelected;
+      justSelected = null;
+      if(!started) {
+        return
+      }
+      var pt = svgedit.math.transformPoint(evt.pageX, evt.pageY, root_sctm), mouse_x = pt.x * current_zoom, mouse_y = pt.y * current_zoom, x = mouse_x / current_zoom, y = mouse_y / current_zoom, element = svgedit.utilities.getElem(getId()), keep = false;
+      var real_x = x;
+      var real_y = y;
+      var useUnit = false;
+      started = false;
+      var attrs, t;
+      switch(current_mode) {
+        case "resize":
+        ;
+        case "multiselect":
+          if(rubberBox != null) {
+            rubberBox.setAttribute("display", "none");
+            curBBoxes = []
+          }
+          current_mode = "select";
+        case "select":
+          if(selectedElements[0] != null) {
+            if(selectedElements[1] == null) {
+              var selected = selectedElements[0];
+              switch(selected.tagName) {
+                case "g":
+                ;
+                case "use":
+                ;
+                case "image":
+                ;
+                case "foreignObject":
+                  break;
+                default:
+                  cur_properties.fill = selected.getAttribute("fill");
+                  cur_properties.fill_opacity = selected.getAttribute("fill-opacity");
+                  cur_properties.stroke = selected.getAttribute("stroke");
+                  cur_properties.stroke_opacity = selected.getAttribute("stroke-opacity");
+                  cur_properties.stroke_width = selected.getAttribute("stroke-width");
+                  cur_properties.stroke_dasharray = selected.getAttribute("stroke-dasharray");
+                  cur_properties.stroke_linejoin = selected.getAttribute("stroke-linejoin");
+                  cur_properties.stroke_linecap = selected.getAttribute("stroke-linecap")
+              }
+              if(selected.tagName == "text") {
+                cur_text.font_size = selected.getAttribute("font-size");
+                cur_text.font_family = selected.getAttribute("font-family")
+              }
+              selectorManager.requestSelector(selected).showGrips(true)
+            }
+            recalculateAllSelectedDimensions();
+            if(real_x != r_start_x || real_y != r_start_y) {
+              var i, len = selectedElements.length;
+              for(i = 0;i < len;++i) {
+                if(selectedElements[i] == null) {
+                  break
+                }
+                if(!selectedElements[i].firstChild) {
+                  selectorManager.requestSelector(selectedElements[i]).resize()
+                }
+              }
+            }else {
+              t = evt.target;
+              if(selectedElements[0].nodeName === "path" && selectedElements[1] == null) {
+                pathActions.select(selectedElements[0])
+              }else {
+                if(evt.shiftKey) {
+                  if(tempJustSelected != t) {
+                    canvas.removeFromSelection([t])
+                  }
+                }
+              }
+            }
+            if(svgedit.browser.supportsNonScalingStroke()) {
+              var elem = selectedElements[0];
+              if(elem) {
+                elem.removeAttribute("style");
+                svgedit.utilities.walkTree(elem, function(elem) {
+                  elem.removeAttribute("style")
+                })
+              }
+            }
+          }
+          return;
+        case "zoom":
+          if(rubberBox != null) {
+            rubberBox.setAttribute("display", "none")
+          }
+          var factor = evt.shiftKey ? 0.5 : 2;
+          call("zoomed", {x:Math.min(r_start_x, real_x), y:Math.min(r_start_y, real_y), width:Math.abs(real_x - r_start_x), height:Math.abs(real_y - r_start_y), factor:factor});
+          return;
+        case "fhpath":
+          sumDistance = 0;
+          controllPoint2 = {x:0, y:0};
+          controllPoint1 = {x:0, y:0};
+          start = {x:0, y:0};
+          end = {x:0, y:0};
+          var coords = element.getAttribute("points");
+          var commaIndex = coords.indexOf(",");
+          if(commaIndex >= 0) {
+            keep = coords.indexOf(",", commaIndex + 1) >= 0
+          }else {
+            keep = coords.indexOf(" ", coords.indexOf(" ") + 1) >= 0
+          }
+          if(keep) {
+            element = pathActions.smoothPolylineIntoPath(element)
+          }
+          break;
+        case "line":
+          attrs = $(element).attr(["x1", "x2", "y1", "y2"]);
+          keep = attrs.x1 != attrs.x2 || attrs.y1 != attrs.y2;
+          break;
+        case "foreignObject":
+        ;
+        case "square":
+        ;
+        case "rect":
+        ;
+        case "image":
+          attrs = $(element).attr(["width", "height"]);
+          keep = attrs.width != 0 || attrs.height != 0 || current_mode === "image";
+          break;
+        case "circle":
+          keep = element.getAttribute("r") != 0;
+          break;
+        case "ellipse":
+          attrs = $(element).attr(["rx", "ry"]);
+          keep = attrs.rx != null || attrs.ry != null;
+          break;
+        case "fhellipse":
+          if(freehand.maxx - freehand.minx > 0 && freehand.maxy - freehand.miny > 0) {
+            element = addSvgElementFromJson({element:"ellipse", curStyles:true, attr:{cx:(freehand.minx + freehand.maxx) / 2, cy:(freehand.miny + freehand.maxy) / 2, rx:(freehand.maxx - freehand.minx) / 2, ry:(freehand.maxy - freehand.miny) / 2, id:getId()}});
+            call("changed", [element]);
+            keep = true
+          }
+          break;
+        case "fhrect":
+          if(freehand.maxx - freehand.minx > 0 && freehand.maxy - freehand.miny > 0) {
+            element = addSvgElementFromJson({element:"rect", curStyles:true, attr:{x:freehand.minx, y:freehand.miny, width:freehand.maxx - freehand.minx, height:freehand.maxy - freehand.miny, id:getId()}});
+            call("changed", [element]);
+            keep = true
+          }
+          break;
+        case "text":
+          keep = true;
+          selectOnly([element]);
+          textActions.start(element);
+          break;
+        case "path":
+          element = null;
+          started = true;
+          var res = pathActions.mouseUp(evt, element, mouse_x, mouse_y);
+          element = res.element;
+          keep = res.keep;
+          break;
+        case "pathedit":
+          keep = true;
+          element = null;
+          pathActions.mouseUp(evt);
+          break;
+        case "textedit":
+          keep = false;
+          element = null;
+          textActions.mouseUp(evt, mouse_x, mouse_y);
+          break;
+        case "rotate":
+          keep = true;
+          element = null;
+          current_mode = "select";
+          var batchCmd = canvas.undoMgr.finishUndoableChange();
+          if(!batchCmd.isEmpty()) {
+            addCommandToHistory(batchCmd)
+          }
+          recalculateAllSelectedDimensions();
+          call("changed", selectedElements);
+          break;
+        default:
+          break
+      }
+      var ext_result = runExtensions("mouseUp", {event:evt, mouse_x:mouse_x, mouse_y:mouse_y}, true);
+      $.each(ext_result, function(i, r) {
+        if(r) {
+          keep = r.keep || keep;
+          element = r.element;
+          started = r.started || started
+        }
+      });
+      if(!keep && element != null) {
+        getCurrentDrawing().releaseId(getId());
+        element.parentNode.removeChild(element);
+        element = null;
+        t = evt.target;
+        while(t.parentNode.parentNode.tagName == "g") {
+          t = t.parentNode
+        }
+        if((current_mode != "path" || !drawn_path) && t.parentNode.id != "selectorParentGroup" && t.id != "svgcanvas" && t.id != "svgroot") {
+          canvas.setMode("select");
+          selectOnly([t], true)
+        }
+      }else {
+        if(element != null) {
+          canvas.addedNew = true;
+          if(useUnit) {
+            svgedit.units.convertAttrs(element)
+          }
+          var ani_dur = 0.2, c_ani;
+          if(opac_ani.beginElement && element.getAttribute("opacity") != cur_shape.opacity) {
+            c_ani = $(opac_ani).clone().attr({to:cur_shape.opacity, dur:ani_dur}).appendTo(element);
+            try {
+              c_ani[0].beginElement()
+            }catch(e) {
+            }
+          }else {
+            ani_dur = 0
+          }
+          setTimeout(function() {
+            if(c_ani) {
+              c_ani.remove()
+            }
+            element.setAttribute("opacity", cur_shape.opacity);
+            element.setAttribute("style", "pointer-events:inherit");
+            cleanupElement(element);
+            if(current_mode === "path") {
+              pathActions.toEditMode(element)
+            }else {
+              if(curConfig.selectNew) {
+                selectOnly([element], true)
+              }
+            }
+            addCommandToHistory(new svgedit.history.InsertElementCommand(element));
+            call("changed", [element])
+          }, ani_dur * 1E3)
+        }
+      }
+      startTransform = null
+    };
+    var dblClick = function(evt) {
+      var evt_target = evt.target;
+      var parent = evt_target.parentNode;
+      if(parent === current_group) {
+        return
+      }
+      var mouse_target = getMouseTarget(evt);
+      var tagName = mouse_target.tagName;
+      if(tagName === "text" && current_mode !== "textedit") {
+        var pt = svgedit.math.transformPoint(evt.pageX, evt.pageY, root_sctm);
+        textActions.select(mouse_target, pt.x, pt.y)
+      }
+      if((tagName === "g" || tagName === "a") && svgedit.utilities.getRotationAngle(mouse_target)) {
+        pushGroupProperties(mouse_target);
+        mouse_target = selectedElements[0];
+        clearSelection(true)
+      }
+      if(current_group) {
+        leaveContext()
+      }
+      if(parent.tagName !== "g" && parent.tagName !== "a" || parent === getCurrentDrawing().getCurrentLayer() || mouse_target === selectorManager.selectorParentGroup) {
+        return
+      }
+      setContext(mouse_target)
+    };
+    var handleLinkInCanvas = function(e) {
+      e.preventDefault();
+      return false
+    };
+    $(container).mousedown(mouseDown).mousemove(mouseMove).click(handleLinkInCanvas).dblclick(dblClick).mouseup(mouseUp);
+    $(container).bind("mousewheel DOMMouseScroll", function(e) {
+      e.preventDefault();
+      var evt = e.originalEvent;
+      root_sctm = $("#svgcontent g")[0].getScreenCTM().inverse();
+      var pt = svgedit.math.transformPoint(evt.pageX, evt.pageY, root_sctm);
+      var bbox = {x:pt.x, y:pt.y, width:0, height:0};
+      var delta = evt.wheelDelta ? evt.wheelDelta : evt.detail ? -evt.detail : 0;
+      if(!delta) {
+        return
+      }
+      bbox.factor = Math.max(3 / 4, Math.min(4 / 3, delta));
+      call("zoomed", bbox)
+    })
+  })();
+  textActions = canvas.textActions = function() {
+    var curtext;
+    var textinput;
+    var cursor;
+    var selblock;
+    var blinker;
+    var chardata = [];
+    var textbb, transbb;
+    var matrix;
+    var last_x, last_y;
+    var allow_dbl;
+    function setCursor(index) {
+      var empty = textinput.value === "";
+      $(textinput).focus();
+      if(!arguments.length) {
+        if(empty) {
+          index = 0
+        }else {
+          if(textinput.selectionEnd !== textinput.selectionStart) {
+            return
+          }
+          index = textinput.selectionEnd
+        }
+      }
+      var charbb;
+      charbb = chardata[index];
+      if(!empty) {
+        textinput.setSelectionRange(index, index)
+      }
+      cursor = svgedit.utilities.getElem("text_cursor");
+      if(!cursor) {
+        cursor = document.createElementNS(NS.SVG, "line");
+        svgedit.utilities.assignAttributes(cursor, {id:"text_cursor", stroke:"#333", "stroke-width":1});
+        cursor = svgedit.utilities.getElem("selectorParentGroup").appendChild(cursor)
+      }
+      if(!blinker) {
+        blinker = setInterval(function() {
+          var show = cursor.getAttribute("display") === "none";
+          cursor.setAttribute("display", show ? "inline" : "none")
+        }, 600)
+      }
+      var start_pt = ptToScreen(charbb.x, textbb.y);
+      var end_pt = ptToScreen(charbb.x, textbb.y + textbb.height);
+      svgedit.utilities.assignAttributes(cursor, {x1:start_pt.x, y1:start_pt.y, x2:end_pt.x, y2:end_pt.y, visibility:"visible", display:"inline"});
+      if(selblock) {
+        selblock.setAttribute("d", "")
+      }
+    }
+    function setSelection(start, end, skipInput) {
+      if(start === end) {
+        setCursor(end);
+        return
+      }
+      if(!skipInput) {
+        textinput.setSelectionRange(start, end)
+      }
+      selblock = svgedit.utilities.getElem("text_selectblock");
+      if(!selblock) {
+        selblock = document.createElementNS(NS.SVG, "path");
+        svgedit.utilities.assignAttributes(selblock, {id:"text_selectblock", fill:"green", opacity:0.5, style:"pointer-events:none"});
+        svgedit.utilities.getElem("selectorParentGroup").appendChild(selblock)
+      }
+      var startbb = chardata[start];
+      var endbb = chardata[end];
+      cursor.setAttribute("visibility", "hidden");
+      var tl = ptToScreen(startbb.x, textbb.y), tr = ptToScreen(startbb.x + (endbb.x - startbb.x), textbb.y), bl = ptToScreen(startbb.x, textbb.y + textbb.height), br = ptToScreen(startbb.x + (endbb.x - startbb.x), textbb.y + textbb.height);
+      var dstr = "M" + tl.x + "," + tl.y + " L" + tr.x + "," + tr.y + " " + br.x + "," + br.y + " " + bl.x + "," + bl.y + "z";
+      svgedit.utilities.assignAttributes(selblock, {d:dstr, display:"inline"})
+    }
+    function getIndexFromPoint(mouse_x, mouse_y) {
+      var pt = svgroot.createSVGPoint();
+      pt.x = mouse_x;
+      pt.y = mouse_y;
+      if(chardata.length == 1) {
+        return 0
+      }
+      var charpos = curtext.getCharNumAtPosition(pt);
+      if(charpos < 0) {
+        charpos = chardata.length - 2;
+        if(mouse_x <= chardata[0].x) {
+          charpos = 0
+        }
+      }else {
+        if(charpos >= chardata.length - 2) {
+          charpos = chardata.length - 2
+        }
+      }
+      var charbb = chardata[charpos];
+      var mid = charbb.x + charbb.width / 2;
+      if(mouse_x > mid) {
+        charpos++
+      }
+      return charpos
+    }
+    function setCursorFromPoint(mouse_x, mouse_y) {
+      setCursor(getIndexFromPoint(mouse_x, mouse_y))
+    }
+    function setEndSelectionFromPoint(x, y, apply) {
+      var i1 = textinput.selectionStart;
+      var i2 = getIndexFromPoint(x, y);
+      var start = Math.min(i1, i2);
+      var end = Math.max(i1, i2);
+      setSelection(start, end, !apply)
+    }
+    function screenToPt(x_in, y_in) {
+      var out = {x:x_in, y:y_in};
+      out.x /= current_zoom;
+      out.y /= current_zoom;
+      if(matrix) {
+        var pt = svgedit.math.transformPoint(out.x, out.y, matrix.inverse());
+        out.x = pt.x;
+        out.y = pt.y
+      }
+      return out
+    }
+    function ptToScreen(x_in, y_in) {
+      var out = {x:x_in, y:y_in};
+      if(matrix) {
+        var pt = svgedit.math.transformPoint(out.x, out.y, matrix);
+        out.x = pt.x;
+        out.y = pt.y
+      }
+      out.x *= current_zoom;
+      out.y *= current_zoom;
+      return out
+    }
+    function hideCursor() {
+      if(cursor) {
+        cursor.setAttribute("visibility", "hidden")
+      }
+    }
+    function selectAll(evt) {
+      setSelection(0, curtext.textContent.length);
+      $(this).unbind(evt)
+    }
+    function selectWord(evt) {
+      if(!allow_dbl || !curtext) {
+        return
+      }
+      var ept = svgedit.math.transformPoint(evt.pageX, evt.pageY, root_sctm), mouse_x = ept.x * current_zoom, mouse_y = ept.y * current_zoom;
+      var pt = screenToPt(mouse_x, mouse_y);
+      var index = getIndexFromPoint(pt.x, pt.y);
+      var str = curtext.textContent;
+      var first = str.substr(0, index).replace(/[a-z0-9]+$/i, "").length;
+      var m = str.substr(index).match(/^[a-z0-9]+/i);
+      var last = (m ? m[0].length : 0) + index;
+      setSelection(first, last);
+      $(evt.target).click(selectAll);
+      setTimeout(function() {
+        $(evt.target).unbind("click", selectAll)
+      }, 300)
+    }
+    return{select:function(target, x, y) {
+      curtext = target;
+      textActions.toEditMode(x, y)
+    }, start:function(elem) {
+      curtext = elem;
+      textActions.toEditMode()
+    }, mouseDown:function(evt, mouse_target, start_x, start_y) {
+      var pt = screenToPt(start_x, start_y);
+      textinput.focus();
+      setCursorFromPoint(pt.x, pt.y);
+      last_x = start_x;
+      last_y = start_y
+    }, mouseMove:function(mouse_x, mouse_y) {
+      var pt = screenToPt(mouse_x, mouse_y);
+      setEndSelectionFromPoint(pt.x, pt.y)
+    }, mouseUp:function(evt, mouse_x, mouse_y) {
+      var pt = screenToPt(mouse_x, mouse_y);
+      setEndSelectionFromPoint(pt.x, pt.y, true);
+      if(evt.target !== curtext && mouse_x < last_x + 2 && mouse_x > last_x - 2 && mouse_y < last_y + 2 && mouse_y > last_y - 2) {
+        textActions.toSelectMode(true)
+      }
+    }, setCursor:setCursor, toEditMode:function(x, y) {
+      allow_dbl = false;
+      current_mode = "textedit";
+      selectorManager.requestSelector(curtext).showGrips(false);
+      var sel = selectorManager.requestSelector(curtext).selectorRect;
+      textActions.init();
+      $(curtext).css("cursor", "text");
+      if(!arguments.length) {
+        setCursor()
+      }else {
+        var pt = screenToPt(x, y);
+        setCursorFromPoint(pt.x, pt.y)
+      }
+      setTimeout(function() {
+        allow_dbl = true
+      }, 300)
+    }, toSelectMode:function(selectElem) {
+      current_mode = "select";
+      clearInterval(blinker);
+      blinker = null;
+      if(selblock) {
+        $(selblock).attr("display", "none")
+      }
+      if(cursor) {
+        $(cursor).attr("visibility", "hidden")
+      }
+      $(curtext).css("cursor", "move");
+      if(selectElem) {
+        clearSelection();
+        $(curtext).css("cursor", "move");
+        call("selected", [curtext]);
+        addToSelection([curtext], true)
+      }
+      if(curtext && !curtext.textContent.length) {
+        canvas.deleteSelectedElements()
+      }
+      $(textinput).blur();
+      curtext = false
+    }, setInputElem:function(elem) {
+      textinput = elem
+    }, clear:function() {
+      if(current_mode == "textedit") {
+        textActions.toSelectMode()
+      }
+    }, init:function(inputElem) {
+      if(!curtext) {
+        return
+      }
+      var i, end;
+      if(!curtext.parentNode) {
+        curtext = selectedElements[0];
+        selectorManager.requestSelector(curtext).showGrips(false)
+      }
+      var str = curtext.textContent;
+      var len = str.length;
+      var xform = curtext.getAttribute("transform");
+      textbb = svgedit.utilities.getBBox(curtext);
+      matrix = xform ? svgedit.math.getMatrix(curtext) : null;
+      chardata = [];
+      chardata.length = len;
+      textinput.focus();
+      $(curtext).unbind("dblclick", selectWord).dblclick(selectWord);
+      if(!len) {
+        end = {x:textbb.x + textbb.width / 2, width:0}
+      }
+      for(i = 0;i < len;i++) {
+        var start = curtext.getStartPositionOfChar(i);
+        end = curtext.getEndPositionOfChar(i);
+        if(!svgedit.browser.supportsGoodTextCharPos()) {
+          var offset = canvas.contentW * current_zoom;
+          start.x -= offset;
+          end.x -= offset;
+          start.x /= current_zoom;
+          end.x /= current_zoom
+        }
+        chardata[i] = {x:start.x, y:textbb.y, width:end.x - start.x, height:textbb.height}
+      }
+      chardata.push({x:end.x, width:0});
+      setSelection(textinput.selectionStart, textinput.selectionEnd, true)
+    }}
+  }();
+  pathActions = canvas.pathActions = function() {
+    var subpath = false;
+    var current_path;
+    var newPoint, firstCtrl;
+    function resetD(p) {
+      p.setAttribute("d", pathActions.convertPath(p))
+    }
+    svgedit.path.Path.prototype.endChanges = function(text) {
+      if(svgedit.browser.isWebkit()) {
+        resetD(this.elem)
+      }
+      var cmd = new svgedit.history.ChangeElementCommand(this.elem, {d:this.last_d}, text);
+      addCommandToHistory(cmd);
+      call("changed", [this.elem])
+    };
+    svgedit.path.Path.prototype.addPtsToSelection = function(indexes) {
+      var i, seg;
+      if(!$.isArray(indexes)) {
+        indexes = [indexes]
+      }
+      for(i = 0;i < indexes.length;i++) {
+        var index = indexes[i];
+        seg = this.segs[index];
+        if(seg.ptgrip) {
+          if(this.selected_pts.indexOf(index) == -1 && index >= 0) {
+            this.selected_pts.push(index)
+          }
+        }
+      }
+      this.selected_pts.sort();
+      i = this.selected_pts.length;
+      var grips = [];
+      grips.length = i;
+      while(i--) {
+        var pt = this.selected_pts[i];
+        seg = this.segs[pt];
+        seg.select(true);
+        grips[i] = seg.ptgrip
+      }
+      pathActions.canDeleteNodes = true;
+      pathActions.closed_subpath = this.subpathIsClosed(this.selected_pts[0]);
+      call("selected", grips)
+    };
+    current_path = null;
+    var drawn_path = null, hasMoved = false;
+    var smoothPolylineIntoPath = function(element) {
+      var i, points = element.points;
+      var N = points.numberOfItems;
+      if(N >= 4) {
+        var curpos = points.getItem(0), prevCtlPt = null;
+        var d = [];
+        d.push(["M", curpos.x, ",", curpos.y, " C"].join(""));
+        for(i = 1;i <= N - 4;i += 3) {
+          var ct1 = points.getItem(i);
+          var ct2 = points.getItem(i + 1);
+          var end = points.getItem(i + 2);
+          if(prevCtlPt) {
+            var newpts = svgedit.path.smoothControlPoints(prevCtlPt, ct1, curpos);
+            if(newpts && newpts.length == 2) {
+              var prevArr = d[d.length - 1].split(",");
+              prevArr[2] = newpts[0].x;
+              prevArr[3] = newpts[0].y;
+              d[d.length - 1] = prevArr.join(",");
+              ct1 = newpts[1]
+            }
+          }
+          d.push([ct1.x, ct1.y, ct2.x, ct2.y, end.x, end.y].join(","));
+          curpos = end;
+          prevCtlPt = ct2
+        }
+        d.push("L");
+        while(i < N) {
+          var pt = points.getItem(i);
+          d.push([pt.x, pt.y].join(","));
+          i++
+        }
+        d = d.join(" ");
+        element = addSvgElementFromJson({element:"path", curStyles:true, attr:{id:getId(), d:d, fill:"none"}})
+      }
+      return element
+    };
+    return{mouseDown:function(evt, mouse_target, start_x, start_y) {
+      var id;
+      if(current_mode === "path") {
+        mouse_x = start_x;
+        mouse_y = start_y;
+        var x = mouse_x / current_zoom, y = mouse_y / current_zoom, stretchy = svgedit.utilities.getElem("path_stretch_line");
+        newPoint = [x, y];
+        if(curConfig.gridSnapping) {
+          x = svgedit.utilities.snapToGrid(x);
+          y = svgedit.utilities.snapToGrid(y);
+          mouse_x = svgedit.utilities.snapToGrid(mouse_x);
+          mouse_y = svgedit.utilities.snapToGrid(mouse_y)
+        }
+        if(!stretchy) {
+          stretchy = document.createElementNS(NS.SVG, "path");
+          svgedit.utilities.assignAttributes(stretchy, {id:"path_stretch_line", stroke:"#22C", "stroke-width":"0.5", fill:"none"});
+          stretchy = svgedit.utilities.getElem("selectorParentGroup").appendChild(stretchy)
+        }
+        stretchy.setAttribute("display", "inline");
+        var keep = null;
+        var index;
+        if(!drawn_path) {
+          d_attr = "M" + x + "," + y + " ";
+          drawn_path = addSvgElementFromJson({element:"path", curStyles:true, attr:{d:d_attr, id:getNextId(), opacity:cur_shape.opacity / 2}});
+          stretchy.setAttribute("d", ["M", mouse_x, mouse_y, mouse_x, mouse_y].join(" "));
+          index = subpath ? svgedit.path.path.segs.length : 0;
+          svgedit.path.addPointGrip(index, mouse_x, mouse_y)
+        }else {
+          var seglist = drawn_path.pathSegList;
+          var i = seglist.numberOfItems;
+          var FUZZ = 6 / current_zoom;
+          var clickOnPoint = false;
+          while(i) {
+            i--;
+            var item = seglist.getItem(i);
+            var px = item.x, py = item.y;
+            if(x >= px - FUZZ && x <= px + FUZZ && y >= py - FUZZ && y <= py + FUZZ) {
+              clickOnPoint = true;
+              break
+            }
+          }
+          id = getId();
+          svgedit.path.removePath_(id);
+          var newpath = svgedit.utilities.getElem(id);
+          var newseg;
+          var s_seg;
+          var len = seglist.numberOfItems;
+          if(clickOnPoint) {
+            if(i <= 1 && len >= 2) {
+              var abs_x = seglist.getItem(0).x;
+              var abs_y = seglist.getItem(0).y;
+              s_seg = stretchy.pathSegList.getItem(1);
+              if(s_seg.pathSegType === 4) {
+                newseg = drawn_path.createSVGPathSegLinetoAbs(abs_x, abs_y)
+              }else {
+                newseg = drawn_path.createSVGPathSegCurvetoCubicAbs(abs_x, abs_y, s_seg.x1 / current_zoom, s_seg.y1 / current_zoom, abs_x, abs_y)
+              }
+              var endseg = drawn_path.createSVGPathSegClosePath();
+              seglist.appendItem(newseg);
+              seglist.appendItem(endseg)
+            }else {
+              if(len < 3) {
+                keep = false;
+                return keep
+              }
+            }
+            $(stretchy).remove();
+            element = newpath;
+            drawn_path = null;
+            started = false;
+            if(subpath) {
+              if(svgedit.path.path.matrix) {
+                svgedit.coords.remapElement(newpath, {}, svgedit.path.path.matrix.inverse())
+              }
+              var new_d = newpath.getAttribute("d");
+              var orig_d = $(svgedit.path.path.elem).attr("d");
+              $(svgedit.path.path.elem).attr("d", orig_d + new_d);
+              $(newpath).remove();
+              if(svgedit.path.path.matrix) {
+                svgedit.path.recalcRotatedPath()
+              }
+              svgedit.path.path.init();
+              pathActions.toEditMode(svgedit.path.path.elem);
+              svgedit.path.path.selectPt();
+              return false
+            }
+          }else {
+            if(!$.contains(container, getMouseTarget(evt))) {
+              console.log("Clicked outside canvas");
+              return false
+            }
+            var num = drawn_path.pathSegList.numberOfItems;
+            var last = drawn_path.pathSegList.getItem(num - 1);
+            var lastx = last.x, lasty = last.y;
+            if(evt.shiftKey) {
+              var xya = svgedit.math.snapToAngle(lastx, lasty, x, y);
+              x = xya.x;
+              y = xya.y
+            }
+            s_seg = stretchy.pathSegList.getItem(1);
+            if(s_seg.pathSegType === 4) {
+              newseg = drawn_path.createSVGPathSegLinetoAbs(round(x), round(y))
+            }else {
+              newseg = drawn_path.createSVGPathSegCurvetoCubicAbs(round(x), round(y), s_seg.x1 / current_zoom, s_seg.y1 / current_zoom, s_seg.x2 / current_zoom, s_seg.y2 / current_zoom)
+            }
+            drawn_path.pathSegList.appendItem(newseg);
+            x *= current_zoom;
+            y *= current_zoom;
+            stretchy.setAttribute("d", ["M", x, y, x, y].join(" "));
+            index = num;
+            if(subpath) {
+              index += svgedit.path.path.segs.length
+            }
+            svgedit.path.addPointGrip(index, x, y)
+          }
+        }
+        return
+      }
+      if(!svgedit.path.path) {
+        return
+      }
+      svgedit.path.path.storeD();
+      id = evt.target.id;
+      var cur_pt;
+      if(id.substr(0, 14) == "pathpointgrip_") {
+        cur_pt = svgedit.path.path.cur_pt = parseInt(id.substr(14));
+        svgedit.path.path.dragging = [start_x, start_y];
+        var seg = svgedit.path.path.segs[cur_pt];
+        if(!evt.shiftKey) {
+          if(svgedit.path.path.selected_pts.length <= 1 || !seg.selected) {
+            svgedit.path.path.clearSelection()
+          }
+          svgedit.path.path.addPtsToSelection(cur_pt)
+        }else {
+          if(seg.selected) {
+            svgedit.path.path.removePtFromSelection(cur_pt)
+          }else {
+            svgedit.path.path.addPtsToSelection(cur_pt)
+          }
+        }
+      }else {
+        if(id.indexOf("ctrlpointgrip_") == 0) {
+          svgedit.path.path.dragging = [start_x, start_y];
+          var parts = id.split("_")[1].split("c");
+          cur_pt = Number(parts[0]);
+          var ctrl_num = Number(parts[1]);
+          svgedit.path.path.selectPt(cur_pt, ctrl_num)
+        }
+      }
+      if(!svgedit.path.path.dragging) {
+        if(rubberBox == null) {
+          rubberBox = selectorManager.getRubberBandBox()
+        }
+        svgedit.utilities.assignAttributes(rubberBox, {x:start_x * current_zoom, y:start_y * current_zoom, width:0, height:0, display:"inline"}, 100)
+      }
+    }, mouseMove:function(mouse_x, mouse_y) {
+      hasMoved = true;
+      if(current_mode === "path") {
+        if(!drawn_path) {
+          return
+        }
+        var seglist = drawn_path.pathSegList;
+        var index = seglist.numberOfItems - 1;
+        if(newPoint) {
+          var pointGrip1 = svgedit.path.addCtrlGrip("1c1");
+          var pointGrip2 = svgedit.path.addCtrlGrip("0c2");
+          pointGrip1.setAttribute("cx", mouse_x);
+          pointGrip1.setAttribute("cy", mouse_y);
+          pointGrip1.setAttribute("display", "inline");
+          var pt_x = newPoint[0];
+          var pt_y = newPoint[1];
+          var seg = seglist.getItem(index);
+          var cur_x = mouse_x / current_zoom;
+          var cur_y = mouse_y / current_zoom;
+          var alt_x = pt_x + (pt_x - cur_x);
+          var alt_y = pt_y + (pt_y - cur_y);
+          pointGrip2.setAttribute("cx", alt_x * current_zoom);
+          pointGrip2.setAttribute("cy", alt_y * current_zoom);
+          pointGrip2.setAttribute("display", "inline");
+          var ctrlLine = svgedit.path.getCtrlLine(1);
+          svgedit.utilities.assignAttributes(ctrlLine, {x1:mouse_x, y1:mouse_y, x2:alt_x * current_zoom, y2:alt_y * current_zoom, display:"inline"});
+          if(index === 0) {
+            firstCtrl = [mouse_x, mouse_y]
+          }else {
+            var last = seglist.getItem(index - 1);
+            var last_x = last.x;
+            var last_y = last.y;
+            if(last.pathSegType === 6) {
+              last_x += last_x - last.x2;
+              last_y += last_y - last.y2
+            }else {
+              if(firstCtrl) {
+                last_x = firstCtrl[0] / current_zoom;
+                last_y = firstCtrl[1] / current_zoom
+              }
+            }
+            svgedit.path.replacePathSeg(6, index, [pt_x, pt_y, last_x, last_y, alt_x, alt_y], drawn_path)
+          }
+        }else {
+          var stretchy = svgedit.utilities.getElem("path_stretch_line");
+          if(stretchy) {
+            var prev = seglist.getItem(index);
+            if(prev.pathSegType === 6) {
+              var prev_x = prev.x + (prev.x - prev.x2);
+              var prev_y = prev.y + (prev.y - prev.y2);
+              svgedit.path.replacePathSeg(6, 1, [mouse_x, mouse_y, prev_x * current_zoom, prev_y * current_zoom, mouse_x, mouse_y], stretchy)
+            }else {
+              if(firstCtrl) {
+                svgedit.path.replacePathSeg(6, 1, [mouse_x, mouse_y, firstCtrl[0], firstCtrl[1], mouse_x, mouse_y], stretchy)
+              }else {
+                svgedit.path.replacePathSeg(4, 1, [mouse_x, mouse_y], stretchy)
+              }
+            }
+          }
+        }
+        return
+      }
+      if(svgedit.path.path.dragging) {
+        var pt = svgedit.path.getPointFromGrip({x:svgedit.path.path.dragging[0], y:svgedit.path.path.dragging[1]}, svgedit.path.path);
+        var mpt = svgedit.path.getPointFromGrip({x:mouse_x, y:mouse_y}, svgedit.path.path);
+        var diff_x = mpt.x - pt.x;
+        var diff_y = mpt.y - pt.y;
+        svgedit.path.path.dragging = [mouse_x, mouse_y];
+        if(svgedit.path.path.dragctrl) {
+          svgedit.path.path.moveCtrl(diff_x, diff_y)
+        }else {
+          svgedit.path.path.movePts(diff_x, diff_y)
+        }
+      }else {
+        svgedit.path.path.selected_pts = [];
+        svgedit.path.path.eachSeg(function(i) {
+          var seg = this;
+          if(!seg.next && !seg.prev) {
+            return
+          }
+          var item = seg.item;
+          var rbb = rubberBox.getBBox();
+          var pt = svgedit.path.getGripPt(seg);
+          var pt_bb = {x:pt.x, y:pt.y, width:0, height:0};
+          var sel = svgedit.math.rectsIntersect(rbb, pt_bb);
+          this.select(sel);
+          if(sel) {
+            svgedit.path.path.selected_pts.push(seg.index)
+          }
+        })
+      }
+    }, mouseUp:function(evt, element, mouse_x, mouse_y) {
+      if(current_mode === "path") {
+        newPoint = null;
+        if(!drawn_path) {
+          element = svgedit.utilities.getElem(getId());
+          started = false;
+          firstCtrl = null
+        }
+        return{keep:true, element:element}
+      }
+      if(svgedit.path.path.dragging) {
+        var last_pt = svgedit.path.path.cur_pt;
+        svgedit.path.path.dragging = false;
+        svgedit.path.path.dragctrl = false;
+        svgedit.path.path.update();
+        if(hasMoved) {
+          svgedit.path.path.endChanges("Move path point(s)")
+        }
+        if(!evt.shiftKey && !hasMoved) {
+          svgedit.path.path.selectPt(last_pt)
+        }
+      }else {
+        if(rubberBox && rubberBox.getAttribute("display") != "none") {
+          rubberBox.setAttribute("display", "none");
+          if(rubberBox.getAttribute("width") <= 2 && rubberBox.getAttribute("height") <= 2) {
+            pathActions.toSelectMode(evt.target)
+          }
+        }else {
+          pathActions.toSelectMode(evt.target)
+        }
+      }
+      hasMoved = false
+    }, toEditMode:function(element) {
+      svgedit.path.path = svgedit.path.getPath_(element);
+      current_mode = "pathedit";
+      clearSelection();
+      svgedit.path.path.show(true).update();
+      svgedit.path.path.oldbbox = svgedit.utilities.getBBox(svgedit.path.path.elem);
+      subpath = false
+    }, toSelectMode:function(elem) {
+      var selPath = elem == svgedit.path.path.elem;
+      current_mode = "select";
+      svgedit.path.path.show(false);
+      current_path = false;
+      clearSelection();
+      if(svgedit.path.path.matrix) {
+        svgedit.path.recalcRotatedPath()
+      }
+      if(selPath) {
+        call("selected", [elem]);
+        addToSelection([elem], true)
+      }
+    }, addSubPath:function(on) {
+      if(on) {
+        current_mode = "path";
+        subpath = true
+      }else {
+        pathActions.clear(true);
+        pathActions.toEditMode(svgedit.path.path.elem)
+      }
+    }, select:function(target) {
+      if(current_path === target) {
+        pathActions.toEditMode(target);
+        current_mode = "pathedit"
+      }else {
+        current_path = target
+      }
+    }, reorient:function() {
+      var elem = selectedElements[0];
+      if(!elem) {
+        return
+      }
+      var angle = svgedit.utilities.getRotationAngle(elem);
+      if(angle == 0) {
+        return
+      }
+      var batchCmd = new svgedit.history.BatchCommand("Reorient path");
+      var changes = {d:elem.getAttribute("d"), transform:elem.getAttribute("transform")};
+      batchCmd.addSubCommand(new svgedit.history.ChangeElementCommand(elem, changes));
+      clearSelection();
+      this.resetOrientation(elem);
+      addCommandToHistory(batchCmd);
+      svgedit.path.getPath_(elem).show(false).matrix = null;
+      this.clear();
+      addToSelection([elem], true);
+      call("changed", selectedElements)
+    }, clear:function(remove) {
+      current_path = null;
+      if(drawn_path) {
+        var elem = svgedit.utilities.getElem(getId());
+        $(svgedit.utilities.getElem("path_stretch_line")).remove();
+        $(elem).remove();
+        $(svgedit.utilities.getElem("pathpointgrip_container")).find("*").attr("display", "none");
+        drawn_path = firstCtrl = null;
+        started = false
+      }else {
+        if(current_mode == "pathedit") {
+          this.toSelectMode()
+        }
+      }
+      if(svgedit.path.path) {
+        svgedit.path.path.init().show(false)
+      }
+    }, resetOrientation:function(path) {
+      if(path == null || path.nodeName != "path") {
+        return false
+      }
+      var tlist = svgedit.transformlist.getTransformList(path);
+      var m = svgedit.math.transformListToTransform(tlist).matrix;
+      tlist.clear();
+      path.removeAttribute("transform");
+      var segList = path.pathSegList;
+      var len = segList.numberOfItems;
+      var i, last_x, last_y;
+      for(i = 0;i < len;++i) {
+        var seg = segList.getItem(i);
+        var type = seg.pathSegType;
+        if(type == 1) {
+          continue
+        }
+        var pts = [];
+        $.each(["", 1, 2], function(j, n) {
+          var x = seg["x" + n], y = seg["y" + n];
+          if(x !== undefined && y !== undefined) {
+            var pt = svgedit.math.transformPoint(x, y, m);
+            pts.splice(pts.length, 0, pt.x, pt.y)
+          }
+        });
+        svgedit.path.replacePathSeg(type, i, pts, path)
+      }
+      reorientGrads(path, m)
+    }, zoomChange:function() {
+      if(current_mode == "pathedit") {
+        svgedit.path.path.update()
+      }
+    }, getNodePoint:function() {
+      var sel_pt = svgedit.path.path.selected_pts.length ? svgedit.path.path.selected_pts[0] : 1;
+      var seg = svgedit.path.path.segs[sel_pt];
+      return{x:seg.item.x, y:seg.item.y, type:seg.type}
+    }, linkControlPoints:function(linkPoints) {
+      svgedit.path.setLinkControlPoints(linkPoints)
+    }, clonePathNode:function() {
+      svgedit.path.path.storeD();
+      var sel_pts = svgedit.path.path.selected_pts;
+      var segs = svgedit.path.path.segs;
+      var i = sel_pts.length;
+      var nums = [];
+      while(i--) {
+        var pt = sel_pts[i];
+        svgedit.path.path.addSeg(pt);
+        nums.push(pt + i);
+        nums.push(pt + i + 1)
+      }
+      svgedit.path.path.init().addPtsToSelection(nums);
+      svgedit.path.path.endChanges("Clone path node(s)")
+    }, opencloseSubPath:function() {
+      var sel_pts = svgedit.path.path.selected_pts;
+      if(sel_pts.length !== 1) {
+        return
+      }
+      var elem = svgedit.path.path.elem;
+      var list = elem.pathSegList;
+      var len = list.numberOfItems;
+      var index = sel_pts[0];
+      var open_pt = null;
+      var start_item = null;
+      svgedit.path.path.eachSeg(function(i) {
+        if(this.type === 2 && i <= index) {
+          start_item = this.item
+        }
+        if(i <= index) {
+          return true
+        }
+        if(this.type === 2) {
+          open_pt = i;
+          return false
+        }
+        if(this.type === 1) {
+          open_pt = false;
+          return false
+        }
+      });
+      if(open_pt == null) {
+        open_pt = svgedit.path.path.segs.length - 1
+      }
+      if(open_pt !== false) {
+        var newseg = elem.createSVGPathSegLinetoAbs(start_item.x, start_item.y);
+        var closer = elem.createSVGPathSegClosePath();
+        if(open_pt == svgedit.path.path.segs.length - 1) {
+          list.appendItem(newseg);
+          list.appendItem(closer)
+        }else {
+          svgedit.path.insertItemBefore(elem, closer, open_pt);
+          svgedit.path.insertItemBefore(elem, newseg, open_pt)
+        }
+        svgedit.path.path.init().selectPt(open_pt + 1);
+        return
+      }
+      var seg = svgedit.path.path.segs[index];
+      if(seg.mate) {
+        list.removeItem(index);
+        list.removeItem(index);
+        svgedit.path.path.init().selectPt(index - 1);
+        return
+      }
+      var i, last_m, z_seg;
+      for(i = 0;i < list.numberOfItems;i++) {
+        var item = list.getItem(i);
+        if(item.pathSegType === 2) {
+          last_m = i
+        }else {
+          if(i === index) {
+            list.removeItem(last_m)
+          }else {
+            if(item.pathSegType === 1 && index < i) {
+              z_seg = i - 1;
+              list.removeItem(i);
+              break
+            }
+          }
+        }
+      }
+      var num = index - last_m - 1;
+      while(num--) {
+        svgedit.path.insertItemBefore(elem, list.getItem(last_m), z_seg)
+      }
+      var pt = list.getItem(last_m);
+      svgedit.path.replacePathSeg(2, last_m, [pt.x, pt.y]);
+      i = index;
+      svgedit.path.path.init().selectPt(0)
+    }, deletePathNode:function() {
+      if(!pathActions.canDeleteNodes) {
+        return
+      }
+      svgedit.path.path.storeD();
+      var sel_pts = svgedit.path.path.selected_pts;
+      var i = sel_pts.length;
+      while(i--) {
+        var pt = sel_pts[i];
+        svgedit.path.path.deleteSeg(pt)
+      }
+      var cleanup = function() {
+        var segList = svgedit.path.path.elem.pathSegList;
+        var len = segList.numberOfItems;
+        var remItems = function(pos, count) {
+          while(count--) {
+            segList.removeItem(pos)
+          }
+        };
+        if(len <= 1) {
+          return true
+        }
+        while(len--) {
+          var item = segList.getItem(len);
+          if(item.pathSegType === 1) {
+            var prev = segList.getItem(len - 1);
+            var nprev = segList.getItem(len - 2);
+            if(prev.pathSegType === 2) {
+              remItems(len - 1, 2);
+              cleanup();
+              break
+            }else {
+              if(nprev.pathSegType === 2) {
+                remItems(len - 2, 3);
+                cleanup();
+                break
+              }
+            }
+          }else {
+            if(item.pathSegType === 2) {
+              if(len > 0) {
+                var prev_type = segList.getItem(len - 1).pathSegType;
+                if(prev_type === 2) {
+                  remItems(len - 1, 1);
+                  cleanup();
+                  break
+                }else {
+                  if(prev_type === 1 && segList.numberOfItems - 1 === len) {
+                    remItems(len, 1);
+                    cleanup();
+                    break
+                  }
+                }
+              }
+            }
+          }
+        }
+        return false
+      };
+      cleanup();
+      if(svgedit.path.path.elem.pathSegList.numberOfItems <= 1) {
+        pathActions.toSelectMode(svgedit.path.path.elem);
+        canvas.deleteSelectedElements();
+        return
+      }
+      svgedit.path.path.init();
+      svgedit.path.path.clearSelection();
+      if(window.opera) {
+        var cp = $(svgedit.path.path.elem);
+        cp.attr("d", cp.attr("d"))
+      }
+      svgedit.path.path.endChanges("Delete path node(s)")
+    }, smoothPolylineIntoPath:smoothPolylineIntoPath, setSegType:function(v) {
+      svgedit.path.path.setSegType(v)
+    }, moveNode:function(attr, newValue) {
+      var sel_pts = svgedit.path.path.selected_pts;
+      if(!sel_pts.length) {
+        return
+      }
+      svgedit.path.path.storeD();
+      var seg = svgedit.path.path.segs[sel_pts[0]];
+      var diff = {x:0, y:0};
+      diff[attr] = newValue - seg.item[attr];
+      seg.move(diff.x, diff.y);
+      svgedit.path.path.endChanges("Move path point")
+    }, fixEnd:function(elem) {
+      var segList = elem.pathSegList;
+      var len = segList.numberOfItems;
+      var i, last_m;
+      for(i = 0;i < len;++i) {
+        var item = segList.getItem(i);
+        if(item.pathSegType === 2) {
+          last_m = item
+        }
+        if(item.pathSegType === 1) {
+          var prev = segList.getItem(i - 1);
+          if(prev.x != last_m.x || prev.y != last_m.y) {
+            var newseg = elem.createSVGPathSegLinetoAbs(last_m.x, last_m.y);
+            svgedit.path.insertItemBefore(elem, newseg, i);
+            pathActions.fixEnd(elem);
+            break
+          }
+        }
+      }
+      if(svgedit.browser.isWebkit()) {
+        resetD(elem)
+      }
+    }, convertPath:svgedit.utilities.convertPath}
+  }();
+  var removeUnusedDefElems = this.removeUnusedDefElems = function() {
+    var defs = svgcontent.getElementsByTagNameNS(NS.SVG, "defs");
+    if(!defs || !defs.length) {
+      return 0
+    }
+    var defelem_uses = [], numRemoved = 0;
+    var attrs = ["fill", "stroke", "filter", "marker-start", "marker-mid", "marker-end"];
+    var alen = attrs.length;
+    var all_els = svgcontent.getElementsByTagNameNS(NS.SVG, "*");
+    var all_len = all_els.length;
+    var i, j;
+    for(i = 0;i < all_len;i++) {
+      var el = all_els[i];
+      for(j = 0;j < alen;j++) {
+        var ref = svgedit.utilities.getUrlFromAttr(el.getAttribute(attrs[j]));
+        if(ref) {
+          defelem_uses.push(ref.substr(1))
+        }
+      }
+      var href = getHref(el);
+      if(href && href.indexOf("#") === 0) {
+        defelem_uses.push(href.substr(1))
+      }
+    }
+    var defelems = $(defs).find("linearGradient, radialGradient, filter, marker, svg, symbol");
+    i = defelems.length;
+    while(i--) {
+      var defelem = defelems[i];
+      var id = defelem.id;
+      if(defelem_uses.indexOf(id) < 0) {
+        removedElements[id] = defelem;
+        defelem.parentNode.removeChild(defelem);
+        numRemoved++
+      }
+    }
+    return numRemoved
+  };
+  this.svgCanvasToString = function() {
+    while(removeUnusedDefElems() > 0) {
+    }
+    pathActions.clear(true);
+    $.each(svgcontent.childNodes, function(i, node) {
+      if(i && node.nodeType === 8 && node.data.indexOf("Created with") >= 0) {
+        svgcontent.insertBefore(node, svgcontent.firstChild)
+      }
+    });
+    if(current_group) {
+      leaveContext();
+      selectOnly([current_group])
+    }
+    var naked_svgs = [];
+    $(svgcontent).find("g:data(gsvg)").each(function() {
+      var attrs = this.attributes;
+      var len = attrs.length;
+      var i;
+      for(i = 0;i < len;i++) {
+        if(attrs[i].nodeName == "id" || attrs[i].nodeName == "style") {
+          len--
+        }
+      }
+      if(len <= 0) {
+        var svg = this.firstChild;
+        naked_svgs.push(svg);
+        $(this).replaceWith(svg)
+      }
+    });
+    var output = this.svgToString(svgcontent, 0);
+    if(naked_svgs.length) {
+      $(naked_svgs).each(function() {
+        groupSvgElem(this)
+      })
+    }
+    return output
+  };
+  this.svgToString = function(elem, indent) {
+    var out = [], toXml = svgedit.utilities.toXml;
+    var unit = curConfig.baseUnit;
+    var unit_re = new RegExp("^-?[\\d\\.]+" + unit + "$");
+    if(elem) {
+      cleanupElement(elem);
+      var attrs = elem.attributes, attr, i, childs = elem.childNodes;
+      for(i = 0;i < indent;i++) {
+        out.push(" ")
+      }
+      out.push("<");
+      out.push(elem.nodeName);
+      if(elem.id === "svgcontent") {
+        var res = getResolution();
+        var vb = "";
+        if(unit !== "px") {
+          res.w = svgedit.units.convertUnit(res.w, unit) + unit;
+          res.h = svgedit.units.convertUnit(res.h, unit) + unit
+        }
+        out.push(' width="' + res.w + '" height="' + res.h + '"' + vb + ' xmlns="' + NS.SVG + '"');
+        var nsuris = {};
+        $(elem).find("*").andSelf().each(function() {
+          var el = this;
+          var uri = this.namespaceURI;
+          if(uri && !nsuris[uri] && nsMap[uri] && nsMap[uri] !== "xmlns" && nsMap[uri] !== "xml") {
+            nsuris[uri] = true;
+            out.push(" xmlns:" + nsMap[uri] + '="' + uri + '"')
+          }
+          $.each(this.attributes, function(i, attr) {
+            var uri = attr.namespaceURI;
+            if(uri && !nsuris[uri] && nsMap[uri] !== "xmlns" && nsMap[uri] !== "xml") {
+              nsuris[uri] = true;
+              out.push(" xmlns:" + nsMap[uri] + '="' + uri + '"')
+            }
+          })
+        });
+        i = attrs.length;
+        var attr_names = ["width", "height", "xmlns", "x", "y", "viewBox", "id", "overflow"];
+        while(i--) {
+          attr = attrs.item(i);
+          var attrVal = toXml(attr.value);
+          if(attr.nodeName.indexOf("xmlns:") === 0) {
+            continue
+          }
+          if(attrVal != "" && attr_names.indexOf(attr.localName) == -1) {
+            if(!attr.namespaceURI || nsMap[attr.namespaceURI]) {
+              out.push(" ");
+              out.push(attr.nodeName);
+              out.push('="');
+              out.push(attrVal);
+              out.push('"')
+            }
+          }
+        }
+      }else {
+        if(elem.nodeName === "defs" && !elem.firstChild) {
+          return
+        }
+        var moz_attrs = ["-moz-math-font-style", "_moz-math-font-style"];
+        for(i = attrs.length - 1;i >= 0;i--) {
+          attr = attrs.item(i);
+          var attrVal = toXml(attr.value);
+          if(moz_attrs.indexOf(attr.localName) >= 0) {
+            continue
+          }
+          if(attrVal != "") {
+            if(attrVal.indexOf("pointer-events") === 0) {
+              continue
+            }
+            if(attr.localName === "class" && attrVal.indexOf("se_") === 0) {
+              continue
+            }
+            out.push(" ");
+            if(attr.localName === "d") {
+              attrVal = pathActions.convertPath(elem, true)
+            }
+            if(!isNaN(attrVal)) {
+              attrVal = svgedit.units.shortFloat(attrVal)
+            }else {
+              if(unit_re.test(attrVal)) {
+                attrVal = svgedit.units.shortFloat(attrVal) + unit
+              }
+            }
+            if(save_options.apply && elem.nodeName === "image" && attr.localName === "href" && save_options.images && save_options.images === "embed") {
+              var img = encodableImages[attrVal];
+              if(img) {
+                attrVal = img
+              }
+            }
+            if(!attr.namespaceURI || attr.namespaceURI == NS.SVG || nsMap[attr.namespaceURI]) {
+              out.push(attr.nodeName);
+              out.push('="');
+              out.push(attrVal);
+              out.push('"')
+            }
+          }
+        }
+      }
+      if(elem.hasChildNodes()) {
+        out.push(">");
+        indent++;
+        var bOneLine = false;
+        for(i = 0;i < childs.length;i++) {
+          var child = childs.item(i);
+          switch(child.nodeType) {
+            case 1:
+              out.push("\n");
+              out.push(this.svgToString(childs.item(i), indent));
+              break;
+            case 3:
+              var str = child.nodeValue.replace(/^\s+|\s+$/g, "");
+              if(str != "") {
+                bOneLine = true;
+                out.push(String(toXml(str)))
+              }
+              break;
+            case 4:
+              out.push("\n");
+              out.push((new Array(indent + 1)).join(" "));
+              out.push("<![CDATA[");
+              out.push(child.nodeValue);
+              out.push("]]\>");
+              break;
+            case 8:
+              out.push("\n");
+              out.push((new Array(indent + 1)).join(" "));
+              out.push("<!--");
+              out.push(child.data);
+              out.push("--\>");
+              break
+          }
+        }
+        indent--;
+        if(!bOneLine) {
+          out.push("\n");
+          for(i = 0;i < indent;i++) {
+            out.push(" ")
+          }
+        }
+        out.push("</");
+        out.push(elem.nodeName);
+        out.push(">")
+      }else {
+        out.push("/>")
+      }
+    }
+    return out.join("")
+  };
+  this.embedImage = function(val, callback) {
+    $(new Image).load(function() {
+      var canvas = document.createElement("canvas");
+      canvas.width = this.width;
+      canvas.height = this.height;
+      canvas.getContext("2d").drawImage(this, 0, 0);
+      try {
+        var urldata = ";svgedit_url=" + encodeURIComponent(val);
+        urldata = canvas.toDataURL().replace(";base64", urldata + ";base64");
+        encodableImages[val] = urldata
+      }catch(e) {
+        encodableImages[val] = false
+      }
+      last_good_img_url = val;
+      if(callback) {
+        callback(encodableImages[val])
+      }
+    }).attr("src", val)
+  };
+  this.setGoodImage = function(val) {
+    last_good_img_url = val
+  };
+  this.open = function() {
+  };
+  this.save = function(opts) {
+    clearSelection();
+    if(opts) {
+      $.extend(save_options, opts)
+    }
+    save_options.apply = true;
+    var str = this.svgCanvasToString();
+    call("saved", str)
+  };
+  function getIssues() {
+    clearSelection();
+    var issues = [];
+    var issue_list = {feGaussianBlur:uiStrings.exportNoBlur, foreignObject:uiStrings.exportNoforeignObject, "[stroke-dasharray]":uiStrings.exportNoDashArray};
+    var content = $(svgcontent);
+    if(!("font" in $("<canvas>")[0].getContext("2d"))) {
+      issue_list.text = uiStrings.exportNoText
+    }
+    $.each(issue_list, function(sel, descr) {
+      if(content.find(sel).length) {
+        issues.push(descr)
+      }
+    });
+    return issues
+  }
+  this.rasterExport = function(imgType, quality, exportWindowName) {
+    var mimeType = "image/" + imgType.toLowerCase();
+    var issues = getIssues();
+    var str = this.svgCanvasToString();
+    svgedit.utilities.buildCanvgCallback(function() {
+      var type = imgType || "PNG";
+      if(!$("#export_canvas").length) {
+        $("<canvas>", {id:"export_canvas"}).hide().appendTo("body")
+      }
+      var c = $("#export_canvas")[0];
+      c.width = svgCanvas.contentW;
+      c.height = svgCanvas.contentH;
+      canvg(c, str, {renderCallback:function() {
+        var dataURLType = (type === "ICO" ? "BMP" : type).toLowerCase();
+        var datauri = quality ? c.toDataURL("image/" + dataURLType, quality) : c.toDataURL("image/" + dataURLType);
+        call("exported", {datauri:datauri, svg:str, issues:issues, type:imgType, mimeType:mimeType, quality:quality, exportWindowName:exportWindowName})
+      }})
+    })()
+  };
+  this.exportPDF = function(exportWindowName, outputType) {
+    var that = this;
+    svgedit.utilities.buildJSPDFCallback(function() {
+      var res = getResolution();
+      var orientation = res.w > res.h ? "landscape" : "portrait";
+      var units = "pt";
+      var doc = jsPDF({orientation:orientation, unit:units, format:[res.w, res.h]});
+      var docTitle = getDocumentTitle();
+      doc.setProperties({title:docTitle});
+      var issues = getIssues();
+      var str = that.svgCanvasToString();
+      doc.addSVG(str, 0, 0);
+      var obj = {svg:str, issues:issues, exportWindowName:exportWindowName};
+      var method = outputType || "dataurlstring";
+      obj[method] = doc.output(method);
+      call("exportedPDF", obj)
+    })()
+  };
+  this.getSvgString = function() {
+    save_options.apply = false;
+    return this.svgCanvasToString()
+  };
+  this.randomizeIds = function(enableRandomization) {
+    if(arguments.length > 0 && enableRandomization == false) {
+      svgedit.draw.randomizeIds(false, getCurrentDrawing())
+    }else {
+      svgedit.draw.randomizeIds(true, getCurrentDrawing())
+    }
+  };
+  var uniquifyElems = this.uniquifyElems = function(g) {
+    var ids = {};
+    var ref_elems = ["filter", "linearGradient", "pattern", "radialGradient", "symbol", "textPath", "use"];
+    svgedit.utilities.walkTree(g, function(n) {
+      if(n.nodeType == 1) {
+        if(n.id) {
+          if(!(n.id in ids)) {
+            ids[n.id] = {elem:null, attrs:[], hrefs:[]}
+          }
+          ids[n.id].elem = n
+        }
+        $.each(ref_attrs, function(i, attr) {
+          var attrnode = n.getAttributeNode(attr);
+          if(attrnode) {
+            var url = svgedit.utilities.getUrlFromAttr(attrnode.value), refid = url ? url.substr(1) : null;
+            if(refid) {
+              if(!(refid in ids)) {
+                ids[refid] = {elem:null, attrs:[], hrefs:[]}
+              }
+              ids[refid].attrs.push(attrnode)
+            }
+          }
+        });
+        var href = svgedit.utilities.getHref(n);
+        if(href && ref_elems.indexOf(n.nodeName) >= 0) {
+          var refid = href.substr(1);
+          if(refid) {
+            if(!(refid in ids)) {
+              ids[refid] = {elem:null, attrs:[], hrefs:[]}
+            }
+            ids[refid].hrefs.push(n)
+          }
+        }
+      }
+    });
+    var oldid;
+    for(oldid in ids) {
+      if(!oldid) {
+        continue
+      }
+      var elem = ids[oldid].elem;
+      if(elem) {
+        var newid = getNextId();
+        elem.id = newid;
+        var attrs = ids[oldid].attrs;
+        var j = attrs.length;
+        while(j--) {
+          var attr = attrs[j];
+          attr.ownerElement.setAttribute(attr.name, "url(#" + newid + ")")
+        }
+        var hreffers = ids[oldid].hrefs;
+        var k = hreffers.length;
+        while(k--) {
+          var hreffer = hreffers[k];
+          svgedit.utilities.setHref(hreffer, "#" + newid)
+        }
+      }
+    }
+  };
+  var setUseData = this.setUseData = function(parent) {
+    var elems = $(parent);
+    if(parent.tagName !== "use") {
+      elems = elems.find("use")
+    }
+    elems.each(function() {
+      var id = getHref(this).substr(1);
+      var ref_elem = svgedit.utilities.getElem(id);
+      if(!ref_elem) {
+        return
+      }
+      $(this).data("ref", ref_elem);
+      if(ref_elem.tagName == "symbol" || ref_elem.tagName == "svg") {
+        $(this).data("symbol", ref_elem).data("ref", ref_elem)
+      }
+    })
+  };
+  var convertGradients = this.convertGradients = function(elem) {
+    var elems = $(elem).find("linearGradient, radialGradient");
+    if(!elems.length && svgedit.browser.isWebkit()) {
+      elems = $(elem).find("*").filter(function() {
+        return this.tagName.indexOf("Gradient") >= 0
+      })
+    }
+    elems.each(function() {
+      var grad = this;
+      if($(grad).attr("gradientUnits") === "userSpaceOnUse") {
+        var elems = $(svgcontent).find('[fill="url(#' + grad.id + ')"],[stroke="url(#' + grad.id + ')"]');
+        if(!elems.length) {
+          return
+        }
+        var bb = svgedit.utilities.getBBox(elems[0]);
+        if(!bb) {
+          return
+        }
+        if(grad.tagName === "linearGradient") {
+          var g_coords = $(grad).attr(["x1", "y1", "x2", "y2"]);
+          var tlist = grad.gradientTransform.baseVal;
+          if(tlist && tlist.numberOfItems > 0) {
+            var m = svgedit.math.transformListToTransform(tlist).matrix;
+            var pt1 = svgedit.math.transformPoint(g_coords.x1, g_coords.y1, m);
+            var pt2 = svgedit.math.transformPoint(g_coords.x2, g_coords.y2, m);
+            g_coords.x1 = pt1.x;
+            g_coords.y1 = pt1.y;
+            g_coords.x2 = pt2.x;
+            g_coords.y2 = pt2.y;
+            grad.removeAttribute("gradientTransform")
+          }
+          $(grad).attr({x1:(g_coords.x1 - bb.x) / bb.width, y1:(g_coords.y1 - bb.y) / bb.height, x2:(g_coords.x2 - bb.x) / bb.width, y2:(g_coords.y2 - bb.y) / bb.height});
+          grad.removeAttribute("gradientUnits")
+        }
+      }
+    })
+  };
+  var convertToGroup = this.convertToGroup = function(elem) {
+    if(!elem) {
+      elem = selectedElements[0]
+    }
+    var $elem = $(elem);
+    var batchCmd = new svgedit.history.BatchCommand;
+    var ts;
+    if($elem.data("gsvg")) {
+      var svg = elem.firstChild;
+      var pt = $(svg).attr(["x", "y"]);
+      $(elem.firstChild.firstChild).unwrap();
+      $(elem).removeData("gsvg");
+      var tlist = svgedit.transformlist.getTransformList(elem);
+      var xform = svgroot.createSVGTransform();
+      xform.setTranslate(pt.x, pt.y);
+      tlist.appendItem(xform);
+      svgedit.recalculate.recalculateDimensions(elem);
+      call("selected", [elem])
+    }else {
+      if($elem.data("symbol")) {
+        elem = $elem.data("symbol");
+        ts = $elem.attr("transform");
+        var pos = $elem.attr(["x", "y"]);
+        var vb = elem.getAttribute("viewBox");
+        if(vb) {
+          var nums = vb.split(" ");
+          pos.x -= +nums[0];
+          pos.y -= +nums[1]
+        }
+        ts += " translate(" + (pos.x || 0) + "," + (pos.y || 0) + ")";
+        var prev = $elem.prev();
+        batchCmd.addSubCommand(new svgedit.history.RemoveElementCommand($elem[0], $elem[0].nextSibling, $elem[0].parentNode));
+        $elem.remove();
+        var has_more = $(svgcontent).find("use:data(symbol)").length;
+        var g = svgdoc.createElementNS(NS.SVG, "g");
+        var childs = elem.childNodes;
+        var i;
+        for(i = 0;i < childs.length;i++) {
+          g.appendChild(childs[i].cloneNode(true))
+        }
+        if(svgedit.browser.isGecko()) {
+          var dupeGrads = $(svgedit.utilities.findDefs()).children("linearGradient,radialGradient,pattern").clone();
+          $(g).append(dupeGrads)
+        }
+        if(ts) {
+          g.setAttribute("transform", ts)
+        }
+        var parent = elem.parentNode;
+        uniquifyElems(g);
+        if(svgedit.browser.isGecko()) {
+          $(findDefs()).append($(g).find("linearGradient,radialGradient,pattern"))
+        }
+        g.id = getNextId();
+        prev.after(g);
+        if(parent) {
+          if(!has_more) {
+            var nextSibling = elem.nextSibling;
+            parent.removeChild(elem);
+            batchCmd.addSubCommand(new svgedit.history.RemoveElementCommand(elem, nextSibling, parent))
+          }
+          batchCmd.addSubCommand(new svgedit.history.InsertElementCommand(g))
+        }
+        setUseData(g);
+        if(svgedit.browser.isGecko()) {
+          convertGradients(svgedit.utilities.findDefs())
+        }else {
+          convertGradients(g)
+        }
+        svgedit.utilities.walkTreePost(g, function(n) {
+          try {
+            svgedit.recalculate.recalculateDimensions(n)
+          }catch(e) {
+            console.log(e)
+          }
+        });
+        $(g).find(visElems).each(function() {
+          if(!this.id) {
+            this.id = getNextId()
+          }
+        });
+        selectOnly([g]);
+        var cm = pushGroupProperties(g, true);
+        if(cm) {
+          batchCmd.addSubCommand(cm)
+        }
+        addCommandToHistory(batchCmd)
+      }else {
+        console.log("Unexpected element to ungroup:", elem)
+      }
+    }
+  };
+  this.setSvgString = function(xmlString) {
+    try {
+      var newDoc = svgedit.utilities.text2xml(xmlString);
+      this.prepareSvg(newDoc);
+      var batchCmd = new svgedit.history.BatchCommand("Change Source");
+      var nextSibling = svgcontent.nextSibling;
+      var oldzoom = svgroot.removeChild(svgcontent);
+      batchCmd.addSubCommand(new svgedit.history.RemoveElementCommand(oldzoom, nextSibling, svgroot));
+      if(svgdoc.adoptNode) {
+        svgcontent = svgdoc.adoptNode(newDoc.documentElement)
+      }else {
+        svgcontent = svgdoc.importNode(newDoc.documentElement, true)
+      }
+      svgroot.appendChild(svgcontent);
+      var content = $(svgcontent);
+      canvas.current_drawing_ = new svgedit.draw.Drawing(svgcontent, idprefix);
+      var nonce = getCurrentDrawing().getNonce();
+      if(nonce) {
+        call("setnonce", nonce)
+      }else {
+        call("unsetnonce")
+      }
+      content.find("image").each(function() {
+        var image = this;
+        svgedit.utilities.preventClickDefault(image);
+        var val = getHref(this);
+        if(val) {
+          if(val.indexOf("data:") === 0) {
+            var m = val.match(/svgedit_url=(.*?);/);
+            if(m) {
+              var url = decodeURIComponent(m[1]);
+              $(new Image).load(function() {
+                image.setAttributeNS(NS.XLINK, "xlink:href", url)
+              }).attr("src", url)
+            }
+          }
+          canvas.embedImage(val)
+        }
+      });
+      content.find("svg").each(function() {
+        if($(this).closest("defs").length) {
+          return
+        }
+        uniquifyElems(this);
+        var pa = this.parentNode;
+        if(pa.childNodes.length === 1 && pa.nodeName === "g") {
+          $(pa).data("gsvg", this);
+          pa.id = pa.id || getNextId()
+        }else {
+          groupSvgElem(this)
+        }
+      });
+      if(svgedit.browser.isGecko()) {
+        content.find("linearGradient, radialGradient, pattern").appendTo(svgedit.utilities.findDefs())
+      }
+      setUseData(content);
+      convertGradients(content[0]);
+      var attrs = {id:"svgcontent", overflow:curConfig.show_outside_canvas ? "visible" : "hidden"};
+      var percs = false;
+      if(content.attr("viewBox")) {
+        var vb = content.attr("viewBox").split(" ");
+        attrs.width = vb[2];
+        attrs.height = vb[3]
+      }else {
+        $.each(["width", "height"], function(i, dim) {
+          var val = content.attr(dim);
+          if(!val) {
+            val = "100%"
+          }
+          if(String(val).substr(-1) === "%") {
+            percs = true
+          }else {
+            attrs[dim] = svgedit.units.convertToNum(dim, val)
+          }
+        })
+      }
+      identifyLayers();
+      content.children().find(visElems).each(function() {
+        if(!this.id) {
+          this.id = getNextId()
+        }
+      });
+      if(percs) {
+        var bb = getStrokedBBox();
+        attrs.width = bb.width + bb.x;
+        attrs.height = bb.height + bb.y
+      }
+      if(attrs.width <= 0) {
+        attrs.width = 100
+      }
+      if(attrs.height <= 0) {
+        attrs.height = 100
+      }
+      content.attr(attrs);
+      this.contentW = attrs.width;
+      this.contentH = attrs.height;
+      batchCmd.addSubCommand(new svgedit.history.InsertElementCommand(svgcontent));
+      var changes = content.attr(["width", "height"]);
+      batchCmd.addSubCommand(new svgedit.history.ChangeElementCommand(svgroot, changes));
+      current_zoom = 1;
+      svgedit.transformlist.resetListMap();
+      clearSelection();
+      svgedit.path.clearData();
+      svgroot.appendChild(selectorManager.selectorParentGroup);
+      addCommandToHistory(batchCmd);
+      call("changed", [svgcontent])
+    }catch(e) {
+      console.log(e);
+      return false
+    }
+    return true
+  };
+  this.importSvgString = function(xmlString) {
+    var j, ts;
+    try {
+      var uid = svgedit.utilities.encode64(xmlString.length + xmlString).substr(0, 32);
+      var useExisting = false;
+      if(import_ids[uid]) {
+        if($(import_ids[uid].symbol).parents("#svgroot").length) {
+          useExisting = true
+        }
+      }
+      var batchCmd = new svgedit.history.BatchCommand("Import Image");
+      var symbol;
+      if(useExisting) {
+        symbol = import_ids[uid].symbol;
+        ts = import_ids[uid].xform
+      }else {
+        var newDoc = svgedit.utilities.text2xml(xmlString);
+        this.prepareSvg(newDoc);
+        var svg;
+        if(svgdoc.adoptNode) {
+          svg = svgdoc.adoptNode(newDoc.documentElement)
+        }else {
+          svg = svgdoc.importNode(newDoc.documentElement, true)
+        }
+        uniquifyElems(svg);
+        var innerw = svgedit.units.convertToNum("width", svg.getAttribute("width")), innerh = svgedit.units.convertToNum("height", svg.getAttribute("height")), innervb = svg.getAttribute("viewBox"), vb = innervb ? innervb.split(" ") : [0, 0, innerw, innerh];
+        for(j = 0;j < 4;++j) {
+          vb[j] = +vb[j]
+        }
+        var canvasw = +svgcontent.getAttribute("width"), canvash = +svgcontent.getAttribute("height");
+        if(innerh > innerw) {
+          ts = "scale(" + canvash / 3 / vb[3] + ")"
+        }else {
+          ts = "scale(" + canvash / 3 / vb[2] + ")"
+        }
+        ts = "translate(0) " + ts + " translate(0)";
+        symbol = svgdoc.createElementNS(NS.SVG, "symbol");
+        var defs = svgedit.utilities.findDefs();
+        if(svgedit.browser.isGecko()) {
+          $(svg).find("linearGradient, radialGradient, pattern").appendTo(defs)
+        }
+        while(svg.firstChild) {
+          var first = svg.firstChild;
+          symbol.appendChild(first)
+        }
+        var attrs = svg.attributes;
+        var i;
+        for(i = 0;i < attrs.length;i++) {
+          var attr = attrs[i];
+          symbol.setAttribute(attr.nodeName, attr.value)
+        }
+        symbol.id = getNextId();
+        import_ids[uid] = {symbol:symbol, xform:ts};
+        svgedit.utilities.findDefs().appendChild(symbol);
+        batchCmd.addSubCommand(new svgedit.history.InsertElementCommand(symbol))
+      }
+      var use_el = svgdoc.createElementNS(NS.SVG, "use");
+      use_el.id = getNextId();
+      setHref(use_el, "#" + symbol.id);
+      (current_group || getCurrentDrawing().getCurrentLayer()).appendChild(use_el);
+      batchCmd.addSubCommand(new svgedit.history.InsertElementCommand(use_el));
+      clearSelection();
+      use_el.setAttribute("transform", ts);
+      svgedit.recalculate.recalculateDimensions(use_el);
+      $(use_el).data("symbol", symbol).data("ref", symbol);
+      addToSelection([use_el]);
+      addCommandToHistory(batchCmd);
+      call("changed", [svgcontent])
+    }catch(e) {
+      console.log(e);
+      return null
+    }
+    return use_el
+  };
+  var identifyLayers = canvas.identifyLayers = function() {
+    leaveContext();
+    getCurrentDrawing().identifyLayers()
+  };
+  this.createLayer = function(name, hrService) {
+    var new_layer = getCurrentDrawing().createLayer(name, historyRecordingService(hrService));
+    clearSelection();
+    call("changed", [new_layer])
+  };
+  this.cloneLayer = function(name, hrService) {
+    var new_layer = getCurrentDrawing().cloneLayer(name, historyRecordingService(hrService));
+    clearSelection();
+    leaveContext();
+    call("changed", [new_layer])
+  };
+  this.deleteCurrentLayer = function() {
+    var current_layer = getCurrentDrawing().getCurrentLayer();
+    var nextSibling = current_layer.nextSibling;
+    var parent = current_layer.parentNode;
+    current_layer = getCurrentDrawing().deleteCurrentLayer();
+    if(current_layer) {
+      var batchCmd = new svgedit.history.BatchCommand("Delete Layer");
+      batchCmd.addSubCommand(new svgedit.history.RemoveElementCommand(current_layer, nextSibling, parent));
+      addCommandToHistory(batchCmd);
+      clearSelection();
+      call("changed", [parent]);
+      return true
+    }
+    return false
+  };
+  this.setCurrentLayer = function(name) {
+    var result = getCurrentDrawing().setCurrentLayer(svgedit.utilities.toXml(name));
+    if(result) {
+      clearSelection()
+    }
+    return result
+  };
+  this.renameCurrentLayer = function(newname) {
+    var drawing = getCurrentDrawing();
+    var layer = drawing.getCurrentLayer();
+    if(layer) {
+      var result = drawing.setCurrentLayerName(newname, historyRecordingService());
+      if(result) {
+        call("changed", [layer]);
+        return true
+      }
+    }
+    return false
+  };
+  this.setCurrentLayerPosition = function(newpos) {
+    var oldpos, drawing = getCurrentDrawing();
+    var result = drawing.setCurrentLayerPosition(newpos);
+    if(result) {
+      addCommandToHistory(new svgedit.history.MoveElementCommand(result.currentGroup, result.oldNextSibling, svgcontent));
+      return true
+    }
+    return false
+  };
+  this.setLayerVisibility = function(layername, bVisible) {
+    var drawing = getCurrentDrawing();
+    var prevVisibility = drawing.getLayerVisibility(layername);
+    var layer = drawing.setLayerVisibility(layername, bVisible);
+    if(layer) {
+      var oldDisplay = prevVisibility ? "inline" : "none";
+      addCommandToHistory(new svgedit.history.ChangeElementCommand(layer, {display:oldDisplay}, "Layer Visibility"))
+    }else {
+      return false
+    }
+    if(layer == drawing.getCurrentLayer()) {
+      clearSelection();
+      pathActions.clear()
+    }
+    return true
+  };
+  this.moveSelectedToLayer = function(layername) {
+    var i;
+    var drawing = getCurrentDrawing();
+    var layer = drawing.getLayerByName(layername);
+    if(!layer) {
+      return false
+    }
+    var batchCmd = new svgedit.history.BatchCommand("Move Elements to Layer");
+    var selElems = selectedElements;
+    i = selElems.length;
+    while(i--) {
+      var elem = selElems[i];
+      if(!elem) {
+        continue
+      }
+      var oldNextSibling = elem.nextSibling;
+      var oldLayer = elem.parentNode;
+      layer.appendChild(elem);
+      batchCmd.addSubCommand(new svgedit.history.MoveElementCommand(elem, oldNextSibling, oldLayer))
+    }
+    addCommandToHistory(batchCmd);
+    return true
+  };
+  this.mergeLayer = function(hrService) {
+    getCurrentDrawing().mergeLayer(historyRecordingService(hrService));
+    clearSelection();
+    leaveContext();
+    call("changed", [svgcontent])
+  };
+  this.mergeAllLayers = function(hrService) {
+    getCurrentDrawing().mergeAllLayers(historyRecordingService(hrService));
+    clearSelection();
+    leaveContext();
+    call("changed", [svgcontent])
+  };
+  var leaveContext = this.leaveContext = function() {
+    var i, len = disabled_elems.length;
+    if(len) {
+      for(i = 0;i < len;i++) {
+        var elem = disabled_elems[i];
+        var orig = elData(elem, "orig_opac");
+        if(orig !== 1) {
+          elem.setAttribute("opacity", orig)
+        }else {
+          elem.removeAttribute("opacity")
+        }
+        elem.setAttribute("style", "pointer-events: inherit")
+      }
+      disabled_elems = [];
+      clearSelection(true);
+      call("contextset", null)
+    }
+    current_group = null
+  };
+  var setContext = this.setContext = function(elem) {
+    leaveContext();
+    if(typeof elem === "string") {
+      elem = svgedit.utilities.getElem(elem)
+    }
+    current_group = elem;
+    $(elem).parentsUntil("#svgcontent").andSelf().siblings().each(function() {
+      var opac = this.getAttribute("opacity") || 1;
+      elData(this, "orig_opac", opac);
+      this.setAttribute("opacity", opac * 0.33);
+      this.setAttribute("style", "pointer-events: none");
+      disabled_elems.push(this)
+    });
+    clearSelection();
+    call("contextset", current_group)
+  };
+  this.clear = function() {
+    pathActions.clear();
+    clearSelection();
+    canvas.clearSvgContentElement();
+    canvas.current_drawing_ = new svgedit.draw.Drawing(svgcontent);
+    canvas.createLayer("Layer 1");
+    canvas.undoMgr.resetUndoStack();
+    selectorManager.initGroup();
+    rubberBox = selectorManager.getRubberBandBox();
+    call("cleared")
+  };
+  this.linkControlPoints = pathActions.linkControlPoints;
+  this.getContentElem = function() {
+    return svgcontent
+  };
+  this.getRootElem = function() {
+    return svgroot
+  };
+  this.getSelectedElems = function() {
+    return selectedElements
+  };
+  var getResolution = this.getResolution = function() {
+    var width = svgcontent.getAttribute("width") / current_zoom;
+    var height = svgcontent.getAttribute("height") / current_zoom;
+    return{w:width, h:height, zoom:current_zoom}
+  };
+  this.getZoom = function() {
+    return current_zoom
+  };
+  this.getSnapToGrid = function() {
+    return curConfig.gridSnapping
+  };
+  this.getVersion = function() {
+    return"svgcanvas.js ($Rev$)"
+  };
+  this.setUiStrings = function(strs) {
+    $.extend(uiStrings, strs.notification)
+  };
+  this.setConfig = function(opts) {
+    $.extend(curConfig, opts)
+  };
+  this.getTitle = function(elem) {
+    var i;
+    elem = elem || selectedElements[0];
+    if(!elem) {
+      return
+    }
+    elem = $(elem).data("gsvg") || $(elem).data("symbol") || elem;
+    var childs = elem.childNodes;
+    for(i = 0;i < childs.length;i++) {
+      if(childs[i].nodeName == "title") {
+        return childs[i].textContent
+      }
+    }
+    return""
+  };
+  this.setGroupTitle = function(val) {
+    var elem = selectedElements[0];
+    elem = $(elem).data("gsvg") || elem;
+    var ts = $(elem).children("title");
+    var batchCmd = new svgedit.history.BatchCommand("Set Label");
+    if(!val.length) {
+      var tsNextSibling = ts.nextSibling;
+      batchCmd.addSubCommand(new svgedit.history.RemoveElementCommand(ts[0], tsNextSibling, elem));
+      ts.remove()
+    }else {
+      if(ts.length) {
+        var title = ts[0];
+        batchCmd.addSubCommand(new svgedit.history.ChangeElementCommand(title, {"#text":title.textContent}));
+        title.textContent = val
+      }else {
+        title = svgdoc.createElementNS(NS.SVG, "title");
+        title.textContent = val;
+        $(elem).prepend(title);
+        batchCmd.addSubCommand(new svgedit.history.InsertElementCommand(title))
+      }
+    }
+    addCommandToHistory(batchCmd)
+  };
+  var getDocumentTitle = this.getDocumentTitle = function() {
+    return canvas.getTitle(svgcontent)
+  };
+  this.setDocumentTitle = function(newtitle) {
+    var i;
+    var childs = svgcontent.childNodes, doc_title = false, old_title = "";
+    var batchCmd = new svgedit.history.BatchCommand("Change Image Title");
+    for(i = 0;i < childs.length;i++) {
+      if(childs[i].nodeName == "title") {
+        doc_title = childs[i];
+        old_title = doc_title.textContent;
+        break
+      }
+    }
+    if(!doc_title) {
+      doc_title = svgdoc.createElementNS(NS.SVG, "title");
+      svgcontent.insertBefore(doc_title, svgcontent.firstChild)
+    }
+    if(newtitle.length) {
+      doc_title.textContent = newtitle
+    }else {
+      doc_title.parentNode.removeChild(doc_title)
+    }
+    batchCmd.addSubCommand(new svgedit.history.ChangeElementCommand(doc_title, {"#text":old_title}));
+    addCommandToHistory(batchCmd)
+  };
+  this.getEditorNS = function(add) {
+    if(add) {
+      svgcontent.setAttribute("xmlns:se", NS.SE)
+    }
+    return NS.SE
+  };
+  this.setResolution = function(x, y) {
+    var res = getResolution();
+    var w = res.w, h = res.h;
+    var batchCmd;
+    if(x == "fit") {
+      var bbox = getStrokedBBox();
+      if(bbox) {
+        batchCmd = new svgedit.history.BatchCommand("Fit Canvas to Content");
+        var visEls = getVisibleElements();
+        addToSelection(visEls);
+        var dx = [], dy = [];
+        $.each(visEls, function(i, item) {
+          dx.push(bbox.x * -1);
+          dy.push(bbox.y * -1)
+        });
+        var cmd = canvas.moveSelectedElements(dx, dy, true);
+        batchCmd.addSubCommand(cmd);
+        clearSelection();
+        x = Math.round(bbox.width);
+        y = Math.round(bbox.height)
+      }else {
+        return false
+      }
+    }
+    if(x != w || y != h) {
+      if(!batchCmd) {
+        batchCmd = new svgedit.history.BatchCommand("Change Image Dimensions")
+      }
+      x = svgedit.units.convertToNum("width", x);
+      y = svgedit.units.convertToNum("height", y);
+      svgcontent.setAttribute("width", x);
+      svgcontent.setAttribute("height", y);
+      this.contentW = x;
+      this.contentH = y;
+      batchCmd.addSubCommand(new svgedit.history.ChangeElementCommand(svgcontent, {width:w, height:h}));
+      svgcontent.setAttribute("viewBox", [0, 0, x / current_zoom, y / current_zoom].join(" "));
+      batchCmd.addSubCommand(new svgedit.history.ChangeElementCommand(svgcontent, {viewBox:["0 0", w, h].join(" ")}));
+      addCommandToHistory(batchCmd);
+      call("changed", [svgcontent])
+    }
+    return true
+  };
+  this.getOffset = function() {
+    return $(svgcontent).attr(["x", "y"])
+  };
+  this.setBBoxZoom = function(val, editor_w, editor_h) {
+    var spacer = 0.85;
+    var bb;
+    var calcZoom = function(bb) {
+      if(!bb) {
+        return false
+      }
+      var w_zoom = Math.round(editor_w / bb.width * 100 * spacer) / 100;
+      var h_zoom = Math.round(editor_h / bb.height * 100 * spacer) / 100;
+      var zoomlevel = Math.min(w_zoom, h_zoom);
+      canvas.setZoom(zoomlevel);
+      return{zoom:zoomlevel, bbox:bb}
+    };
+    if(typeof val == "object") {
+      bb = val;
+      if(bb.width == 0 || bb.height == 0) {
+        var newzoom = bb.zoom ? bb.zoom : current_zoom * bb.factor;
+        canvas.setZoom(newzoom);
+        return{zoom:current_zoom, bbox:bb}
+      }
+      return calcZoom(bb)
+    }
+    switch(val) {
+      case "selection":
+        if(!selectedElements[0]) {
+          return
+        }
+        var sel_elems = $.map(selectedElements, function(n) {
+          if(n) {
+            return n
+          }
+        });
+        bb = getStrokedBBox(sel_elems);
+        break;
+      case "canvas":
+        var res = getResolution();
+        spacer = 0.95;
+        bb = {width:res.w, height:res.h, x:0, y:0};
+        break;
+      case "content":
+        bb = getStrokedBBox();
+        break;
+      case "layer":
+        bb = getStrokedBBox(getVisibleElements(getCurrentDrawing().getCurrentLayer()));
+        break;
+      default:
+        return
+    }
+    return calcZoom(bb)
+  };
+  this.setZoom = function(zoomlevel) {
+    var res = getResolution();
+    svgcontent.setAttribute("viewBox", "0 0 " + res.w / zoomlevel + " " + res.h / zoomlevel);
+    current_zoom = zoomlevel;
+    $.each(selectedElements, function(i, elem) {
+      if(!elem) {
+        return
+      }
+      selectorManager.requestSelector(elem).resize()
+    });
+    pathActions.zoomChange();
+    runExtensions("zoomChanged", zoomlevel)
+  };
+  this.getMode = function() {
+    return current_mode
+  };
+  this.setMode = function(name) {
+    pathActions.clear(true);
+    textActions.clear();
+    cur_properties = selectedElements[0] && selectedElements[0].nodeName == "text" ? cur_text : cur_shape;
+    current_mode = name
+  };
+  this.getColor = function(type) {
+    return cur_properties[type]
+  };
+  this.setColor = function(type, val, preventUndo) {
+    cur_shape[type] = val;
+    cur_properties[type + "_paint"] = {type:"solidColor"};
+    var elems = [];
+    function addNonG(e) {
+      if(e.nodeName != "g") {
+        elems.push(e)
+      }
+    }
+    var i = selectedElements.length;
+    while(i--) {
+      var elem = selectedElements[i];
+      if(elem) {
+        if(elem.tagName == "g") {
+          svgedit.utilities.walkTree(elem, addNonG)
+        }else {
+          if(type == "fill") {
+            if(elem.tagName != "polyline" && elem.tagName != "line") {
+              elems.push(elem)
+            }
+          }else {
+            elems.push(elem)
+          }
+        }
+      }
+    }
+    if(elems.length > 0) {
+      if(!preventUndo) {
+        changeSelectedAttribute(type, val, elems);
+        call("changed", elems)
+      }else {
+        changeSelectedAttributeNoUndo(type, val, elems)
+      }
+    }
+  };
+  var setGradient = this.setGradient = function(type) {
+    if(!cur_properties[type + "_paint"] || cur_properties[type + "_paint"].type == "solidColor") {
+      return
+    }
+    var grad = canvas[type + "Grad"];
+    var duplicate_grad = findDuplicateGradient(grad);
+    var defs = svgedit.utilities.findDefs();
+    if(!duplicate_grad) {
+      var orig_grad = grad;
+      grad = defs.appendChild(svgdoc.importNode(grad, true));
+      grad.id = getNextId()
+    }else {
+      grad = duplicate_grad
+    }
+    canvas.setColor(type, "url(#" + grad.id + ")")
+  };
+  var findDuplicateGradient = function(grad) {
+    var defs = svgedit.utilities.findDefs();
+    var existing_grads = $(defs).find("linearGradient, radialGradient");
+    var i = existing_grads.length;
+    var rad_attrs = ["r", "cx", "cy", "fx", "fy"];
+    while(i--) {
+      var og = existing_grads[i];
+      if(grad.tagName == "linearGradient") {
+        if(grad.getAttribute("x1") != og.getAttribute("x1") || grad.getAttribute("y1") != og.getAttribute("y1") || grad.getAttribute("x2") != og.getAttribute("x2") || grad.getAttribute("y2") != og.getAttribute("y2")) {
+          continue
+        }
+      }else {
+        var grad_attrs = $(grad).attr(rad_attrs);
+        var og_attrs = $(og).attr(rad_attrs);
+        var diff = false;
+        $.each(rad_attrs, function(i, attr) {
+          if(grad_attrs[attr] != og_attrs[attr]) {
+            diff = true
+          }
+        });
+        if(diff) {
+          continue
+        }
+      }
+      var stops = grad.getElementsByTagNameNS(NS.SVG, "stop");
+      var ostops = og.getElementsByTagNameNS(NS.SVG, "stop");
+      if(stops.length != ostops.length) {
+        continue
+      }
+      var j = stops.length;
+      while(j--) {
+        var stop = stops[j];
+        var ostop = ostops[j];
+        if(stop.getAttribute("offset") != ostop.getAttribute("offset") || stop.getAttribute("stop-opacity") != ostop.getAttribute("stop-opacity") || stop.getAttribute("stop-color") != ostop.getAttribute("stop-color")) {
+          break
+        }
+      }
+      if(j == -1) {
+        return og
+      }
+    }
+    return null
+  };
+  function reorientGrads(elem, m) {
+    var i;
+    var bb = svgedit.utilities.getBBox(elem);
+    for(i = 0;i < 2;i++) {
+      var type = i === 0 ? "fill" : "stroke";
+      var attrVal = elem.getAttribute(type);
+      if(attrVal && attrVal.indexOf("url(") === 0) {
+        var grad = svgedit.utilities.getRefElem(attrVal);
+        if(grad.tagName === "linearGradient") {
+          var x1 = grad.getAttribute("x1") || 0;
+          var y1 = grad.getAttribute("y1") || 0;
+          var x2 = grad.getAttribute("x2") || 1;
+          var y2 = grad.getAttribute("y2") || 0;
+          x1 = bb.width * x1 + bb.x;
+          y1 = bb.height * y1 + bb.y;
+          x2 = bb.width * x2 + bb.x;
+          y2 = bb.height * y2 + bb.y;
+          var pt1 = svgedit.math.transformPoint(x1, y1, m);
+          var pt2 = svgedit.math.transformPoint(x2, y2, m);
+          var g_coords = {};
+          g_coords.x1 = (pt1.x - bb.x) / bb.width;
+          g_coords.y1 = (pt1.y - bb.y) / bb.height;
+          g_coords.x2 = (pt2.x - bb.x) / bb.width;
+          g_coords.y2 = (pt2.y - bb.y) / bb.height;
+          var newgrad = grad.cloneNode(true);
+          $(newgrad).attr(g_coords);
+          newgrad.id = getNextId();
+          svgedit.utilities.findDefs().appendChild(newgrad);
+          elem.setAttribute(type, "url(#" + newgrad.id + ")")
+        }
+      }
+    }
+  }
+  this.setPaint = function(type, paint) {
+    var p = new $.jGraduate.Paint(paint);
+    this.setPaintOpacity(type, p.alpha / 100, true);
+    cur_properties[type + "_paint"] = p;
+    switch(p.type) {
+      case "solidColor":
+        this.setColor(type, p.solidColor != "none" ? "#" + p.solidColor : "none");
+        break;
+      case "linearGradient":
+      ;
+      case "radialGradient":
+        canvas[type + "Grad"] = p[p.type];
+        setGradient(type);
+        break
+    }
+  };
+  this.setStrokePaint = function(paint) {
+    this.setPaint("stroke", paint)
+  };
+  this.setFillPaint = function(paint) {
+    this.setPaint("fill", paint)
+  };
+  this.getStrokeWidth = function() {
+    return cur_properties.stroke_width
+  };
+  this.setStrokeWidth = function(val) {
+    if(val == 0 && ["line", "path"].indexOf(current_mode) >= 0) {
+      canvas.setStrokeWidth(1);
+      return
+    }
+    cur_properties.stroke_width = val;
+    var elems = [];
+    function addNonG(e) {
+      if(e.nodeName != "g") {
+        elems.push(e)
+      }
+    }
+    var i = selectedElements.length;
+    while(i--) {
+      var elem = selectedElements[i];
+      if(elem) {
+        if(elem.tagName == "g") {
+          svgedit.utilities.walkTree(elem, addNonG)
+        }else {
+          elems.push(elem)
+        }
+      }
+    }
+    if(elems.length > 0) {
+      changeSelectedAttribute("stroke-width", val, elems);
+      call("changed", selectedElements)
+    }
+  };
+  this.setStrokeAttr = function(attr, val) {
+    cur_shape[attr.replace("-", "_")] = val;
+    var elems = [];
+    function addNonG(e) {
+      if(e.nodeName != "g") {
+        elems.push(e)
+      }
+    }
+    var i = selectedElements.length;
+    while(i--) {
+      var elem = selectedElements[i];
+      if(elem) {
+        if(elem.tagName == "g") {
+          svgedit.utilities.walkTree(elem, function(e) {
+            if(e.nodeName != "g") {
+              elems.push(e)
+            }
+          })
+        }else {
+          elems.push(elem)
+        }
+      }
+    }
+    if(elems.length > 0) {
+      changeSelectedAttribute(attr, val, elems);
+      call("changed", selectedElements)
+    }
+  };
+  this.getStyle = function() {
+    return cur_shape
+  };
+  this.getOpacity = function() {
+    return cur_shape.opacity
+  };
+  this.setOpacity = function(val) {
+    cur_shape.opacity = val;
+    changeSelectedAttribute("opacity", val)
+  };
+  this.getFillOpacity = function() {
+    return cur_shape.fill_opacity
+  };
+  this.getStrokeOpacity = function() {
+    return cur_shape.stroke_opacity
+  };
+  this.setPaintOpacity = function(type, val, preventUndo) {
+    cur_shape[type + "_opacity"] = val;
+    if(!preventUndo) {
+      changeSelectedAttribute(type + "-opacity", val)
+    }else {
+      changeSelectedAttributeNoUndo(type + "-opacity", val)
+    }
+  };
+  this.getPaintOpacity = function(type) {
+    return type === "fill" ? this.getFillOpacity() : this.getStrokeOpacity()
+  };
+  this.getBlur = function(elem) {
+    var val = 0;
+    if(elem) {
+      var filter_url = elem.getAttribute("filter");
+      if(filter_url) {
+        var blur = svgedit.utilities.getElem(elem.id + "_blur");
+        if(blur) {
+          val = blur.firstChild.getAttribute("stdDeviation")
+        }
+      }
+    }
+    return val
+  };
+  (function() {
+    var cur_command = null;
+    var filter = null;
+    var filterHidden = false;
+    canvas.setBlurNoUndo = function(val) {
+      if(!filter) {
+        canvas.setBlur(val);
+        return
+      }
+      if(val === 0) {
+        changeSelectedAttributeNoUndo("filter", "");
+        filterHidden = true
+      }else {
+        var elem = selectedElements[0];
+        if(filterHidden) {
+          changeSelectedAttributeNoUndo("filter", "url(#" + elem.id + "_blur)")
+        }
+        if(svgedit.browser.isWebkit()) {
+          console.log("e", elem);
+          elem.removeAttribute("filter");
+          elem.setAttribute("filter", "url(#" + elem.id + "_blur)")
+        }
+        changeSelectedAttributeNoUndo("stdDeviation", val, [filter.firstChild]);
+        canvas.setBlurOffsets(filter, val)
+      }
+    };
+    function finishChange() {
+      var bCmd = canvas.undoMgr.finishUndoableChange();
+      cur_command.addSubCommand(bCmd);
+      addCommandToHistory(cur_command);
+      cur_command = null;
+      filter = null
+    }
+    canvas.setBlurOffsets = function(filter, stdDev) {
+      if(stdDev > 3) {
+        svgedit.utilities.assignAttributes(filter, {x:"-50%", y:"-50%", width:"200%", height:"200%"}, 100)
+      }else {
+        if(!svgedit.browser.isWebkit()) {
+          filter.removeAttribute("x");
+          filter.removeAttribute("y");
+          filter.removeAttribute("width");
+          filter.removeAttribute("height")
+        }
+      }
+    };
+    canvas.setBlur = function(val, complete) {
+      if(cur_command) {
+        finishChange();
+        return
+      }
+      var elem = selectedElements[0];
+      var elem_id = elem.id;
+      filter = svgedit.utilities.getElem(elem_id + "_blur");
+      val -= 0;
+      var batchCmd = new svgedit.history.BatchCommand;
+      if(filter) {
+        if(val === 0) {
+          filter = null
+        }
+      }else {
+        var newblur = addSvgElementFromJson({element:"feGaussianBlur", attr:{"in":"SourceGraphic", stdDeviation:val}});
+        filter = addSvgElementFromJson({element:"filter", attr:{id:elem_id + "_blur"}});
+        filter.appendChild(newblur);
+        svgedit.utilities.findDefs().appendChild(filter);
+        batchCmd.addSubCommand(new svgedit.history.InsertElementCommand(filter))
+      }
+      var changes = {filter:elem.getAttribute("filter")};
+      if(val === 0) {
+        elem.removeAttribute("filter");
+        batchCmd.addSubCommand(new svgedit.history.ChangeElementCommand(elem, changes));
+        return
+      }
+      changeSelectedAttribute("filter", "url(#" + elem_id + "_blur)");
+      batchCmd.addSubCommand(new svgedit.history.ChangeElementCommand(elem, changes));
+      canvas.setBlurOffsets(filter, val);
+      cur_command = batchCmd;
+      canvas.undoMgr.beginUndoableChange("stdDeviation", [filter ? filter.firstChild : null]);
+      if(complete) {
+        canvas.setBlurNoUndo(val);
+        finishChange()
+      }
+    }
+  })();
+  this.getBold = function() {
+    var selected = selectedElements[0];
+    if(selected != null && selected.tagName == "text" && selectedElements[1] == null) {
+      return selected.getAttribute("font-weight") == "bold"
+    }
+    return false
+  };
+  this.setBold = function(b) {
+    var selected = selectedElements[0];
+    if(selected != null && selected.tagName == "text" && selectedElements[1] == null) {
+      changeSelectedAttribute("font-weight", b ? "bold" : "normal")
+    }
+    if(!selectedElements[0].textContent) {
+      textActions.setCursor()
+    }
+  };
+  this.getItalic = function() {
+    var selected = selectedElements[0];
+    if(selected != null && selected.tagName == "text" && selectedElements[1] == null) {
+      return selected.getAttribute("font-style") == "italic"
+    }
+    return false
+  };
+  this.setItalic = function(i) {
+    var selected = selectedElements[0];
+    if(selected != null && selected.tagName == "text" && selectedElements[1] == null) {
+      changeSelectedAttribute("font-style", i ? "italic" : "normal")
+    }
+    if(!selectedElements[0].textContent) {
+      textActions.setCursor()
+    }
+  };
+  this.getFontFamily = function() {
+    return cur_text.font_family
+  };
+  this.setFontFamily = function(val) {
+    cur_text.font_family = val;
+    changeSelectedAttribute("font-family", val);
+    if(selectedElements[0] && !selectedElements[0].textContent) {
+      textActions.setCursor()
+    }
+  };
+  this.setFontColor = function(val) {
+    cur_text.fill = val;
+    changeSelectedAttribute("fill", val)
+  };
+  this.getFontColor = function() {
+    return cur_text.fill
+  };
+  this.getFontSize = function() {
+    return cur_text.font_size
+  };
+  this.setFontSize = function(val) {
+    cur_text.font_size = val;
+    changeSelectedAttribute("font-size", val);
+    if(!selectedElements[0].textContent) {
+      textActions.setCursor()
+    }
+  };
+  this.getText = function() {
+    var selected = selectedElements[0];
+    if(selected == null) {
+      return""
+    }
+    return selected.textContent
+  };
+  this.setTextContent = function(val) {
+    changeSelectedAttribute("#text", val);
+    textActions.init(val);
+    textActions.setCursor()
+  };
+  this.setImageURL = function(val) {
+    var elem = selectedElements[0];
+    if(!elem) {
+      return
+    }
+    var attrs = $(elem).attr(["width", "height"]);
+    var setsize = !attrs.width || !attrs.height;
+    var cur_href = getHref(elem);
+    if(cur_href !== val) {
+      setsize = true
+    }else {
+      if(!setsize) {
+        return
+      }
+    }
+    var batchCmd = new svgedit.history.BatchCommand("Change Image URL");
+    setHref(elem, val);
+    batchCmd.addSubCommand(new svgedit.history.ChangeElementCommand(elem, {"#href":cur_href}));
+    if(setsize) {
+      $(new Image).load(function() {
+        var changes = $(elem).attr(["width", "height"]);
+        $(elem).attr({width:this.width, height:this.height});
+        selectorManager.requestSelector(elem).resize();
+        batchCmd.addSubCommand(new svgedit.history.ChangeElementCommand(elem, changes));
+        addCommandToHistory(batchCmd);
+        call("changed", [elem])
+      }).attr("src", val)
+    }else {
+      addCommandToHistory(batchCmd)
+    }
+  };
+  this.setLinkURL = function(val) {
+    var elem = selectedElements[0];
+    if(!elem) {
+      return
+    }
+    if(elem.tagName !== "a") {
+      var parents_a = $(elem).parents("a");
+      if(parents_a.length) {
+        elem = parents_a[0]
+      }else {
+        return
+      }
+    }
+    var cur_href = getHref(elem);
+    if(cur_href === val) {
+      return
+    }
+    var batchCmd = new svgedit.history.BatchCommand("Change Link URL");
+    setHref(elem, val);
+    batchCmd.addSubCommand(new svgedit.history.ChangeElementCommand(elem, {"#href":cur_href}));
+    addCommandToHistory(batchCmd)
+  };
+  this.setRectRadius = function(val) {
+    var selected = selectedElements[0];
+    if(selected != null && selected.tagName == "rect") {
+      var r = selected.getAttribute("rx");
+      if(r != val) {
+        selected.setAttribute("rx", val);
+        selected.setAttribute("ry", val);
+        addCommandToHistory(new svgedit.history.ChangeElementCommand(selected, {rx:r, ry:r}, "Radius"));
+        call("changed", [selected])
+      }
+    }
+  };
+  this.makeHyperlink = function(url) {
+    canvas.groupSelectedElements("a", url)
+  };
+  this.removeHyperlink = function() {
+    canvas.ungroupSelectedElement()
+  };
+  this.setSegType = function(new_type) {
+    pathActions.setSegType(new_type)
+  };
+  this.convertToPath = function(elem, getBBox) {
+    if(elem == null) {
+      var elems = selectedElements;
+      $.each(elems, function(i, elem) {
+        if(elem) {
+          canvas.convertToPath(elem)
+        }
+      });
+      return
+    }
+    if(getBBox) {
+      return svgedit.utilities.getBBoxOfElementAsPath(elem, addSvgElementFromJson, pathActions)
+    }else {
+      var attrs = {fill:cur_shape.fill, "fill-opacity":cur_shape.fill_opacity, stroke:cur_shape.stroke, "stroke-width":cur_shape.stroke_width, "stroke-dasharray":cur_shape.stroke_dasharray, "stroke-linejoin":cur_shape.stroke_linejoin, "stroke-linecap":cur_shape.stroke_linecap, "stroke-opacity":cur_shape.stroke_opacity, opacity:cur_shape.opacity, visibility:"hidden"};
+      return svgedit.utilities.convertToPath(elem, attrs, addSvgElementFromJson, pathActions, clearSelection, addToSelection, svgedit.history, addCommandToHistory)
+    }
+  };
+  var changeSelectedAttributeNoUndo = function(attr, newValue, elems) {
+    if(current_mode == "pathedit") {
+      pathActions.moveNode(attr, newValue)
+    }
+    elems = elems || selectedElements;
+    var i = elems.length;
+    var no_xy_elems = ["g", "polyline", "path"];
+    var good_g_attrs = ["transform", "opacity", "filter"];
+    while(i--) {
+      var elem = elems[i];
+      if(elem == null) {
+        continue
+      }
+      if((attr === "x" || attr === "y") && no_xy_elems.indexOf(elem.tagName) >= 0) {
+        var bbox = getStrokedBBox([elem]);
+        var diff_x = attr === "x" ? newValue - bbox.x : 0;
+        var diff_y = attr === "y" ? newValue - bbox.y : 0;
+        canvas.moveSelectedElements(diff_x * current_zoom, diff_y * current_zoom, true);
+        continue
+      }
+      if(elem.tagName === "g" && good_g_attrs.indexOf(attr) >= 0) {
+      }
+      var oldval = attr === "#text" ? elem.textContent : elem.getAttribute(attr);
+      if(oldval == null) {
+        oldval = ""
+      }
+      if(oldval !== String(newValue)) {
+        if(attr == "#text") {
+          var old_w = svgedit.utilities.getBBox(elem).width;
+          elem.textContent = newValue;
+          if(/rotate/.test(elem.getAttribute("transform"))) {
+            elem = ffClone(elem)
+          }
+        }else {
+          if(attr == "#href") {
+            setHref(elem, newValue)
+          }else {
+            elem.setAttribute(attr, newValue)
+          }
+        }
+        if(current_mode === "textedit" && attr !== "#text" && elem.textContent.length) {
+          textActions.toSelectMode(elem)
+        }
+        if(svgedit.browser.isGecko() && elem.nodeName === "text" && /rotate/.test(elem.getAttribute("transform"))) {
+          if(String(newValue).indexOf("url") === 0 || ["font-size", "font-family", "x", "y"].indexOf(attr) >= 0 && elem.textContent) {
+            elem = ffClone(elem)
+          }
+        }
+        if(selectedElements.indexOf(elem) >= 0) {
+          setTimeout(function() {
+            if(!elem.parentNode) {
+              return
+            }
+            selectorManager.requestSelector(elem).resize()
+          }, 0)
+        }
+        var angle = svgedit.utilities.getRotationAngle(elem);
+        if(angle != 0 && attr != "transform") {
+          var tlist = svgedit.transformlist.getTransformList(elem);
+          var n = tlist.numberOfItems;
+          while(n--) {
+            var xform = tlist.getItem(n);
+            if(xform.type == 4) {
+              tlist.removeItem(n);
+              var box = svgedit.utilities.getBBox(elem);
+              var center = svgedit.math.transformPoint(box.x + box.width / 2, box.y + box.height / 2, svgedit.math.transformListToTransform(tlist).matrix);
+              var cx = center.x, cy = center.y;
+              var newrot = svgroot.createSVGTransform();
+              newrot.setRotate(angle, cx, cy);
+              tlist.insertItemBefore(newrot, n);
+              break
+            }
+          }
+        }
+      }
+    }
+  };
+  var changeSelectedAttribute = this.changeSelectedAttribute = function(attr, val, elems) {
+    elems = elems || selectedElements;
+    canvas.undoMgr.beginUndoableChange(attr, elems);
+    var i = elems.length;
+    changeSelectedAttributeNoUndo(attr, val, elems);
+    var batchCmd = canvas.undoMgr.finishUndoableChange();
+    if(!batchCmd.isEmpty()) {
+      addCommandToHistory(batchCmd)
+    }
+  };
+  this.deleteSelectedElements = function() {
+    var i;
+    var batchCmd = new svgedit.history.BatchCommand("Delete Elements");
+    var len = selectedElements.length;
+    var selectedCopy = [];
+    for(i = 0;i < len;++i) {
+      var selected = selectedElements[i];
+      if(selected == null) {
+        break
+      }
+      var parent = selected.parentNode;
+      var t = selected;
+      selectorManager.releaseSelector(t);
+      svgedit.path.removePath_(t.id);
+      if(parent.tagName === "a" && parent.childNodes.length === 1) {
+        t = parent;
+        parent = parent.parentNode
+      }
+      var nextSibling = t.nextSibling;
+      var elem = parent.removeChild(t);
+      selectedCopy.push(selected);
+      selectedElements[i] = null;
+      batchCmd.addSubCommand(new RemoveElementCommand(elem, nextSibling, parent))
+    }
+    if(!batchCmd.isEmpty()) {
+      addCommandToHistory(batchCmd)
+    }
+    call("changed", selectedCopy);
+    clearSelection()
+  };
+  this.cutSelectedElements = function() {
+    var i;
+    var batchCmd = new svgedit.history.BatchCommand("Cut Elements");
+    var len = selectedElements.length;
+    var selectedCopy = [];
+    for(i = 0;i < len;++i) {
+      var selected = selectedElements[i];
+      if(selected == null) {
+        break
+      }
+      var parent = selected.parentNode;
+      var t = selected;
+      selectorManager.releaseSelector(t);
+      svgedit.path.removePath_(t.id);
+      var nextSibling = t.nextSibling;
+      var elem = parent.removeChild(t);
+      selectedCopy.push(selected);
+      selectedElements[i] = null;
+      batchCmd.addSubCommand(new RemoveElementCommand(elem, nextSibling, parent))
+    }
+    if(!batchCmd.isEmpty()) {
+      addCommandToHistory(batchCmd)
+    }
+    call("changed", selectedCopy);
+    clearSelection();
+    canvas.clipBoard = selectedCopy
+  };
+  this.copySelectedElements = function() {
+    canvas.clipBoard = $.merge([], selectedElements)
+  };
+  this.pasteElements = function(type, x, y) {
+    var cb = canvas.clipBoard;
+    var len = cb.length;
+    if(!len) {
+      return
+    }
+    var pasted = [];
+    var batchCmd = new svgedit.history.BatchCommand("Paste elements");
+    var drawing = getCurrentDrawing();
+    while(len--) {
+      var elem = cb[len];
+      if(!elem) {
+        continue
+      }
+      var copy = drawing.copyElem(elem);
+      if(!svgedit.utilities.getElem(elem.id)) {
+        copy.id = elem.id
+      }
+      pasted.push(copy);
+      (current_group || drawing.getCurrentLayer()).appendChild(copy);
+      batchCmd.addSubCommand(new svgedit.history.InsertElementCommand(copy));
+      restoreRefElems(copy)
+    }
+    selectOnly(pasted);
+    if(type !== "in_place") {
+      var ctr_x, ctr_y;
+      if(!type) {
+        ctr_x = lastClickPoint.x;
+        ctr_y = lastClickPoint.y
+      }else {
+        if(type === "point") {
+          ctr_x = x;
+          ctr_y = y
+        }
+      }
+      var bbox = getStrokedBBox(pasted);
+      var cx = ctr_x - (bbox.x + bbox.width / 2), cy = ctr_y - (bbox.y + bbox.height / 2), dx = [], dy = [];
+      $.each(pasted, function(i, item) {
+        dx.push(cx);
+        dy.push(cy)
+      });
+      var cmd = canvas.moveSelectedElements(dx, dy, false);
+      batchCmd.addSubCommand(cmd)
+    }
+    addCommandToHistory(batchCmd);
+    call("changed", pasted)
+  };
+  this.groupSelectedElements = function(type, urlArg) {
+    if(!type) {
+      type = "g"
+    }
+    var cmd_str = "";
+    switch(type) {
+      case "a":
+        cmd_str = "Make hyperlink";
+        var url = "";
+        if(arguments.length > 1) {
+          url = urlArg
+        }
+        break;
+      default:
+        type = "g";
+        cmd_str = "Group Elements";
+        break
+    }
+    var batchCmd = new svgedit.history.BatchCommand(cmd_str);
+    var g = addSvgElementFromJson({element:type, attr:{id:getNextId()}});
+    if(type === "a") {
+      setHref(g, url)
+    }
+    batchCmd.addSubCommand(new svgedit.history.InsertElementCommand(g));
+    var i = selectedElements.length;
+    while(i--) {
+      var elem = selectedElements[i];
+      if(elem == null) {
+        continue
+      }
+      if(elem.parentNode.tagName === "a" && elem.parentNode.childNodes.length === 1) {
+        elem = elem.parentNode
+      }
+      var oldNextSibling = elem.nextSibling;
+      var oldParent = elem.parentNode;
+      g.appendChild(elem);
+      batchCmd.addSubCommand(new svgedit.history.MoveElementCommand(elem, oldNextSibling, oldParent))
+    }
+    if(!batchCmd.isEmpty()) {
+      addCommandToHistory(batchCmd)
+    }
+    selectOnly([g], true)
+  };
+  var pushGroupProperties = this.pushGroupProperties = function(g, undoable) {
+    var children = g.childNodes;
+    var len = children.length;
+    var xform = g.getAttribute("transform");
+    var glist = svgedit.transformlist.getTransformList(g);
+    var m = svgedit.math.transformListToTransform(glist).matrix;
+    var batchCmd = new svgedit.history.BatchCommand("Push group properties");
+    var i = 0;
+    var gangle = svgedit.utilities.getRotationAngle(g);
+    var gattrs = $(g).attr(["filter", "opacity"]);
+    var gfilter, gblur, changes;
+    var drawing = getCurrentDrawing();
+    for(i = 0;i < len;i++) {
+      var elem = children[i];
+      if(elem.nodeType !== 1) {
+        continue
+      }
+      if(gattrs.opacity !== null && gattrs.opacity !== 1) {
+        var c_opac = elem.getAttribute("opacity") || 1;
+        var new_opac = Math.round((elem.getAttribute("opacity") || 1) * gattrs.opacity * 100) / 100;
+        changeSelectedAttribute("opacity", new_opac, [elem])
+      }
+      if(gattrs.filter) {
+        var cblur = this.getBlur(elem);
+        var orig_cblur = cblur;
+        if(!gblur) {
+          gblur = this.getBlur(g)
+        }
+        if(cblur) {
+          cblur = Number(gblur) + Number(cblur)
+        }else {
+          if(cblur === 0) {
+            cblur = gblur
+          }
+        }
+        if(!orig_cblur) {
+          if(!gfilter) {
+            gfilter = svgedit.utilities.getRefElem(gattrs.filter)
+          }else {
+            gfilter = drawing.copyElem(gfilter);
+            svgedit.utilities.findDefs().appendChild(gfilter)
+          }
+        }else {
+          gfilter = svgedit.utilities.getRefElem(elem.getAttribute("filter"))
+        }
+        var suffix = gfilter.firstChild.tagName === "feGaussianBlur" ? "blur" : "filter";
+        gfilter.id = elem.id + "_" + suffix;
+        changeSelectedAttribute("filter", "url(#" + gfilter.id + ")", [elem]);
+        if(cblur) {
+          changeSelectedAttribute("stdDeviation", cblur, [gfilter.firstChild]);
+          canvas.setBlurOffsets(gfilter, cblur)
+        }
+      }
+      var chtlist = svgedit.transformlist.getTransformList(elem);
+      if(~elem.tagName.indexOf("Gradient")) {
+        chtlist = null
+      }
+      if(!chtlist) {
+        continue
+      }
+      if(elem.tagName === "defs") {
+        continue
+      }
+      if(glist.numberOfItems) {
+        if(gangle && glist.numberOfItems == 1) {
+          var rgm = glist.getItem(0).matrix;
+          var rcm = svgroot.createSVGMatrix();
+          var cangle = svgedit.utilities.getRotationAngle(elem);
+          if(cangle) {
+            rcm = chtlist.getItem(0).matrix
+          }
+          var cbox = svgedit.utilities.getBBox(elem);
+          var ceqm = svgedit.math.transformListToTransform(chtlist).matrix;
+          var coldc = svgedit.math.transformPoint(cbox.x + cbox.width / 2, cbox.y + cbox.height / 2, ceqm);
+          var sangle = gangle + cangle;
+          var r2 = svgroot.createSVGTransform();
+          r2.setRotate(sangle, coldc.x, coldc.y);
+          var trm = svgedit.math.matrixMultiply(rgm, rcm, r2.matrix.inverse());
+          if(cangle) {
+            chtlist.removeItem(0)
+          }
+          if(sangle) {
+            if(chtlist.numberOfItems) {
+              chtlist.insertItemBefore(r2, 0)
+            }else {
+              chtlist.appendItem(r2)
+            }
+          }
+          if(trm.e || trm.f) {
+            var tr = svgroot.createSVGTransform();
+            tr.setTranslate(trm.e, trm.f);
+            if(chtlist.numberOfItems) {
+              chtlist.insertItemBefore(tr, 0)
+            }else {
+              chtlist.appendItem(tr)
+            }
+          }
+        }else {
+          var oldxform = elem.getAttribute("transform");
+          changes = {};
+          changes.transform = oldxform || "";
+          var newxform = svgroot.createSVGTransform();
+          var chm = svgedit.math.transformListToTransform(chtlist).matrix, chm_inv = chm.inverse();
+          var gm = svgedit.math.matrixMultiply(chm_inv, m, chm);
+          newxform.setMatrix(gm);
+          chtlist.appendItem(newxform)
+        }
+        var cmd = svgedit.recalculate.recalculateDimensions(elem);
+        if(cmd) {
+          batchCmd.addSubCommand(cmd)
+        }
+      }
+    }
+    if(xform) {
+      changes = {};
+      changes.transform = xform;
+      g.setAttribute("transform", "");
+      g.removeAttribute("transform");
+      batchCmd.addSubCommand(new svgedit.history.ChangeElementCommand(g, changes))
+    }
+    if(undoable && !batchCmd.isEmpty()) {
+      return batchCmd
+    }
+  };
+  this.ungroupSelectedElement = function() {
+    var g = selectedElements[0];
+    if(!g) {
+      return
+    }
+    if($(g).data("gsvg") || $(g).data("symbol")) {
+      convertToGroup(g);
+      return
+    }
+    if(g.tagName === "use") {
+      var symbol = svgedit.utilities.getElem(getHref(g).substr(1));
+      $(g).data("symbol", symbol).data("ref", symbol);
+      convertToGroup(g);
+      return
+    }
+    var parents_a = $(g).parents("a");
+    if(parents_a.length) {
+      g = parents_a[0]
+    }
+    if(g.tagName === "g" || g.tagName === "a") {
+      var batchCmd = new svgedit.history.BatchCommand("Ungroup Elements");
+      var cmd = pushGroupProperties(g, true);
+      if(cmd) {
+        batchCmd.addSubCommand(cmd)
+      }
+      var parent = g.parentNode;
+      var anchor = g.nextSibling;
+      var children = new Array(g.childNodes.length);
+      var i = 0;
+      while(g.firstChild) {
+        var elem = g.firstChild;
+        var oldNextSibling = elem.nextSibling;
+        var oldParent = elem.parentNode;
+        if(elem.tagName === "title") {
+          var nextSibling = elem.nextSibling;
+          batchCmd.addSubCommand(new svgedit.history.RemoveElementCommand(elem, nextSibling, oldParent));
+          oldParent.removeChild(elem);
+          continue
+        }
+        children[i++] = elem = parent.insertBefore(elem, anchor);
+        batchCmd.addSubCommand(new svgedit.history.MoveElementCommand(elem, oldNextSibling, oldParent))
+      }
+      clearSelection();
+      var gNextSibling = g.nextSibling;
+      g = parent.removeChild(g);
+      batchCmd.addSubCommand(new svgedit.history.RemoveElementCommand(g, gNextSibling, parent));
+      if(!batchCmd.isEmpty()) {
+        addCommandToHistory(batchCmd)
+      }
+      addToSelection(children)
+    }
+  };
+  this.moveToTopSelectedElement = function() {
+    var selected = selectedElements[0];
+    if(selected != null) {
+      var t = selected;
+      var oldParent = t.parentNode;
+      var oldNextSibling = t.nextSibling;
+      t = t.parentNode.appendChild(t);
+      if(oldNextSibling != t.nextSibling) {
+        addCommandToHistory(new svgedit.history.MoveElementCommand(t, oldNextSibling, oldParent, "top"));
+        call("changed", [t])
+      }
+    }
+  };
+  this.moveToBottomSelectedElement = function() {
+    var selected = selectedElements[0];
+    if(selected != null) {
+      var t = selected;
+      var oldParent = t.parentNode;
+      var oldNextSibling = t.nextSibling;
+      var firstChild = t.parentNode.firstChild;
+      if(firstChild.tagName == "title") {
+        firstChild = firstChild.nextSibling
+      }
+      if(firstChild.tagName == "defs") {
+        firstChild = firstChild.nextSibling
+      }
+      t = t.parentNode.insertBefore(t, firstChild);
+      if(oldNextSibling != t.nextSibling) {
+        addCommandToHistory(new svgedit.history.MoveElementCommand(t, oldNextSibling, oldParent, "bottom"));
+        call("changed", [t])
+      }
+    }
+  };
+  this.moveUpDownSelected = function(dir) {
+    var selected = selectedElements[0];
+    if(!selected) {
+      return
+    }
+    curBBoxes = [];
+    var closest, found_cur;
+    var list = $(getIntersectionList(getStrokedBBox([selected]))).toArray();
+    if(dir == "Down") {
+      list.reverse()
+    }
+    $.each(list, function() {
+      if(!found_cur) {
+        if(this == selected) {
+          found_cur = true
+        }
+        return
+      }
+      closest = this;
+      return false
+    });
+    if(!closest) {
+      return
+    }
+    var t = selected;
+    var oldParent = t.parentNode;
+    var oldNextSibling = t.nextSibling;
+    $(closest)[dir == "Down" ? "before" : "after"](t);
+    if(oldNextSibling != t.nextSibling) {
+      addCommandToHistory(new svgedit.history.MoveElementCommand(t, oldNextSibling, oldParent, "Move " + dir));
+      call("changed", [t])
+    }
+  };
+  this.moveSelectedElements = function(dx, dy, undoable) {
+    if(dx.constructor != Array) {
+      dx /= current_zoom;
+      dy /= current_zoom
+    }
+    undoable = undoable || true;
+    var batchCmd = new svgedit.history.BatchCommand("position");
+    var i = selectedElements.length;
+    while(i--) {
+      var selected = selectedElements[i];
+      if(selected != null) {
+        var xform = svgroot.createSVGTransform();
+        var tlist = svgedit.transformlist.getTransformList(selected);
+        if(dx.constructor == Array) {
+          xform.setTranslate(dx[i], dy[i])
+        }else {
+          xform.setTranslate(dx, dy)
+        }
+        if(tlist.numberOfItems) {
+          tlist.insertItemBefore(xform, 0)
+        }else {
+          tlist.appendItem(xform)
+        }
+        var cmd = svgedit.recalculate.recalculateDimensions(selected);
+        if(cmd) {
+          batchCmd.addSubCommand(cmd)
+        }
+        selectorManager.requestSelector(selected).resize()
+      }
+    }
+    if(!batchCmd.isEmpty()) {
+      if(undoable) {
+        addCommandToHistory(batchCmd)
+      }
+      call("changed", selectedElements);
+      return batchCmd
+    }
+  };
+  this.cloneSelectedElements = function(x, y) {
+    var i, elem;
+    var batchCmd = new svgedit.history.BatchCommand("Clone Elements");
+    var len = selectedElements.length;
+    function sortfunction(a, b) {
+      return $(b).index() - $(a).index()
+    }
+    selectedElements.sort(sortfunction);
+    for(i = 0;i < len;++i) {
+      elem = selectedElements[i];
+      if(elem == null) {
+        break
+      }
+    }
+    var copiedElements = selectedElements.slice(0, i);
+    this.clearSelection(true);
+    var drawing = getCurrentDrawing();
+    i = copiedElements.length;
+    while(i--) {
+      elem = copiedElements[i] = drawing.copyElem(copiedElements[i]);
+      (current_group || drawing.getCurrentLayer()).appendChild(elem);
+      batchCmd.addSubCommand(new svgedit.history.InsertElementCommand(elem))
+    }
+    if(!batchCmd.isEmpty()) {
+      addToSelection(copiedElements.reverse());
+      this.moveSelectedElements(x, y, false);
+      addCommandToHistory(batchCmd)
+    }
+  };
+  this.alignSelectedElements = function(type, relative_to) {
+    var i, elem;
+    var bboxes = [], angles = [];
+    var minx = Number.MAX_VALUE, maxx = Number.MIN_VALUE, miny = Number.MAX_VALUE, maxy = Number.MIN_VALUE;
+    var curwidth = Number.MIN_VALUE, curheight = Number.MIN_VALUE;
+    var len = selectedElements.length;
+    if(!len) {
+      return
+    }
+    for(i = 0;i < len;++i) {
+      if(selectedElements[i] == null) {
+        break
+      }
+      elem = selectedElements[i];
+      bboxes[i] = getStrokedBBox([elem]);
+      switch(relative_to) {
+        case "smallest":
+          if((type == "l" || type == "c" || type == "r") && (curwidth == Number.MIN_VALUE || curwidth > bboxes[i].width) || (type == "t" || type == "m" || type == "b") && (curheight == Number.MIN_VALUE || curheight > bboxes[i].height)) {
+            minx = bboxes[i].x;
+            miny = bboxes[i].y;
+            maxx = bboxes[i].x + bboxes[i].width;
+            maxy = bboxes[i].y + bboxes[i].height;
+            curwidth = bboxes[i].width;
+            curheight = bboxes[i].height
+          }
+          break;
+        case "largest":
+          if((type == "l" || type == "c" || type == "r") && (curwidth == Number.MIN_VALUE || curwidth < bboxes[i].width) || (type == "t" || type == "m" || type == "b") && (curheight == Number.MIN_VALUE || curheight < bboxes[i].height)) {
+            minx = bboxes[i].x;
+            miny = bboxes[i].y;
+            maxx = bboxes[i].x + bboxes[i].width;
+            maxy = bboxes[i].y + bboxes[i].height;
+            curwidth = bboxes[i].width;
+            curheight = bboxes[i].height
+          }
+          break;
+        default:
+          if(bboxes[i].x < minx) {
+            minx = bboxes[i].x
+          }
+          if(bboxes[i].y < miny) {
+            miny = bboxes[i].y
+          }
+          if(bboxes[i].x + bboxes[i].width > maxx) {
+            maxx = bboxes[i].x + bboxes[i].width
+          }
+          if(bboxes[i].y + bboxes[i].height > maxy) {
+            maxy = bboxes[i].y + bboxes[i].height
+          }
+          break
+      }
+    }
+    if(relative_to == "page") {
+      minx = 0;
+      miny = 0;
+      maxx = canvas.contentW;
+      maxy = canvas.contentH
+    }
+    var dx = new Array(len);
+    var dy = new Array(len);
+    for(i = 0;i < len;++i) {
+      if(selectedElements[i] == null) {
+        break
+      }
+      elem = selectedElements[i];
+      var bbox = bboxes[i];
+      dx[i] = 0;
+      dy[i] = 0;
+      switch(type) {
+        case "l":
+          dx[i] = minx - bbox.x;
+          break;
+        case "c":
+          dx[i] = (minx + maxx) / 2 - (bbox.x + bbox.width / 2);
+          break;
+        case "r":
+          dx[i] = maxx - (bbox.x + bbox.width);
+          break;
+        case "t":
+          dy[i] = miny - bbox.y;
+          break;
+        case "m":
+          dy[i] = (miny + maxy) / 2 - (bbox.y + bbox.height / 2);
+          break;
+        case "b":
+          dy[i] = maxy - (bbox.y + bbox.height);
+          break
+      }
+    }
+    this.moveSelectedElements(dx, dy)
+  };
+  this.contentW = getResolution().w;
+  this.contentH = getResolution().h;
+  this.updateCanvas = function(w, h) {
+    svgroot.setAttribute("width", w);
+    svgroot.setAttribute("height", h);
+    var bg = $("#canvasBackground")[0];
+    var old_x = svgcontent.getAttribute("x");
+    var old_y = svgcontent.getAttribute("y");
+    var x = w / 2 - this.contentW * current_zoom / 2;
+    var y = h / 2 - this.contentH * current_zoom / 2;
+    svgedit.utilities.assignAttributes(svgcontent, {width:this.contentW * current_zoom, height:this.contentH * current_zoom, x:x, y:y, viewBox:"0 0 " + this.contentW + " " + this.contentH});
+    svgedit.utilities.assignAttributes(bg, {width:svgcontent.getAttribute("width"), height:svgcontent.getAttribute("height"), x:x, y:y});
+    var bg_img = svgedit.utilities.getElem("background_image");
+    if(bg_img) {
+      svgedit.utilities.assignAttributes(bg_img, {width:"100%", height:"100%"})
+    }
+    selectorManager.selectorParentGroup.setAttribute("transform", "translate(" + x + "," + y + ")");
+    runExtensions("canvasUpdated", {new_x:x, new_y:y, old_x:old_x, old_y:old_y, d_x:x - old_x, d_y:y - old_y});
+    return{x:x, y:y, old_x:old_x, old_y:old_y, d_x:x - old_x, d_y:y - old_y}
+  };
+  this.setBackground = function(color, url) {
+    var bg = svgedit.utilities.getElem("canvasBackground");
+    var border = $(bg).find("rect")[0];
+    var bg_img = svgedit.utilities.getElem("background_image");
+    border.setAttribute("fill", color);
+    if(url) {
+      if(!bg_img) {
+        bg_img = svgdoc.createElementNS(NS.SVG, "image");
+        svgedit.utilities.assignAttributes(bg_img, {id:"background_image", width:"100%", height:"100%", preserveAspectRatio:"xMinYMin", style:"pointer-events:none"})
+      }
+      setHref(bg_img, url);
+      bg.appendChild(bg_img)
+    }else {
+      if(bg_img) {
+        bg_img.parentNode.removeChild(bg_img)
+      }
+    }
+  };
+  this.cycleElement = function(next) {
+    var num;
+    var cur_elem = selectedElements[0];
+    var elem = false;
+    var all_elems = getVisibleElements(current_group || getCurrentDrawing().getCurrentLayer());
+    if(!all_elems.length) {
+      return
+    }
+    if(cur_elem == null) {
+      num = next ? all_elems.length - 1 : 0;
+      elem = all_elems[num]
+    }else {
+      var i = all_elems.length;
+      while(i--) {
+        if(all_elems[i] == cur_elem) {
+          num = next ? i - 1 : i + 1;
+          if(num >= all_elems.length) {
+            num = 0
+          }else {
+            if(num < 0) {
+              num = all_elems.length - 1
+            }
+          }
+          elem = all_elems[num];
+          break
+        }
+      }
+    }
+    selectOnly([elem], true);
+    call("selected", selectedElements)
+  };
+  this.clear();
+  this.getPrivateMethods = function() {
+    var obj = {addCommandToHistory:addCommandToHistory, setGradient:setGradient, addSvgElementFromJson:addSvgElementFromJson, assignAttributes:assignAttributes, BatchCommand:BatchCommand, call:call, ChangeElementCommand:ChangeElementCommand, copyElem:function(elem) {
+      return getCurrentDrawing().copyElem(elem)
+    }, ffClone:ffClone, findDefs:findDefs, findDuplicateGradient:findDuplicateGradient, getElem:getElem, getId:getId, getIntersectionList:getIntersectionList, getMouseTarget:getMouseTarget, getNextId:getNextId, getPathBBox:getPathBBox, getUrlFromAttr:getUrlFromAttr, hasMatrixTransform:hasMatrixTransform, identifyLayers:identifyLayers, InsertElementCommand:InsertElementCommand, isIdentity:svgedit.math.isIdentity, logMatrix:logMatrix, matrixMultiply:matrixMultiply, MoveElementCommand:MoveElementCommand, 
+    preventClickDefault:svgedit.utilities.preventClickDefault, recalculateAllSelectedDimensions:recalculateAllSelectedDimensions, recalculateDimensions:recalculateDimensions, remapElement:remapElement, RemoveElementCommand:RemoveElementCommand, removeUnusedDefElems:removeUnusedDefElems, round:round, runExtensions:runExtensions, sanitizeSvg:sanitizeSvg, SVGEditTransformList:svgedit.transformlist.SVGTransformList, toString:toString, transformBox:svgedit.math.transformBox, transformListToTransform:transformListToTransform, 
+    transformPoint:transformPoint, walkTree:svgedit.utilities.walkTree};
+    return obj
+  }
+};;module.exports = svgedit; }());//# sourceMappingURL=svgedit.compiled.js.map
