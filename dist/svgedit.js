@@ -10071,4 +10071,4 @@ $.SvgCanvas = function(container, config) {
     transformPoint:transformPoint, walkTree:svgedit.utilities.walkTree};
     return obj
   }
-};;module.exports = svgedit; }());//# sourceMappingURL=svgedit.compiled.js.map
+};;module.exports = svgedit; }());
