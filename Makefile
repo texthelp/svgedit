@@ -10,7 +10,6 @@ ZIP=zip
 JS_FILES=\
 	svgedit.js \
 	jquery-svg.js \
-	contextmenu/jquery.contextMenu.js \
 	pathseg.js \
 	browser.js \
 	svgtransformlist.js \
@@ -26,10 +25,7 @@ JS_FILES=\
 	draw.js \
 	layer.js \
 	path.js \
-	svgcanvas.js \
-	svg-editor.js \
-	locale/locale.js \
-	contextmenu.js
+	svgcanvas.js
 
 JS_INPUT_FILES=$(addprefix editor/, $(JS_FILES))
 JS_BUILD_FILES=$(addprefix build/$(PACKAGE)/, $(JS_FILES))
@@ -62,7 +58,8 @@ $(COMPILED_JS):
 	java -jar $(CLOSURE) \
 		--compilation_level SIMPLE_OPTIMIZATIONS \
 		$(CLOSURE_JS_ARGS) \
-		--js_output_file $(COMPILED_JS)
+		--js_output_file $(COMPILED_JS) \
+		--output_wrapper "const jquery = require('jquery'); const jQuery = jquery; const $$ = jquery; (function() { var %output%;module.exports = svgedit; }());"
 
 compile: $(COMPILED_JS)
 

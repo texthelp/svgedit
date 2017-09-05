@@ -1,0 +1,34 @@
+{
+  "name": "svgedit",
+  "version": "0.0.1",
+  "description": "Powerful SVG-Editor on your browser",
+  "main": "dist/svgedit.js",
+  "publishConfig": {
+    "registry": "https://npm.texthelp.com"
+  },
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "test": "test"
+  },
+  "scripts": {
+    "prepublish": "shx mkdir -p dist && make clean && make && shx cp editor/svgedit.compiled.js dist/svgedit.js && make clean",
+    "build": "make"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/texthelp/svgedit.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/texthelp/svgedit/issues"
+  },
+  "homepage": "https://github.com/texthelp/svgedit#readme",
+  "dependencies": {
+    "jquery": "^1.12.4"
+  },
+  "devDependencies": {
+     "shx": "^0.2.2"
+  }
+}
