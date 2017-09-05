@@ -1178,7 +1178,7 @@ svgedit.utilities.copyElem = function(el, getNextId) {
 				new_el.appendChild(svgedit.utilities.copyElem(child, getNextId));
 				break;
 			case 3: // text node
-				new_el.textContent = child.nodeValue;
+				new_el.appendChild(document.createTextNode(child.textContent));
 				break;
 			default:
 				break;
