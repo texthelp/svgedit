@@ -1,0 +1,15 @@
+/build/
+/chrome-app/
+/clipart/
+/docs/
+/editor/
+/examples/
+/extras/
+/firefox-extension/
+/opera-widget/
+/screencasts/
+/test/
+/wave/
+!/dist/
+composer.json
+Makefile
