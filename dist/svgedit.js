@@ -7928,7 +7928,7 @@ $.SvgCanvas = function(container, config) {
             }
             out.push(" ");
             if(attr.localName === "d") {
-              attrVal = pathActions.convertPath(elem, true)
+              attrVal = canvas.pathActions.convertPath(elem).replace(/,/g, " ").toUpperCase()
             }
             if(!isNaN(attrVal)) {
               attrVal = svgedit.units.shortFloat(attrVal)

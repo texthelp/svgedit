@@ -3864,7 +3864,7 @@ this.svgToString = function(elem, indent) {
 					if (attrVal.indexOf('pointer-events') === 0) {continue;}
 					if (attr.localName === 'class' && attrVal.indexOf('se_') === 0) {continue;}
 					out.push(' '); 
-					if (attr.localName === 'd') {attrVal = pathActions.convertPath(elem, true);}
+					if (attr.localName === 'd') {attrVal = canvas.pathActions.convertPath(elem).replace(/,/g, " ").toUpperCase();}
 					if (!isNaN(attrVal)) {
 						attrVal = svgedit.units.shortFloat(attrVal);
 					} else if (unit_re.test(attrVal)) {
