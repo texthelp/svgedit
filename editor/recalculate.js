@@ -724,7 +724,7 @@ svgedit.recalculate.recalculateDimensions = function(selected) {
     }
     // if it was a rotation, put the rotate back and return without a command
     // (this function has zero work to do for a rotate())
-    else {
+    else if(tlist.getItem(1).type === 4) {
       operation = 4; // rotation
       if (angle) {
         var newRot = svgroot.createSVGTransform();
