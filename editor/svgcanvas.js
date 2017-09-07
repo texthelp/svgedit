@@ -1147,6 +1147,10 @@ var getMouseTarget = this.getMouseTarget = function(evt) {
 		if (canvas.spaceKey || evt.button === 1) {return;}
 
 		var right_click = evt.button === 2;
+		if(right_click && current_mode === "path") {
+			mouseUp(evt);
+			return true;
+		}
 	
 		if (evt.altKey) { // duplicate when dragging
 			svgCanvas.cloneSelectedElements(0, 0);
@@ -1936,7 +1940,27 @@ var getMouseTarget = this.getMouseTarget = function(evt) {
 	// identified, a ChangeElementCommand is created and stored on the stack for those attrs
 	// this is done in when we recalculate the selected dimensions()
 	var mouseUp = function(evt) {
-		if (evt.button === 2) {return;}
+		if (evt.button === 2) {
+			// Right-click 
+			switch(current_mode) {
+				case 'path':
+					// set element to null here so that it is not removed nor finalized
+					element = null;
+					// continue to be set to true so that mouseMove happens
+					started = true;
+					
+					var res = pathActions.mouseUp(evt, element, mouse_x, mouse_y);
+					element = res.element;
+					keep = res.keep;
+					break;
+				case 'pathedit':
+					keep = true;
+					element = null;
+					pathActions.mouseUp(evt);
+					break;
+			}
+			return;
+		}
 		var tempJustSelected = justSelected;
 		justSelected = null;
 		if (!started) {return;}
@@ -2964,6 +2988,7 @@ pathActions = canvas.pathActions = function() {
 						element = newpath;
 						drawn_path = null;
 						started = false;
+						$(svgedit.utilities.getElem('pathpointgrip_container')).remove();
 						
 						if (subpath) {
 							if (svgedit.path.path.matrix) {
@@ -3085,122 +3110,23 @@ pathActions = canvas.pathActions = function() {
 		mouseMove: function(mouse_x, mouse_y) {
 			hasMoved = true;
 			if (current_mode === 'path') {
-				if (!drawn_path) {return;}
-				var seglist = drawn_path.pathSegList;
-				var index = seglist.numberOfItems - 1;
+				if (!drawn_path) {return;} 
+				var seglist = drawn_path.pathSegList; 
+				var index = seglist.numberOfItems - 1; 
 
-				if (newPoint) {
-					// First point
-//					if (!index) {return;}
-
-					// Set control points
-					var pointGrip1 = svgedit.path.addCtrlGrip('1c1');
-					var pointGrip2 = svgedit.path.addCtrlGrip('0c2');
-					
-					// dragging pointGrip1
-					pointGrip1.setAttribute('cx', mouse_x);
-					pointGrip1.setAttribute('cy', mouse_y);
-					pointGrip1.setAttribute('display', 'inline');
-
-					var pt_x = newPoint[0];
-					var pt_y = newPoint[1];
-					
-					// set curve
-					var seg = seglist.getItem(index);
-					var cur_x = mouse_x / current_zoom;
-					var cur_y = mouse_y / current_zoom;
-					var alt_x = (pt_x + (pt_x - cur_x));
-					var alt_y = (pt_y + (pt_y - cur_y));
-					
-					pointGrip2.setAttribute('cx', alt_x * current_zoom);
-					pointGrip2.setAttribute('cy', alt_y * current_zoom);
-					pointGrip2.setAttribute('display', 'inline');
-					
-					var ctrlLine = svgedit.path.getCtrlLine(1);
-					svgedit.utilities.assignAttributes(ctrlLine, {
-						x1: mouse_x,
-						y1: mouse_y,
-						x2: alt_x * current_zoom,
-						y2: alt_y * current_zoom,
-						display: 'inline'
-					});
-
-					if (index === 0) {
-						firstCtrl = [mouse_x, mouse_y];
+				var stretchy = svgedit.utilities.getElem('path_stretch_line');
+				if (stretchy) {
+					var prev = seglist.getItem(index);
+					if (prev.pathSegType === 6) {
+						var prev_x = prev.x + (prev.x - prev.x2);
+						var prev_y = prev.y + (prev.y - prev.y2);
+						svgedit.path.replacePathSeg(6, 1, [mouse_x, mouse_y, prev_x * current_zoom, prev_y * current_zoom, mouse_x, mouse_y], stretchy);							
+					} else if (firstCtrl) {
+						svgedit.path.replacePathSeg(6, 1, [mouse_x, mouse_y, firstCtrl[0], firstCtrl[1], mouse_x, mouse_y], stretchy);
 					} else {
-						var last = seglist.getItem(index - 1);
-						var last_x = last.x;
-						var last_y = last.y;
-	
-						if (last.pathSegType === 6) {
-							last_x += (last_x - last.x2);
-							last_y += (last_y - last.y2);
-						} else if (firstCtrl) {
-							last_x = firstCtrl[0]/current_zoom;
-							last_y = firstCtrl[1]/current_zoom;
-						}
-						svgedit.path.replacePathSeg(6, index, [pt_x, pt_y, last_x, last_y, alt_x, alt_y], drawn_path);
-					}
-				} else {
-					var stretchy = svgedit.utilities.getElem('path_stretch_line');
-					if (stretchy) {
-						var prev = seglist.getItem(index);
-						if (prev.pathSegType === 6) {
-							var prev_x = prev.x + (prev.x - prev.x2);
-							var prev_y = prev.y + (prev.y - prev.y2);
-							svgedit.path.replacePathSeg(6, 1, [mouse_x, mouse_y, prev_x * current_zoom, prev_y * current_zoom, mouse_x, mouse_y], stretchy);							
-						} else if (firstCtrl) {
-							svgedit.path.replacePathSeg(6, 1, [mouse_x, mouse_y, firstCtrl[0], firstCtrl[1], mouse_x, mouse_y], stretchy);
-						} else {
-							svgedit.path.replacePathSeg(4, 1, [mouse_x, mouse_y], stretchy);
-						}
+						svgedit.path.replacePathSeg(4, 1, [mouse_x, mouse_y], stretchy);
 					}
 				}
-				return;
-			}
-			// if we are dragging a point, let's move it
-			if (svgedit.path.path.dragging) {
-				var pt = svgedit.path.getPointFromGrip({
-					x: svgedit.path.path.dragging[0],
-					y: svgedit.path.path.dragging[1]
-				}, svgedit.path.path);
-				var mpt = svgedit.path.getPointFromGrip({
-					x: mouse_x,
-					y: mouse_y
-				}, svgedit.path.path);
-				var diff_x = mpt.x - pt.x;
-				var diff_y = mpt.y - pt.y;
-				svgedit.path.path.dragging = [mouse_x, mouse_y];
-				
-				if (svgedit.path.path.dragctrl) {
-					svgedit.path.path.moveCtrl(diff_x, diff_y);
-				} else {
-					svgedit.path.path.movePts(diff_x, diff_y);
-				}
-			} else {
-				svgedit.path.path.selected_pts = [];
-				svgedit.path.path.eachSeg(function(i) {
-					var seg = this;
-					if (!seg.next && !seg.prev) {return;}
-						
-					var item = seg.item;
-					var rbb = rubberBox.getBBox();
-					
-					var pt = svgedit.path.getGripPt(seg);
-					var pt_bb = {
-						x: pt.x,
-						y: pt.y,
-						width: 0,
-						height: 0
-					};
-				
-					var sel = svgedit.math.rectsIntersect(rbb, pt_bb);
-
-					this.select(sel);
-					//Note that addPtsToSelection is not being run
-					if (sel) {svgedit.path.path.selected_pts.push(seg.index);}
-				});
-
 			}
 		}, 
 		mouseUp: function(evt, element, mouse_x, mouse_y) {
@@ -3212,6 +3138,7 @@ pathActions = canvas.pathActions = function() {
 					element = svgedit.utilities.getElem(getId());
 					started = false;
 					firstCtrl = null;
+					canvas.setMode("select");
 				}
 
 				return {
@@ -5343,6 +5270,7 @@ this.setMode = function(name) {
 	textActions.clear();
 	cur_properties = (selectedElements[0] && selectedElements[0].nodeName == 'text') ? cur_text : cur_shape;
 	current_mode = name;
+	call("mode", name);
 };
 
 // Group: Element Styling
