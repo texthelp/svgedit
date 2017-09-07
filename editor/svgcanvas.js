@@ -5269,8 +5269,8 @@ this.setMode = function(name) {
 	pathActions.clear(true);
 	textActions.clear();
 	cur_properties = (selectedElements[0] && selectedElements[0].nodeName == 'text') ? cur_text : cur_shape;
+	call("mode", current_mode, name);
 	current_mode = name;
-	call("mode", name);
 };
 
 // Group: Element Styling
