@@ -1191,7 +1191,7 @@ svgedit.utilities.copyElem = function(el, getNextId) {
 		var ref = $(el).data('symbol');
 		$(new_el).data('ref', ref).data('symbol', ref);
 	} else if (new_el.tagName == 'image') {
-		preventClickDefault(new_el);
+        svgedit.utilities.preventClickDefault(new_el);
 	}
 	return new_el;
 };
