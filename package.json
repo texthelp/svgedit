@@ -1,6 +1,6 @@
 {
   "name": "svgedit",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Powerful SVG-Editor on your browser",
   "main": "dist/svgedit.js",
   "publishConfig": {
@@ -25,9 +25,6 @@
     "url": "https://github.com/texthelp/svgedit/issues"
   },
   "homepage": "https://github.com/texthelp/svgedit#readme",
-  "dependencies": {
-    "jquery": "^1.12.4"
-  },
   "devDependencies": {
     "shx": "^0.2.2"
   }

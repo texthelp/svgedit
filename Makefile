@@ -60,12 +60,12 @@ $(COMPILED_JS):
 		--js_output_file dist/svgedit.js \
 		--compilation_level WHITESPACE_ONLY \
 		--formatting PRETTY_PRINT \
-		--output_wrapper "const jquery = require('jquery'); const jQuery = jquery; const $$ = jquery; (function() { var %output%;module.exports = svgedit; }());"
+		--output_wrapper "(function() { var %output%;module.exports = svgedit; }());"
 	java -jar $(CLOSURE) \
 		$(CLOSURE_JS_ARGS) \
 		--js_output_file dist/svgedit.min.js \
 		--compilation_level SIMPLE_OPTIMIZATIONS \
-		--output_wrapper "const jquery = require('jquery'); const jQuery = jquery; const $$ = jquery; (function() { var %output%;module.exports = svgedit; }());"
+		--output_wrapper "(function() { var %output%;module.exports = svgedit; }());"
 	
 
 compile: $(COMPILED_JS)
