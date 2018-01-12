@@ -1,6 +1,6 @@
 {
   "name": "svgedit",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Powerful SVG-Editor on your browser",
   "main": "dist/svgedit.js",
   "publishConfig": {
