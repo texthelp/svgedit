@@ -1698,7 +1698,7 @@ var getMouseTarget = this.getMouseTarget = function(evt) {
 				}
 
 				translateOrigin.setTranslate(-(left+tx), -(top+ty));
-                if (evt.shiftKey) {
+                if (evt.shiftKey || (selected.dataset.keepAspectRatio && selected.dataset.keepAspectRatio === "true")) {
 					if (sx == 1) {sx = sy;}
 					else {sy = sx;}
 				}
