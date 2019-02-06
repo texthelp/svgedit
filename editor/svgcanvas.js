@@ -1518,7 +1518,7 @@ var getMouseTarget = this.getMouseTarget = function(evt) {
 		if (!started) {return;}
 		if (evt.button === 1 || canvas.spaceKey) {return;}
 
-		var i, xya, c, cx, cy, dx, dy, len, angle, box,
+		var i, xya, c, cx, cy, dx, dy, len, angle, box, x, y, 
 			selected = selectedElements[0],
 			pt = svgedit.math.transformPoint( evt.pageX, evt.pageY, root_sctm ),
 			mouse_x = pt.x * current_zoom,
