@@ -5293,7 +5293,7 @@ this.setColor = function(type, val, preventUndo) {
 	cur_properties[type + '_paint'] = {type:'solidColor'};
 	var elems = [];
 	function addNonG (e) {
-		if (e.nodeName != 'g') {
+		if (e.nodeName != 'g' && !(e.dataset.preventPaint && e.dataset.preventPaint === 'true')) {
 			elems.push(e);
 		}
 	}

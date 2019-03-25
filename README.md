@@ -39,3 +39,11 @@ The following browsers had been tested for 2.6 or earlier and will probably cont
  * [Stackoverflow](http://stackoverflow.com/tags/svg-edit) group.
  * Join the [svg-edit mailing list](https://groups.google.com/forum/#!forum/svg-edit).
  * Join us on `#svg-edit` on `freenode.net` (or use the [web client](http://webchat.freenode.net/?channels=svg-edit)).
+ 
+ ## Build (Windows)
+ 
+ With cygwin (and make) installed
+ 
+ `cd /cygdrive/c/<..>/svgedit`
+ 
+ `make compile` 
