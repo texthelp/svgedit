@@ -1,6 +1,6 @@
 {
   "name": "svgedit",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Powerful SVG-Editor on your browser",
   "main": "dist/svgedit.js",
   "publishConfig": {
@@ -12,8 +12,9 @@
     "test": "test"
   },
   "scripts": {
-    "prepublish": "shx mkdir -p dist && make clean && make && make clean",
-    "build": "make"
+    "build": "make",
+    "docker-create": "docker build -t svgedit .",
+    "docker-build": "npx cross-var docker run --rm -v $init_cwd:/src svgedit:latest /bin/sh -c \"cd /src && make all\""
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
   },
   "homepage": "https://github.com/texthelp/svgedit#readme",
   "devDependencies": {
+    "cross-var": "^1.1.0",
     "shx": "^0.2.2"
   }
 }
