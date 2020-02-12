@@ -14,7 +14,7 @@
   "scripts": {
     "build": "make",
     "docker-create": "docker build -t svgedit .",
-    "docker-build": "npx cross-var docker run --rm -v $init_cwd:/src svgedit:latest /bin/sh -c \"cd /src && make\""
+    "docker-build": "npx cross-var docker run --rm -v $init_cwd:/src svgedit:latest /bin/sh -c \"cd /src && make all\""
   },
   "repository": {
     "type": "git",
