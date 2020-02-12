@@ -126,6 +126,7 @@ svgedit.coords.remapElement = function(selected, changes, m) {
   switch (elName) {
     case 'foreignObject':
     case 'rect':
+    case 'svg':
     case 'image':
       // Allow images to be inverted (give them matrix when flipped)
       if (elName === 'image' && (m.a < 0 || m.d < 0)) {

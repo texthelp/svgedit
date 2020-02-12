@@ -1,6 +1,6 @@
 {
   "name": "svgedit",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Powerful SVG-Editor on your browser",
   "main": "dist/svgedit.js",
   "publishConfig": {
@@ -14,7 +14,7 @@
   "scripts": {
     "build": "make",
     "docker-create": "docker build -t svgedit .",
-    "docker-build": "npx cross-var docker run --rm -v $init_cwd:/src svgedit:latest /bin/sh -c \"cd /src && make all\""
+    "docker-build": "npx cross-var docker run --rm -v $init_cwd:/src svgedit:latest /bin/sh -c \"cd /src && make\""
   },
   "repository": {
     "type": "git",
